@@ -1,6 +1,7 @@
 package org.vliux.android.gesturecut;
 
 import android.app.Application;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 
 import org.vliux.android.gesturecut.util.AppLog;
@@ -13,6 +14,7 @@ public class GuestCutApplication extends Application {
     public void onCreate() {
         super.onCreate();
         checkDebuggable();
+        startKeyGuard();
     }
 
     private void checkDebuggable(){
@@ -21,5 +23,10 @@ public class GuestCutApplication extends Application {
             boolean debug = (applicationInfo.flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0;
             AppLog.setLoggingEnabled(debug);
         }
+    }
+
+    private void startKeyGuard(){
+        Intent intent = new Intent(getApplicationContext(), GuestKeyGuardService.class);
+        startService(intent);
     }
 }

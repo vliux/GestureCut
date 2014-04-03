@@ -53,8 +53,13 @@ public class GuestKeyGuardService extends Service {
             }
             String action = intent.getAction();
             if(SCREEN_OFF.equals(action)){
-
+                Intent mainIntent = new Intent(context, MainActivity.class);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(mainIntent);
             }
         }
     };
+
+
 }
