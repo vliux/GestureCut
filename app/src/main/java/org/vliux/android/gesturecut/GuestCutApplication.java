@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 
+import org.vliux.android.gesturecut.service.GuestKeyGuardService;
 import org.vliux.android.gesturecut.util.AppLog;
 
 /**

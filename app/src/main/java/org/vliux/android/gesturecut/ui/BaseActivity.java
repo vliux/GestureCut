@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut;
+package org.vliux.android.gesturecut.ui;
 
 import android.app.Activity;
 import android.os.Bundle;

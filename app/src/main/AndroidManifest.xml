@@ -8,11 +8,11 @@
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
 
-        <service android:name=".GuestKeyGuardService"
+        <service android:name=".service.GuestKeyGuardService"
             android:label="GuestKeyGuardService"
             android:process=":keyguard" />
 
-        <activity android:name=".MainActivity"
+        <activity android:name=".ui.MainActivity"
             android:launchMode="singleTop"
             android:excludeFromRecents="true">
             <intent-filter>

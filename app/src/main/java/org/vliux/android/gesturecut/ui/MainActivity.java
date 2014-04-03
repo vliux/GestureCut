@@ -1,7 +1,9 @@
-package org.vliux.android.gesturecut;
+package org.vliux.android.gesturecut.ui;
 
 import android.os.Bundle;
 import android.view.WindowManager;
+
+import org.vliux.android.gesturecut.R;
 
 /**
  * Created by vliux on 4/3/14.
