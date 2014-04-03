@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">GestureCut</string>
+    <string name="float_window_btn_snapshot">Snapshot ...</string>
 </resources>

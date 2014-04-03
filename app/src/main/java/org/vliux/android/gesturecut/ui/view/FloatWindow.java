@@ -1,0 +1,39 @@
+package org.vliux.android.gesturecut.ui.view;
+
+import android.content.Context;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
+
+import org.vliux.android.gesturecut.R;
+
+/**
+ * Created by vliux on 4/3/14.
+ */
+public class FloatWindow extends LinearLayout implements View.OnClickListener {
+
+    public FloatWindow(Context context) {
+        super(context);
+        init();
+    }
+
+    public FloatWindow(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init();
+    }
+
+    public FloatWindow(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init();
+    }
+
+    private void init(){
+        LayoutInflater.from(getContext()).inflate(R.layout.view_floatwindow, this, true);
+    }
+
+    @Override
+    public void onClick(View view){
+    }
+}
