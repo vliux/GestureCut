@@ -1,10 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="org.vliux.android.gesturecut">
 
-    <application android:allowBackup="true"
+    <application
+        android:name=".GuestCutApplication"
+        android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
+
+        <service android:name=".GuestKeyGuardService"
+            android:label="GuestKeyGuardService"
+            android:process=":keyguard" />
 
     </application>
 
