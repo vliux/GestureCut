@@ -48,7 +48,7 @@ public class MainActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what){
                 case WHAT_SHOW_FLOAT_WINDOW:
-                    FloatWindowManager.showWindow(MainActivity.this, new FloatWindow(MainActivity.this));
+                    FloatWindowManager.showWindow(MainActivity.this.getApplicationContext(), new FloatWindow(MainActivity.this.getApplicationContext()));
                     break;
             }
         }
