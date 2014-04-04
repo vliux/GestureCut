@@ -10,8 +10,6 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
-import org.vliux.android.gesturecut.AppConstant;
-
 /**
  * Created by vliux on 10/15/13.
  */
