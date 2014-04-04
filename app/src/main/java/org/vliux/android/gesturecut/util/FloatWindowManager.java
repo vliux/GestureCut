@@ -20,8 +20,10 @@ public class FloatWindowManager {
     public static void showWindow(Context activityContext, View view){
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_SYSTEM_ALERT, 0, PixelFormat.TRANSLUCENT);
-        lp.gravity = Gravity.CENTER;
+                WindowManager.LayoutParams.TYPE_PHONE,
+                WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+                PixelFormat.TRANSLUCENT);
+        lp.gravity = Gravity.RIGHT|Gravity.TOP;
         //lp.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;
         WindowManager windowManager = (WindowManager)activityContext.getSystemService(Context.WINDOW_SERVICE);
         view.setVisibility(View.VISIBLE);

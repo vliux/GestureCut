@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 
@@ -31,9 +32,11 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_floatwindow, this, true);
+        this.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view){
+        Toast.makeText(getContext(), "FloatWindow pressed", Toast.LENGTH_SHORT).show();
     }
 }
