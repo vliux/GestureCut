@@ -1,5 +1,7 @@
 package org.vliux.android.gesturecut.ui.view;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -8,7 +10,10 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.vliux.android.gesturecut.GuestCutApplication;
 import org.vliux.android.gesturecut.R;
+
+import java.util.List;
 
 /**
  * Created by vliux on 4/3/14.
@@ -37,6 +42,19 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        Toast.makeText(getContext(), "FloatWindow pressed", Toast.LENGTH_SHORT).show();
+        ActivityManager activityManager = (ActivityManager)getContext().getApplicationContext().getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> runningTaskInfoList = activityManager.getRunningTasks(1);
+        if(null != runningTaskInfoList && runningTaskInfoList.size() > 0){
+            ActivityManager.RunningTaskInfo runningTaskInfo = runningTaskInfoList.get(0);
+            if(null != runningTaskInfo) {
+                GuestCutApplication.sTargetComponentName = (null != runningTaskInfo.topActivity?
+                    runningTaskInfo.topActivity : runningTaskInfo.baseActivity);
+                Toast.makeText(getContext(),
+                        String.format("Base:%s, Top:%s", runningTaskInfo.baseActivity.flattenToShortString(),
+                                runningTaskInfo.topActivity.flattenToShortString()),
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+
     }
 }

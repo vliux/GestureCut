@@ -5,12 +5,14 @@
     android:layout_height="match_parent">
 
     <Button
+        android:id="@+id/main_btn"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="10dp"
         android:gravity="center"
         android:text="GuestCut MainActivity"
         android:textSize="30sp"
-        android:textColor="#FF0000"/>
+        android:textColor="#FF0000"
+        android:onClick="onClick"/>
 
 </LinearLayout>
