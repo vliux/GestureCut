@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view;
+package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
