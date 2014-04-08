@@ -4,15 +4,17 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/main_btn"
+    <android.gesture.GestureOverlayView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:gravity="center"
-        android:text="GuestCut MainActivity"
-        android:textSize="30sp"
-        android:textColor="#FF0000"
-        android:onClick="onClick"/>
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="28dp"
+            android:textColor="@android:color/holo_blue_dark"/>
+    </android.gesture.GestureOverlayView>
 
 </LinearLayout>

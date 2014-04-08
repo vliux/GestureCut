@@ -12,14 +12,12 @@ import org.vliux.android.gesturecut.R;
  * Created by vliux on 4/3/14.
  */
 public class MainActivity extends BaseActivity {
-    private Button mBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setKeyGuardFlags();
         setContentView(R.layout.activity_main);
-        mBtn = (Button)findViewById(R.id.main_btn);
     }
 
     @Override
@@ -29,9 +27,7 @@ public class MainActivity extends BaseActivity {
 
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.main_btn:
-                GuestCutApplication.startTargetActivity(getApplicationContext());
-                break;
+
         }
     }
 
