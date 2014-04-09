@@ -22,6 +22,7 @@ import org.vliux.android.gesturecut.biz.db.DbTable;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.util.GestureUtil;
+import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
  * Created by vliux on 4/9/14.
@@ -47,19 +48,16 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_2nd_floatwindow, this, true);
-        mRecordBtn = (Button)findViewById(R.id.btn_record);
+        //mRecordBtn = (Button)findViewById(R.id.btn_record);
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
 
-        mRecordBtn.setOnClickListener(this);
+        //mRecordBtn.setOnClickListener(this);
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
     }
 
     public void onClick(View view){
         switch (view.getId()){
-            case R.id.btn_record:
-
-                break;
         }
     }
 
@@ -79,6 +77,7 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
                     e.printStackTrace();
                 }
             }
+            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
         }
     };
 }

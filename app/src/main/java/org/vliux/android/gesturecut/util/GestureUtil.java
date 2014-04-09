@@ -4,6 +4,9 @@ import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
+import android.gesture.Prediction;
+
+import java.util.List;
 
 /**
  * Created by vliux on 4/9/14.
@@ -36,6 +39,21 @@ public class GestureUtil {
             mGestureLibrary.addGesture(name, gesture);
             if(mGestureLibrary.save()){
                 return name;
+            }
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param gesture
+     * @return The gesture name previously saved in GestureLibrary; NULL if not found.
+     */
+    public String matchGesture(Gesture gesture){
+        if(null != gesture){
+            List<Prediction> predictionList = mGestureLibrary.recognize(gesture);
+            if(null != predictionList && predictionList.size() > 0){
+                return predictionList.get(0).name;
             }
         }
         return null;

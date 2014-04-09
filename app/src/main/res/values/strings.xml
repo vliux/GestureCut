@@ -1,7 +1,15 @@
 <resources>
     <string name="app_name">GestureCut</string>
     <string name="float_window_btn_snapshot">Snapshot ...</string>
+
+    <!-- text in background for recording a new gesture -->
+    <string name="gesture_bg_title_record">Record your gesture</string>
+    <!-- text in background for starting activity from a gesture -->
+    <string name="gesture_bg_title_use">Use your gesture</string>
+
     <string name="btn_record_gesture">Record pattern</string>
     <string name="saving_gesture">Saving gesture ...</string>
     <string name="saving_gesture_completed">Gesture %s saved</string>
+    <string name="start_activity_from_gesture">Starting activity from gesture ...</string>
+
 </resources>

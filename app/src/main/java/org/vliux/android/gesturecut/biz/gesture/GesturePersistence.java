@@ -2,6 +2,7 @@ package org.vliux.android.gesturecut.biz.gesture;
 
 import android.app.ActivityManager;
 import android.content.ComponentName;
+import android.content.ContentValues;
 import android.content.Context;
 import android.gesture.Gesture;
 import android.graphics.Bitmap;
@@ -52,6 +53,21 @@ public class GesturePersistence {
         }
         Toast.makeText(context, String.format(context.getString(R.string.saving_gesture_completed), gestureName),
                 Toast.LENGTH_SHORT).show();
+    }
+
+    public static ComponentName loadGesture(Context context, Gesture gesture){
+        String gestureName = GestureUtil.getInstance().matchGesture(gesture);
+        if(null == gestureName || gestureName.length() <= 0){
+            return null;
+        }
+
+        GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
+        ContentValues dbResult = gestureDbTable.getGesture(gestureName);
+        if(null != dbResult && dbResult.containsKey(GestureDbTable.DB_COL_COMPONENT_NAME_TEXT_1)){
+            return ComponentName.unflattenFromString(dbResult.getAsString(GestureDbTable.DB_COL_COMPONENT_NAME_TEXT_1));
+        }else{
+            return null;
+        }
     }
 
     /**
