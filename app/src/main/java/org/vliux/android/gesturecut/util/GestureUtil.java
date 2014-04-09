@@ -25,13 +25,19 @@ public class GestureUtil {
         mGestureLibrary.load();
     }
 
-    public boolean addGesture(Gesture gesture){
+    /**
+     *
+     * @param gesture
+     * @return The name of the saved gesture. If saving failed return NULL.
+     */
+    public String addGesture(Gesture gesture){
         if(null != gesture){
             String name = String.valueOf(System.currentTimeMillis());
             mGestureLibrary.addGesture(name, gesture);
-            return mGestureLibrary.save();
-        }else{
-            return false;
+            if(mGestureLibrary.save()){
+                return name;
+            }
         }
+        return null;
     }
 }

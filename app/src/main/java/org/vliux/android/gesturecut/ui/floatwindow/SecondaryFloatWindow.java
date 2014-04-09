@@ -15,6 +15,9 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.db.DbManager;
+import org.vliux.android.gesturecut.biz.db.DbTable;
+import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.GestureUtil;
 
 /**
@@ -61,12 +64,7 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
             Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-            int thumbWidth = (int)getContext().getResources().getDimension(R.dimen.gesture_thumbnail_width);
-            int thumbHeight = (int)getContext().getResources().getDimension(R.dimen.gesture_thumbnail_height);
-            //Bitmap gestureBitmap = gesture.toBitmap(thumbWidth, thumbHeight, 10, 0xFFFF0000);
-            boolean saved = GestureUtil.getInstance().addGesture(gesture);
-            //mGestureOverlayView.clear(true);
-            Toast.makeText(getContext(), String.valueOf(saved), Toast.LENGTH_SHORT).show();
+
         }
     };
 }

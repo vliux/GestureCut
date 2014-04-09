@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Handler;
 
+import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.service.GuestKeyGuardService;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.ui.floatwindow.FloatWindowManager;
@@ -30,6 +31,10 @@ public class GestureCutApplication extends Application {
     public void onTerminate() {
         super.onTerminate();
         controlFloatWindow(false);
+    }
+
+    private void initDb(){
+        DbManager.init(getApplicationContext());
     }
 
     private void controlFloatWindow(final boolean isToShow) {
