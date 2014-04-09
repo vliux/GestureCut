@@ -1,17 +1,16 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.app.ActivityManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.GuestCutApplication;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 import java.util.List;
 
@@ -56,5 +55,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
             }
         }
 
+        SecondaryFloatWindow secondaryFloatWindow = new SecondaryFloatWindow(getContext());
+        WindowManagerUtil.showWindow(getContext(), secondaryFloatWindow, WindowManagerUtil.WindowScope.APP);
     }
 }

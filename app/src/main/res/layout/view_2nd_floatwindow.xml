@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.gesture.GestureOverlayView
+        android:id="@+id/gesture_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textSize="28dp"
+            android:textColor="@android:color/holo_blue_dark"/>
+    </android.gesture.GestureOverlayView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <Button
+            android:id="@+id/btn_record"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/btn_record_gesture"
+            android:textColor="@android:color/holo_blue_dark"/>
+    </LinearLayout>
+</LinearLayout>

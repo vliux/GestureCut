@@ -10,6 +10,7 @@ import android.os.Handler;
 import org.vliux.android.gesturecut.service.GuestKeyGuardService;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.ui.floatwindow.FloatWindowManager;
+import org.vliux.android.gesturecut.util.GestureUtil;
 
 /**
  * Created by vliux on 4/3/14.
@@ -22,6 +23,7 @@ public class GuestCutApplication extends Application {
         checkDebuggable();
         startKeyGuard();
         controlFloatWindow(true);
+        GestureUtil.init(getApplicationContext());
     }
 
     @Override

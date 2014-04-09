@@ -9,4 +9,5 @@ public class AppConstant {
         public static final int WIDTH = 300;
         public static final int HEIGH = 200;
     }
+
 }
