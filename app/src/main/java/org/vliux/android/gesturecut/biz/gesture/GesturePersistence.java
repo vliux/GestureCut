@@ -14,6 +14,7 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -21,41 +22,54 @@ import java.io.IOException;
  */
 public class GesturePersistence {
 
-    public static void saveGesture(Context context, Gesture gesture){
+    public static void saveGesture(Context context, Gesture gesture, ComponentName componentName)
+            throws GestureLibraryException, GestureSaveIconException, GestureDbException {
         int thumbWidth = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_width);
         int thumbHeight = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_height);
         Bitmap gestureBitmap = gesture.toBitmap(thumbWidth, thumbHeight, 10, 0xFFFF0000);
 
+        // save to GestureLibrary
         String gestureName = GestureUtil.getInstance().addGesture(gesture);
-        Toast.makeText(context, String.valueOf(gestureName), Toast.LENGTH_SHORT).show();
+        if(null == gestureName || gestureName.length() <= 0){
+            throw new GestureLibraryException();
+        }
+        // save icon to file
+        File iconDir = context.getDir(AppConstant.GestureStorage.GESTURE_ICON_DIR_NAME, Context.MODE_PRIVATE);
+        String iconPath = null;
+        try {
+            iconPath = ImageUtil.saveBmp(gestureBitmap, iconDir, gestureName, ImageUtil.QUALITY_OK);
+            if(null == iconPath || iconPath.length() <= 0){
+                throw new GestureSaveIconException();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new GestureSaveIconException();
+        }
+        // save to DB
+        GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
+        if(!gestureDbTable.addGesture(gestureName, componentName.flattenToString(), iconPath)){
+            throw new GestureDbException();
+        }
+        Toast.makeText(context, String.format(context.getString(R.string.saving_gesture_completed), gestureName),
+                Toast.LENGTH_SHORT).show();
+    }
 
+    /**
+     * Failed to save gesture to Android GestureLibrary.
+     */
+    public static class GestureLibraryException extends Exception{
+    }
+
+    /**
+     * Failed to save gesture thumbnail icon.
+     */
+    public static class GestureSaveIconException extends Exception{
 
     }
 
-    private static class SaveGestureRunnable implements Runnable{
-        private Context context;
-        private String mGestureName;
-        private Bitmap mGestureIcon;
-        private ComponentName mComponentName;
-
-        public SaveGestureRunnable(Context context, String gestureName, Bitmap gestureIcon, ComponentName componentName){
-            mGestureName = gestureName;
-            mGestureIcon = gestureIcon;
-            mComponentName = componentName;
-        }
-
-        @Override
-        public void run() {
-            try {
-                ImageUtil.saveBmp(mGestureIcon,
-                        context.getDir(AppConstant.GestureStorage.GESTURE_ICON_DIR_NAME, Context.MODE_PRIVATE),
-                        mGestureName, ImageUtil.QUALITY_OK);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            GestureDbTable gestureDbTable = (GestureDbTable) DbManager.getInstance().getDbTable(GestureDbTable.class);
-
-        }
+    /**
+     * Failed to save gesture to DB.
+     */
+    public static class GestureDbException extends Exception{
     }
 }

@@ -25,6 +25,7 @@ public class GestureCutApplication extends Application {
         startKeyGuard();
         controlFloatWindow(true);
         GestureUtil.init(getApplicationContext());
+        initDb();
     }
 
     @Override

@@ -3,4 +3,5 @@
     <string name="float_window_btn_snapshot">Snapshot ...</string>
     <string name="btn_record_gesture">Record pattern</string>
     <string name="saving_gesture">Saving gesture ...</string>
+    <string name="saving_gesture_completed">Gesture %s saved</string>
 </resources>

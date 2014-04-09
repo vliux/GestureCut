@@ -16,7 +16,6 @@ public class AppConstant {
     }
 
     public static class GestureStorage{
-        public static final String GESTURE_STORAGE_ROOT = "gesture";
-        public static final String GESTURE_ICON_DIR_NAME = GESTURE_STORAGE_ROOT + "/icon";
+        public static final String GESTURE_ICON_DIR_NAME = "gesture_icon";
     }
 }
