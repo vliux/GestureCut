@@ -12,8 +12,7 @@
         android:theme="@style/AppTheme">
 
         <service android:name=".service.GuestKeyGuardService"
-            android:label="GuestKeyGuardService"
-            android:process=":keyguard" />
+            android:label="GuestKeyGuardService" />
 
         <activity android:name=".ui.MainActivity"
             android:launchMode="singleTop"

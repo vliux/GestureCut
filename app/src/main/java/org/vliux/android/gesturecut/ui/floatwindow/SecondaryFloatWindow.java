@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibrary;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.DbTable;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
@@ -64,15 +66,18 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
     private GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-            Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-            try {
-                GesturePersistence.saveGesture(getContext(), gesture, null);
-            } catch (GesturePersistence.GestureLibraryException e) {
-                e.printStackTrace();
-            } catch (GesturePersistence.GestureSaveIconException e) {
-                e.printStackTrace();
-            } catch (GesturePersistence.GestureDbException e) {
-                e.printStackTrace();
+            ComponentName componentName = TaskManager.getTopComponentName(getContext());
+            if(null != componentName){
+                Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
+                try {
+                    GesturePersistence.saveGesture(getContext(), gesture, componentName);
+                } catch (GesturePersistence.GestureLibraryException e) {
+                    e.printStackTrace();
+                } catch (GesturePersistence.GestureSaveIconException e) {
+                    e.printStackTrace();
+                } catch (GesturePersistence.GestureDbException e) {
+                    e.printStackTrace();
+                }
             }
         }
     };

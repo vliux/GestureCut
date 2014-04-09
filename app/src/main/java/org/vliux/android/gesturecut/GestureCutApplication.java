@@ -64,16 +64,14 @@ public class GestureCutApplication extends Application {
         startService(intent);
     }
 
-    public static ComponentName sTargetComponentName;
-
-    public static void startTargetActivity(Context context) {
+    /*public static void startTargetActivity(Context context) {
         if (null != sTargetComponentName) {
             Intent intent = new Intent();
             intent.setComponent(sTargetComponentName);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
-    }
+    }*/
 
     private Handler mHandler = new Handler();
 }
