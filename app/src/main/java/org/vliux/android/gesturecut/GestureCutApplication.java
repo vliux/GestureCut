@@ -15,7 +15,7 @@ import org.vliux.android.gesturecut.util.GestureUtil;
 /**
  * Created by vliux on 4/3/14.
  */
-public class GuestCutApplication extends Application {
+public class GestureCutApplication extends Application {
 
     @Override
     public void onCreate() {
@@ -37,7 +37,7 @@ public class GuestCutApplication extends Application {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    FloatWindowManager.showWindow(GuestCutApplication.this);
+                    FloatWindowManager.showWindow(GestureCutApplication.this);
                 }
             }, 300L);
         }else{

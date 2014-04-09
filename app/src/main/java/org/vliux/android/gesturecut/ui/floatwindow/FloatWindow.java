@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import org.vliux.android.gesturecut.GuestCutApplication;
+import org.vliux.android.gesturecut.GestureCutApplication;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
@@ -46,7 +46,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
         if(null != runningTaskInfoList && runningTaskInfoList.size() > 0){
             ActivityManager.RunningTaskInfo runningTaskInfo = runningTaskInfoList.get(0);
             if(null != runningTaskInfo) {
-                GuestCutApplication.sTargetComponentName = (null != runningTaskInfo.topActivity?
+                GestureCutApplication.sTargetComponentName = (null != runningTaskInfo.topActivity?
                     runningTaskInfo.topActivity : runningTaskInfo.baseActivity);
                 Toast.makeText(getContext(),
                         String.format("Base:%s, Top:%s", runningTaskInfo.baseActivity.flattenToShortString(),

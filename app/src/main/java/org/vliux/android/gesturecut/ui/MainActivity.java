@@ -3,9 +3,7 @@ package org.vliux.android.gesturecut.ui;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 
-import org.vliux.android.gesturecut.GuestCutApplication;
 import org.vliux.android.gesturecut.R;
 
 /**
