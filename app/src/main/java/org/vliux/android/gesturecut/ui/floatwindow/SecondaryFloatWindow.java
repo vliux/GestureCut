@@ -6,6 +6,7 @@ import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -73,4 +74,14 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
             WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
         }
     };
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
+            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), this);
+            return true;
+        }else{
+            return super.dispatchKeyEvent(event);
+        }
+    }
 }

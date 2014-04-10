@@ -30,9 +30,9 @@ public class WindowManagerUtil {
             case APP:
                 lp = new WindowManager.LayoutParams(
                         WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.TYPE_PHONE,
+                        WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        PixelFormat.OPAQUE);
+                        PixelFormat.TRANSLUCENT);
                 lp.gravity = Gravity.CENTER;
                 break;
         }
