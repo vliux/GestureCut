@@ -3,12 +3,9 @@ package org.vliux.android.gesturecut.ui.floatwindow;
 import android.content.ComponentName;
 import android.content.Context;
 import android.gesture.Gesture;
-import android.gesture.GestureLibrary;
 import android.gesture.GestureOverlayView;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.util.AttributeSet;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -17,11 +14,7 @@ import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.TaskManager;
-import org.vliux.android.gesturecut.biz.db.DbManager;
-import org.vliux.android.gesturecut.biz.db.DbTable;
-import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
-import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**

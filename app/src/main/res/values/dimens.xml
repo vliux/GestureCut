@@ -2,4 +2,8 @@
 <resources>
     <dimen name="gesture_thumbnail_width">128dp</dimen>
     <dimen name="gesture_thumbnail_height">128dp</dimen>
+
+    <dimen name="gesture_overlay_margin">12dp</dimen>
+    <dimen name="text_size_gesture_overlay_title">28dp</dimen>
+
 </resources>
