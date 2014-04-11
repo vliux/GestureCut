@@ -2,14 +2,14 @@
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/global_bkground">
 
     <android.gesture.GestureOverlayView
         android:id="@+id/main_gesture_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/gesture_overlay_margin"
-        android:background="@color/gesture_cur_blue">
+        android:layout_margin="@dimen/gesture_overlay_margin">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -20,11 +20,19 @@
             android:textColor="@android:color/holo_blue_dark"/>
     </android.gesture.GestureOverlayView>
 
+    <ImageView
+        android:id="@+id/main_settings_outmost"
+        android:layout_width="@dimen/gesture_list_item_icon_dimen"
+        android:layout_height="@dimen/gesture_list_item_icon_dimen"
+        android:layout_gravity="top|left"
+        android:layout_marginTop="@dimen/settings_outmost_margin"
+        android:layout_marginLeft="@dimen/settings_outmost_margin"
+        android:src="@drawable/ic_settings_3"/>
+
     <LinearLayout
-        android:id="@+id/main_more_layout"
+        android:id="@+id/main_gesture_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:translationX="0dp">
+        android:layout_height="match_parent">
         <org.vliux.android.gesturecut.ui.view.GestureList
             android:layout_width="match_parent"
             android:layout_height="match_parent">

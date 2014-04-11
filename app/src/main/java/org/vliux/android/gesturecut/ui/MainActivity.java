@@ -7,27 +7,37 @@ import android.gesture.GestureOverlayView;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.util.ScreenUtil;
 
 /**
  * Created by vliux on 4/3/14.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements View.OnClickListener{
     private GestureOverlayView mGesutreOverLayView;
+    private ViewGroup mGesutreListLayout;
+    private ImageView mIvSettings; //outmost settings btn
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setKeyGuardFlags();
         setContentView(R.layout.activity_main);
-
         mGesutreOverLayView = (GestureOverlayView)findViewById(R.id.main_gesture_overlay);
+        mGesutreListLayout = (ViewGroup)findViewById(R.id.main_gesture_list_layout);
+        mIvSettings = (ImageView)findViewById(R.id.main_settings_outmost);
+
+        mGesutreListLayout.setTranslationX(-ScreenUtil.getScreenSize(this)[0]);
+
         mGesutreOverLayView.setGestureColor(Color.BLUE);
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
+        mIvSettings.setOnClickListener(this);
     }
 
     @Override
@@ -35,9 +45,12 @@ public class MainActivity extends BaseActivity {
         super.onResume();
     }
 
+    @Override
     public void onClick(View view){
         switch (view.getId()){
-
+            case R.id.main_settings_outmost:
+                mGesutreListLayout.setTranslationX(0);
+                break;
         }
     }
 
