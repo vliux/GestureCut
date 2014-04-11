@@ -5,14 +5,18 @@
 
     <dimen name="gesture_overlay_margin">12dp</dimen>
 
-    <dimen name="main_more_width">220dp</dimen>
     <dimen name="main_more_trans_x">-220dp</dimen>
+
+    <!-- global listview dividers -->
+    <dimen name="listview_divider_thick">3dp</dimen>
+    <dimen name="listview_divider_thin">1dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
     <dimen name="gesture_list_outter_margin">10dp</dimen>
-    <dimen name="gesture_list_item_height">60dp</dimen>
-    <dimen name="gesture_list_item_icon_dimen">52dp</dimen>
-    <dimen name="gesture_list_item_divider_margin">8dp</dimen>
+    <dimen name="gesture_list_item_height">80dp</dimen>
+    <dimen name="gesture_list_item_icon_dimen">60dp</dimen>
+    <dimen name="gesture_list_item_padding_vertical">4dp</dimen>
+    <dimen name="gesture_list_item_vertical_divider_margin_horiz">6dp</dimen>
 
     <dimen name="text_size_general">16dp</dimen>
     <dimen name="text_size_small_title">22dp</dimen>

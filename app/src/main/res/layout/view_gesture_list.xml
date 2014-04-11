@@ -4,8 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="@dimen/gesture_list_outter_margin"
-    android:background="#FAFAF0">
+    android:padding="@dimen/gesture_list_outter_margin"
+    android:background="@color/gesture_list_bkground">
 
     <TextView
         android:layout_width="match_parent"
@@ -18,7 +18,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/listview_divider_thick"
         android:layout_marginBottom="@dimen/gesture_list_outter_margin"
         android:background="@color/gesture_cur_blue"/>
 
@@ -26,12 +26,15 @@
         android:id="@+id/gesture_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:cacheColorHint="@color/gesture_list_bkground"
+        android:divider="@color/gesture_cur_blue"
+        android:dividerHeight="@dimen/listview_divider_thin">
     </ListView>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/listview_divider_thick"
         android:layout_marginTop="@dimen/gesture_list_outter_margin"
         android:background="@color/gesture_cur_blue"/>
 

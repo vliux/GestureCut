@@ -3,25 +3,28 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/gesture_list_item_height">
+    android:layout_height="@dimen/gesture_list_item_height"
+    android:paddingTop="@dimen/gesture_list_item_padding_vertical"
+    android:paddingBottom="@dimen/gesture_list_item_padding_vertical">
 
     <ImageView
         android:id="@+id/item_gesture_icon"
-        android:layout_width="@dimen/gesture_list_item_icon_dimen"
-        android:layout_height="@dimen/gesture_list_item_icon_dimen"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:scaleType="center"/>
 
     <View
-        android:layout_width="2dp"
+        android:layout_width="@dimen/listview_divider_thin"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/gesture_list_item_divider_margin"
-        android:background="@color/gesture_cur_blue" />
+        android:background="@color/gesture_cur_blue"
+        android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
+        android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"/>
 
     <ImageView
         android:id="@+id/item_gesture_app_icon"
-        android:layout_width="@dimen/gesture_list_item_icon_dimen"
-        android:layout_height="@dimen/gesture_list_item_icon_dimen"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
         android:scaleType="center"/>
 
