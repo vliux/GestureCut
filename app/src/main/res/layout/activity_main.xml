@@ -17,7 +17,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/gesture_bg_title_use"
-            android:textSize="@dimen/text_size_gesture_overlay_title"
+            android:textSize="@dimen/text_size_large_title"
             android:textColor="@android:color/holo_blue_dark"/>
     </android.gesture.GestureOverlayView>
 

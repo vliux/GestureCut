@@ -4,14 +4,17 @@
     <dimen name="gesture_thumbnail_height">60dp</dimen>
 
     <dimen name="gesture_overlay_margin">12dp</dimen>
-    <dimen name="text_size_gesture_overlay_title">28dp</dimen>
 
-    <dimen name="main_more_width">180dp</dimen>
-    <dimen name="main_more_trans_x">-180dp</dimen>
+    <dimen name="main_more_width">220dp</dimen>
+    <dimen name="main_more_trans_x">-220dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
-    <dimen name="gesture_list_bottom_bar_height">45dp</dimen>
-    <dimen name="icon_dimen">30dp</dimen>
+    <dimen name="gesture_list_outter_margin">10dp</dimen>
+    <dimen name="gesture_list_item_height">60dp</dimen>
+    <dimen name="gesture_list_item_icon_dimen">52dp</dimen>
+    <dimen name="gesture_list_item_divider_margin">8dp</dimen>
 
     <dimen name="text_size_general">16dp</dimen>
+    <dimen name="text_size_small_title">22dp</dimen>
+    <dimen name="text_size_large_title">28dp</dimen>
 </resources>

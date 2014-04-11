@@ -3,29 +3,33 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/gesture_list_bottom_bar_height">
+    android:layout_height="@dimen/gesture_list_item_height">
 
     <ImageView
         android:id="@+id/item_gesture_icon"
-        android:layout_width="@dimen/icon_dimen"
-        android:layout_height="@dimen/icon_dimen"
-        android:scaleType="centerCrop"/>
+        android:layout_width="@dimen/gesture_list_item_icon_dimen"
+        android:layout_height="@dimen/gesture_list_item_icon_dimen"
+        android:layout_gravity="center"
+        android:scaleType="center"/>
 
     <View
         android:layout_width="2dp"
         android:layout_height="match_parent"
-        android:background="@android:color/holo_blue_light" />
+        android:layout_margin="@dimen/gesture_list_item_divider_margin"
+        android:background="@color/gesture_cur_blue" />
 
     <ImageView
         android:id="@+id/item_gesture_app_icon"
-        android:layout_width="@dimen/icon_dimen"
-        android:layout_height="@dimen/icon_dimen"
-        android:scaleType="centerInside"/>
+        android:layout_width="@dimen/gesture_list_item_icon_dimen"
+        android:layout_height="@dimen/gesture_list_item_icon_dimen"
+        android:layout_gravity="center"
+        android:scaleType="center"/>
 
     <TextView
         android:id="@+id/item_gesture_tv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
+        style="@style/text_basic_style"
         android:textSize="@dimen/text_size_general"/>
 </LinearLayout>

@@ -5,4 +5,7 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="text_basic_style">
+        <item name="android:textColor">@color/gesture_cur_blue</item>
+    </style>
 </resources>

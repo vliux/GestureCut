@@ -132,7 +132,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             notifyHandler = handler;
             gestureName = gesName;
             viewHolder = vh;
-            iconWidth = (int)getContext().getResources().getDimension(R.dimen.icon_dimen);
+            iconWidth = (int)getContext().getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
             iconHeight = iconWidth;
         }
 
