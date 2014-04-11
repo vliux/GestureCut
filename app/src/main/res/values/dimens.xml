@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="gesture_thumbnail_width">128dp</dimen>
-    <dimen name="gesture_thumbnail_height">128dp</dimen>
+    <dimen name="gesture_thumbnail_width">60dp</dimen>
+    <dimen name="gesture_thumbnail_height">60dp</dimen>
 
     <dimen name="gesture_overlay_margin">12dp</dimen>
     <dimen name="text_size_gesture_overlay_title">28dp</dimen>
 
+    <dimen name="main_more_width">180dp</dimen>
+    <dimen name="main_more_trans_x">-180dp</dimen>
+
+    <!-- gesture list view, for editing existing gestures -->
+    <dimen name="gesture_list_bottom_bar_height">45dp</dimen>
+    <dimen name="icon_dimen">30dp</dimen>
+
+    <dimen name="text_size_general">16dp</dimen>
 </resources>

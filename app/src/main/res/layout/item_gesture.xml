@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/gesture_list_bottom_bar_height">
+
+    <ImageView
+        android:id="@+id/item_gesture_icon"
+        android:layout_width="@dimen/icon_dimen"
+        android:layout_height="@dimen/icon_dimen"
+        android:scaleType="centerCrop"/>
+
+    <View
+        android:layout_width="2dp"
+        android:layout_height="match_parent"
+        android:background="@android:color/holo_blue_light" />
+
+    <ImageView
+        android:id="@+id/item_gesture_app_icon"
+        android:layout_width="@dimen/icon_dimen"
+        android:layout_height="@dimen/icon_dimen"
+        android:scaleType="centerInside"/>
+
+    <TextView
+        android:id="@+id/item_gesture_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_general"/>
+</LinearLayout>

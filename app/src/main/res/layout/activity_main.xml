@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/holo_blue_light">
@@ -21,4 +21,14 @@
             android:textColor="@android:color/holo_blue_dark"/>
     </android.gesture.GestureOverlayView>
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/main_more_layout"
+        android:layout_width="@dimen/main_more_width"
+        android:layout_height="match_parent"
+        android:translationX="0dp">
+        <org.vliux.android.gesturecut.ui.view.GestureList
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </org.vliux.android.gesturecut.ui.view.GestureList>
+    </LinearLayout>
+</FrameLayout>

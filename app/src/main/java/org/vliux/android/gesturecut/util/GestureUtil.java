@@ -7,6 +7,7 @@ import android.gesture.GestureLibrary;
 import android.gesture.Prediction;
 
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by vliux on 4/9/14.
@@ -58,4 +59,9 @@ public class GestureUtil {
         }
         return null;
     }
+
+    public Set<String> getGestureNames(){
+        return mGestureLibrary.getGestureEntries();
+    }
+
 }
