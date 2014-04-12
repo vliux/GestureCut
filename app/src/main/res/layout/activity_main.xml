@@ -29,13 +29,8 @@
         android:layout_marginLeft="@dimen/settings_outmost_margin"
         android:src="@drawable/ic_settings_3"/>
 
-    <LinearLayout
+    <org.vliux.android.gesturecut.ui.view.GestureList
         android:id="@+id/main_gesture_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <org.vliux.android.gesturecut.ui.view.GestureList
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </org.vliux.android.gesturecut.ui.view.GestureList>
-    </LinearLayout>
+        android:layout_height="match_parent"></org.vliux.android.gesturecut.ui.view.GestureList>
 </FrameLayout>

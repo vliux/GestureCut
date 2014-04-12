@@ -1,5 +1,7 @@
 package org.vliux.android.gesturecut.ui.view;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,6 +12,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +25,7 @@ import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
+import org.vliux.android.gesturecut.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +38,8 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private ImageView mIvAdd;
     private ImageView mIvSettings;
     private ListView mGestureListView;
+    private int mScreenWidth;
+    private boolean mIsShown = false;
 
     public GestureList(Context context) {
         super(context);
@@ -59,6 +65,8 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         mIvAdd.setOnClickListener(this);
         mIvSettings.setOnClickListener(this);
         mGestureListView.setAdapter(new GestureListViewAdapter());
+        mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
+        setTranslationX(-mScreenWidth);
     }
 
     @Override
@@ -178,4 +186,38 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             }
         }
     };
+
+    public boolean isShown(){
+        return mIsShown;
+    }
+
+    public void show(){
+        mIsShown = true;
+        getAnimatorSet(true).start();
+    }
+
+    public void hide(){
+        mIsShown = false;
+        getAnimatorSet(false).start();
+    }
+
+    private AnimatorSet getAnimatorSet(boolean forShown){
+        ObjectAnimator transxObjAnimator = null;
+        ObjectAnimator alphaObjAnimator = null;
+        if(forShown) {
+            // animators for showing
+            transxObjAnimator = ObjectAnimator.ofFloat(this, "translationX", -mScreenWidth, 0);
+            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 0.8f, 1.0f);
+        }else{
+            // animators for hiding
+            transxObjAnimator = ObjectAnimator.ofFloat(this, "translationX", 0, -mScreenWidth);
+            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.8f);
+        }
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(500L);
+        animatorSet.setInterpolator(new OvershootInterpolator());
+        animatorSet.play(transxObjAnimator).with(alphaObjAnimator);
+        return animatorSet;
+    }
 }
