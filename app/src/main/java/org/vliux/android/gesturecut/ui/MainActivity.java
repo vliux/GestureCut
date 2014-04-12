@@ -43,6 +43,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
+        mGesutreListLayout.setAutoRefresh(true);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mGesutreListLayout.setAutoRefresh(false);
     }
 
     @Override

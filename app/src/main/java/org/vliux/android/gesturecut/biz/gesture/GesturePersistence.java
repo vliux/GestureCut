@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.GestureUtil;
@@ -51,6 +52,8 @@ public class GesturePersistence {
         if(!gestureDbTable.addGesture(gestureName, componentName.flattenToString(), iconPath)){
             throw new GestureDbException();
         }
+        // send local broadcast
+        AppBroadcastManager.sendGestureAddedBroadcast(context);
         Toast.makeText(context, String.format(context.getString(R.string.saving_gesture_completed), gestureName),
                 Toast.LENGTH_SHORT).show();
     }

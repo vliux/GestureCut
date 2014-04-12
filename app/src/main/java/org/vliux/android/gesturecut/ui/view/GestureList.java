@@ -2,8 +2,11 @@ package org.vliux.android.gesturecut.ui.view;
 
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.content.BroadcastReceiver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -11,6 +14,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
 import org.vliux.android.gesturecut.biz.db.DbManager;
@@ -43,6 +48,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private ListView mGestureListView;
     private int mScreenWidth;
     private boolean mIsShown = false;
+    private GestureListViewAdapter mListViewAdapter;
 
     public GestureList(Context context) {
         super(context);
@@ -67,9 +73,23 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
 
         mIvAdd.setOnClickListener(this);
         mIvSettings.setOnClickListener(this);
-        mGestureListView.setAdapter(new GestureListViewAdapter());
+        mListViewAdapter = new GestureListViewAdapter();
+        mGestureListView.setAdapter(mListViewAdapter);
         mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
         setTranslationX(-mScreenWidth);
+    }
+
+    /**
+     * Whether this view can automatically refresh for the change of gesture library.
+     * @param autoRefresh
+     */
+    public void setAutoRefresh(boolean autoRefresh){
+        if(autoRefresh){
+            LocalBroadcastManager.getInstance(getContext()).registerReceiver(mGestureAddedBroadcastReceiver,
+                    new IntentFilter(AppConstant.LocalBroadcasts.BROADCAST_GESTURE_ADDED));
+        }else{
+            LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mGestureAddedBroadcastReceiver);
+        }
     }
 
     @Override
@@ -86,9 +106,23 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         private List<String> mGestureNames;
 
         public GestureListViewAdapter(){
-            mGestureNames = new ArrayList<String>();
+            loadData();
+        }
+
+        private void loadData(){
+            if(null == mGestureNames){
+                mGestureNames = new ArrayList<String>();
+            }else{
+                mGestureNames.clear();
+            }
             mGestureNames.addAll(GestureUtil.getInstance().getGestureNames());
             Collections.sort(mGestureNames);
+        }
+
+        @Override
+        public void notifyDataSetChanged() {
+            loadData();
+            super.notifyDataSetChanged();
         }
 
         @Override
@@ -197,6 +231,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     public void show(){
         mIsShown = true;
         getAnimatorSet(true).start();
+        mListViewAdapter.notifyDataSetChanged();
     }
 
     public void hide(){
@@ -239,4 +274,18 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         mShadowDrawable.setBounds(0, 0, 4, getHeight());
         mShadowDrawable.draw(canvas);
     }
+
+    private BroadcastReceiver mGestureAddedBroadcastReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(null != intent){
+                String action = intent.getAction();
+                if(AppConstant.LocalBroadcasts.BROADCAST_GESTURE_ADDED.equals(action)){
+                    if(null != mListViewAdapter){
+                        mListViewAdapter.notifyDataSetChanged();
+                    }
+                }
+            }
+        }
+    };
 }

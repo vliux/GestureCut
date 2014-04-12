@@ -18,4 +18,9 @@ public class AppConstant {
     public static class GestureStorage{
         public static final String GESTURE_ICON_DIR_NAME = "gesture_icon";
     }
+
+    public static class LocalBroadcasts{
+        public static final String BROADCAST_GESTURE_ADDED = "org.vliux.android.gesturecut.GESTURE_ADDED";
+        public static final String BROADCAST_GESTURE_DELELTED = "org.vliux.android.gesturecut.GESTURE_DELETED";
+    }
 }
