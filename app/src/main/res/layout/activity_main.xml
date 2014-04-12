@@ -22,8 +22,8 @@
 
     <ImageView
         android:id="@+id/main_settings_outmost"
-        android:layout_width="@dimen/gesture_list_item_icon_dimen"
-        android:layout_height="@dimen/gesture_list_item_icon_dimen"
+        android:layout_width="@dimen/icon_dimen_global"
+        android:layout_height="@dimen/icon_dimen_global"
         android:layout_gravity="top|left"
         android:layout_marginTop="@dimen/settings_outmost_margin"
         android:layout_marginLeft="@dimen/settings_outmost_margin"

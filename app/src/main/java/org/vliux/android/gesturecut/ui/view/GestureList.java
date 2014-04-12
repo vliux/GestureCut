@@ -5,6 +5,9 @@ import android.animation.ObjectAnimator;
 import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -219,5 +222,21 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         animatorSet.setInterpolator(new OvershootInterpolator());
         animatorSet.play(transxObjAnimator).with(alphaObjAnimator);
         return animatorSet;
+    }
+
+    private GradientDrawable mShadowDrawable;
+    /**
+     * Draw a shadown on the right boundary.
+     * @param canvas
+     */
+    @Override
+    protected void dispatchDraw(Canvas canvas) {
+        super.dispatchDraw(canvas);
+        if(null == mShadowDrawable){
+            mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
+                    new int[]{Color.argb(0x60, 0, 0, 0), Color.argb(0, 0 , 0, 0)});
+        }
+        mShadowDrawable.setBounds(0, 0, 4, getHeight());
+        mShadowDrawable.draw(canvas);
     }
 }
