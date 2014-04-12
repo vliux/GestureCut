@@ -5,6 +5,9 @@
 
     <dimen name="gesture_overlay_margin">12dp</dimen>
 
+    <!-- main activity -->
+    <dimen name="main_actv_time_margin_left">12dp</dimen>
+
     <!-- global listview dividers -->
     <dimen name="listview_divider_thick">3dp</dimen>
     <dimen name="listview_divider_thin">1dp</dimen>

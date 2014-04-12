@@ -8,27 +8,34 @@
         android:id="@+id/main_gesture_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="@dimen/gesture_overlay_margin">
+        android:layout_margin="@dimen/gesture_overlay_margin"
+        android:gestureColor="@android:color/holo_red_light">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/main_actv_time_margin_left">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="2"
                 android:gravity="bottom"
                 android:text="12:27"
                 android:textSize="@dimen/text_size_clock"
-                android:textColor="@color/gesture_cur_blue"/>
+                android:textColor="@color/gesture_cur_blue"
+                android:textStyle="bold"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"/>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="3"
                 android:layout_gravity="top"
                 android:text="2014-04-12 | Saturday"
                 android:textColor="@color/gesture_cur_blue"
-                android:textSize="@dimen/text_size_large_title"/>
+                android:textSize="@dimen/text_size_small_title"/>
         </LinearLayout>
     </android.gesture.GestureOverlayView>
 

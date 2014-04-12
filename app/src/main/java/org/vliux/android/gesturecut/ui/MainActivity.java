@@ -35,7 +35,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mGesutreListLayout = (GestureList)findViewById(R.id.main_gesture_list_layout);
         mIvSettings = (ImageView)findViewById(R.id.main_settings_outmost);
 
-        mGesutreOverLayView.setGestureColor(Color.BLUE);
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
         mIvSettings.setOnClickListener(this);
     }
