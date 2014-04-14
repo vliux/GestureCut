@@ -7,14 +7,34 @@
     android:padding="@dimen/gesture_list_outter_margin"
     android:background="@color/gesture_list_bkground">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/gesture_list_outter_margin"
-        android:layout_marginBottom="@dimen/gesture_list_outter_margin"
-        style="@style/text_basic_style"
-        android:textSize="@dimen/text_size_small_title"
-        android:text="@string/gesture_list_title"/>
+        android:layout_marginBottom="@dimen/gesture_list_outter_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            style="@style/text_basic_style"
+            android:textSize="@dimen/text_size_small_title"
+            android:text="@string/gesture_list_title"/>
+
+        <ImageView
+            android:id="@+id/gesture_list_settings"
+            android:layout_width="@dimen/icon_dimen_global"
+            android:layout_height="@dimen/icon_dimen_global"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/ic_settings"/>
+
+        <ImageView
+            android:id="@+id/gesture_list_add"
+            android:layout_width="@dimen/icon_dimen_global"
+            android:layout_height="@dimen/icon_dimen_global"
+            android:layout_toLeftOf="@id/gesture_list_settings"
+            android:layout_marginRight="@dimen/settings_outmost_margin"
+            android:src="@drawable/ic_edit"/>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
@@ -31,30 +51,4 @@
         android:dividerHeight="@dimen/listview_divider_thin">
     </ListView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/listview_divider_thick"
-        android:background="@color/gesture_cur_blue"/>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-        android:gravity="center_vertical">
-
-        <ImageView
-            android:id="@+id/gesture_list_add"
-            android:layout_width="@dimen/icon_dimen_global"
-            android:layout_height="@dimen/icon_dimen_global"
-            android:layout_weight="1"
-            android:src="@drawable/ic_add"/>
-
-        <ImageView
-            android:id="@+id/gesture_list_settings"
-            android:layout_width="@dimen/icon_dimen_global"
-            android:layout_height="@dimen/icon_dimen_global"
-            android:layout_weight="1"
-            android:src="@drawable/ic_settings_1"/>
-    </LinearLayout>
 </LinearLayout>

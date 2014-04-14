@@ -14,7 +14,7 @@
 
     <dimen name="settings_outmost_margin">10dp</dimen>
     <!-- global icon dimension -->
-    <dimen name="icon_dimen_global">45dp</dimen>
+    <dimen name="icon_dimen_global">30dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
     <dimen name="gesture_list_outter_margin">10dp</dimen>
