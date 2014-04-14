@@ -255,11 +255,11 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         if(forShown) {
             // animators for showing
             transxObjAnimator = ObjectAnimator.ofFloat(this, "translationX", -mScreenWidth, 0);
-            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 0.8f, 1.0f);
+            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
         }else{
             // animators for hiding
             transxObjAnimator = ObjectAnimator.ofFloat(this, "translationX", 0, -mScreenWidth);
-            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.8f);
+            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.0f);
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
