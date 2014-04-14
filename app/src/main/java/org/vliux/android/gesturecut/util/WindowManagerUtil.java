@@ -25,7 +25,7 @@ public class WindowManagerUtil {
                         WindowManager.LayoutParams.TYPE_PHONE,
                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                         PixelFormat.TRANSLUCENT);
-                lp.gravity = Gravity.RIGHT|Gravity.TOP;
+                lp.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
                 break;
             case APP:
                 lp = new WindowManager.LayoutParams(
