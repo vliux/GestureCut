@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.os.Handler;
 
+import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.service.GuestKeyGuardService;
 import org.vliux.android.gesturecut.util.AppLog;
@@ -62,6 +63,8 @@ public class GestureCutApplication extends Application {
     private void startKeyGuard() {
         Intent intent = new Intent(getApplicationContext(), GuestKeyGuardService.class);
         startService(intent);
+        // init monitor for incomming calls
+        PhoneStateMonitor.init(this);
     }
 
     /*public static void startTargetActivity(Context context) {

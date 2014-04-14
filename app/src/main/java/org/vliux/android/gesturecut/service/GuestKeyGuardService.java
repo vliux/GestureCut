@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
+import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
 import org.vliux.android.gesturecut.ui.MainActivity;
 
 /**
@@ -54,7 +55,8 @@ public class GuestKeyGuardService extends Service {
                 return;
             }
             String action = intent.getAction();
-            if(SCREEN_OFF.equals(action)){
+            if(SCREEN_OFF.equals(action)
+                    && !PhoneStateMonitor.getInstance().isOnCall()){
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
