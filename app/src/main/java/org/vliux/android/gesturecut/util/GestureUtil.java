@@ -54,7 +54,11 @@ public class GestureUtil {
         if(null != gesture){
             List<Prediction> predictionList = mGestureLibrary.recognize(gesture);
             if(null != predictionList && predictionList.size() > 0){
-                return predictionList.get(0).name;
+                for(Prediction prediction : predictionList){
+                    if(prediction.score > 1.0){
+                        return prediction.name;
+                    }
+                }
             }
         }
         return null;
