@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false" >
+    <item
+        android:drawable="@drawable/icon_unlock00"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock01"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock02"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock03"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock04"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock05"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock06"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock07"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock08"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock09"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock10"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock11"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock12"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock13"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock14"
+        android:duration="300"/>
+    <item
+        android:drawable="@drawable/icon_unlock15"
+        android:duration="500"/>
+
+</animation-list>
