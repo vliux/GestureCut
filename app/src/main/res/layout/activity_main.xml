@@ -14,12 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="@dimen/main_actv_time_margin_left">
+            android:layout_marginRight="@dimen/main_actv_time_margin_left">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="bottom|right"
                 android:text="12:27"
                 android:textSize="@dimen/text_size_clock"
                 android:textColor="@color/gesture_cur_blue"
@@ -31,7 +31,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:layout_gravity="top"
+                android:gravity="top|right"
                 android:text="2014-04-12 | Saturday"
                 android:textColor="@color/gesture_cur_blue"
                 android:textSize="@dimen/text_size_small_title"/>
