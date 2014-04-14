@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GestureList;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
@@ -84,15 +85,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private GestureOverlayView.OnGesturePerformedListener mOnGesutrePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-            ComponentName componentName = GesturePersistence.loadGesture(getApplicationContext(), gesture);
-            if(null != componentName){
+            ResolvedComponent resolvedComponent = GesturePersistence.loadGesture(getApplicationContext(), gesture);
+            if(null != resolvedComponent){
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.start_activity_from_gesture),
                         Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent();
-                intent.setComponent(componentName);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                getApplicationContext().startActivity(intent);
+                resolvedComponent.startActivity(getApplicationContext());
             }
         }
     };

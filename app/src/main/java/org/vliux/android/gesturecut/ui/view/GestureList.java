@@ -29,6 +29,7 @@ import android.widget.TextView;
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.GestureUtil;
@@ -184,21 +185,30 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         @Override
         public void run() {
             GestureDbTable gestureDbTable = (GestureDbTable) DbManager.getInstance().getDbTable(GestureDbTable.class);
-            ContentValues gestureValues = gestureDbTable.getGesture(gestureName);
-            String iconPath = gestureValues.getAsString(GestureDbTable.DB_COL_GESTURE_ICON_PATH_TEXT_1);
-            Bitmap bmp = null;
-            if(null != iconPath && iconPath.length() > 0){
-                bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
-            }
-            String componentStr = gestureValues.getAsString(GestureDbTable.DB_COL_COMPONENT_NAME_TEXT_1);
+            GestureDbTable.DbData dbData = gestureDbTable.getGesture(gestureName);
+            if(null != dbData && null != dbData.resolvedComponent){
+                String iconPath = dbData.iconPath;
+                Bitmap bmp = null;
+                if(null != iconPath && iconPath.length() > 0){
+                    bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
+                }
+                String componentStr = null;
+                switch (dbData.resolvedComponent.getType()){
+                    case COMPONENT_NAME:
+                        componentStr = dbData.resolvedComponent.getComponentName().flattenToShortString();
+                        break;
+                    case PACKAGE_NAME:
+                        componentStr = dbData.resolvedComponent.getPackageName();
+                }
 
-            if(null != bmp || null != componentStr){
-                NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
-                notifyHandlerData.viewHolder = viewHolder;
-                notifyHandlerData.bitmap = bmp;
-                notifyHandlerData.componentStr = componentStr;
-                Message message = notifyHandler.obtainMessage(WHAT_GESTURE_ICON_LOADED, notifyHandlerData);
-                mHandler.sendMessage(message);
+                if(null != bmp || null != componentStr){
+                    NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
+                    notifyHandlerData.viewHolder = viewHolder;
+                    notifyHandlerData.bitmap = bmp;
+                    notifyHandlerData.componentStr = componentStr;
+                    Message message = notifyHandler.obtainMessage(WHAT_GESTURE_ICON_LOADED, notifyHandlerData);
+                    mHandler.sendMessage(message);
+                }
             }
         }
     }

@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
@@ -24,7 +25,7 @@ import java.io.IOException;
  */
 public class GesturePersistence {
 
-    public static void saveGesture(Context context, Gesture gesture, ComponentName componentName)
+    public static void saveGesture(Context context, Gesture gesture, ResolvedComponent resolvedComponent)
             throws GestureLibraryException, GestureSaveIconException, GestureDbException {
         int thumbWidth = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_width);
         int thumbHeight = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_height);
@@ -49,28 +50,24 @@ public class GesturePersistence {
         }
         // save to DB
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
-        if(!gestureDbTable.addGesture(gestureName, componentName.flattenToString(), iconPath)){
+        if (!gestureDbTable.addGesture(gestureName, resolvedComponent, iconPath)) {
             throw new GestureDbException();
         }
+
         // send local broadcast
         AppBroadcastManager.sendGestureAddedBroadcast(context);
         Toast.makeText(context, String.format(context.getString(R.string.saving_gesture_completed), gestureName),
                 Toast.LENGTH_SHORT).show();
     }
 
-    public static ComponentName loadGesture(Context context, Gesture gesture){
+    public static ResolvedComponent loadGesture(Context context, Gesture gesture){
         String gestureName = GestureUtil.getInstance().matchGesture(gesture);
         if(null == gestureName || gestureName.length() <= 0){
             return null;
         }
 
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
-        ContentValues dbResult = gestureDbTable.getGesture(gestureName);
-        if(null != dbResult && dbResult.containsKey(GestureDbTable.DB_COL_COMPONENT_NAME_TEXT_1)){
-            return ComponentName.unflattenFromString(dbResult.getAsString(GestureDbTable.DB_COL_COMPONENT_NAME_TEXT_1));
-        }else{
-            return null;
-        }
+        return gestureDbTable.getGesture(gestureName).resolvedComponent;
     }
 
     /**

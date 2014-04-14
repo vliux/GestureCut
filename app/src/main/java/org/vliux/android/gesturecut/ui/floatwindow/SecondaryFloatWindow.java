@@ -14,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
@@ -58,11 +59,11 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
     private GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-            ComponentName componentName = TaskManager.getTopComponentName(getContext());
-            if(null != componentName){
+            ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
+            if(null != resolvedComponent){
                 Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
                 try {
-                    GesturePersistence.saveGesture(getContext(), gesture, componentName);
+                    GesturePersistence.saveGesture(getContext(), gesture, resolvedComponent);
                 } catch (GesturePersistence.GestureLibraryException e) {
                     e.printStackTrace();
                 } catch (GesturePersistence.GestureSaveIconException e) {
