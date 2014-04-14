@@ -21,8 +21,9 @@
                 android:layout_weight="1"
                 android:gravity="bottom|right"
                 android:text="12:27"
+                android:textStyle="italic"
                 android:textSize="@dimen/text_size_clock"
-                android:textColor="@color/gesture_cur_blue"
+                android:textColor="@color/clock_textv_color"
                 android:shadowColor="@android:color/black"
                 android:shadowDx="1"
                 android:shadowDy="1"
@@ -33,8 +34,13 @@
                 android:layout_weight="3"
                 android:gravity="top|right"
                 android:text="2014-04-12 | Saturday"
-                android:textColor="@color/gesture_cur_blue"
-                android:textSize="@dimen/text_size_small_title"/>
+                android:textStyle="italic"
+                android:textColor="@color/clock_textv_color"
+                android:textSize="@dimen/text_size_small_title"
+                android:shadowColor="@android:color/black"
+                android:shadowDx="1"
+                android:shadowDy="1"
+                android:shadowRadius="1"/>
         </LinearLayout>
     </android.gesture.GestureOverlayView>
 
@@ -45,7 +51,7 @@
         android:layout_gravity="top|left"
         android:layout_marginTop="@dimen/settings_outmost_margin"
         android:layout_marginLeft="@dimen/settings_outmost_margin"
-        android:src="@drawable/ic_info"/>
+        android:src="@drawable/ic_info_white"/>
 
     <org.vliux.android.gesturecut.ui.view.GestureList
         android:id="@+id/main_gesture_list_layout"
