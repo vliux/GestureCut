@@ -32,7 +32,7 @@ public class WindowManagerUtil {
                         WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
                         WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        PixelFormat.TRANSLUCENT);
+                        PixelFormat.OPAQUE);
                 lp.gravity = Gravity.CENTER;
                 break;
         }

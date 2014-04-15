@@ -41,7 +41,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        SecondaryFloatWindow secondaryFloatWindow = new SecondaryFloatWindow(getContext());
-        WindowManagerUtil.showWindow(getContext(), secondaryFloatWindow, WindowManagerUtil.WindowScope.APP);
+        ExpandedFloatWindow expandedFloatWindow = new ExpandedFloatWindow(getContext().getApplicationContext());
+        WindowManagerUtil.showWindow(getContext(), expandedFloatWindow, WindowManagerUtil.WindowScope.APP);
     }
 }

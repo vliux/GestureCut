@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="global_bkground">@android:color/white</color>
-    <color name="gesture_cur_blue">@android:color/black</color>
+    <color name="gesture_cur_blue">@android:color/holo_blue_dark</color>
     <color name="gesture_list_bkground">#FFFAFAF0</color>
     <color name="clock_textv_color">@android:color/white</color>
 </resources>
