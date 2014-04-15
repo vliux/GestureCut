@@ -8,8 +8,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginBottom="@dimen/settings_outmost_margin"
+        android:layout_height="1px"
         android:background="@color/clock_textv_color"/>
 
     <ImageView
@@ -17,6 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/unlock_bar_margin_vertical"
+        android:layout_marginBottom="@dimen/unlock_bar_margin_vertical"
         android:src="@drawable/ic_unlock"/>
 
 </LinearLayout>

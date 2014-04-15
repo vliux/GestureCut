@@ -76,7 +76,7 @@ public class UnlockBar extends LinearLayout {
         super.onTouchEvent(event);
         switch (event.getAction()){
             case MotionEvent.ACTION_UP:
-                if(!mIsResetting){
+                if(!mIsInAnim){
                     reset();
                 }
                 break;
@@ -127,10 +127,7 @@ public class UnlockBar extends LinearLayout {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             AppLog.logd(TAG, "onFling(): velocityY = " + velocityY);
             if(velocityY < AppConstant.LockScreen.MIN_UNLOCK_FLOING_VELOCITY){
-                Toast.makeText(getContext(), "onUnlockConditionFulfilled", Toast.LENGTH_SHORT).show();
-                if(null != mUnlockListener){
-                    mUnlockListener.onUnlockConditionFulfilled();
-                }
+                flyAway();
             }else {
                 reset();
             }
@@ -142,10 +139,10 @@ public class UnlockBar extends LinearLayout {
         public void onUnlockConditionFulfilled();
     }
 
-    private boolean mIsResetting = false;
+    private boolean mIsInAnim = false;
     private void reset(){
-        if(!mIsResetting){
-            mIsResetting = true;
+        if(!mIsInAnim){
+            mIsInAnim = true;
             ObjectAnimator returnAnim = ObjectAnimator.ofFloat(mTargetViewGroup, "translationY",
                     mTargetViewGroup.getTranslationY(), 0.0f);
             returnAnim.setDuration(500L);
@@ -153,25 +150,61 @@ public class UnlockBar extends LinearLayout {
             returnAnim.addListener(new Animator.AnimatorListener() {
                 @Override
                 public void onAnimationStart(Animator animation) {
-                    mIsResetting = true;
+                    mIsInAnim = true;
                 }
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
-                    mIsResetting = false;
+                    mIsInAnim = false;
                 }
 
                 @Override
                 public void onAnimationCancel(Animator animation) {
-                    mIsResetting = false;
+                    mIsInAnim = false;
                 }
 
                 @Override
                 public void onAnimationRepeat(Animator animation) {
-                    mIsResetting = true;
+                    mIsInAnim = true;
                 }
             });
             returnAnim.start();
+        }
+    }
+
+    private void flyAway(){
+        if(!mIsInAnim){
+            mIsInAnim = true;
+            ObjectAnimator flyAnim = ObjectAnimator.ofFloat(mTargetViewGroup, "translationY",
+                    mTargetViewGroup.getTranslationY(), -mTargetViewGroup.getHeight());
+            flyAnim.setDuration(500L);
+            flyAnim.setInterpolator(new OvershootInterpolator());
+            flyAnim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mIsInAnim = true;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mIsInAnim = false;
+                    Toast.makeText(getContext(), "onUnlockConditionFulfilled", Toast.LENGTH_SHORT).show();
+                    if(null != mUnlockListener){
+                        mUnlockListener.onUnlockConditionFulfilled();
+                    }
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    mIsInAnim = false;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                    mIsInAnim = true;
+                }
+            });
+            flyAnim.start();
         }
     }
 }
