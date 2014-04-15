@@ -13,7 +13,7 @@
         android:background="@color/clock_textv_color"/>
 
     <ImageView
-        android:id="@+id/main_unlock_iv"
+        android:id="@+id/iv_unlock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

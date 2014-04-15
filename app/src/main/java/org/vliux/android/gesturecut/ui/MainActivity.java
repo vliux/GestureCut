@@ -18,43 +18,47 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GestureList;
+import org.vliux.android.gesturecut.ui.view.UnlockBar;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
  * Created by vliux on 4/3/14.
  */
 public class MainActivity extends BaseActivity implements View.OnClickListener{
+    private ViewGroup mOutmostLayout;
     private GestureOverlayView mGesutreOverLayView;
     private GestureList mGesutreListLayout;
     private ImageView mIvSettings; //outmost settings btn
-    private ImageView mIvUnlock; //unlock imageview at bottom
+    private UnlockBar mUnlockBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setKeyGuardFlags();
         setContentView(R.layout.activity_main);
+        mOutmostLayout = (ViewGroup)findViewById(R.id.main_outmost_layout);
         mGesutreOverLayView = (GestureOverlayView)findViewById(R.id.main_gesture_overlay);
         mGesutreListLayout = (GestureList)findViewById(R.id.main_gesture_list_layout);
         mIvSettings = (ImageView)findViewById(R.id.main_settings_outmost);
-        mIvUnlock = (ImageView)findViewById(R.id.main_unlock_iv);
+        mUnlockBar = (UnlockBar)findViewById(R.id.main_unlock_bar);
 
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
         mIvSettings.setOnClickListener(this);
+        mUnlockBar.setTargetViewGroup(mOutmostLayout);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mGesutreListLayout.setAutoRefresh(true);
-        playUnlockAnim(true);
+        mUnlockBar.setAnimationEffects(true);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mGesutreListLayout.setAutoRefresh(false);
-        playUnlockAnim(false);
+        mUnlockBar.setAnimationEffects(false);
     }
 
     @Override
@@ -99,13 +103,4 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     };
-
-    private void playUnlockAnim(boolean play){
-        AnimationDrawable animationDrawable = (AnimationDrawable)mIvUnlock.getDrawable();
-        if(play){
-            animationDrawable.start();
-        }else{
-            animationDrawable.stop();
-        }
-    }
 }
