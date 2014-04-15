@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.AppLog;
 
@@ -125,7 +126,7 @@ public class UnlockBar extends LinearLayout {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             AppLog.logd(TAG, "onFling(): velocityY = " + velocityY);
-            if(velocityY < -5){
+            if(velocityY < AppConstant.LockScreen.MIN_UNLOCK_FLOING_VELOCITY){
                 Toast.makeText(getContext(), "onUnlockConditionFulfilled", Toast.LENGTH_SHORT).show();
                 if(null != mUnlockListener){
                     mUnlockListener.onUnlockConditionFulfilled();
