@@ -45,6 +45,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
         mIvSettings.setOnClickListener(this);
         mUnlockBar.setTargetViewGroup(mOutmostLayout);
+        mUnlockBar.setOnUnlockListener(new UnlockBar.OnUnlockListener() {
+            @Override
+            public void onUnlockConditionFulfilled() {
+                finish();
+            }
+        });
     }
 
     @Override
