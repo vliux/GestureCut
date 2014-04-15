@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.ui.view;
 
+import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
@@ -72,6 +73,13 @@ public class UnlockBar extends LinearLayout {
         //return super.onTouchEvent(event);
         mGestureDetector.onTouchEvent(event);
         super.onTouchEvent(event);
+        switch (event.getAction()){
+            case MotionEvent.ACTION_UP:
+                if(!mIsResetting){
+                    reset();
+                }
+                break;
+        }
         return true;
     }
 
@@ -112,7 +120,6 @@ public class UnlockBar extends LinearLayout {
 
         @Override
         public void onLongPress(MotionEvent e) {
-
         }
 
         @Override
@@ -134,11 +141,36 @@ public class UnlockBar extends LinearLayout {
         public void onUnlockConditionFulfilled();
     }
 
+    private boolean mIsResetting = false;
     private void reset(){
-        ObjectAnimator returnAnim = ObjectAnimator.ofFloat(mTargetViewGroup, "translationY",
-                mTargetViewGroup.getTranslationY(), 0.0f);
-        returnAnim.setDuration(500L);
-        returnAnim.setInterpolator(new OvershootInterpolator());
-        returnAnim.start();
+        if(!mIsResetting){
+            mIsResetting = true;
+            ObjectAnimator returnAnim = ObjectAnimator.ofFloat(mTargetViewGroup, "translationY",
+                    mTargetViewGroup.getTranslationY(), 0.0f);
+            returnAnim.setDuration(500L);
+            returnAnim.setInterpolator(new OvershootInterpolator());
+            returnAnim.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mIsResetting = true;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mIsResetting = false;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    mIsResetting = false;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                    mIsResetting = true;
+                }
+            });
+            returnAnim.start();
+        }
     }
 }
