@@ -6,6 +6,8 @@ import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
 import android.gesture.Prediction;
 
+import org.vliux.android.gesturecut.AppConstant;
+
 import java.util.List;
 import java.util.Set;
 
@@ -55,7 +57,7 @@ public class GestureUtil {
             List<Prediction> predictionList = mGestureLibrary.recognize(gesture);
             if(null != predictionList && predictionList.size() > 0){
                 for(Prediction prediction : predictionList){
-                    if(prediction.score > 1.0){
+                    if(prediction.score > AppConstant.Gestures.MIN_GESTURE_MATCH_SCORE){
                         return prediction.name;
                     }
                 }

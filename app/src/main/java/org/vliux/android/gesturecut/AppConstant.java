@@ -5,9 +5,8 @@ package org.vliux.android.gesturecut;
  */
 public class AppConstant {
 
-    public static class FloatWindowDimen{
-        public static final int WIDTH = 300;
-        public static final int HEIGH = 200;
+    public static class Gestures{
+        public static final double MIN_GESTURE_MATCH_SCORE = 1.0;
     }
 
     public static class DbTables{
