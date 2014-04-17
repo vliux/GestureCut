@@ -1,17 +1,17 @@
 package org.vliux.android.gesturecut.ui;
 
-import android.content.ComponentName;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
-import android.graphics.Color;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
@@ -19,7 +19,10 @@ import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GestureList;
 import org.vliux.android.gesturecut.ui.view.UnlockBar;
-import org.vliux.android.gesturecut.util.WindowManagerUtil;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * Created by vliux on 4/3/14.
@@ -30,6 +33,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     private GestureList mGesutreListLayout;
     private ImageView mIvSettings; //outmost settings btn
     private UnlockBar mUnlockBar;
+    private TextView mTvTime;
+    private TextView mTvDate;
+    private TimeChangeReceiver mTimeChangeReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +47,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mGesutreListLayout = (GestureList)findViewById(R.id.main_gesture_list_layout);
         mIvSettings = (ImageView)findViewById(R.id.main_settings_outmost);
         mUnlockBar = (UnlockBar)findViewById(R.id.main_unlock_bar);
+        mTvTime = (TextView)findViewById(R.id.main_tv_time);
+        mTvDate = (TextView)findViewById(R.id.main_tv_date);
 
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
         mIvSettings.setOnClickListener(this);
@@ -51,6 +59,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                 finish();
             }
         });
+
+        mTimeChangeReceiver = new TimeChangeReceiver();
     }
 
     @Override
@@ -58,6 +68,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         super.onResume();
         mGesutreListLayout.setAutoRefresh(true);
         mUnlockBar.setAnimationEffects(true);
+        mTimeChangeReceiver.register();
     }
 
     @Override
@@ -65,6 +76,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         super.onPause();
         mGesutreListLayout.setAutoRefresh(false);
         mUnlockBar.setAnimationEffects(false);
+        mTimeChangeReceiver.unregister();
     }
 
     @Override
@@ -109,4 +121,32 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
             }
         }
     };
+
+    private class TimeChangeReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context paramContext, Intent paramIntent) {
+            refreshTimeTextView();
+        }
+
+        public void register() {
+            refreshTimeTextView();
+            IntentFilter localIntentFilter = new IntentFilter();
+            localIntentFilter.addAction("android.intent.action.TIME_SET");
+            localIntentFilter.addAction("android.intent.action.TIME_TICK");
+
+            MainActivity.this.registerReceiver(this, localIntentFilter);
+
+        }
+
+        public void unregister() {
+            MainActivity.this.unregisterReceiver(this);
+        }
+
+        private void refreshTimeTextView(){
+            Date date = new Date();
+            mTvTime.setText(new SimpleDateFormat("HH:mm", Locale.CHINA).format(date));
+            mTvDate.setText(new SimpleDateFormat("yyyy-MM-dd | EEEE", Locale.CHINA).format(date));
+        }
+
+    }
 }

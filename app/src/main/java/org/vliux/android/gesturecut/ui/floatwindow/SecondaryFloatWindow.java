@@ -5,12 +5,14 @@ import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
+import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
@@ -23,8 +25,8 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  * Created by vliux on 4/9/14.
  */
 public class SecondaryFloatWindow extends LinearLayout implements View.OnClickListener {
-    private Button mRecordBtn;
     private GestureOverlayView mGestureOverlayView;
+    private Switch mSwitch;
 
     public SecondaryFloatWindow(Context context) {
         super(context);
@@ -43,7 +45,6 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_2nd_floatwindow, this, true);
-        //mRecordBtn = (Button)findViewById(R.id.btn_record);
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
 
         //mRecordBtn.setOnClickListener(this);

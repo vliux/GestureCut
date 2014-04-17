@@ -14,8 +14,6 @@
 
     <string name="gesture_list_title">Your gestures</string>
 
-    <string name="switch_text_off">Record</string>
-    <string name="switch_text_on">Use</string>
-    <string name="switch_title">Record or use gestures?</string>
-
+    <string name="float_window_2nd_tab_add">Add gesture</string>
+    <string name="float_window_2nd_tab_use">Use gestures</string>
 </resources>
