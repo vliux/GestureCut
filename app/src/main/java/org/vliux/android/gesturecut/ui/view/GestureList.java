@@ -7,9 +7,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -30,6 +33,7 @@ import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.GestureUtil;
@@ -156,7 +160,10 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             }
 
             ConcurrentControl.submitTask(
-                    new LoadGestureDataRunnable(mHandler, mGestureNames.get(position), viewHolder));
+                    new LoadGestureDataRunnable(mHandler,
+                            mGestureNames.get(position),
+                            viewHolder,
+                            getContext().getPackageManager()));
             return convertView;
         }
     };
@@ -174,7 +181,9 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         private int iconWidth;
         private int iconHeight;
 
-        public LoadGestureDataRunnable(Handler handler, String gesName, GestureListViewHolder vh){
+        public LoadGestureDataRunnable(Handler handler, String gesName,
+                                       GestureListViewHolder vh,
+                                       PackageManager pm){
             notifyHandler = handler;
             gestureName = gesName;
             viewHolder = vh;
@@ -193,21 +202,29 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
                 }
                 String componentStr = null;
-                Bitmap packageIcon = null;
+                Drawable packageIcon = null;
                 switch (dbData.resolvedComponent.getType()){
                     case COMPONENT_NAME:
-                        componentStr = dbData.resolvedComponent.getComponentName().getPackageName();
+                        StringBuilder sb =
+                                new StringBuilder(TaskManager.getDescription(getContext(), dbData.resolvedComponent.getComponentName()));
+                        sb.append("(");
+                        sb.append(dbData.resolvedComponent.getComponentName().getClassName());
+                        sb.append(")");
+                        componentStr = sb.toString();
+                        packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent.getComponentName());
                         break;
                     case PACKAGE_NAME:
-                        componentStr = dbData.resolvedComponent.getPackageName();
+                        componentStr = TaskManager.getDescription(getContext(), dbData.resolvedComponent.getPackageName());
+                        packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent.getPackageName());
+                        break;
                 }
-                
 
                 if(null != bmp || null != componentStr){
                     NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
                     notifyHandlerData.viewHolder = viewHolder;
                     notifyHandlerData.bitmap = bmp;
                     notifyHandlerData.componentStr = componentStr;
+                    notifyHandlerData.packageIcon = packageIcon;
                     Message message = notifyHandler.obtainMessage(WHAT_GESTURE_ICON_LOADED, notifyHandlerData);
                     mHandler.sendMessage(message);
                 }
@@ -219,7 +236,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         public GestureListViewHolder viewHolder;
         public Bitmap bitmap;
         public String componentStr;
-        public Bitmap packageIcon;
+        public Drawable packageIcon;
     }
 
     public static final int WHAT_GESTURE_ICON_LOADED = 100;
@@ -232,6 +249,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     NotifyHandlerData notifyHandlerData = (NotifyHandlerData)msg.obj;
                     notifyHandlerData.viewHolder.gestureIcon.setImageBitmap(notifyHandlerData.bitmap);
                     notifyHandlerData.viewHolder.textView.setText(notifyHandlerData.componentStr);
+                    notifyHandlerData.viewHolder.appIcon.setImageDrawable(notifyHandlerData.packageIcon);
                     break;
             }
         }

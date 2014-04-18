@@ -4,7 +4,9 @@ import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.GestureCutApplication;
@@ -73,4 +75,50 @@ public class TaskManager {
         return false;
     }
 
+    public static String getDescription(Context context, String packageName){
+        PackageManager packageManager = context.getPackageManager();
+        if(null != packageManager){
+            try {
+                ApplicationInfo applicationInfo =
+                        packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                if(null != applicationInfo){
+                    CharSequence charSequence = packageManager.getApplicationLabel(applicationInfo);
+                    if(null != charSequence){
+                        return charSequence.toString();
+                    }
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static String getDescription(Context context, ComponentName componentName){
+        return getDescription(context, componentName.getPackageName());
+    }
+
+    public static Drawable getIcon(Context context, String packageName){
+        PackageManager packageManager = context.getPackageManager();
+        if(null != packageManager){
+            try {
+                return packageManager.getApplicationIcon(packageName);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
+    public static Drawable getIcon(Context context, ComponentName componentName){
+        PackageManager packageManager = context.getPackageManager();
+        if (packageManager != null) {
+            try {
+                return packageManager.getActivityIcon(componentName);
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
 }

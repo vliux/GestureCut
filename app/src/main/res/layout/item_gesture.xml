@@ -32,7 +32,8 @@
         android:id="@+id/item_gesture_tv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center"
+        android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
+        android:gravity="left|center_vertical"
         style="@style/text_basic_style"
         android:textSize="@dimen/text_size_general"/>
 </LinearLayout>
