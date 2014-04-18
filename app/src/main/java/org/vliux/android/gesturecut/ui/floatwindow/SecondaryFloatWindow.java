@@ -32,6 +32,7 @@ public class SecondaryFloatWindow extends LinearLayout
     private GestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
+    private FwDialogView mFwDialog;
 
     public SecondaryFloatWindow(Context context) {
         super(context);
@@ -53,6 +54,7 @@ public class SecondaryFloatWindow extends LinearLayout
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
+        mFwDialog = (FwDialogView)findViewById(R.id.gesture_fwdialog);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
@@ -67,21 +69,34 @@ public class SecondaryFloatWindow extends LinearLayout
 
     private GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
-        public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-            ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
+        public void onGesturePerformed(GestureOverlayView overlay, final Gesture gesture) {
+            final ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
             if(null != resolvedComponent){
-                Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-                try {
-                    GesturePersistence.saveGesture(getContext(), gesture, resolvedComponent);
-                } catch (GesturePersistence.GestureLibraryException e) {
-                    e.printStackTrace();
-                } catch (GesturePersistence.GestureSaveIconException e) {
-                    e.printStackTrace();
-                } catch (GesturePersistence.GestureDbException e) {
-                    e.printStackTrace();
-                }
+                //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
+                mFwDialog.show("Add new gesture",
+                        "Are you sure to add this new gesture into your gesture store?",
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try {
+                                    GesturePersistence.saveGesture(getContext(), gesture, resolvedComponent);
+                                    WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
+                                } catch (GesturePersistence.GestureLibraryException e) {
+                                    e.printStackTrace();
+                                } catch (GesturePersistence.GestureSaveIconException e) {
+                                    e.printStackTrace();
+                                } catch (GesturePersistence.GestureDbException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mFwDialog.hide();
+                            }
+                        });
             }
-            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
         }
     };
 

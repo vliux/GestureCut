@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fw2_layer2"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/transparent_black">
+    <!-- dialog box -->
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/dialog_white_bg">
+        <!-- dialog title -->
+        <TextView
+            android:id="@+id/fw2_layer2_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/gesture_list_outter_margin"
+            android:layout_marginBottom="@dimen/gesture_list_outter_margin"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_small_title"
+            android:text="Are you sure?"
+            android:textColor="@color/gesture_cur_blue" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:background="@color/gesture_cur_blue" />
+        <!-- dialog content -->
+        <TextView
+            android:id="@+id/fw2_layer2_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:textSize="@dimen/text_size_small_title"
+            android:text="Add the new gesture into your gesture store?"
+            android:textColor="@color/gesture_cur_blue" />
+
+        <!-- button save -->
+        <Button
+            android:id="@+id/fw2_layer2_btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:text="@string/save"
+            android:textColor="@color/global_bkground"
+            android:background="@color/gesture_cur_blue" />
+        <!-- button cancel -->
+        <Button
+            android:id="@+id/fw2_layer2_btn_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:text="@string/cancel"
+            android:textColor="@color/gesture_cur_blue"
+            android:background="@color/global_bkground" />
+    </LinearLayout>
+</FrameLayout>
