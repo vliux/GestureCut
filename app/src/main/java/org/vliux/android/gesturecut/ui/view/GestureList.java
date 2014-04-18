@@ -193,13 +193,15 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
                 }
                 String componentStr = null;
+                Bitmap packageIcon = null;
                 switch (dbData.resolvedComponent.getType()){
                     case COMPONENT_NAME:
-                        componentStr = dbData.resolvedComponent.getComponentName().flattenToShortString();
+                        componentStr = dbData.resolvedComponent.getComponentName().getPackageName();
                         break;
                     case PACKAGE_NAME:
                         componentStr = dbData.resolvedComponent.getPackageName();
                 }
+                
 
                 if(null != bmp || null != componentStr){
                     NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
@@ -217,6 +219,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         public GestureListViewHolder viewHolder;
         public Bitmap bitmap;
         public String componentStr;
+        public Bitmap packageIcon;
     }
 
     public static final int WHAT_GESTURE_ICON_LOADED = 100;

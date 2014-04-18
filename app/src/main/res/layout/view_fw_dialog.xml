@@ -8,7 +8,7 @@
     <!-- dialog box -->
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/dialog_white_bg">
@@ -36,7 +36,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gesture_list_outter_margin"
-            android:textSize="@dimen/text_size_small_title"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_general"
             android:text="Add the new gesture into your gesture store?"
             android:textColor="@color/gesture_cur_blue" />
 
@@ -48,15 +49,19 @@
             android:layout_margin="@dimen/gesture_list_outter_margin"
             android:text="@string/save"
             android:textColor="@color/global_bkground"
-            android:background="@color/gesture_cur_blue" />
+            android:textSize="@dimen/text_size_general"
+            android:background="@drawable/btn_bg_ok" />
         <!-- button cancel -->
         <Button
             android:id="@+id/fw2_layer2_btn_cancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:layout_marginBottom="@dimen/gesture_list_outter_margin"
+            android:layout_marginLeft="@dimen/gesture_list_outter_margin"
+            android:layout_marginRight="@dimen/gesture_list_outter_margin"
             android:text="@string/cancel"
-            android:textColor="@color/gesture_cur_blue"
-            android:background="@color/global_bkground" />
+            android:textColor="@color/global_bkground"
+            android:textSize="@dimen/text_size_general"
+            android:background="@drawable/btn_bg_cancel" />
     </LinearLayout>
 </FrameLayout>
