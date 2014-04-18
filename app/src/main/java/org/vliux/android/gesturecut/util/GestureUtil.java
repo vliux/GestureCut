@@ -52,13 +52,13 @@ public class GestureUtil {
      * @param gesture
      * @return The gesture name previously saved in GestureLibrary; NULL if not found.
      */
-    public String matchGesture(Gesture gesture){
+    public Prediction matchGesture(Gesture gesture){
         if(null != gesture){
             List<Prediction> predictionList = mGestureLibrary.recognize(gesture);
             if(null != predictionList && predictionList.size() > 0){
                 for(Prediction prediction : predictionList){
                     if(prediction.score > AppConstant.Gestures.MIN_GESTURE_MATCH_SCORE){
-                        return prediction.name;
+                        return prediction;
                     }
                 }
             }

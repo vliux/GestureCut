@@ -5,6 +5,7 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.content.Context;
 import android.gesture.Gesture;
+import android.gesture.Prediction;
 import android.graphics.Bitmap;
 import android.widget.Toast;
 
@@ -61,11 +62,16 @@ public class GesturePersistence {
     }
 
     public static ResolvedComponent loadGesture(Context context, Gesture gesture){
-        String gestureName = GestureUtil.getInstance().matchGesture(gesture);
-        if(null == gestureName || gestureName.length() <= 0){
+        Prediction prediction = GestureUtil.getInstance().matchGesture(gesture);
+        if(null == prediction){
             return null;
         }
 
+        String gestureName = prediction.name;
+        if(null == gestureName || gestureName.length() <= 0){
+            return null;
+        }
+        Toast.makeText(context, "prediction.score=" + prediction.score, Toast.LENGTH_SHORT).show();
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
         return gestureDbTable.getGesture(gestureName).resolvedComponent;
     }
