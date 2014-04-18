@@ -70,35 +70,57 @@ public class SecondaryFloatWindow extends LinearLayout
     private GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, final Gesture gesture) {
-            final ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
-            if(null != resolvedComponent){
-                //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-                mFwDialog.show("Add new gesture",
-                        "Are you sure to add this new gesture into your gesture store?",
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                try {
-                                    GesturePersistence.saveGesture(getContext(), gesture, resolvedComponent);
-                                    WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
-                                } catch (GesturePersistence.GestureLibraryException e) {
-                                    e.printStackTrace();
-                                } catch (GesturePersistence.GestureSaveIconException e) {
-                                    e.printStackTrace();
-                                } catch (GesturePersistence.GestureDbException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        },
-                        new OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mFwDialog.hide();
-                            }
-                        });
+            switch (mTabLikeView.getType()){
+                case ADD:
+                    addGesture(gesture);
+                    break;
+                case USE:
+                    useGesture(gesture);
+                    break;
             }
         }
     };
+
+    private void useGesture(Gesture gesture){
+        ResolvedComponent resolvedComponent = GesturePersistence.loadGesture(getContext(), gesture);
+        if(null != resolvedComponent){
+            Toast.makeText(getContext(),
+                    getContext().getString(R.string.start_activity_from_gesture),
+                    Toast.LENGTH_SHORT).show();
+            resolvedComponent.startActivity(getContext());
+            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
+        }
+    }
+
+    private void addGesture(final Gesture gesture){
+        final ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
+        if(null != resolvedComponent){
+            //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
+            mFwDialog.show("Add new gesture",
+                    "Are you sure to add this new gesture into your gesture store?",
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            try {
+                                GesturePersistence.saveGesture(getContext(), gesture, resolvedComponent);
+                                WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
+                            } catch (GesturePersistence.GestureLibraryException e) {
+                                e.printStackTrace();
+                            } catch (GesturePersistence.GestureSaveIconException e) {
+                                e.printStackTrace();
+                            } catch (GesturePersistence.GestureDbException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    },
+                    new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mFwDialog.hide();
+                        }
+                    });
+        }
+    }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
