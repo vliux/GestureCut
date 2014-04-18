@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gesture_cur_blue">
+    android:background="@color/global_bkground">
+
+    <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
+        android:id="@+id/gesture_tablike"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/switch_layout_height">
+    </org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
 
     <android.gesture.GestureOverlayView
         android:id="@+id/gesture_overlay"
@@ -12,11 +19,11 @@
         android:layout_margin="@dimen/gesture_overlay_margin"
         android:background="@android:color/white">
         <TextView
+            android:id="@+id/gesture_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="@string/gesture_bg_title_record"
             android:textSize="@dimen/text_size_large_title"
             android:textColor="@color/gesture_cur_blue"/>
     </android.gesture.GestureOverlayView>

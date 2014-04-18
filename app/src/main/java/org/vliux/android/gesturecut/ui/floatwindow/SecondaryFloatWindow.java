@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
@@ -24,9 +25,13 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
 /**
  * Created by vliux on 4/9/14.
  */
-public class SecondaryFloatWindow extends LinearLayout implements View.OnClickListener {
+public class SecondaryFloatWindow extends LinearLayout
+        implements View.OnClickListener,
+        TabLikeView.OnTablikeChangedListener {
+
     private GestureOverlayView mGestureOverlayView;
-    private Switch mSwitch;
+    private TabLikeView mTabLikeView;
+    private TextView mTvHint;
 
     public SecondaryFloatWindow(Context context) {
         super(context);
@@ -46,10 +51,13 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_2nd_floatwindow, this, true);
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
+        mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
+        mTvHint = (TextView)findViewById(R.id.gesture_hint);
 
-        //mRecordBtn.setOnClickListener(this);
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
+        mTabLikeView.setOnTabChangedListener(this);
+        refreshHint(mTabLikeView.getType());
     }
 
     public void onClick(View view){
@@ -84,6 +92,22 @@ public class SecondaryFloatWindow extends LinearLayout implements View.OnClickLi
             return true;
         }else{
             return super.dispatchKeyEvent(event);
+        }
+    }
+
+    @Override
+    public void onTabSwitched(TabLikeView.TabType newType) {
+        refreshHint(newType);
+    }
+
+    private void refreshHint(TabLikeView.TabType tabType){
+        switch (tabType){
+            case ADD:
+                mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
+                break;
+            case USE:
+                mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
+                break;
         }
     }
 }

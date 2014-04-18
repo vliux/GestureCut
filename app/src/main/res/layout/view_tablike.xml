@@ -4,10 +4,56 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <TextView
+
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
         android:layout_weight="1"
-        android:text="@string/float_window_2nd_tab_use"
-        android:textSize="@dimen/text_size_small_title"/>
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tablike_tv_use"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/float_window_2nd_tab_use"
+            android:textSize="@dimen/text_size_small_title"
+            android:textStyle="bold"/>
+        <View
+            android:id="@+id/tablike_underscore_use"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gesture_cur_blue"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@color/gesture_cur_blue"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tablike_tv_add"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/float_window_2nd_tab_add"
+            android:textSize="@dimen/text_size_small_title"/>
+        <View
+            android:id="@+id/tablike_underscore_add"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gesture_cur_blue"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+
+
 </LinearLayout>
