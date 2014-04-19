@@ -20,7 +20,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/gesture_overlay_margin"
-            android:background="@android:color/white">
+            android:background="@android:color/white"
+            style="@style/gesture_overlay_use">
 
             <TextView
                 android:id="@+id/gesture_hint"

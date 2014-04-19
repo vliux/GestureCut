@@ -4,6 +4,9 @@ import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
@@ -30,6 +33,7 @@ public class UnlockBar extends LinearLayout {
     private ImageView mIvUnlock;
     private OnUnlockListener mUnlockListener;
     private float mInitY = -1;
+    private Drawable mOrgBkDrawable;
 
     public UnlockBar(Context context) {
         super(context);
@@ -69,16 +73,37 @@ public class UnlockBar extends LinearLayout {
         }
     }
 
+    private void changeBkColor(boolean onPress){
+        if(onPress){
+            if(null == mOrgBkDrawable){
+                mOrgBkDrawable = getBackground();
+            }
+            setBackgroundDrawable(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
+                    new int[]{getContext().getResources().getColor(R.color.gesture_cur_blue),
+                            getContext().getResources().getColor(R.color.gesture_cur_blue_bright)}));
+
+        }else {
+            setBackgroundDrawable(mOrgBkDrawable);
+        }
+    }
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         //return super.onTouchEvent(event);
         mGestureDetector.onTouchEvent(event);
         super.onTouchEvent(event);
         switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                changeBkColor(true);
+                break;
             case MotionEvent.ACTION_UP:
+                changeBkColor(false);
                 if(!mIsInAnim){
                     reset();
                 }
+                break;
+            case MotionEvent.ACTION_CANCEL:
+                changeBkColor(false);
                 break;
         }
         return true;

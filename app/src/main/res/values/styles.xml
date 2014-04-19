@@ -8,4 +8,16 @@
     <style name="text_basic_style">
         <item name="android:textColor">@color/gesture_cur_blue</item>
     </style>
+
+    <style name="gesture_overlay">
+        <item name="android:gestureStrokeWidth">24.0</item>
+    </style>
+
+    <style name="gesture_overlay_use" parent="gesture_overlay">
+        <item name="android:gestureColor">#FFEE3366</item>
+    </style>
+
+    <style name="gesture_overlay_add" parent="gesture_overlay">
+        <item name="android:gestureColor">#FF3344FF</item>
+    </style>
 </resources>

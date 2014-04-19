@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="@dimen/gesture_overlay_margin"
-        android:gestureColor="@android:color/holo_red_light">
+        style="@style/gesture_overlay_use">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,15 +55,15 @@
         android:layout_marginLeft="@dimen/settings_outmost_margin"
         android:src="@drawable/ic_info_white"/>
 
-    <org.vliux.android.gesturecut.ui.view.GestureList
-        android:id="@+id/main_gesture_list_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></org.vliux.android.gesturecut.ui.view.GestureList>
-
     <org.vliux.android.gesturecut.ui.view.UnlockBar
         android:id="@+id/main_unlock_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom">
     </org.vliux.android.gesturecut.ui.view.UnlockBar>
+
+    <org.vliux.android.gesturecut.ui.view.GestureList
+        android:id="@+id/main_gesture_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></org.vliux.android.gesturecut.ui.view.GestureList>
 </FrameLayout>

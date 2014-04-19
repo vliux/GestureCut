@@ -29,8 +29,9 @@
     <dimen name="text_size_clock">80dp</dimen>
 
     <!-- UnlockBar -->
-    <dimen name="unlock_bar_margin_vertical">16dp</dimen>
+    <dimen name="unlock_bar_margin_vertical">20dp</dimen>
 
     <!-- 2nd float window -->
     <dimen name="switch_layout_height">45dp</dimen>
+
 </resources>
