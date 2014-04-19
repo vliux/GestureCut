@@ -5,12 +5,14 @@ import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -33,6 +35,7 @@ public class SecondaryFloatWindow extends LinearLayout
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
     private FwDialogView mFwDialog;
+    private ImageView mIvAppIcon; // show top app icon if we are recording gesture
 
     public SecondaryFloatWindow(Context context) {
         super(context);
@@ -55,6 +58,7 @@ public class SecondaryFloatWindow extends LinearLayout
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
         mFwDialog = (FwDialogView)findViewById(R.id.gesture_fwdialog);
+        mIvAppIcon = (ImageView)findViewById(R.id.gesture_app_icon);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
@@ -146,9 +150,24 @@ public class SecondaryFloatWindow extends LinearLayout
         switch (tabType){
             case ADD:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
+                ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
+                Drawable appIcon = null;
+                switch (resolvedComponent.getType()){
+                    case COMPONENT_NAME:
+                        appIcon = TaskManager.getIcon(getContext(), resolvedComponent.getComponentName());
+                        break;
+                    case PACKAGE_NAME:
+                        appIcon = TaskManager.getIcon(getContext(), resolvedComponent.getPackageName());
+                        break;
+                }
+                if(null != appIcon){
+                    mIvAppIcon.setImageDrawable(appIcon);
+                    mIvAppIcon.setVisibility(VISIBLE);
+                }
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
+                mIvAppIcon.setVisibility(GONE);
                 break;
         }
     }
