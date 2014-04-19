@@ -207,9 +207,12 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     case COMPONENT_NAME:
                         StringBuilder sb =
                                 new StringBuilder(TaskManager.getDescription(getContext(), dbData.resolvedComponent.getComponentName()));
-                        sb.append("(");
-                        sb.append(dbData.resolvedComponent.getComponentName().getClassName());
-                        sb.append(")");
+                        String[] clzSects = dbData.resolvedComponent.getComponentName().getClassName().split("\\.");
+                        if(null != clzSects && clzSects.length > 0){
+                            sb.append(" (");
+                            sb.append(clzSects[clzSects.length - 1]);
+                            sb.append(")");
+                        }
                         componentStr = sb.toString();
                         packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent.getComponentName());
                         break;
