@@ -4,6 +4,7 @@ import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureLibraries;
 import android.gesture.GestureLibrary;
+import android.gesture.GestureStore;
 import android.gesture.Prediction;
 
 import org.vliux.android.gesturecut.AppConstant;
@@ -28,6 +29,7 @@ public class GestureUtil {
 
     private GestureUtil(Context context){
         mGestureLibrary = GestureLibraries.fromPrivateFile(context, "gesture_store");
+        mGestureLibrary.setOrientationStyle(GestureStore.ORIENTATION_SENSITIVE);
         mGestureLibrary.load();
     }
 
