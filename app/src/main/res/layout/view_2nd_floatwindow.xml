@@ -66,4 +66,12 @@
         android:layout_height="match_parent"
         android:visibility="gone">
     </org.vliux.android.gesturecut.ui.floatwindow.FwDialogView>
+
+    <!-- ImageView for animator when starting activty of defined gestures -->
+    <ImageView
+        android:id="@+id/gesture_appicon_startactiv"
+        android:layout_width="@dimen/icon_dimen_global_large"
+        android:layout_height="@dimen/icon_dimen_global_large"
+        android:layout_gravity="bottom|center_horizontal"
+        android:visibility="gone"/>
 </FrameLayout>

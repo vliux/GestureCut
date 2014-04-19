@@ -66,4 +66,12 @@
         android:id="@+id/main_gesture_list_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></org.vliux.android.gesturecut.ui.view.GestureList>
+
+    <!-- ImageView for animator when starting activty of defined gestures -->
+    <ImageView
+        android:id="@+id/main_appicon_startactiv"
+        android:layout_width="@dimen/icon_dimen_global_large"
+        android:layout_height="@dimen/icon_dimen_global_large"
+        android:layout_gravity="bottom|center_horizontal"
+        android:visibility="gone"/>
 </FrameLayout>

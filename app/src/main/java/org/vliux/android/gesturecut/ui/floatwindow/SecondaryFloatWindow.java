@@ -1,27 +1,23 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
-import android.content.ComponentName;
 import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Switch;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
@@ -35,7 +31,8 @@ public class SecondaryFloatWindow extends LinearLayout
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
     private FwDialogView mFwDialog;
-    private ImageView mIvAppIcon; // show top app icon if we are recording gesture
+    private ImageView mIvAppIconAdd; // show top app icon if we are recording gesture
+    private ImageView mIvAppIconUseAnim; // app icon for animator when using gesture
 
     public SecondaryFloatWindow(Context context) {
         super(context);
@@ -58,7 +55,8 @@ public class SecondaryFloatWindow extends LinearLayout
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
         mFwDialog = (FwDialogView)findViewById(R.id.gesture_fwdialog);
-        mIvAppIcon = (ImageView)findViewById(R.id.gesture_app_icon);
+        mIvAppIconAdd = (ImageView)findViewById(R.id.gesture_app_icon);
+        mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
@@ -88,11 +86,15 @@ public class SecondaryFloatWindow extends LinearLayout
     private void useGesture(Gesture gesture){
         ResolvedComponent resolvedComponent = GesturePersistence.loadGesture(getContext(), gesture);
         if(null != resolvedComponent){
-            Toast.makeText(getContext(),
+            /*Toast.makeText(getContext(),
                     getContext().getString(R.string.start_activity_from_gesture),
-                    Toast.LENGTH_SHORT).show();
-            resolvedComponent.startActivity(getContext());
-            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
+                    Toast.LENGTH_SHORT).show();*/
+            AnimUtil.getStartActivityAnimatorSet(getContext(), mIvAppIconUseAnim, resolvedComponent, new Runnable(){
+                @Override
+                public void run() {
+                    WindowManagerUtil.closeWindow(getContext(), SecondaryFloatWindow.this);
+                }
+            }).start();
         }
     }
 
@@ -161,13 +163,13 @@ public class SecondaryFloatWindow extends LinearLayout
                         break;
                 }
                 if(null != appIcon){
-                    mIvAppIcon.setImageDrawable(appIcon);
-                    mIvAppIcon.setVisibility(VISIBLE);
+                    mIvAppIconAdd.setImageDrawable(appIcon);
+                    mIvAppIconAdd.setVisibility(VISIBLE);
                 }
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
-                mIvAppIcon.setVisibility(GONE);
+                mIvAppIconAdd.setVisibility(GONE);
                 break;
         }
     }
