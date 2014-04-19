@@ -80,7 +80,7 @@ public class UnlockBar extends LinearLayout {
             }
             setBackgroundDrawable(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
                     new int[]{getContext().getResources().getColor(R.color.gesture_cur_blue),
-                            getContext().getResources().getColor(R.color.gesture_cur_blue_bright)}));
+                            getContext().getResources().getColor(R.color.gesture_cur_blue_transparent)}));
 
         }else {
             setBackgroundDrawable(mOrgBkDrawable);
