@@ -17,21 +17,28 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/float_window_2nd_tab_use"
-            android:textSize="@dimen/text_size_small_title"
+            android:textColor="@color/gesture_cur_blue"
+            android:textSize="@dimen/text_size_general"
             android:textStyle="bold"/>
         <View
             android:id="@+id/tablike_underscore_use"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/gesture_cur_blue"/>
+        <!-- grey bottom line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gesture_cur_grey"/>
     </LinearLayout>
 
-    <View
+    <!--<View
         android:layout_width="1dp"
         android:layout_height="match_parent"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
-        android:background="@color/gesture_cur_blue"/>
+        android:background="@color/gesture_cur_blue"
+        android:alpha="0.7"/>-->
 
     <LinearLayout
         android:orientation="vertical"
@@ -45,13 +52,19 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/float_window_2nd_tab_add"
-            android:textSize="@dimen/text_size_small_title"/>
+            android:textSize="@dimen/text_size_general"
+            android:textColor="@color/gesture_cur_grey"/>
         <View
             android:id="@+id/tablike_underscore_add"
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="@color/gesture_cur_blue"
             android:visibility="invisible"/>
+        <!-- grey bottom line -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:background="@color/gesture_cur_grey"/>
     </LinearLayout>
 
 

@@ -7,4 +7,5 @@
     <color name="gesture_list_bkground">#FFFAFAF0</color>
     <color name="clock_textv_color">@android:color/white</color>
     <color name="transparent_black">#88000000</color>
+    <color name="gesture_cur_grey">#99888888</color>
 </resources>
