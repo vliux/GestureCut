@@ -124,8 +124,13 @@ public class SecondaryFloatWindow extends LinearLayout
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK){
-            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), this);
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && KeyEvent.ACTION_UP == event.getAction()){
+            if(mFwDialog.isShow()){
+                mFwDialog.hide();
+            }else {
+                WindowManagerUtil.closeWindow(getContext().getApplicationContext(), this);
+            }
             return true;
         }else{
             return super.dispatchKeyEvent(event);

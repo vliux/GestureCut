@@ -47,6 +47,10 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         mBtnCancel.setOnClickListener(this);
     }
 
+    public boolean isShow(){
+        return getVisibility() == VISIBLE;
+    }
+
     public void show(String title, String content, OnClickListener saveClicked, OnClickListener cancelClicked){
         mTvTitle.setText(title);
         mTvContent.setText(content);

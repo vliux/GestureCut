@@ -34,4 +34,6 @@
     <!-- 2nd float window -->
     <dimen name="switch_layout_height">45dp</dimen>
 
+    <!-- action bar -->
+    <dimen name="back_imgv_margin_horiz">10dp</dimen>
 </resources>
