@@ -48,7 +48,6 @@ import java.util.List;
  * Created by vliux on 4/11/14.
  */
 public class GestureList extends LinearLayout implements View.OnClickListener {
-    private ImageView mIvAdd;
     private ImageView mIvSettings;
     private ListView mGestureListView;
     private int mScreenWidth;
@@ -72,11 +71,9 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
-        mIvAdd = (ImageView)findViewById(R.id.gesture_list_add);
         mIvSettings = (ImageView)findViewById(R.id.gesture_list_settings);
         mGestureListView = (ListView)findViewById(R.id.gesture_listview);
 
-        mIvAdd.setOnClickListener(this);
         mIvSettings.setOnClickListener(this);
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
@@ -100,8 +97,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.gesture_list_add:
-                break;
             case R.id.gesture_list_settings:
                 break;
         }

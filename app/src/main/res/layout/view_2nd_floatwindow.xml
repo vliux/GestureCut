@@ -10,17 +10,27 @@
         android:layout_height="match_parent"
         android:background="@color/global_bkground">
 
-        <LinearLayout
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/switch_layout_height"
             android:background="@color/gesture_cur_blue">
-            <ImageView
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/back_imgv_margin_horiz"
-                android:layout_marginRight="@dimen/back_imgv_margin_horiz"
-                android:src="@drawable/ic_back"/>
-        </LinearLayout>
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="@dimen/settings_outmost_margin"
+                android:gravity="center"
+                android:text="@string/app_name"
+                android:textColor="@color/global_bkground"
+                android:textSize="@dimen/text_size_small_title"/>
+            <ImageView
+                android:id="@+id/gesture_more"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/back_imgv_margin_horiz"
+                android:layout_gravity="right|center_vertical"
+                android:src="@drawable/ic_more"/>
+        </FrameLayout>
 
         <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
             android:id="@+id/gesture_tablike"

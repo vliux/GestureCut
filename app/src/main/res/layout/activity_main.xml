@@ -53,7 +53,7 @@
         android:layout_gravity="top|left"
         android:layout_marginTop="@dimen/settings_outmost_margin"
         android:layout_marginLeft="@dimen/settings_outmost_margin"
-        android:src="@drawable/ic_info_white"/>
+        android:src="@drawable/ic_info"/>
 
     <org.vliux.android.gesturecut.ui.view.UnlockBar
         android:id="@+id/main_unlock_bar"
