@@ -23,12 +23,12 @@
         <View
             android:id="@+id/tablike_underscore_use"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="4dp"
             android:background="@color/gesture_cur_blue"/>
         <!-- grey bottom line -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="1dp"
             android:background="@color/gesture_cur_grey"/>
     </LinearLayout>
 
@@ -57,13 +57,13 @@
         <View
             android:id="@+id/tablike_underscore_add"
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="4dp"
             android:background="@color/gesture_cur_blue"
             android:visibility="invisible"/>
         <!-- grey bottom line -->
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
+            android:layout_height="1dp"
             android:background="@color/gesture_cur_grey"/>
     </LinearLayout>
 
