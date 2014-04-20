@@ -39,14 +39,7 @@ public class AnimUtil {
             @Override
             public void onAnimationStart(Animator animation) {
                 if(null != resolvedComponent){
-                    switch (resolvedComponent.getType()){
-                        case COMPONENT_NAME:
-                            targetView.setImageDrawable(TaskManager.getIcon(context, resolvedComponent.getComponentName()));
-                            break;
-                        case PACKAGE_NAME:
-                            targetView.setImageDrawable(TaskManager.getIcon(context, resolvedComponent.getPackageName()));
-                            break;
-                    }
+                    targetView.setImageDrawable(TaskManager.getIcon(context, resolvedComponent));
                 }
                 targetView.setVisibility(View.VISIBLE);
             }

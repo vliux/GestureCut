@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!-- application info shown to use, when adding a new gesture -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/settings_outmost_margin">
+
+    <ImageView
+        android:id="@+id/appinfo_app_icon"
+        android:layout_width="@dimen/icon_dimen_global_large"
+        android:layout_height="@dimen/icon_dimen_global_large"
+        android:layout_marginBottom="@dimen/gesture_list_outter_margin"
+        android:layout_gravity="left|center_vertical" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/appinfo_appname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/text_size_general"
+            android:textColor="@color/gesture_cur_blue"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/appinfo_appdetail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textSize="@dimen/text_size_general"
+            android:textColor="@color/gesture_cur_grey" />
+    </LinearLayout>
+
+</LinearLayout>

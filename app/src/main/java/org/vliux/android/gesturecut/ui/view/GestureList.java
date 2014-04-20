@@ -202,24 +202,10 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
                 }
                 String componentStr = null;
-                Drawable packageIcon = null;
-                switch (dbData.resolvedComponent.getType()){
-                    case COMPONENT_NAME:
-                        StringBuilder sb =
-                                new StringBuilder(TaskManager.getDescription(getContext(), dbData.resolvedComponent.getComponentName()));
-                        String[] clzSects = dbData.resolvedComponent.getComponentName().getClassName().split("\\.");
-                        if(null != clzSects && clzSects.length > 0){
-                            sb.append(" (");
-                            sb.append(clzSects[clzSects.length - 1]);
-                            sb.append(")");
-                        }
-                        componentStr = sb.toString();
-                        packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent.getComponentName());
-                        break;
-                    case PACKAGE_NAME:
-                        componentStr = TaskManager.getDescription(getContext(), dbData.resolvedComponent.getPackageName());
-                        packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent.getPackageName());
-                        break;
+                Drawable packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent);
+                String[] descStrs = TaskManager.getDescription(getContext(), dbData.resolvedComponent);
+                if(null != descStrs && descStrs.length >= 2){
+                    componentStr = descStrs[0];
                 }
 
                 if(null != bmp || null != componentStr){

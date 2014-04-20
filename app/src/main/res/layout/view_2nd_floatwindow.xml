@@ -40,14 +40,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center">
-                <!-- app icon if is recording -->
-                <ImageView
-                    android:id="@+id/gesture_app_icon"
-                    android:layout_width="@dimen/icon_dimen_global_large"
-                    android:layout_height="@dimen/icon_dimen_global_large"
-                    android:layout_marginBottom="@dimen/gesture_list_outter_margin"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
+                <!-- target app info, when adding a new gesture -->
+                <org.vliux.android.gesturecut.ui.view.AppInfoView
+                    android:id="@+id/gesture_appinfoview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:visibility="gone">
+                </org.vliux.android.gesturecut.ui.view.AppInfoView>
+
                 <TextView
                     android:id="@+id/gesture_hint"
                     android:layout_width="match_parent"

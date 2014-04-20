@@ -1,6 +1,7 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
@@ -17,6 +18,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
@@ -31,7 +33,7 @@ public class SecondaryFloatWindow extends LinearLayout
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
     private FwDialogView mFwDialog;
-    private ImageView mIvAppIconAdd; // show top app icon if we are recording gesture
+    private AppInfoView mAppInfoView; // app info shown when adding new gesture
     private ImageView mIvAppIconUseAnim; // app icon for animator when using gesture
 
     public SecondaryFloatWindow(Context context) {
@@ -55,7 +57,7 @@ public class SecondaryFloatWindow extends LinearLayout
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
         mFwDialog = (FwDialogView)findViewById(R.id.gesture_fwdialog);
-        mIvAppIconAdd = (ImageView)findViewById(R.id.gesture_app_icon);
+        mAppInfoView = (AppInfoView)findViewById(R.id.gesture_appinfoview);
         mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
 
         mGestureOverlayView.setGestureColor(Color.RED);
@@ -153,7 +155,7 @@ public class SecondaryFloatWindow extends LinearLayout
             case ADD:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
                 ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
-                Drawable appIcon = null;
+                /*Drawable appIcon = null;
                 switch (resolvedComponent.getType()){
                     case COMPONENT_NAME:
                         appIcon = TaskManager.getIcon(getContext(), resolvedComponent.getComponentName());
@@ -165,11 +167,13 @@ public class SecondaryFloatWindow extends LinearLayout
                 if(null != appIcon){
                     mIvAppIconAdd.setImageDrawable(appIcon);
                     mIvAppIconAdd.setVisibility(VISIBLE);
-                }
+                }*/
+                mAppInfoView.setVisibility(VISIBLE);
+                mAppInfoView.setResolvedComponent(resolvedComponent);
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
-                mIvAppIconAdd.setVisibility(GONE);
+                mAppInfoView.setVisibility(GONE);
                 break;
         }
     }

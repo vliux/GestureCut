@@ -75,7 +75,52 @@ public class TaskManager {
         return false;
     }
 
-    public static String getDescription(Context context, String packageName){
+    /**
+     *
+     * @param context
+     * @param resolvedComponent
+     * @return array of Strings. String[0] is the application label, while String[1] is the detail info.
+     */
+    public static String[] getDescription(Context context, ResolvedComponent resolvedComponent){
+        String[] retValues = new String[2];
+        String packageName = null;
+        switch (resolvedComponent.getType()){
+            case COMPONENT_NAME:
+                packageName = resolvedComponent.getComponentName().getPackageName();
+                retValues[1] = resolvedComponent.getComponentName().getClassName();
+                break;
+            case PACKAGE_NAME:
+                packageName = resolvedComponent.getPackageName();
+                retValues[1] = packageName;
+                break;
+        }
+        if(null == packageName || packageName.length() <= 0){
+            return null;
+        }
+
+        PackageManager packageManager = context.getPackageManager();
+        if(null != packageManager){
+            try {
+                ApplicationInfo applicationInfo =
+                        packageManager.getApplicationInfo(packageName, PackageManager.GET_META_DATA);
+                if(null != applicationInfo){
+                    CharSequence charSequence = packageManager.getApplicationLabel(applicationInfo);
+                    if(null != charSequence){
+                        retValues[0] = charSequence.toString();
+                    }
+                }
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+            }
+        }
+        if(null == retValues[0]){
+            return null;
+        }
+
+        return retValues;
+    }
+
+    /*public static String getDescription(Context context, String packageName){
         PackageManager packageManager = context.getPackageManager();
         if(null != packageManager){
             try {
@@ -96,9 +141,19 @@ public class TaskManager {
 
     public static String getDescription(Context context, ComponentName componentName){
         return getDescription(context, componentName.getPackageName());
+    }*/
+
+    public static Drawable getIcon(Context context, ResolvedComponent resolvedComponent){
+        switch (resolvedComponent.getType()){
+            case COMPONENT_NAME:
+                return getIcon(context, resolvedComponent.getComponentName());
+            case PACKAGE_NAME:
+                return getIcon(context, resolvedComponent.getPackageName());
+        }
+        return null;
     }
 
-    public static Drawable getIcon(Context context, String packageName){
+    private static Drawable getIcon(Context context, String packageName){
         PackageManager packageManager = context.getPackageManager();
         if(null != packageManager){
             try {
@@ -110,7 +165,7 @@ public class TaskManager {
         return null;
     }
 
-    public static Drawable getIcon(Context context, ComponentName componentName){
+    private static Drawable getIcon(Context context, ComponentName componentName){
         PackageManager packageManager = context.getPackageManager();
         if (packageManager != null) {
             try {
