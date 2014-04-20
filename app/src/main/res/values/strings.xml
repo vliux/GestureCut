@@ -22,4 +22,7 @@
 
     <string name="appinfo_app_detail_clz">Class: \u0020</string>
     <string name="appinfo_app_detail_pkg">Package: \u0020</string>
+
+    <string name="add_gesture_confirm_title">Add new gesture</string>
+    <string name="add_gesture_confirm_content">Are you sure to add this new gesture into your gesture store?</string>
 </resources>

@@ -111,8 +111,8 @@ public class SecondaryFloatWindow extends LinearLayout
     private void addGesture(final Gesture gesture){
         if(null != mResolvedComponent){
             //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-            mFwDialog.show("Add new gesture",
-                    "Are you sure to add this new gesture into your gesture store?",
+            mFwDialog.show(getContext().getString(R.string.add_gesture_confirm_title),
+                    getContext().getString(R.string.add_gesture_confirm_content),
                     new OnClickListener() {
                         @Override
                         public void onClick(View v) {

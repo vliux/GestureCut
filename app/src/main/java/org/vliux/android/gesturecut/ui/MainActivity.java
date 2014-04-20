@@ -104,8 +104,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onBackPressed() {
         if(mGesutreListLayout.isShown()){
             mGesutreListLayout.hide();
-        }else {
-            super.onBackPressed();
         }
     }
 
