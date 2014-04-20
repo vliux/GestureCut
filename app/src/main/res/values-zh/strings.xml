@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">快手</string>
+
+    <!-- text in background for recording a new gesture -->
+    <string name="gesture_bg_title_record">记录新的手势</string>
+    <!-- text in background for starting activity from a gesture -->
+    <string name="gesture_bg_title_use">使用已有手势</string>
+
+    <string name="saving_gesture_completed">手势%s已保存</string>
+    <string name="start_activity_from_gesture">通过手势启动任务...</string>
+
+    <string name="gesture_list_title">您的手势</string>
+
+    <string name="float_window_2nd_tab_add">添加手势</string>
+    <string name="float_window_2nd_tab_use">使用手势</string>
+
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+
+    <string name="appinfo_app_detail_clz">类名: \u0020</string>
+    <string name="appinfo_app_detail_pkg">包名: \u0020</string>
+
+    <string name="add_gesture_confirm_title">添加新的手势</string>
+    <string name="add_gesture_confirm_content">确认保存该手势吗?</string>
+</resources>
