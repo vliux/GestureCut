@@ -19,4 +19,7 @@
 
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+
+    <string name="appinfo_app_detail_clz">Class: \u0020</string>
+    <string name="appinfo_app_detail_pkg">Package: \u0020</string>
 </resources>

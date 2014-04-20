@@ -33,8 +33,15 @@ public class SecondaryFloatWindow extends LinearLayout
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
     private FwDialogView mFwDialog;
+
     private AppInfoView mAppInfoView; // app info shown when adding new gesture
+    private LinearLayout mAppInfoLayout; // layout containing AppInfoView
     private ImageView mIvAppIconUseAnim; // app icon for animator when using gesture
+
+    /* ResolvedComponent as a gesture target. This variable is is used for kepping the reference,
+     * as far as, when actually saving the new gesture, the top-level component may be different than what is shown to user.
+     */
+    private ResolvedComponent mResolvedComponent;
 
     public SecondaryFloatWindow(Context context) {
         super(context);
@@ -59,6 +66,7 @@ public class SecondaryFloatWindow extends LinearLayout
         mFwDialog = (FwDialogView)findViewById(R.id.gesture_fwdialog);
         mAppInfoView = (AppInfoView)findViewById(R.id.gesture_appinfoview);
         mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
+        mAppInfoLayout = (LinearLayout)findViewById(R.id.gesture_appinfo_layout);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
@@ -101,8 +109,7 @@ public class SecondaryFloatWindow extends LinearLayout
     }
 
     private void addGesture(final Gesture gesture){
-        final ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
-        if(null != resolvedComponent){
+        if(null != mResolvedComponent){
             //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
             mFwDialog.show("Add new gesture",
                     "Are you sure to add this new gesture into your gesture store?",
@@ -110,7 +117,7 @@ public class SecondaryFloatWindow extends LinearLayout
                         @Override
                         public void onClick(View v) {
                             try {
-                                GesturePersistence.saveGesture(getContext(), gesture, resolvedComponent);
+                                GesturePersistence.saveGesture(getContext(), gesture, mResolvedComponent);
                                 WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
                             } catch (GesturePersistence.GestureLibraryException e) {
                                 e.printStackTrace();
@@ -154,26 +161,13 @@ public class SecondaryFloatWindow extends LinearLayout
         switch (tabType){
             case ADD:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
-                ResolvedComponent resolvedComponent = TaskManager.getTopComponent(getContext());
-                /*Drawable appIcon = null;
-                switch (resolvedComponent.getType()){
-                    case COMPONENT_NAME:
-                        appIcon = TaskManager.getIcon(getContext(), resolvedComponent.getComponentName());
-                        break;
-                    case PACKAGE_NAME:
-                        appIcon = TaskManager.getIcon(getContext(), resolvedComponent.getPackageName());
-                        break;
-                }
-                if(null != appIcon){
-                    mIvAppIconAdd.setImageDrawable(appIcon);
-                    mIvAppIconAdd.setVisibility(VISIBLE);
-                }*/
-                mAppInfoView.setVisibility(VISIBLE);
-                mAppInfoView.setResolvedComponent(resolvedComponent);
+                mResolvedComponent = TaskManager.getTopComponent(getContext());
+                mAppInfoLayout.setVisibility(VISIBLE);
+                mAppInfoView.setResolvedComponent(mResolvedComponent);
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
-                mAppInfoView.setVisibility(GONE);
+                mAppInfoLayout.setVisibility(GONE);
                 break;
         }
     }

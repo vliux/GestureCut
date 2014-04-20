@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.GestureCutApplication;
+import org.vliux.android.gesturecut.R;
 
 import java.util.List;
 
@@ -87,11 +88,11 @@ public class TaskManager {
         switch (resolvedComponent.getType()){
             case COMPONENT_NAME:
                 packageName = resolvedComponent.getComponentName().getPackageName();
-                retValues[1] = resolvedComponent.getComponentName().getClassName();
+                retValues[1] = context.getString(R.string.appinfo_app_detail_clz) + resolvedComponent.getComponentName().getClassName();
                 break;
             case PACKAGE_NAME:
                 packageName = resolvedComponent.getPackageName();
-                retValues[1] = packageName;
+                retValues[1] = context.getString(R.string.appinfo_app_detail_pkg) + packageName;
                 break;
         }
         if(null == packageName || packageName.length() <= 0){

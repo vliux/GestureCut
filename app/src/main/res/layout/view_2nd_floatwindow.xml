@@ -31,32 +31,37 @@
             android:id="@+id/gesture_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_margin="@dimen/gesture_overlay_margin"
             android:background="@android:color/white"
             style="@style/gesture_overlay_use">
 
             <LinearLayout
+                android:id="@+id/gesture_appinfo_layout"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="top"
+                android:visibility="gone">
                 <!-- target app info, when adding a new gesture -->
                 <org.vliux.android.gesturecut.ui.view.AppInfoView
                     android:id="@+id/gesture_appinfoview"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:visibility="gone">
-                </org.vliux.android.gesturecut.ui.view.AppInfoView>
-
-                <TextView
-                    android:id="@+id/gesture_hint"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_size_large_title"
-                    android:textColor="@color/gesture_cur_blue" />
+                    android:background="@color/gesture_cur_blue_light_semi_transparent">
+                 </org.vliux.android.gesturecut.ui.view.AppInfoView>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/gesture_cur_blue"/>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/gesture_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_large_title"
+                android:textColor="@color/gesture_cur_blue" />
         </android.gesture.GestureOverlayView>
     </LinearLayout>
 
