@@ -1,5 +1,8 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
@@ -10,6 +13,7 @@ import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -20,6 +24,7 @@ import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.AnimUtil;
+import org.vliux.android.gesturecut.util.ScreenUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
@@ -162,13 +167,48 @@ public class SecondaryFloatWindow extends LinearLayout
             case ADD:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
                 mResolvedComponent = TaskManager.getTopComponent(getContext());
-                mAppInfoLayout.setVisibility(VISIBLE);
                 mAppInfoView.setResolvedComponent(mResolvedComponent);
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
-                mAppInfoLayout.setVisibility(GONE);
+                //mAppInfoLayout.setVisibility(GONE);
                 break;
         }
+        getAnimatorSetOnSwitchTab(tabType).start();
+    }
+
+    private AnimatorSet getAnimatorSetOnSwitchTab(final TabLikeView.TabType tabType){
+        ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "translationX", ScreenUtil.getScreenSize(getContext())[0], 0.0f);
+        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "alpha", 0.0f, 1.0f);
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(500L);
+        animatorSet.setInterpolator(new OvershootInterpolator());
+        animatorSet.play(translationXAnimator).with(alphaAnimator);
+
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                switch (tabType){
+                    case ADD:
+                        mAppInfoLayout.setVisibility(VISIBLE);
+                        break;
+                    case USE:
+                        mAppInfoLayout.setVisibility(GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        return animatorSet;
     }
 }
