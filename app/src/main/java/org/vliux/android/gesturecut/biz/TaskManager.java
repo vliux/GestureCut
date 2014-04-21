@@ -82,13 +82,24 @@ public class TaskManager {
      * @param resolvedComponent
      * @return array of Strings. String[0] is the application label, while String[1] is the detail info.
      */
-    public static String[] getDescription(Context context, ResolvedComponent resolvedComponent){
+    public static String[] getDescription(Context context, ResolvedComponent resolvedComponent,
+                                          boolean longDetail ){
         String[] retValues = new String[2];
         String packageName = null;
         switch (resolvedComponent.getType()){
             case COMPONENT_NAME:
                 packageName = resolvedComponent.getComponentName().getPackageName();
-                retValues[1] = context.getString(R.string.appinfo_app_detail_clz) + resolvedComponent.getComponentName().getClassName();
+                String className = resolvedComponent.getComponentName().getClassName();
+                if(longDetail){
+                    retValues[1] = context.getString(R.string.appinfo_app_detail_clz) + className;
+                }else{
+                    if(null != className){
+                        String[] clzSects = className.split("\\.");
+                        if(null != clzSects && clzSects.length >= 1){
+                            retValues[1] = context.getString(R.string.appinfo_app_detail_clz) + clzSects[clzSects.length - 1];
+                        }
+                    }
+                }
                 break;
             case PACKAGE_NAME:
                 packageName = resolvedComponent.getPackageName();

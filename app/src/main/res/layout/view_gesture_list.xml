@@ -22,11 +22,11 @@
             android:textColor="@color/global_bkground"/>
 
         <ImageView
-            android:id="@+id/gesture_list_settings"
+            android:id="@+id/gesture_list_del"
             android:layout_width="@dimen/icon_dimen_global"
             android:layout_height="@dimen/icon_dimen_global"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_more"/>
+            android:src="@drawable/ic_del"/>
 
         <!--<ImageView
             android:id="@+id/gesture_list_add"

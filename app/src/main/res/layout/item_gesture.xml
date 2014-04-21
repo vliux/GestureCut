@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="@dimen/gesture_list_item_height"
@@ -21,7 +22,7 @@
         android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
         android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"/>
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/item_gesture_app_icon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -35,5 +36,29 @@
         android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
         android:gravity="left|center_vertical"
         style="@style/text_basic_style"
-        android:textSize="@dimen/text_size_general"/>
+        android:textSize="@dimen/text_size_general"/>-->
+
+    <FrameLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <org.vliux.android.gesturecut.ui.view.AppInfoView
+            android:id="@+id/item_gesture_appinfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="left"
+            custom:longClassName="false">
+        </org.vliux.android.gesturecut.ui.view.AppInfoView>
+
+        <ImageView
+            android:id="@+id/item_gesture_del"
+            android:layout_width="@dimen/icon_dimen_global_large"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:paddingLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
+            android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
+            android:src="@drawable/ic_round_delete"
+            android:background="@color/gesture_cur_grey"
+            android:visibility="gone"/>
+    </FrameLayout>
 </LinearLayout>
