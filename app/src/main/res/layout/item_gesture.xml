@@ -58,7 +58,7 @@
             android:paddingLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
             android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
             android:src="@drawable/ic_busy"
-            android:background="@color/gesture_cur_grey"
+            android:background="@drawable/btn_bg_del"
             android:scaleType="center"
             android:visibility="gone"/>
     </FrameLayout>

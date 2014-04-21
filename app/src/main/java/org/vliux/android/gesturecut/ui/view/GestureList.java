@@ -99,6 +99,11 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         switch(v.getId()){
             case R.id.gesture_list_del:
                 mIsDelMode = !mIsDelMode;
+                if(mIsDelMode){
+                    mIvDel.setImageResource(R.drawable.ic_checkmark);
+                }else{
+                    mIvDel.setImageResource(R.drawable.ic_del);
+                }
                 mListViewAdapter.notifyDataSetChanged();
                 break;
             case R.id.item_gesture_del:
