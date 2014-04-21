@@ -52,6 +52,7 @@ public class GestureUtil {
     public void deleteGesture(String name){
         if(null != name && name.length() > 0){
             mGestureLibrary.removeEntry(name);
+            mGestureLibrary.save();
         }
     }
 
