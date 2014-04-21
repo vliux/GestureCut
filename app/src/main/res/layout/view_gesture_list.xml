@@ -46,11 +46,13 @@
         android:id="@+id/gesture_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:padding="@dimen/gesture_list_outter_margin"
+        android:paddingLeft="@dimen/gesture_list_outter_margin"
+        android:paddingRight="@dimen/gesture_list_outter_margin"
         android:layout_weight="1"
         android:cacheColorHint="@color/gesture_list_bkground"
-        android:divider="@color/gesture_cur_blue"
-        android:dividerHeight="@dimen/listview_divider_thin">
+        android:divider="@color/gesture_cur_blue_light_semi_transparent"
+        android:dividerHeight="@dimen/listview_divider_thin"
+        android:listSelector="@drawable/gesture_list_selector">
     </ListView>
 
 </LinearLayout>
