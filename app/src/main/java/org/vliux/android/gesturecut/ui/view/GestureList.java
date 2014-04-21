@@ -1,6 +1,7 @@
 package org.vliux.android.gesturecut.ui.view;
 
 import android.animation.AnimatorSet;
+import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -79,6 +80,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         mGestureListView.setAdapter(mListViewAdapter);
         mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
         setTranslationX(-mScreenWidth);
+        mGestureListView.setLayoutTransition(new LayoutTransition());
     }
 
     /**
@@ -107,11 +109,13 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 mListViewAdapter.notifyDataSetChanged();
                 break;
             case R.id.item_gesture_del:
-                String gestureName = (String)v.getTag();
-                if(null != gestureName && gestureName.length() > 0){
-                    Toast.makeText(getContext(), "removing gesture " + gestureName, Toast.LENGTH_SHORT).show();
-                    GesturePersistence.removeGesture(getContext(), gestureName);
-                    mListViewAdapter.notifyDataSetChanged();
+                if(mIsDelMode){
+                    String gestureName = (String)v.getTag();
+                    if(null != gestureName && gestureName.length() > 0){
+                        Toast.makeText(getContext(), "removing gesture " + gestureName, Toast.LENGTH_SHORT).show();
+                        GesturePersistence.removeGesture(getContext(), gestureName);
+                        mListViewAdapter.notifyDataSetChanged();
+                    }
                 }
         }
     }
