@@ -25,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
@@ -33,6 +34,7 @@ import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
+import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
@@ -50,6 +52,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private int mScreenWidth;
     private boolean mIsShown = false;
     private GestureListViewAdapter mListViewAdapter;
+    private boolean mIsDelMode = false;
 
     public GestureList(Context context) {
         super(context);
@@ -95,7 +98,16 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.gesture_list_del:
+                mIsDelMode = !mIsDelMode;
+                mListViewAdapter.notifyDataSetChanged();
                 break;
+            case R.id.item_gesture_del:
+                String gestureName = (String)v.getTag();
+                if(null != gestureName && gestureName.length() > 0){
+                    Toast.makeText(getContext(), "removing gesture " + gestureName, Toast.LENGTH_SHORT).show();
+                    GesturePersistence.removeGesture(getContext(), gestureName);
+                    mListViewAdapter.notifyDataSetChanged();
+                }
         }
     }
 
@@ -153,6 +165,14 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 viewHolder = (GestureListViewHolder)convertView.getTag();
             }
 
+            if(mIsDelMode){
+                viewHolder.delIcon.setVisibility(VISIBLE);
+                viewHolder.delIcon.setOnClickListener(GestureList.this);
+            }else {
+                viewHolder.delIcon.setVisibility(GONE);
+                viewHolder.delIcon.setOnClickListener(null);
+            }
+
             ConcurrentControl.submitTask(
                     new LoadGestureDataRunnable(mHandler,
                             mGestureNames.get(position),
@@ -208,8 +228,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
                     notifyHandlerData.viewHolder = viewHolder;
                     notifyHandlerData.bitmap = bmp;
-                    //notifyHandlerData.componentStr = componentStr;
-                    //notifyHandlerData.packageIcon = packageIcon;
+                    notifyHandlerData.gestureName = gestureName;
                     notifyHandlerData.resolvedComponent = dbData.resolvedComponent;
                     Message message = notifyHandler.obtainMessage(WHAT_GESTURE_ICON_LOADED, notifyHandlerData);
                     mHandler.sendMessage(message);
@@ -219,6 +238,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     }
 
     private class NotifyHandlerData{
+        public String gestureName;
         public GestureListViewHolder viewHolder;
         public ResolvedComponent resolvedComponent;
         public Bitmap bitmap; // bitmap for gesture snapshot
@@ -233,9 +253,9 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 case WHAT_GESTURE_ICON_LOADED:
                     NotifyHandlerData notifyHandlerData = (NotifyHandlerData)msg.obj;
                     notifyHandlerData.viewHolder.gestureIcon.setImageBitmap(notifyHandlerData.bitmap);
-                    //notifyHandlerData.viewHolder.textView.setText(notifyHandlerData.componentStr);
-                    //notifyHandlerData.viewHolder.appIcon.setImageDrawable(notifyHandlerData.packageIcon);
                     notifyHandlerData.viewHolder.appInfoView.setResolvedComponent(notifyHandlerData.resolvedComponent);
+                    // set tag, used in onClick()
+                    notifyHandlerData.viewHolder.delIcon.setTag(notifyHandlerData.gestureName);
                     break;
             }
         }

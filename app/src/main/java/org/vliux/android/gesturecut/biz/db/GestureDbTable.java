@@ -49,6 +49,11 @@ public class GestureDbTable extends DbTable {
         return insert(cv);
     }
 
+    public boolean removeGesture(String gestureName){
+        return super.delete(DB_COL_COMPONENT_NAME_TEXT_1 + "=?",
+                new String[]{gestureName});
+    }
+
     public DbData getGesture(String gestureName){
         String[] columns = new String[]{
             DB_COL_GESTURE_ICON_PATH_TEXT_1,

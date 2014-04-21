@@ -61,6 +61,26 @@ public class GesturePersistence {
                 Toast.LENGTH_SHORT).show();
     }
 
+    public static void removeGesture(Context context, String gestureName){
+        if(null != gestureName && gestureName.length() > 0){
+            // remove from GestureLibrary
+            GestureUtil.getInstance().deleteGesture(gestureName);
+
+            // remove gesture bitmap
+            GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
+            GestureDbTable.DbData dbData = gestureDbTable.getGesture(gestureName);
+            if(null != dbData && null != dbData.iconPath){
+                File iconFile = new File(dbData.iconPath);
+                if(iconFile.exists()){
+                    iconFile.delete();
+                }
+            }
+
+            // delete from db
+            gestureDbTable.removeGesture(gestureName);
+        }
+    }
+
     public static ResolvedComponent loadGesture(Context context, Gesture gesture){
         Prediction prediction = GestureUtil.getInstance().matchGesture(gesture);
         if(null == prediction){

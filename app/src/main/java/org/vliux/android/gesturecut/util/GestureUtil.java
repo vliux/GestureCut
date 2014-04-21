@@ -49,6 +49,12 @@ public class GestureUtil {
         return null;
     }
 
+    public void deleteGesture(String name){
+        if(null != name && name.length() > 0){
+            mGestureLibrary.removeEntry(name);
+        }
+    }
+
     /**
      *
      * @param gesture
