@@ -16,7 +16,7 @@ public class WindowManagerUtil {
         APP // show in app lifecycle
     }
 
-    public static void showWindow(Context context, View view, WindowScope windowScope){
+    public static WindowManager.LayoutParams showWindow(Context context, View view, WindowScope windowScope){
         WindowManager.LayoutParams lp = null;
         switch (windowScope){
             case GLOBAL:
@@ -25,7 +25,10 @@ public class WindowManagerUtil {
                         WindowManager.LayoutParams.TYPE_PHONE,
                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                         PixelFormat.TRANSLUCENT);
-                lp.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
+                lp.gravity = Gravity.LEFT | Gravity.TOP;
+                int[] screenSize = ScreenUtil.getScreenSize(context);
+                lp.x = screenSize[0];
+                lp.y = screenSize[1]/2;
                 break;
             case APP:
                 lp = new WindowManager.LayoutParams(
@@ -39,11 +42,17 @@ public class WindowManagerUtil {
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         view.setVisibility(View.VISIBLE);
         windowManager.addView(view, lp);
+        return lp;
     }
 
     public static void closeWindow(Context context, View dialogView){
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         dialogView.setVisibility(View.GONE);
         windowManager.removeView(dialogView);
+    }
+
+    public static void updateWindow(Context context, View view, WindowManager.LayoutParams layoutParams){
+        WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.updateViewLayout(view, layoutParams);
     }
 }

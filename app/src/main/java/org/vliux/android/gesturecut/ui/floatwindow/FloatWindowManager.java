@@ -27,7 +27,9 @@ public class FloatWindowManager {
             if (null == sFloatWindow) {
                 sFloatWindow = new FloatWindow(context.getApplicationContext());
             }
-            WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, WindowManagerUtil.WindowScope.GLOBAL);
+            WindowManager.LayoutParams lp =
+                    WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, WindowManagerUtil.WindowScope.GLOBAL);
+            sFloatWindow.setWindowLayoutParams(lp);
         }else{
             AppLog.logw(TAG, "FloatWindow instance exist, it should already been shown");
         }
