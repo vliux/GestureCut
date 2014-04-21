@@ -12,7 +12,7 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/switch_layout_height"
+            android:layout_height="@dimen/title_bar_height"
             android:background="@color/gesture_cur_blue">
             <TextView
                 android:layout_width="wrap_content"
