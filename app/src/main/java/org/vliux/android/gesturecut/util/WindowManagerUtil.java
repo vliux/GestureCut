@@ -4,7 +4,10 @@ import android.content.Context;
 import android.graphics.PixelFormat;
 import android.view.Gravity;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
+
+import org.vliux.android.gesturecut.R;
 
 /**
  * Created by vliux on 4/8/14.
@@ -18,6 +21,7 @@ public class WindowManagerUtil {
 
     public static WindowManager.LayoutParams showWindow(Context context, View view, WindowScope windowScope){
         WindowManager.LayoutParams lp = null;
+        int[] screenSize = ScreenUtil.getScreenSize(context);
         switch (windowScope){
             case GLOBAL:
                 lp = new WindowManager.LayoutParams(
@@ -26,16 +30,17 @@ public class WindowManagerUtil {
                         WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
                         PixelFormat.TRANSLUCENT);
                 lp.gravity = Gravity.LEFT | Gravity.TOP;
-                int[] screenSize = ScreenUtil.getScreenSize(context);
                 lp.x = screenSize[0];
                 lp.y = screenSize[1]/2;
                 break;
             case APP:
                 lp = new WindowManager.LayoutParams(
-                        WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
+                        (int)(screenSize[0] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
+                        (int)(screenSize[1] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
+                        //WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
                         WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        PixelFormat.OPAQUE);
+                        PixelFormat.TRANSLUCENT);
                 lp.gravity = Gravity.CENTER;
                 break;
         }

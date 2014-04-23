@@ -7,8 +7,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/global_bkground">
+        android:layout_height="match_parent">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -35,13 +34,14 @@
         <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
             android:id="@+id/gesture_tablike"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/switch_layout_height"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
+            android:layout_height="@dimen/switch_layout_height"
+            android:background="@color/global_bkground"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
 
-        <android.gesture.GestureOverlayView
+        <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
             android:id="@+id/gesture_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/white"
+            android:background="@color/gesture_create_bg_semi_transparent"
             style="@style/gesture_overlay_use">
 
             <LinearLayout
@@ -73,7 +73,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/text_size_large_title"
                 android:textColor="@color/gesture_cur_blue" />
-        </android.gesture.GestureOverlayView>
+        </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
     </LinearLayout>
 
     <!-- layer above -->

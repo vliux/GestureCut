@@ -8,6 +8,8 @@
     <color name="clock_textv_color">@android:color/white</color>
     <color name="transparent_black">#88000000</color>
     <color name="gesture_cur_grey">#99888888</color>
-    <color name="gesture_cur_blue_light_semi_transparent">#4433b5e5</color>
+    <color name="gesture_cur_blue_light_semi_transparent">#5533b5e5</color>
     <color name="gesture_cur_blue_transparent">#000099cc</color>
+    <!-- the bg color of GestureOverlayView on Second FloatWindow -->
+    <color name="gesture_create_bg_semi_transparent">#99000000</color>
 </resources>
