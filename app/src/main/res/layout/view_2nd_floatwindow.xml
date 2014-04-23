@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- action bar -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
@@ -31,6 +32,7 @@
                 android:src="@drawable/ic_more"/>
         </FrameLayout>
 
+        <!-- tabs -->
         <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
             android:id="@+id/gesture_tablike"
             android:layout_width="match_parent"
@@ -76,7 +78,7 @@
         </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
     </LinearLayout>
 
-    <!-- layer above -->
+    <!-- layer above, show confirmation dialog -->
     <org.vliux.android.gesturecut.ui.floatwindow.FwDialogView
         android:id="@+id/gesture_fwdialog"
         android:layout_width="match_parent"

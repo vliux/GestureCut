@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
@@ -22,6 +23,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.ui.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
@@ -34,6 +36,7 @@ public class SecondaryFloatWindow extends LinearLayout
         implements View.OnClickListener,
         TabLikeView.OnTablikeChangedListener {
 
+    private ImageView mIvMore; // button at right-top corner of action bar
     private GestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
@@ -72,15 +75,23 @@ public class SecondaryFloatWindow extends LinearLayout
         mAppInfoView = (AppInfoView)findViewById(R.id.gesture_appinfoview);
         mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
         mAppInfoLayout = (LinearLayout)findViewById(R.id.gesture_appinfo_layout);
+        mIvMore = (ImageView)findViewById(R.id.gesture_more);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
         mTabLikeView.setOnTabChangedListener(this);
         refreshHint(mTabLikeView.getType());
+        mIvMore.setOnClickListener(this);
     }
 
     public void onClick(View view){
         switch (view.getId()){
+            case R.id.gesture_more:
+                Intent intent = new Intent(getContext(), GestureListActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                getContext().startActivity(intent);
+                WindowManagerUtil.closeWindow(getContext(), this);
+                break;
         }
     }
 
