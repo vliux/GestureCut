@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.ui.view;
 
+import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
@@ -12,7 +13,6 @@ import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Message;
@@ -21,19 +21,19 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
-import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
@@ -183,8 +183,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_gesture, parent, false);
                 viewHolder = new GestureListViewHolder();
                 viewHolder.gestureIcon = (ImageView)convertView.findViewById(R.id.item_gesture_icon);
-                //viewHolder.appIcon = (ImageView)convertView.findViewById(R.id.item_gesture_app_icon);
-                //viewHolder.textView = (TextView)convertView.findViewById(R.id.item_gesture_tv);
                 viewHolder.appInfoView = (AppInfoView)convertView.findViewById(R.id.item_gesture_appinfo);
                 viewHolder.delIcon = (ImageView)convertView.findViewById(R.id.item_gesture_del);
                 convertView.setTag(viewHolder);
@@ -193,11 +191,11 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             }
 
             if(mIsDelMode){
-                viewHolder.delIcon.setVisibility(VISIBLE);
                 viewHolder.delIcon.setOnClickListener(GestureList.this);
+                getDeleteBtnAnimatorSet(viewHolder.delIcon, true).start(); // setVisibility() is in AnimatorListener
             }else {
-                viewHolder.delIcon.setVisibility(GONE);
                 viewHolder.delIcon.setOnClickListener(null);
+                getDeleteBtnAnimatorSet(viewHolder.delIcon, false).start();
             }
 
             ConcurrentControl.submitTask(
@@ -295,7 +293,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     public void show(){
         if(mNeedShowHide){
             mIsShown = true;
-            getAnimatorSet(true).start();
+            getShowHideAnimatorSet(true).start();
             mListViewAdapter.notifyDataSetChanged();
         }
     }
@@ -303,11 +301,16 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     public void hide(){
         if(mNeedShowHide){
             mIsShown = false;
-            getAnimatorSet(false).start();
+            getShowHideAnimatorSet(false).start();
         }
     }
 
-    private AnimatorSet getAnimatorSet(boolean forShown){
+    /**
+     * Get the AnimatorSet for showing or hiding this GestureList.
+     * @param forShown
+     * @return
+     */
+    private AnimatorSet getShowHideAnimatorSet(boolean forShown){
         ObjectAnimator transxObjAnimator = null;
         ObjectAnimator alphaObjAnimator = null;
         if(forShown) {
@@ -324,6 +327,43 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         animatorSet.setDuration(500L);
         animatorSet.setInterpolator(new OvershootInterpolator());
         animatorSet.play(transxObjAnimator).with(alphaObjAnimator);
+        return animatorSet;
+    }
+
+    /**
+     * Get the AnimatorSet for showing ImageView of delete button.
+     * @return
+     */
+    private AnimatorSet getDeleteBtnAnimatorSet(final View deleteBtn, final boolean forShown){
+        ObjectAnimator alphaObjectAnimator = null;
+        if(forShown){
+            alphaObjectAnimator = ObjectAnimator.ofFloat(deleteBtn, "alpha", 0.0f, 1.0f);
+        }else{
+            alphaObjectAnimator = ObjectAnimator.ofFloat(deleteBtn, "alpha", 1.0f, 0.0f);
+        }
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(500L);
+        animatorSet.setInterpolator(new OvershootInterpolator());
+        animatorSet.play(alphaObjectAnimator);
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                deleteBtn.setVisibility((forShown? VISIBLE : GONE));
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                deleteBtn.setVisibility((forShown? VISIBLE : GONE));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
         return animatorSet;
     }
 
