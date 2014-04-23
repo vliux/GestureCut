@@ -28,8 +28,8 @@ public class AnimUtil {
                                                           final ResolvedComponent resolvedComponent, final Runnable animEndRunnable){
         ObjectAnimator transxObjAnimator = ObjectAnimator.ofFloat(targetView, "translationY", 0.0f, -ScreenUtil.getScreenSize(context)[1]/2);
         ObjectAnimator alphaObjAnimator = ObjectAnimator.ofFloat(targetView, "alpha", 0.0f, 1.0f, 0.5f);
-        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(targetView, "scaleX", 1.0f, 2.0f);
-        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(targetView, "scaleY", 1.0f, 2.0f);
+        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(targetView, "scaleX", 1.0f, 3.0f);
+        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(targetView, "scaleY", 1.0f, 3.0f);
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(800L);
