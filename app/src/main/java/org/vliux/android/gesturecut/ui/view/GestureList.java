@@ -348,11 +348,16 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
+                if(forShown){
+                    deleteBtn.setVisibility(VISIBLE);
+                }
             }
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                deleteBtn.setVisibility((forShown? VISIBLE : GONE));
+                if(!forShown){
+                    deleteBtn.setVisibility(GONE);
+                }
             }
 
             @Override

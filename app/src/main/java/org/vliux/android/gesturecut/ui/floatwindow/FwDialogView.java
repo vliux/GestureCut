@@ -1,5 +1,8 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -56,13 +59,58 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         mTvContent.setText(content);
         mSaveClicked = saveClicked;
         mCancelClicked = cancelClicked;
-        setVisibility(VISIBLE);
+        getShowHideAnimator(true).start();
     }
 
     public void hide(){
         mSaveClicked = null;
         mCancelClicked = null;
-        setVisibility(GONE);
+        getShowHideAnimator(false).start();
+    }
+
+    private AnimatorSet getShowHideAnimator(final boolean forShown){
+        ObjectAnimator scaleXAnimator = null;
+        ObjectAnimator scaleYAnimator = null;
+        ObjectAnimator alphaAnimator = null;
+        if(forShown){
+            scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 0.0f, 1.0f);
+            scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 0.0f, 1.0f);
+            alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
+        }else{
+            scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 1.0f, 0.0f);
+            scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 1.0f, 0.0f);
+            alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.0f);
+        }
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.setDuration(500L);
+        animatorSet.play(scaleXAnimator).with(scaleYAnimator).with(alphaAnimator);
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+                if(forShown){
+                    setVisibility(VISIBLE);
+                }
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                if(!forShown){
+                    setVisibility(GONE);
+                }
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+                setVisibility((forShown? VISIBLE : GONE));
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+        return animatorSet;
     }
 
     @Override
