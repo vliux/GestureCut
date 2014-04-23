@@ -35,9 +35,9 @@ public class WindowManagerUtil {
                 break;
             case APP:
                 lp = new WindowManager.LayoutParams(
-                        (int)(screenSize[0] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
-                        (int)(screenSize[1] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
-                        //WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
+                        //(int)(screenSize[0] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
+                        //(int)(screenSize[1] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
+                        WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
                         WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         PixelFormat.TRANSLUCENT);

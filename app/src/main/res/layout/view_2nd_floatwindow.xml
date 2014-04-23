@@ -59,7 +59,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="@dimen/settings_outmost_margin"
-                    android:background="@color/gesture_cur_blue_light_semi_transparent">
+                    android:background="@color/beige_light_semi_transparent">
                  </org.vliux.android.gesturecut.ui.view.AppInfoView>
                 <View
                     android:layout_width="match_parent"
