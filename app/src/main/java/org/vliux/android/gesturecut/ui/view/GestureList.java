@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -48,6 +49,13 @@ import java.util.List;
  * Created by vliux on 4/11/14.
  */
 public class GestureList extends LinearLayout implements View.OnClickListener {
+
+    /**
+     * Whether show() and hide() are required to make the view visible/invisible.
+     * If it is faluse, then the view is by default visible.
+     */
+    private boolean mNeedShowHide = false;
+
     private ImageView mIvDel;
     private ListView mGestureListView;
     private int mScreenWidth;
@@ -57,20 +65,20 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
 
     public GestureList(Context context) {
         super(context);
-        init();
+        init(null);
     }
 
     public GestureList(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(attrs);
     }
 
     public GestureList(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(attrs);
     }
 
-    private void init(){
+    private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
         mIvDel = (ImageView)findViewById(R.id.gesture_list_del);
         mGestureListView = (ListView)findViewById(R.id.gesture_listview);
@@ -79,8 +87,18 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
         mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
-        setTranslationX(-mScreenWidth);
         mGestureListView.setLayoutTransition(new LayoutTransition());
+
+        if(null != attrs){
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureList);
+            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureList_showHideRequired, false);
+        }else{
+            mNeedShowHide = false;
+        }
+
+        if(mNeedShowHide){
+            setTranslationX(-mScreenWidth);
+        }
     }
 
     /**
@@ -275,14 +293,18 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     }
 
     public void show(){
-        mIsShown = true;
-        getAnimatorSet(true).start();
-        mListViewAdapter.notifyDataSetChanged();
+        if(mNeedShowHide){
+            mIsShown = true;
+            getAnimatorSet(true).start();
+            mListViewAdapter.notifyDataSetChanged();
+        }
     }
 
     public void hide(){
-        mIsShown = false;
-        getAnimatorSet(false).start();
+        if(mNeedShowHide){
+            mIsShown = false;
+            getAnimatorSet(false).start();
+        }
     }
 
     private AnimatorSet getAnimatorSet(boolean forShown){

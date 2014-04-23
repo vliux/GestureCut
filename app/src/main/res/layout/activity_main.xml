@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:extend="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_outmost_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -65,7 +66,8 @@
     <org.vliux.android.gesturecut.ui.view.GestureList
         android:id="@+id/main_gesture_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></org.vliux.android.gesturecut.ui.view.GestureList>
+        android:layout_height="match_parent"
+        extend:showHideRequired="true"></org.vliux.android.gesturecut.ui.view.GestureList>
 
     <!-- ImageView for animator when starting activty of defined gestures -->
     <ImageView
