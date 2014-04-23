@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mTvDate = (TextView)findViewById(R.id.main_tv_date);
         mIvAppIconAnim = (ImageView)findViewById(R.id.main_appicon_startactiv);
 
+        loadCustomFont();
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
         mIvSettings.setOnClickListener(this);
         mUnlockBar.setTargetViewGroup(mOutmostLayout);
@@ -73,6 +75,12 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         mTimeChangeReceiver = new TimeChangeReceiver();
         mScreenHeight = ScreenUtil.getScreenSize(this)[1];
+    }
+
+    private void loadCustomFont(){
+        Typeface typeFace = Typeface.createFromAsset(getAssets(), "Fontfabric.otf");
+        mTvTime.setTypeface(typeFace);
+        mTvDate.setTypeface(typeFace);
     }
 
     @Override
