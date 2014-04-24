@@ -1,19 +1,13 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
-import android.app.ActivityManager;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import org.vliux.android.gesturecut.GestureCutApplication;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 

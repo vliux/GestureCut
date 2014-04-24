@@ -29,14 +29,14 @@ public class TaskManager {
                 componentName = chooseComponent(context.getPackageManager(),
                         runningTaskInfo);
                 if(null != componentName){
-                    Toast.makeText(context,
+                    /*Toast.makeText(context,
                             String.format("ComponentName: %s", componentName.getClassName()),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     return new ResolvedComponent(componentName);
                 }else if(null != runningTaskInfo.baseActivity){
-                    Toast.makeText(context,
+                    /*Toast.makeText(context,
                             String.format("Package: %s", runningTaskInfo.baseActivity.getPackageName()),
-                            Toast.LENGTH_SHORT).show();
+                            Toast.LENGTH_SHORT).show();*/
                     return new ResolvedComponent(runningTaskInfo.baseActivity.getPackageName());
                 }
             }

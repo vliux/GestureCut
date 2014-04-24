@@ -213,7 +213,7 @@ public class UnlockBar extends LinearLayout {
                 @Override
                 public void onAnimationEnd(Animator animation) {
                     mIsInAnim = false;
-                    Toast.makeText(getContext(), "onUnlockConditionFulfilled", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "onUnlockConditionFulfilled", Toast.LENGTH_SHORT).show();
                     if(null != mUnlockListener){
                         mUnlockListener.onUnlockConditionFulfilled();
                     }
