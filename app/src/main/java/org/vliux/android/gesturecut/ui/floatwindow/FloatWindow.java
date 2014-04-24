@@ -1,7 +1,9 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -89,4 +91,5 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
         }
         return false;
     }
+
 }

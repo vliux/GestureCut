@@ -23,6 +23,7 @@ import android.widget.Toast;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
+import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GestureList;
 import org.vliux.android.gesturecut.ui.view.UnlockBar;
@@ -89,6 +90,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mGesutreListLayout.setAutoRefresh(true);
         mUnlockBar.setAnimationEffects(true);
         mTimeChangeReceiver.register();
+        AppBroadcastManager.sendLockerStartedBroadcast(this);
     }
 
     @Override
@@ -97,6 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mGesutreListLayout.setAutoRefresh(false);
         mUnlockBar.setAnimationEffects(false);
         mTimeChangeReceiver.unregister();
+        AppBroadcastManager.sendLockerStoppedBroadcast(this);
     }
 
     @Override

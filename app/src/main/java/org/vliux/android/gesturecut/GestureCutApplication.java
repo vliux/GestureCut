@@ -44,11 +44,13 @@ public class GestureCutApplication extends Application {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    FloatWindowManager.showWindow(GestureCutApplication.this);
+                    FloatWindowManager.registerLockerStatusReceiver(GestureCutApplication.this);
+                    //FloatWindowManager.showWindow(GestureCutApplication.this);
                 }
             }, 300L);
         }else{
-            FloatWindowManager.closeWindow(this);
+            FloatWindowManager.unregisterLockerStatusReceiver(GestureCutApplication.this);
+            //FloatWindowManager.closeWindow(this);
         }
     }
 

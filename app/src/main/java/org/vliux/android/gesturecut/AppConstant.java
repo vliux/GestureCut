@@ -25,5 +25,8 @@ public class AppConstant {
     public static class LocalBroadcasts{
         public static final String BROADCAST_GESTURE_ADDED = "org.vliux.android.gesturecut.GESTURE_ADDED";
         public static final String BROADCAST_GESTURE_DELELTED = "org.vliux.android.gesturecut.GESTURE_DELETED";
+
+        public static final String BROADCAST_LOCKER_STARTED = "org.vliux.android.gesturecut.LOCKER_STARTED";
+        public static final String BROADCAST_LOCKER_STOPPED = "org.vliux.android.gesturecut.LOCKER_STOPED";
     }
 }

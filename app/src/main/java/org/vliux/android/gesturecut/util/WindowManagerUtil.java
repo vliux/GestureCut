@@ -13,6 +13,7 @@ import org.vliux.android.gesturecut.R;
  * Created by vliux on 4/8/14.
  */
 public class WindowManagerUtil {
+    private static final String TAG = WindowManagerUtil.class.getSimpleName();
 
     public enum WindowScope {
         GLOBAL, // always shown on screen
@@ -20,6 +21,10 @@ public class WindowManagerUtil {
     }
 
     public static WindowManager.LayoutParams showWindow(Context context, View view, WindowScope windowScope){
+        if(null != view.getParent()){
+            AppLog.loge(TAG, "view already has a parent, unable to showWindow()");
+            return null;
+        }
         WindowManager.LayoutParams lp = null;
         int[] screenSize = ScreenUtil.getScreenSize(context);
         switch (windowScope){
@@ -51,6 +56,10 @@ public class WindowManagerUtil {
     }
 
     public static void closeWindow(Context context, View dialogView){
+        if(null == dialogView.getParent()){
+            AppLog.loge(TAG, "view doesn't have any parent yet, unable to closeWindow()");
+            return;
+        }
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         dialogView.setVisibility(View.GONE);
         windowManager.removeView(dialogView);
