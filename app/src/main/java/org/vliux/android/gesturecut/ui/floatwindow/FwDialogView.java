@@ -4,14 +4,26 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.gesture.Gesture;
+import android.graphics.Bitmap;
+import android.os.Handler;
+import android.os.Message;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.biz.TaskManager;
+import org.vliux.android.gesturecut.biz.db.GestureDbTable;
+import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.util.ImageUtil;
+import org.w3c.dom.Text;
 
 /**
  * Created by vliux on 4/18/14.
@@ -19,6 +31,12 @@ import org.vliux.android.gesturecut.R;
 public class FwDialogView extends FrameLayout implements View.OnClickListener {
     private TextView mTvTitle;
     private TextView mTvContent;
+
+    private TextView mTvLeft;
+    private TextView mTvRight;
+    private ImageView mIvLeft;
+    private ImageView mIvRight;
+
     private OnClickListener mSaveClicked;
     private OnClickListener mCancelClicked;
     private Button mBtnSave;
@@ -45,6 +63,10 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         mTvContent = (TextView)findViewById(R.id.fw2_layer2_content);
         mBtnSave = (Button)findViewById(R.id.fw2_layer2_btn_save);
         mBtnCancel = (Button)findViewById(R.id.fw2_layer2_btn_cancel);
+        mIvLeft = (ImageView)findViewById(R.id.fw_layer2_iv1);
+        mIvRight = (ImageView)findViewById(R.id.fw_layer2_iv2);
+        mTvLeft = (TextView)findViewById(R.id.fw_layer2_tv_title1);
+        mTvRight = (TextView)findViewById(R.id.fw_layer2_tv_title2);
 
         mBtnSave.setOnClickListener(this);
         mBtnCancel.setOnClickListener(this);
@@ -54,7 +76,9 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         return getVisibility() == VISIBLE;
     }
 
-    public void showAlert(String title, String content, OnClickListener okClicked){
+    public void showAlert(String title, String content,
+                          Gesture newGesture, GestureDbTable.DbData dbData,
+                          OnClickListener okClicked){
         mTvTitle.setText(title);
         mTvContent.setText(content);
 
@@ -62,17 +86,32 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         mBtnSave.setBackgroundResource(R.drawable.btn_bg_warning);
         mBtnCancel.setVisibility(GONE);
 
+        mTvLeft.setText(getContext().getString(R.string.add_gesture_subtitle_new_gesture));
+        mTvRight.setText(getContext().getString(R.string.add_gesture_subtitle_similar_gesture));
+        mIvLeft.setImageBitmap(GesturePersistence.toBitmap(getContext(), newGesture));
+        mIvRight.setImageDrawable(null);
+        if(null != dbData && null != dbData.iconPath){
+            ConcurrentControl.submitTask(new LoadExistingGestureIconRunnable(dbData.iconPath));
+        }
+
         mSaveClicked = okClicked;
         getShowHideAnimator(true).start();
     }
 
-    public void showConfirm(String title, String content, OnClickListener saveClicked, OnClickListener cancelClicked){
+    public void showConfirm(String title, String content,
+                            Gesture newGesture, ResolvedComponent resolvedComponent,
+                            OnClickListener saveClicked, OnClickListener cancelClicked){
         mTvTitle.setText(title);
         mTvContent.setText(content);
 
         mBtnSave.setText(getContext().getString(R.string.save));
         mBtnSave.setBackgroundResource(R.drawable.btn_bg_ok);
         mBtnCancel.setVisibility(VISIBLE);
+
+        mTvLeft.setText(getContext().getString(R.string.add_gesture_subtitle_new_gesture));
+        mTvRight.setText(getContext().getString(R.string.add_gesture_subtitle_target_task));
+        mIvLeft.setImageBitmap(GesturePersistence.toBitmap(getContext(), newGesture));
+        mIvRight.setImageDrawable(TaskManager.getIcon(getContext(), resolvedComponent));
 
         mSaveClicked = saveClicked;
         mCancelClicked = cancelClicked;
@@ -83,6 +122,32 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         mSaveClicked = null;
         mCancelClicked = null;
         getShowHideAnimator(false).start();
+        mHandler.removeMessages(WHAT_GESTURE_ICON_LOADED);
+    }
+
+    /**
+     * Load gesture icon from file system.
+     */
+    class LoadExistingGestureIconRunnable implements Runnable{
+        private String mIconPath;
+
+        public LoadExistingGestureIconRunnable(String iconPath){
+            mIconPath = iconPath;
+        }
+
+        @Override
+        public void run() {
+            int iconWidth = (int)getContext().getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
+            int iconHeight = iconWidth;
+            Bitmap bmp = null;
+            if (null != mIconPath && mIconPath.length() > 0) {
+                bmp = ImageUtil.decodeSampledBitmap(mIconPath, iconWidth, iconHeight, ImageUtil.optionSave());
+                if(null != bmp){
+                    Message msg = mHandler.obtainMessage(WHAT_GESTURE_ICON_LOADED, bmp);
+                    mHandler.sendMessage(msg);
+                }
+            }
+        }
     }
 
     private AnimatorSet getShowHideAnimator(final boolean forShown){
@@ -146,4 +211,18 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
                 break;
         }
     }
+
+    private static final int WHAT_GESTURE_ICON_LOADED = 100;
+    private Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case WHAT_GESTURE_ICON_LOADED:
+                    Bitmap bitmap = (Bitmap)msg.obj;
+                    if(null != bitmap){
+                        mIvRight.setImageBitmap(bitmap);
+                    }
+            }
+        }
+    };
 }

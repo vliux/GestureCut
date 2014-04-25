@@ -22,6 +22,7 @@ import android.widget.TextView;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
+import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
@@ -127,9 +128,11 @@ public class SecondaryFloatWindow extends LinearLayout
     private void addGesture(final Gesture gesture){
         if(null != mResolvedComponent){
             //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-            if(null != GesturePersistence.loadGesture(getContext(), gesture)){
+            GestureDbTable.DbData dbData = GesturePersistence.loadGestureEx(getContext(), gesture);
+            if(null != dbData && null != dbData.resolvedComponent){
                 mFwDialog.showAlert(getContext().getString(R.string.add_gesture_alert_duplicate),
                         getContext().getString(R.string.add_gesture_alert_duplicate_content),
+                        gesture, dbData,
                         new OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -139,6 +142,7 @@ public class SecondaryFloatWindow extends LinearLayout
             }else{
                 mFwDialog.showConfirm(getContext().getString(R.string.add_gesture_confirm_title),
                         getContext().getString(R.string.add_gesture_confirm_content),
+                        gesture, mResolvedComponent,
                         new OnClickListener() {
                             @Override
                             public void onClick(View v) {

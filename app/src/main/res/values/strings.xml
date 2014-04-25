@@ -27,4 +27,9 @@
     <!-- warning dialog of highly duplicated gesture trying to be added -->
     <string name="add_gesture_alert_duplicate">Duplicated gesture</string>
     <string name="add_gesture_alert_duplicate_content">The new gesture is of high similarity with an exsiting gesture.</string>
+
+    <!-- FwDialogView sub-titles for imageview -->
+    <string name="add_gesture_subtitle_new_gesture">New gesture</string>
+    <string name="add_gesture_subtitle_target_task">Target task</string>
+    <string name="add_gesture_subtitle_similar_gesture">Existing gesture</string>
 </resources>

@@ -41,27 +41,71 @@
             android:text="Add the new gesture into your gesture store?"
             android:textColor="@color/gesture_cur_blue" />
 
-        <!-- button save -->
-        <Button
-            android:id="@+id/fw2_layer2_btn_save"
+        <TableLayout
+            android:stretchColumns="*"
+            android:shrinkColumns="*"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gesture_list_outter_margin"
-            android:text="@string/save"
-            android:textColor="@color/global_bkground"
-            android:textSize="@dimen/text_size_general"
-            android:background="@drawable/btn_bg_ok" />
-        <!-- button cancel -->
-        <Button
-            android:id="@+id/fw2_layer2_btn_cancel"
+            android:background="@color/beige_light_semi_transparent">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/fw_layer2_tv_title1"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_general"
+                    android:textColor="@color/gesture_cur_blue"
+                    android:text="New gesture" />
+
+                <TextView
+                    android:id="@+id/fw_layer2_tv_title2"
+                    android:gravity="center"
+                    android:textSize="@dimen/text_size_general"
+                    android:textColor="@color/gesture_cur_blue"
+                    android:text="Target task" />
+            </TableRow>
+
+            <TableRow>
+                <ImageView
+                    android:id="@+id/fw_layer2_iv1"
+                    android:src="@drawable/ic_launcher"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+
+                <ImageView
+                    android:id="@+id/fw_layer2_iv2"
+                    android:src="@drawable/ic_launcher"
+                    android:layout_gravity="center"
+                    android:scaleType="centerCrop"/>
+            </TableRow>
+        </TableLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/gesture_list_outter_margin"
-            android:layout_marginLeft="@dimen/gesture_list_outter_margin"
-            android:layout_marginRight="@dimen/gesture_list_outter_margin"
-            android:text="@string/cancel"
-            android:textColor="@color/global_bkground"
-            android:textSize="@dimen/text_size_general"
-            android:background="@drawable/btn_bg_cancel" />
+            android:layout_height="wrap_content">
+            <!-- button save -->
+            <Button
+                android:id="@+id/fw2_layer2_btn_save"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/gesture_list_outter_margin"
+                android:text="@string/save"
+                android:textColor="@color/global_bkground"
+                android:textSize="@dimen/text_size_general"
+                android:background="@drawable/btn_bg_ok" />
+            <!-- button cancel -->
+            <Button
+                android:id="@+id/fw2_layer2_btn_cancel"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="@dimen/gesture_list_outter_margin"
+                android:text="@string/cancel"
+                android:textColor="@color/global_bkground"
+                android:textSize="@dimen/text_size_general"
+                android:background="@drawable/btn_bg_cancel" />
+        </LinearLayout>
     </LinearLayout>
 </FrameLayout>

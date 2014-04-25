@@ -26,11 +26,16 @@ import java.io.IOException;
  */
 public class GesturePersistence {
 
-    public static void saveGesture(Context context, Gesture gesture, ResolvedComponent resolvedComponent)
-            throws GestureLibraryException, GestureSaveIconException, GestureDbException {
+    public static Bitmap toBitmap(Context context, Gesture gesture){
         int thumbWidth = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_width);
         int thumbHeight = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_height);
         Bitmap gestureBitmap = gesture.toBitmap(thumbWidth, thumbHeight, 10, 0xFFFF0000);
+        return gestureBitmap;
+    }
+
+    public static void saveGesture(Context context, Gesture gesture, ResolvedComponent resolvedComponent)
+            throws GestureLibraryException, GestureSaveIconException, GestureDbException {
+        Bitmap gestureBitmap = toBitmap(context, gesture);
 
         // save to GestureLibrary
         String gestureName = GestureUtil.getInstance().addGesture(gesture);
@@ -82,6 +87,15 @@ public class GesturePersistence {
     }
 
     public static ResolvedComponent loadGesture(Context context, Gesture gesture){
+        GestureDbTable.DbData dbData = loadGestureEx(context, gesture);
+        if(null != dbData){
+            return dbData.resolvedComponent;
+        }
+
+        return null;
+    }
+
+    public static GestureDbTable.DbData loadGestureEx(Context context, Gesture gesture){
         Prediction prediction = GestureUtil.getInstance().matchGesture(gesture);
         if(null == prediction){
             return null;
@@ -93,7 +107,7 @@ public class GesturePersistence {
         }
         //Toast.makeText(context, "prediction.score=" + prediction.score, Toast.LENGTH_SHORT).show();
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
-        return gestureDbTable.getGesture(gestureName).resolvedComponent;
+        return gestureDbTable.getGesture(gestureName);
     }
 
     /**
