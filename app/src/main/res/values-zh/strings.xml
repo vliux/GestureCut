@@ -27,4 +27,9 @@
     <!-- warning dialog of highly duplicated gesture trying to be added -->
     <string name="add_gesture_alert_duplicate">不建议添加该手势</string>
     <string name="add_gesture_alert_duplicate_content">新的手势和已存在的手势过于相似，请重画一个手势.</string>
+
+    <!-- FwDialogView sub-titles for imageview -->
+    <string name="add_gesture_subtitle_new_gesture">新的手势</string>
+    <string name="add_gesture_subtitle_target_task">对应的任务</string>
+    <string name="add_gesture_subtitle_similar_gesture">已存在的手势</string>
 </resources>

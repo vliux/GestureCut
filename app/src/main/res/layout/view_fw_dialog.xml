@@ -47,25 +47,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gesture_list_outter_margin"
-            android:background="@color/beige_light_semi_transparent">
+            android:background="@drawable/beige_bg_round_corner">
 
-            <TableRow>
+            <TableRow
+                android:background="@color/gesture_cur_blue_light_semi_transparent"
+                android:padding="@dimen/fw2_tablelayout_padding">
                 <TextView
                     android:id="@+id/fw_layer2_tv_title1"
                     android:gravity="center"
                     android:textSize="@dimen/text_size_general"
-                    android:textColor="@color/gesture_cur_blue"
+                    android:textColor="@color/global_bkground"
                     android:text="New gesture" />
 
                 <TextView
                     android:id="@+id/fw_layer2_tv_title2"
                     android:gravity="center"
                     android:textSize="@dimen/text_size_general"
-                    android:textColor="@color/gesture_cur_blue"
+                    android:textColor="@color/global_bkground"
                     android:text="Target task" />
             </TableRow>
 
-            <TableRow>
+            <TableRow
+                android:padding="@dimen/fw2_tablelayout_padding">
                 <ImageView
                     android:id="@+id/fw_layer2_iv1"
                     android:src="@drawable/ic_launcher"
