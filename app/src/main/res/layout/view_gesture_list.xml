@@ -10,12 +10,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_bar_height"
-        android:padding="@dimen/gesture_list_outter_margin"
         android:background="@color/gesture_cur_blue">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/gesture_list_outter_margin"
             style="@style/text_basic_style"
             android:textSize="@dimen/text_size_small_title"
             android:text="@string/gesture_list_title"
@@ -23,10 +23,12 @@
 
         <ImageView
             android:id="@+id/gesture_list_del"
-            android:layout_width="@dimen/icon_dimen_global"
-            android:layout_height="@dimen/icon_dimen_global"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:padding="@dimen/gesture_list_outter_margin"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_del"/>
+            android:src="@drawable/ic_del"
+            android:background="@drawable/btn_bg_transparent"/>
 
         <!--<ImageView
             android:id="@+id/gesture_list_add"
