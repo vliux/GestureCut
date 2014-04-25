@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">快手</string>
+    <string name="app_name">弹指</string>
 
     <!-- text in background for recording a new gesture -->
     <string name="gesture_bg_title_record">画出要添加的手势</string>
