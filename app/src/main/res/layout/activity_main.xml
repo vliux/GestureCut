@@ -47,12 +47,12 @@
 
     <ImageView
         android:id="@+id/main_settings_outmost"
-        android:layout_width="@dimen/icon_dimen_global"
-        android:layout_height="@dimen/icon_dimen_global"
+        android:layout_width="@dimen/main_actv_topleft_iv_dimen"
+        android:layout_height="@dimen/main_actv_topleft_iv_dimen"
         android:layout_gravity="top|left"
-        android:layout_marginTop="@dimen/settings_outmost_margin"
-        android:layout_marginLeft="@dimen/settings_outmost_margin"
-        android:src="@drawable/ic_info"/>
+        android:padding="@dimen/settings_outmost_margin"
+        android:src="@drawable/ic_info"
+        android:background="@drawable/btn_bg_transparent"/>
 
     <org.vliux.android.gesturecut.ui.view.UnlockBar
         android:id="@+id/main_unlock_bar"
