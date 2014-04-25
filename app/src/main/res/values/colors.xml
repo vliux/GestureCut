@@ -13,4 +13,7 @@
     <!-- the bg color of GestureOverlayView on Second FloatWindow -->
     <color name="gesture_create_bg_semi_transparent">#BB000000</color>
     <color name="beige_light_semi_transparent">#DDFDFDCA</color>
+
+    <color name="red_warning">@android:color/holo_red_light</color>
+    <color name="red_warning_dark">@android:color/holo_red_dark</color>
 </resources>

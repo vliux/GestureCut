@@ -127,29 +127,41 @@ public class SecondaryFloatWindow extends LinearLayout
     private void addGesture(final Gesture gesture){
         if(null != mResolvedComponent){
             //Toast.makeText(getContext(), getContext().getString(R.string.saving_gesture), Toast.LENGTH_SHORT).show();
-            mFwDialog.show(getContext().getString(R.string.add_gesture_confirm_title),
-                    getContext().getString(R.string.add_gesture_confirm_content),
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            try {
-                                GesturePersistence.saveGesture(getContext(), gesture, mResolvedComponent);
-                                WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
-                            } catch (GesturePersistence.GestureLibraryException e) {
-                                e.printStackTrace();
-                            } catch (GesturePersistence.GestureSaveIconException e) {
-                                e.printStackTrace();
-                            } catch (GesturePersistence.GestureDbException e) {
-                                e.printStackTrace();
+            if(null != GesturePersistence.loadGesture(getContext(), gesture)){
+                mFwDialog.showAlert(getContext().getString(R.string.add_gesture_alert_duplicate),
+                        getContext().getString(R.string.add_gesture_alert_duplicate_content),
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mFwDialog.hide();
+                            }
+                        });
+            }else{
+                mFwDialog.showConfirm(getContext().getString(R.string.add_gesture_confirm_title),
+                        getContext().getString(R.string.add_gesture_confirm_content),
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                try {
+                                    GesturePersistence.saveGesture(getContext(), gesture, mResolvedComponent);
+                                    WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
+                                } catch (GesturePersistence.GestureLibraryException e) {
+                                    e.printStackTrace();
+                                } catch (GesturePersistence.GestureSaveIconException e) {
+                                    e.printStackTrace();
+                                } catch (GesturePersistence.GestureDbException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        },
+                        new OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mFwDialog.hide();
                             }
                         }
-                    },
-                    new OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mFwDialog.hide();
-                        }
-                    });
+                );
+            }
         }
     }
 

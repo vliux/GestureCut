@@ -91,7 +91,7 @@ public class GesturePersistence {
         if(null == gestureName || gestureName.length() <= 0){
             return null;
         }
-        Toast.makeText(context, "prediction.score=" + prediction.score, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(context, "prediction.score=" + prediction.score, Toast.LENGTH_SHORT).show();
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
         return gestureDbTable.getGesture(gestureName).resolvedComponent;
     }

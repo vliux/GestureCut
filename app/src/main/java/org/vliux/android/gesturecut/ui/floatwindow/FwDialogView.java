@@ -54,9 +54,26 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         return getVisibility() == VISIBLE;
     }
 
-    public void show(String title, String content, OnClickListener saveClicked, OnClickListener cancelClicked){
+    public void showAlert(String title, String content, OnClickListener okClicked){
         mTvTitle.setText(title);
         mTvContent.setText(content);
+
+        mBtnSave.setText(getContext().getString(R.string.get_it));
+        mBtnSave.setBackgroundResource(R.drawable.btn_bg_warning);
+        mBtnCancel.setVisibility(GONE);
+
+        mSaveClicked = okClicked;
+        getShowHideAnimator(true).start();
+    }
+
+    public void showConfirm(String title, String content, OnClickListener saveClicked, OnClickListener cancelClicked){
+        mTvTitle.setText(title);
+        mTvContent.setText(content);
+
+        mBtnSave.setText(getContext().getString(R.string.save));
+        mBtnSave.setBackgroundResource(R.drawable.btn_bg_ok);
+        mBtnCancel.setVisibility(VISIBLE);
+
         mSaveClicked = saveClicked;
         mCancelClicked = cancelClicked;
         getShowHideAnimator(true).start();
@@ -73,18 +90,19 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         ObjectAnimator scaleYAnimator = null;
         ObjectAnimator alphaAnimator = null;
         if(forShown){
-            scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 0.0f, 1.0f);
-            scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 0.0f, 1.0f);
+            //scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 0.5f, 1.0f);
+            //scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 0.5f, 1.0f);
             alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
         }else{
-            scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 1.0f, 0.0f);
-            scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 1.0f, 0.0f);
+            //scaleXAnimator = ObjectAnimator.ofFloat(this, "scaleX", 1.0f, 0.0f);
+            //scaleYAnimator = ObjectAnimator.ofFloat(this, "scaleY", 1.0f, 0.0f);
             alphaAnimator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.0f);
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(500L);
-        animatorSet.play(scaleXAnimator).with(scaleYAnimator).with(alphaAnimator);
+        //animatorSet.play(scaleXAnimator).with(scaleYAnimator).with(alphaAnimator);
+        animatorSet.play(alphaAnimator);
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {

@@ -16,10 +16,15 @@
 
     <string name="cancel">取消</string>
     <string name="save">保存</string>
+    <string name="get_it">知道了</string>
 
     <string name="appinfo_app_detail_clz">类名: \u0020</string>
     <string name="appinfo_app_detail_pkg">包名: \u0020</string>
 
     <string name="add_gesture_confirm_title">添加新的手势</string>
     <string name="add_gesture_confirm_content">确认保存该手势吗?</string>
+
+    <!-- warning dialog of highly duplicated gesture trying to be added -->
+    <string name="add_gesture_alert_duplicate">不建议添加该手势</string>
+    <string name="add_gesture_alert_duplicate_content">新的手势和已存在的手势过于相似，请重画一个手势.</string>
 </resources>
