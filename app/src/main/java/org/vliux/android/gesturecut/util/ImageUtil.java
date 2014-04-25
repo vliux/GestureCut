@@ -29,7 +29,7 @@ import org.vliux.android.gesturecut.util.AppLog;
  */
 public class ImageUtil {
     public static final String TAG = ImageUtil.class.getSimpleName();
-    public static final Bitmap.CompressFormat DEFAULT_COMPRESS_FORMAT = Bitmap.CompressFormat.JPEG;
+    public static final Bitmap.CompressFormat DEFAULT_COMPRESS_FORMAT = Bitmap.CompressFormat.PNG;
 
     public static void recycleBitmap(Bitmap bitmap) {
         if (null == bitmap) {
@@ -172,7 +172,7 @@ public class ImageUtil {
     public static String saveBmp(Bitmap bmp, File dir, String fileName, int quality,
                                  Bitmap.CompressFormat compressFormat) throws IOException {
         if (null == fileName || fileName.length() <= 0) {
-            fileName = String.valueOf(new Date().getTime()) + ".jpg";
+            fileName = String.valueOf(new Date().getTime()) + ".png";
         }
         if (null == compressFormat) {
             compressFormat = DEFAULT_COMPRESS_FORMAT;
