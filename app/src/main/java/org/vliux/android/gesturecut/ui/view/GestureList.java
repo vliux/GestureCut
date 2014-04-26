@@ -28,6 +28,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
@@ -99,6 +100,8 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         if(mNeedShowHide){
             setTranslationX(-mScreenWidth);
         }
+
+        setEmptyGestureView(mGestureListView);
     }
 
     /**
@@ -112,6 +115,11 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         }else{
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mGestureAddedBroadcastReceiver);
         }
+    }
+
+    private void setEmptyGestureView(ListView gestureListView){
+        TextView tvEmpty = (TextView)findViewById(R.id.gesture_empty_tv);
+        gestureListView.setEmptyView(tvEmpty);
     }
 
     @Override

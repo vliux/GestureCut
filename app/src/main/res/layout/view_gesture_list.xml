@@ -48,13 +48,25 @@
         android:id="@+id/gesture_listview"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="1"
         android:paddingLeft="@dimen/gesture_list_outter_margin"
         android:paddingRight="@dimen/gesture_list_outter_margin"
-        android:layout_weight="1"
         android:cacheColorHint="@color/gesture_list_bkground"
         android:divider="@color/gesture_cur_blue_light_semi_transparent"
         android:dividerHeight="@dimen/listview_divider_thin"
         android:listSelector="@drawable/gesture_list_selector">
     </ListView>
-
+    <!-- empty view for ListView -->
+    <TextView
+        android:id="@+id/gesture_empty_tv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:paddingLeft="@dimen/gesture_list_outter_margin"
+        android:paddingRight="@dimen/gesture_list_outter_margin"
+        android:gravity="center"
+        android:text="@string/gesture_list_no_defined"
+        android:textSize="@dimen/text_size_small_title"
+        android:textColor="@color/gesture_cur_blue"
+        android:visibility="gone"/>
 </LinearLayout>
