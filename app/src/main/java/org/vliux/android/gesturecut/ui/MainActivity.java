@@ -76,6 +76,8 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         mTimeChangeReceiver = new TimeChangeReceiver();
         mScreenHeight = ScreenUtil.getScreenSize(this)[1];
+
+        startActivity(new Intent(this, WelcomeActivity.class));
     }
 
     private void loadCustomFont(){

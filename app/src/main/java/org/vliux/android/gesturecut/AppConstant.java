@@ -6,7 +6,7 @@ package org.vliux.android.gesturecut;
 public class AppConstant {
 
     public static class LockScreen{
-        public static final float MIN_UNLOCK_FLOING_VELOCITY = -400.0f;
+        public static final float MIN_UNLOCK_FLOING_VELOCITY = -200.0f;
     }
 
     public static class Gestures{
