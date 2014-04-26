@@ -54,6 +54,19 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="top"
                 android:visibility="gone">
+                <!-- warning text for invalid target ResolvedComponent -->
+                <TextView
+                    android:id="@+id/gesture_tv_invalid_rc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/settings_outmost_margin"
+                    android:paddingLeft="@dimen/settings_outmost_margin"
+                    android:paddingRight="@dimen/settings_outmost_margin"
+                    android:textColor="@color/red_warning"
+                    android:textSize="@dimen/text_size_general"
+                    android:textStyle="bold"
+                    android:background="@color/beige_light_semi_transparent"
+                    android:visibility="gone"/>
                 <!-- target app info, when adding a new gesture -->
                 <org.vliux.android.gesturecut.ui.view.AppInfoView
                     android:id="@+id/gesture_appinfoview"

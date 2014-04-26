@@ -1,8 +1,5 @@
 package org.vliux.android.gesturecut.biz.gesture;
 
-import android.app.ActivityManager;
-import android.content.ComponentName;
-import android.content.ContentValues;
 import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.Prediction;
@@ -25,6 +22,7 @@ import java.io.IOException;
  * Created by vliux on 4/9/14.
  */
 public class GesturePersistence {
+    private static final String TAG = GesturePersistence.class.getSimpleName();
 
     public static Bitmap toBitmap(Context context, Gesture gesture){
         int thumbWidth = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_width);
@@ -34,9 +32,10 @@ public class GesturePersistence {
     }
 
     public static void saveGesture(Context context, Gesture gesture, ResolvedComponent resolvedComponent)
-            throws GestureLibraryException, GestureSaveIconException, GestureDbException {
+            throws GestureLibraryException,
+            GestureSaveIconException,
+            GestureDbException{
         Bitmap gestureBitmap = toBitmap(context, gesture);
-
         // save to GestureLibrary
         String gestureName = GestureUtil.getInstance().addGesture(gesture);
         if(null == gestureName || gestureName.length() <= 0){

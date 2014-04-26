@@ -7,12 +7,15 @@ import android.content.pm.PackageManager;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.util.AppLog;
 
 /**
  * Created by vliux on 4/14/14.
  * Represent an entity of the top task.
  */
 public class ResolvedComponent {
+    private static final String TAG = ResolvedComponent.class.getSimpleName();
+
     public enum ResolvedType{
         COMPONENT_NAME,
         PACKAGE_NAME,
@@ -57,12 +60,17 @@ public class ResolvedComponent {
                 break;
         }
         if(null != intent){
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.getApplicationContext().startActivity(intent);
-        }else{
-            Toast.makeText(context.getApplicationContext(),
-                    context.getApplicationContext().getString(R.string.start_activity_failed),
-                    Toast.LENGTH_SHORT).show();
+            try{
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.getApplicationContext().startActivity(intent);
+                return;
+            }catch (Exception e){
+                AppLog.loge(TAG, "startActivity() of ResolvedComponent throws Exception");
+                e.printStackTrace();
+            }
         }
+        Toast.makeText(context.getApplicationContext(),
+                context.getApplicationContext().getString(R.string.start_activity_failed),
+                Toast.LENGTH_SHORT).show();
     }
 }

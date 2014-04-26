@@ -5,11 +5,9 @@ import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -21,9 +19,11 @@ import android.widget.TextView;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.biz.TaskFilterManager;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
 import org.vliux.android.gesturecut.ui.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.AnimUtil;
@@ -46,6 +46,7 @@ public class SecondaryFloatWindow extends LinearLayout
     private AppInfoView mAppInfoView; // app info shown when adding new gesture
     private LinearLayout mAppInfoLayout; // layout containing AppInfoView
     private ImageView mIvAppIconUseAnim; // app icon for animator when using gesture
+    private TextView mTvInvalidRc; // show warning for invalid ResolvedComponent
 
     /* ResolvedComponent as a gesture target. This variable is is used for kepping the reference,
      * as far as, when actually saving the new gesture, the top-level component may be different than what is shown to user.
@@ -77,6 +78,7 @@ public class SecondaryFloatWindow extends LinearLayout
         mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
         mAppInfoLayout = (LinearLayout)findViewById(R.id.gesture_appinfo_layout);
         mIvMore = (ImageView)findViewById(R.id.gesture_more);
+        mTvInvalidRc = (TextView)findViewById(R.id.gesture_tv_invalid_rc);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
@@ -194,6 +196,14 @@ public class SecondaryFloatWindow extends LinearLayout
             case ADD:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
                 mResolvedComponent = TaskManager.getTopComponent(getContext());
+                try {
+                    TaskFilterManager.getInstance().processAddFilters(getContext(), mResolvedComponent);
+                    mTvInvalidRc.setVisibility(GONE);
+                } catch (TaskFilterException e) {
+                    e.printStackTrace();
+                    mTvInvalidRc.setVisibility(VISIBLE);
+                    mTvInvalidRc.setText(e.getMessage());
+                }
                 mAppInfoView.setResolvedComponent(mResolvedComponent);
                 break;
             case USE:
