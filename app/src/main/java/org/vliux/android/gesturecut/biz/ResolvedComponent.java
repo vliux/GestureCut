@@ -56,7 +56,13 @@ public class ResolvedComponent {
                 intent = packageManager.getLaunchIntentForPackage(packageName);
                 break;
         }
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.getApplicationContext().startActivity(intent);
+        if(null != intent){
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.getApplicationContext().startActivity(intent);
+        }else{
+            Toast.makeText(context.getApplicationContext(),
+                    context.getApplicationContext().getString(R.string.start_activity_failed),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

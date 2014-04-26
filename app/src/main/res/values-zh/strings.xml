@@ -8,6 +8,7 @@
 
     <string name="saving_gesture_completed">手势%s已保存</string>
     <string name="start_activity_from_gesture">通过手势启动任务...</string>
+    <string name="start_activity_failed">抱歉，无法启动该任务</string>
 
     <string name="gesture_list_title">您的手势</string>
     <string name="gesture_list_no_defined">您还没有可用的手势，请先添加手势。</string>
