@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/gesture_list_outter_margin"
-            android:text="添加新手势"
+            android:text="认识浮动小划块"
             android:textSize="@dimen/text_size_small_title"
             android:textColor="@color/global_bkground"
             android:textStyle="bold" />
