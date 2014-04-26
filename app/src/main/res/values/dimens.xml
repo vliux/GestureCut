@@ -44,4 +44,6 @@
 
     <!-- action bar -->
     <dimen name="back_imgv_margin_horiz">10dp</dimen>
+    <!-- welcome pages -->
+    <dimen name="welcome_dots_margin_bottom">45dp</dimen>
 </resources>

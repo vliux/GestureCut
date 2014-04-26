@@ -6,8 +6,8 @@
 
     <gradient
         android:type="linear"
-        android:startColor="@color/global_bkground"
-        android:endColor="@color/gesture_cur_blue"
+        android:startColor="@color/gesture_cur_blue"
+        android:endColor="@color/gesture_cur_blue_light_semi_transparent"
         android:angle="90"/>
 
 </shape>

@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/welcome_float_window" />
+            android:src="@drawable/welcome_add_gesture" />
     </LinearLayout>
 
     <!-- dots -->
@@ -41,12 +41,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/gesture_list_outter_margin"
-            android:src="@drawable/welcome_dot_active"/>
+            android:src="@drawable/welcome_dot_normal"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/gesture_list_outter_margin"
-            android:src="@drawable/welcome_dot_normal"/>
+            android:src="@drawable/welcome_dot_active"/>
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
