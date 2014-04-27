@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
@@ -15,7 +16,7 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
 /**
  * Created by vliux on 4/26/14.
  */
-public class WelcomeActivity extends BaseActivity {
+public class WelcomeActivity extends BaseActivity implements View.OnClickListener{
     private static final int NUM_PAGES = 4;
     private ViewPager mViewPager;
 
@@ -67,10 +68,21 @@ public class WelcomeActivity extends BaseActivity {
                     break;
                 case 3:
                     pageView = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.view_welcome_04, null);
+                    Button startBtn = (Button)pageView.findViewById(R.id.welcome_start_btn);
+                    startBtn.setOnClickListener(WelcomeActivity.this);
                     break;
             }
             container.addView(pageView);
             return pageView;
         }
     };
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.welcome_start_btn:
+                finish();
+                break;
+        }
+    }
 }
