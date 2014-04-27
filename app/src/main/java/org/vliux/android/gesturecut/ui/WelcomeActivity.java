@@ -1,5 +1,7 @@
 package org.vliux.android.gesturecut.ui;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -8,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.util.PreferenceHelper;
 
 /**
  * Created by vliux on 4/26/14.
@@ -15,6 +18,15 @@ import org.vliux.android.gesturecut.R;
 public class WelcomeActivity extends BaseActivity {
     private static final int NUM_PAGES = 4;
     private ViewPager mViewPager;
+
+    public static void startWelcomeIfNeeded(Context context){
+        boolean isAleadyShown =
+                PreferenceHelper.getUserPref(context.getApplicationContext(), PreferenceHelper.KEY_WELCOME_PAGE_ALREADY_SHOWN, false);
+        if(!isAleadyShown){
+            context.startActivity(new Intent(context, WelcomeActivity.class));
+            PreferenceHelper.setUserPref(context.getApplicationContext(), PreferenceHelper.KEY_WELCOME_PAGE_ALREADY_SHOWN, true);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

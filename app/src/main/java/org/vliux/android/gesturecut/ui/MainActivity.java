@@ -77,7 +77,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mTimeChangeReceiver = new TimeChangeReceiver();
         mScreenHeight = ScreenUtil.getScreenSize(this)[1];
 
-        startActivity(new Intent(this, WelcomeActivity.class));
+        // show welcome page after 1000ms
+        mOutmostLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                WelcomeActivity.startWelcomeIfNeeded(MainActivity.this);
+            }
+        }, 1000L);
     }
 
     private void loadCustomFont(){
