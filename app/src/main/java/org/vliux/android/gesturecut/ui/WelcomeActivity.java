@@ -22,10 +22,10 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
 
     public static void startWelcomeIfNeeded(Context context){
         boolean isAleadyShown =
-                PreferenceHelper.getUserPref(context.getApplicationContext(), PreferenceHelper.KEY_WELCOME_PAGE_ALREADY_SHOWN, false);
+                PreferenceHelper.getUserPref(context.getApplicationContext(), R.string.pref_key_welcome_already_shown, false);
         if(!isAleadyShown){
             context.startActivity(new Intent(context, WelcomeActivity.class));
-            PreferenceHelper.setUserPref(context.getApplicationContext(), PreferenceHelper.KEY_WELCOME_PAGE_ALREADY_SHOWN, true);
+            PreferenceHelper.setUserPref(context.getApplicationContext(), R.string.pref_key_welcome_already_shown, true);
         }
     }
 

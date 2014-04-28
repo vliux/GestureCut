@@ -37,4 +37,14 @@
     <string name="add_gesture_subtitle_new_gesture">New gesture</string>
     <string name="add_gesture_subtitle_target_task">Target task</string>
     <string name="add_gesture_subtitle_similar_gesture">Existing gesture</string>
+
+    <!-- settings -->
+    <string name="setting_lockscreen_status">Lock-screen</string>
+    <string name="setting_lockscreen_status_summary_on">Lock-screen enabled</string>
+    <string name="setting_lockscreen_status_summary_off">Lock-screen disabled</string>
+
+    <!-- preference keys -->
+    <string name="pref_key_lockscreen_status">PREF_KEY_LOCKSCREEN_STATUS</string>
+    <string name="pref_key_welcome_already_shown">PREF_KEY_WELCOME_ALREADY_SHOWN</string>
+
 </resources>

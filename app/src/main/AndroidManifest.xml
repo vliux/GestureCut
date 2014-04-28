@@ -43,6 +43,13 @@
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
         </activity>
+
+        <activity android:name=".ui.SettingsActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:screenOrientation="portrait">
+        </activity>
+
     </application>
 
 </manifest>

@@ -23,7 +23,7 @@ public class GestureCutApplication extends Application {
     public void onCreate() {
         super.onCreate();
         checkDebuggable();
-        startKeyGuard();
+        initKeyguardRelated();
         controlFloatWindow(true);
         GestureUtil.init(getApplicationContext());
         initDb();
@@ -37,6 +37,11 @@ public class GestureCutApplication extends Application {
 
     private void initDb(){
         DbManager.init(getApplicationContext());
+        GuestKeyGuardService.startKeyGuard(this);
+    }
+
+    private void initKeyguardRelated(){
+        PhoneStateMonitor.init(this);
     }
 
     private void controlFloatWindow(final boolean isToShow) {
@@ -62,12 +67,7 @@ public class GestureCutApplication extends Application {
         }
     }
 
-    private void startKeyGuard() {
-        Intent intent = new Intent(getApplicationContext(), GuestKeyGuardService.class);
-        startService(intent);
-        // init monitor for incomming calls
-        PhoneStateMonitor.init(this);
-    }
+
 
     /*public static void startTargetActivity(Context context) {
         if (null != sTargetComponentName) {

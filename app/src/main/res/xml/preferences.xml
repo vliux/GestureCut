@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:key="@string/pref_key_lockscreen_status"
+        android:title="@string/setting_lockscreen_status"
+        android:summaryOff="@string/setting_lockscreen_status_summary_off"
+        android:summaryOn="@string/setting_lockscreen_status_summary_on"
+        android:defaultValue="true"
+        android:selectable="false"/>
+</PreferenceScreen>

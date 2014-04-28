@@ -40,8 +40,13 @@ public class PhoneStateMonitor extends BroadcastReceiver {
     private boolean mIsOnCall = false;
 
     public static void init(Context context){
-        sInstance =
-                new PhoneStateMonitor(context);
+        if(null == sInstance){
+            synchronized (PhoneStateMonitor.class){
+                if(null == sInstance){
+                    sInstance = new PhoneStateMonitor(context);
+                }
+            }
+        }
     }
 
     public static PhoneStateMonitor getInstance(){
@@ -51,7 +56,6 @@ public class PhoneStateMonitor extends BroadcastReceiver {
     private PhoneStateMonitor(Context context){
         mAppContext = context.getApplicationContext();
         mTelephonyManager = (TelephonyManager)mAppContext.getSystemService(Context.TELEPHONY_SERVICE);
-        register();
     }
 
     /**
@@ -96,7 +100,10 @@ public class PhoneStateMonitor extends BroadcastReceiver {
         }
     }
 
-    private void register() {
+    /**
+     * Need to call explicitly.
+     */
+    public void register() {
         IntentFilter filter = new IntentFilter();
         for (String action : PHONE_STATE_INTENTS) {
             filter.addAction(action);

@@ -37,4 +37,10 @@
     <string name="add_gesture_subtitle_new_gesture">新的手势</string>
     <string name="add_gesture_subtitle_target_task">对应的任务</string>
     <string name="add_gesture_subtitle_similar_gesture">已存在的手势</string>
+
+    <!-- settings -->
+    <string name="setting_lockscreen_status">锁屏状态</string>
+    <string name="setting_lockscreen_status_summary_on">锁屏已打开</string>
+    <string name="setting_lockscreen_status_summary_off">锁屏已关闭</string>
+
 </resources>
