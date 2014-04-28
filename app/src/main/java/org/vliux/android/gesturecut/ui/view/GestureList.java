@@ -129,21 +129,28 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     public void onClick(View v) {
         switch(v.getId()){
             case R.id.gesture_list_del:
-                mIsDelMode = !mIsDelMode;
-                if(mIsDelMode){
-                    mIvDel.setImageResource(R.drawable.ic_checkmark);
-                }else{
-                    mIvDel.setImageResource(R.drawable.ic_del);
+                if(mListViewAdapter.getCount() > 0){
+                    // enter delete mode only if count > 0
+                    mIsDelMode = !mIsDelMode;
+                    if(mIsDelMode){
+                        mIvDel.setImageResource(R.drawable.ic_checkmark);
+                    }else{
+                        mIvDel.setImageResource(R.drawable.ic_del);
+                    }
+                    mListViewAdapter.notifyDataSetChanged();
                 }
-                mListViewAdapter.notifyDataSetChanged();
                 break;
             case R.id.item_gesture_del:
                 if(mIsDelMode){
                     String gestureName = (String)v.getTag();
                     if(null != gestureName && gestureName.length() > 0){
-                        Toast.makeText(getContext(), "removing gesture " + gestureName, Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(), "removing gesture " + gestureName, Toast.LENGTH_SHORT).show();
                         GesturePersistence.removeGesture(getContext(), gestureName);
                         mListViewAdapter.notifyDataSetChanged();
+                        if(mListViewAdapter.getCount() <= 0){
+                            mIsDelMode = false;
+                            mIvDel.setImageResource(R.drawable.ic_del);
+                        }
                     }
                 }
                 break;

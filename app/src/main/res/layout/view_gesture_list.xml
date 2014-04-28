@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:paddingTop="@dimen/gesture_list_tite_btns_padding_verti"
             android:paddingBottom="@dimen/gesture_list_tite_btns_padding_verti"
-            android:layout_alignParentRight="true"
+            android:layout_toLeftOf="@+id/gesture_list_settings"
             android:src="@drawable/ic_del"
             android:background="@drawable/btn_bg_transparent"/>
 
@@ -35,9 +35,9 @@
             android:id="@+id/gesture_list_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
             android:paddingTop="@dimen/gesture_list_tite_btns_padding_verti"
             android:paddingBottom="@dimen/gesture_list_tite_btns_padding_verti"
-            android:layout_toLeftOf="@id/gesture_list_del"
             android:src="@drawable/ic_settings"
             android:background="@drawable/btn_bg_transparent"/>
     </RelativeLayout>
