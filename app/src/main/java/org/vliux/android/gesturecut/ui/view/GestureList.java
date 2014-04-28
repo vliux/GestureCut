@@ -38,6 +38,7 @@ import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.ui.WelcomeActivity;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
@@ -58,6 +59,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private boolean mNeedShowHide = false;
 
     private ImageView mIvDel;
+    private ImageView mIvHelp;
     private ListView mGestureListView;
     private int mScreenWidth;
     private boolean mIsShown = false;
@@ -82,9 +84,11 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
         mIvDel = (ImageView)findViewById(R.id.gesture_list_del);
+        mIvHelp = (ImageView)findViewById(R.id.gesture_list_help);
         mGestureListView = (ListView)findViewById(R.id.gesture_listview);
 
         mIvDel.setOnClickListener(this);
+        mIvHelp.setOnClickListener(this);
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
         mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
@@ -143,6 +147,10 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                         mListViewAdapter.notifyDataSetChanged();
                     }
                 }
+                break;
+            case R.id.gesture_list_help:
+                getContext().startActivity(new Intent(getContext(), WelcomeActivity.class));
+                break;
         }
     }
 

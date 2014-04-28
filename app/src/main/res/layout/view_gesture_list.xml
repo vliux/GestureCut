@@ -30,13 +30,15 @@
             android:src="@drawable/ic_del"
             android:background="@drawable/btn_bg_transparent"/>
 
-        <!--<ImageView
-            android:id="@+id/gesture_list_add"
-            android:layout_width="@dimen/icon_dimen_global"
-            android:layout_height="@dimen/icon_dimen_global"
-            android:layout_toLeftOf="@id/gesture_list_settings"
+        <ImageView
+            android:id="@+id/gesture_list_help"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/gesture_list_outter_margin"
+            android:layout_toLeftOf="@id/gesture_list_del"
             android:layout_marginRight="@dimen/settings_outmost_margin"
-            android:src="@drawable/ic_edit"/>-->
+            android:src="@drawable/ic_info"
+            android:background="@drawable/btn_bg_transparent"/>
     </RelativeLayout>
 
     <!--<View
