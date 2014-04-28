@@ -32,13 +32,13 @@
             android:background="@drawable/btn_bg_transparent"/>
 
         <ImageView
-            android:id="@+id/gesture_list_help"
+            android:id="@+id/gesture_list_settings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/gesture_list_tite_btns_padding_verti"
             android:paddingBottom="@dimen/gesture_list_tite_btns_padding_verti"
             android:layout_toLeftOf="@id/gesture_list_del"
-            android:src="@drawable/ic_info"
+            android:src="@drawable/ic_settings"
             android:background="@drawable/btn_bg_transparent"/>
     </RelativeLayout>
 

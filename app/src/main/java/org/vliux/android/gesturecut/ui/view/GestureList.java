@@ -21,8 +21,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
@@ -38,6 +36,7 @@ import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.ui.SettingsActivity;
 import org.vliux.android.gesturecut.ui.WelcomeActivity;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
@@ -59,7 +58,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private boolean mNeedShowHide = false;
 
     private ImageView mIvDel;
-    private ImageView mIvHelp;
+    private ImageView mIvSetting;
     private ListView mGestureListView;
     private int mScreenWidth;
     private boolean mIsShown = false;
@@ -84,11 +83,11 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
         mIvDel = (ImageView)findViewById(R.id.gesture_list_del);
-        mIvHelp = (ImageView)findViewById(R.id.gesture_list_help);
+        mIvSetting = (ImageView)findViewById(R.id.gesture_list_settings);
         mGestureListView = (ListView)findViewById(R.id.gesture_listview);
 
         mIvDel.setOnClickListener(this);
-        mIvHelp.setOnClickListener(this);
+        mIvSetting.setOnClickListener(this);
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
         mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
@@ -148,8 +147,8 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     }
                 }
                 break;
-            case R.id.gesture_list_help:
-                getContext().startActivity(new Intent(getContext(), WelcomeActivity.class));
+            case R.id.gesture_list_settings:
+                getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
                 break;
         }
     }

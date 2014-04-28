@@ -8,4 +8,11 @@
         android:summaryOn="@string/setting_lockscreen_status_summary_on"
         android:defaultValue="true"
         android:selectable="false"/>
+
+    <Preference
+        android:title="@string/setting_help_title"
+        android:summary="@string/setting_help_summary">
+        <intent android:targetClass="org.vliux.android.gesturecut.ui.WelcomeActivity"
+            android:targetPackage="org.vliux.android.gesturecut"/>
+    </Preference>
 </PreferenceScreen>

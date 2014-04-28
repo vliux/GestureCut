@@ -42,5 +42,6 @@
     <string name="setting_lockscreen_status">锁屏状态</string>
     <string name="setting_lockscreen_status_summary_on">锁屏已打开</string>
     <string name="setting_lockscreen_status_summary_off">锁屏已关闭</string>
-
+    <string name="setting_help_title">帮助</string>
+    <string name="setting_help_summary">显示引导页</string>
 </resources>
