@@ -82,7 +82,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         mGestureListView = (BottomBarAwaredListView)findViewById(R.id.gesture_listview);
         mBottomBar = (BottomBar)findViewById(R.id.gesture_bottom_bar);
 
-        mBottomBar.setOnClickListener(this);
+        mBottomBar.setOnDeleteClicked(mOnBottomBarClickedListener);
         mIvSetting.setOnClickListener(this);
         mGestureListView.setBottomBar(mBottomBar);
         mListViewAdapter = new GestureListViewAdapter();
@@ -129,14 +129,19 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             case R.id.gesture_list_settings:
                 getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
                 break;
-            case R.id.gesture_bottom_bar_del:
-                if(mLastLongClickPosition >= 0 && mLastLongClickPosition < mListViewAdapter.getCount()){
-                    GesturePersistence.removeGesture(getContext(), mListViewAdapter.getGestureName(mLastLongClickPosition));
-                }
-                mLastLongClickPosition = -1;
-                break;
         }
     }
+
+    private OnClickListener mOnBottomBarClickedListener = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(mLastLongClickPosition >= 0 && mLastLongClickPosition < mListViewAdapter.getCount()){
+                GesturePersistence.removeGesture(getContext(), mListViewAdapter.getGestureName(mLastLongClickPosition));
+                mListViewAdapter.notifyDataSetChanged();
+            }
+            mLastLongClickPosition = -1;
+        }
+    };
 
     private class GestureListViewAdapter extends BaseAdapter{
         private List<String> mGestureNames;
@@ -188,7 +193,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 viewHolder = new GestureListViewHolder();
                 viewHolder.gestureIcon = (ImageView)convertView.findViewById(R.id.item_gesture_icon);
                 viewHolder.appInfoView = (AppInfoView)convertView.findViewById(R.id.item_gesture_appinfo);
-                viewHolder.delIcon = (ImageView)convertView.findViewById(R.id.item_gesture_del);
                 convertView.setTag(viewHolder);
             }else{
                 viewHolder = (GestureListViewHolder)convertView.getTag();
@@ -208,7 +212,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         //public ImageView appIcon;
         //public TextView textView;
         public AppInfoView appInfoView;
-        public ImageView delIcon;
     }
 
     private class LoadGestureDataRunnable implements Runnable{
@@ -268,8 +271,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                     NotifyHandlerData notifyHandlerData = (NotifyHandlerData)msg.obj;
                     notifyHandlerData.viewHolder.gestureIcon.setImageBitmap(notifyHandlerData.bitmap);
                     notifyHandlerData.viewHolder.appInfoView.setResolvedComponent(notifyHandlerData.resolvedComponent);
-                    // set tag, used in onClick()
-                    notifyHandlerData.viewHolder.delIcon.setTag(notifyHandlerData.gestureName);
                     break;
             }
         }
@@ -349,10 +350,9 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 && KeyEvent.ACTION_UP == event.getAction()){
             if(mBottomBar.isShown()){
                 mBottomBar.hideBottomBar();
-            }else {
-                hide();
+                return true;
             }
-            return true;
+            return false;
         }else{
             return super.dispatchKeyEvent(event);
         }

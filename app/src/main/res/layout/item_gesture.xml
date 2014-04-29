@@ -49,17 +49,5 @@
             android:layout_gravity="left"
             custom:longClassName="false">
         </org.vliux.android.gesturecut.ui.view.AppInfoView>
-
-        <ImageView
-            android:id="@+id/item_gesture_del"
-            android:layout_width="@dimen/icon_dimen_global_large"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:paddingLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-            android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-            android:src="@drawable/ic_busy"
-            android:background="@drawable/btn_bg_del"
-            android:scaleType="center"
-            android:visibility="gone"/>
     </FrameLayout>
 </LinearLayout>

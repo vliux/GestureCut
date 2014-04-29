@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/btn_bg_blue_del_pressed"
+    <item android:drawable="@drawable/shape_bg_red_semi_tarnsparent"
         android:state_pressed="true"/>
-    <item android:drawable="@drawable/btn_bg_blue_del_normal"
+    <item android:drawable="@drawable/shape_bg_red_dark_semi_tarnsparent"
         android:state_pressed="false"/>
 </selector>

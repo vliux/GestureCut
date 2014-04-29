@@ -6,6 +6,7 @@ import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -44,8 +45,16 @@ public class BottomBar extends FrameLayout {
         mIvDelete = (ImageView)findViewById(R.id.gesture_bottom_bar_del);
     }
 
-    public void setOnDeleteClicked(OnClickListener onDeleteClicked){
-        mIvDelete.setOnClickListener(onDeleteClicked);
+    public void setOnDeleteClicked(final OnClickListener onDeleteClicked){
+        setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(null != onDeleteClicked){
+                    onDeleteClicked.onClick(BottomBar.this);
+                }
+                hideBottomBar();
+            }
+        });
     }
 
     public boolean isShown(){
