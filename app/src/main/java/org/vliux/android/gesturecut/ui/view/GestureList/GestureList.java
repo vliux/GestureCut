@@ -1,6 +1,5 @@
-package org.vliux.android.gesturecut.ui.view;
+package org.vliux.android.gesturecut.ui.view.GestureList;
 
-import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
 import android.animation.ObjectAnimator;
@@ -11,23 +10,21 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
@@ -37,7 +34,7 @@ import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.SettingsActivity;
-import org.vliux.android.gesturecut.ui.WelcomeActivity;
+import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
@@ -50,20 +47,19 @@ import java.util.List;
  * Created by vliux on 4/11/14.
  */
 public class GestureList extends LinearLayout implements View.OnClickListener {
-
+    private static final String TAG = GestureList.class.getSimpleName();
     /**
      * Whether show() and hide() are required to make the view visible/invisible.
      * If it is faluse, then the view is by default visible.
      */
     private boolean mNeedShowHide = false;
 
-    private ImageView mIvDel;
     private ImageView mIvSetting;
-    private ListView mGestureListView;
+    private BottomBarAwaredListView mGestureListView;
     private int mScreenWidth;
     private boolean mIsShown = false;
     private GestureListViewAdapter mListViewAdapter;
-    private boolean mIsDelMode = false;
+    private BottomBar mBottomBar;
 
     public GestureList(Context context) {
         super(context);
@@ -82,16 +78,18 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
 
     private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
-        mIvDel = (ImageView)findViewById(R.id.gesture_list_del);
         mIvSetting = (ImageView)findViewById(R.id.gesture_list_settings);
-        mGestureListView = (ListView)findViewById(R.id.gesture_listview);
+        mGestureListView = (BottomBarAwaredListView)findViewById(R.id.gesture_listview);
+        mBottomBar = (BottomBar)findViewById(R.id.gesture_bottom_bar);
 
-        mIvDel.setOnClickListener(this);
+        mBottomBar.setOnClickListener(this);
         mIvSetting.setOnClickListener(this);
+        mGestureListView.setBottomBar(mBottomBar);
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
         mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
         mGestureListView.setLayoutTransition(new LayoutTransition());
+        mGestureListView.setOnItemLongClickListener(mOnItemLongClickListener);
 
         if(null != attrs){
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureList);
@@ -128,34 +126,14 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.gesture_list_del:
-                if(mListViewAdapter.getCount() > 0){
-                    // enter delete mode only if count > 0
-                    mIsDelMode = !mIsDelMode;
-                    if(mIsDelMode){
-                        mIvDel.setImageResource(R.drawable.ic_checkmark);
-                    }else{
-                        mIvDel.setImageResource(R.drawable.ic_del);
-                    }
-                    mListViewAdapter.notifyDataSetChanged();
-                }
-                break;
-            case R.id.item_gesture_del:
-                if(mIsDelMode){
-                    String gestureName = (String)v.getTag();
-                    if(null != gestureName && gestureName.length() > 0){
-                        //Toast.makeText(getContext(), "removing gesture " + gestureName, Toast.LENGTH_SHORT).show();
-                        GesturePersistence.removeGesture(getContext(), gestureName);
-                        mListViewAdapter.notifyDataSetChanged();
-                        if(mListViewAdapter.getCount() <= 0){
-                            mIsDelMode = false;
-                            mIvDel.setImageResource(R.drawable.ic_del);
-                        }
-                    }
-                }
-                break;
             case R.id.gesture_list_settings:
                 getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
+                break;
+            case R.id.gesture_bottom_bar_del:
+                if(mLastLongClickPosition >= 0 && mLastLongClickPosition < mListViewAdapter.getCount()){
+                    GesturePersistence.removeGesture(getContext(), mListViewAdapter.getGestureName(mLastLongClickPosition));
+                }
+                mLastLongClickPosition = -1;
                 break;
         }
     }
@@ -175,6 +153,10 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             }
             mGestureNames.addAll(GestureUtil.getInstance().getGestureNames());
             Collections.sort(mGestureNames);
+        }
+
+        public String getGestureName(int position){
+            return mGestureNames.get(position);
         }
 
         @Override
@@ -210,14 +192,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 convertView.setTag(viewHolder);
             }else{
                 viewHolder = (GestureListViewHolder)convertView.getTag();
-            }
-
-            if(mIsDelMode){
-                viewHolder.delIcon.setOnClickListener(GestureList.this);
-                getDeleteBtnAnimatorSet(viewHolder.delIcon, true).start(); // setVisibility() is in AnimatorListener
-            }else {
-                viewHolder.delIcon.setOnClickListener(null);
-                getDeleteBtnAnimatorSet(viewHolder.delIcon, false).start();
             }
 
             ConcurrentControl.submitTask(
@@ -264,12 +238,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
                 if(null != iconPath && iconPath.length() > 0){
                     bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
                 }
-                /*String componentStr = null;
-                Drawable packageIcon = TaskManager.getIcon(getContext(), dbData.resolvedComponent);
-                String[] descStrs = TaskManager.getDescription(getContext(), dbData.resolvedComponent);
-                if(null != descStrs && descStrs.length >= 2){
-                    componentStr = descStrs[0];
-                }*/
 
                 if(null != bmp){
                     NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
@@ -292,7 +260,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     }
 
     public static final int WHAT_GESTURE_ICON_LOADED = 100;
-
     private Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -352,64 +319,6 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         return animatorSet;
     }
 
-    /**
-     * Get the AnimatorSet for showing ImageView of delete button.
-     * @return
-     */
-    private AnimatorSet getDeleteBtnAnimatorSet(final View deleteBtn, final boolean forShown){
-        ObjectAnimator alphaObjectAnimator = null;
-        if(forShown){
-            alphaObjectAnimator = ObjectAnimator.ofFloat(deleteBtn, "alpha", 0.0f, 1.0f);
-        }else{
-            alphaObjectAnimator = ObjectAnimator.ofFloat(deleteBtn, "alpha", 1.0f, 0.0f);
-        }
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(500L);
-        animatorSet.setInterpolator(new OvershootInterpolator());
-        animatorSet.play(alphaObjectAnimator);
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                if(forShown){
-                    deleteBtn.setVisibility(VISIBLE);
-                }
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if(!forShown){
-                    deleteBtn.setVisibility(GONE);
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                deleteBtn.setVisibility((forShown? VISIBLE : GONE));
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-        return animatorSet;
-    }
-
-    private GradientDrawable mShadowDrawable;
-    /**
-     * Draw a shadown on the right boundary.
-     * @param canvas
-     */
-    @Override
-    protected void dispatchDraw(Canvas canvas) {
-        super.dispatchDraw(canvas);
-        if(null == mShadowDrawable){
-            mShadowDrawable = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT,
-                    new int[]{Color.argb(0x60, 0, 0, 0), Color.argb(0, 0 , 0, 0)});
-        }
-        mShadowDrawable.setBounds(0, 0, 4, getHeight());
-        mShadowDrawable.draw(canvas);
-    }
-
     private BroadcastReceiver mGestureAddedBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -423,4 +332,29 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
             }
         }
     };
+
+    private int mLastLongClickPosition = -1;
+    private AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+            mBottomBar.showBottomBar();
+            mLastLongClickPosition = position;
+            return true;
+        }
+    };
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && KeyEvent.ACTION_UP == event.getAction()){
+            if(mBottomBar.isShown()){
+                mBottomBar.hideBottomBar();
+            }else {
+                hide();
+            }
+            return true;
+        }else{
+            return super.dispatchKeyEvent(event);
+        }
+    }
 }

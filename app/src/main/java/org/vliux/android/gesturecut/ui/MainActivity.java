@@ -1,9 +1,5 @@
 package org.vliux.android.gesturecut.ui;
 
-import android.animation.Animator;
-import android.animation.AnimatorInflater;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -15,17 +11,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
-import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
-import org.vliux.android.gesturecut.ui.view.GestureList;
+import org.vliux.android.gesturecut.ui.view.GestureList.GestureList;
 import org.vliux.android.gesturecut.ui.view.UnlockBar;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
@@ -121,9 +114,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onBackPressed() {
-        if(mGesutreListLayout.isShown()){
+        /*if(mGesutreListLayout.isShown()){
             mGesutreListLayout.hide();
-        }
+        }*/
     }
 
     private void setKeyGuardFlags(){

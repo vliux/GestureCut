@@ -15,5 +15,7 @@
     <color name="beige_light_semi_transparent">#DDFDFDCA</color>
 
     <color name="red_warning">@android:color/holo_red_light</color>
+    <color name="red_warning_semi_transparent">#bbff4444</color>
     <color name="red_warning_dark">@android:color/holo_red_dark</color>
+    <color name="red_warning_dark_semi_transparent">#bbcc0000</color>
 </resources>

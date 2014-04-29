@@ -29,6 +29,7 @@
     <dimen name="gesture_list_item_vertical_divider_margin_horiz">6dp</dimen>
     <dimen name="gesture_list_tite_btns_padding_horiz">3dp</dimen>
     <dimen name="gesture_list_tite_btns_padding_verti">10dp</dimen>
+    <dimen name="gesture_list_bottom_bar_height">60dp</dimen>
 
     <dimen name="text_size_tiny">14dp</dimen>
     <dimen name="text_size_general">16dp</dimen>

@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.ui.view.GestureList;
+import org.vliux.android.gesturecut.ui.view.GestureList.GestureList;
 
 /**
  * Created by vliux on 4/21/14.
