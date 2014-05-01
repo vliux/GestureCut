@@ -7,9 +7,7 @@ package org.vliux.android.gesturecut.ui.floatwindow;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.PixelFormat;
 import android.support.v4.content.LocalBroadcastManager;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -20,7 +18,7 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
  * Created by vliux on 10/15/13.
- * showWindow() and closeWindow() should only be called in main thread,
+ * All methods should only be called in main thread,
  * as they maintain an instance of FloatWindow.
  */
 public class FloatWindowManager {
@@ -35,7 +33,26 @@ public class FloatWindowManager {
         LocalBroadcastManager.getInstance(context.getApplicationContext()).unregisterReceiver(sLockerStatusReceiver);
     }
 
-    public static void showWindow(Context context){
+    /**
+     * Show or hide the float window.
+     * If there is no instance yet, will call addWindow() then.
+     * @param context
+     * @param isShow
+     */
+    public static void toggleWindow(Context context, boolean isShow){
+        if(null != sFloatWindow){
+            sFloatWindow.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        }else{
+            if(isShow){
+                AppLog.logw(TAG, "FloatWindow instance is NULL, will call addWindow()");
+                addWindow(context);
+            }else{
+                AppLog.logw(TAG, "FloatWindow instance is NULL, ignore toggleWindow(false)");
+            }
+        }
+    }
+
+    private static void addWindow(Context context){
         if(null == sFloatWindow){
             synchronized (FloatWindowManager.class){
                 if (null == sFloatWindow) {
@@ -51,11 +68,11 @@ public class FloatWindowManager {
         }
     }
 
-    public static void closeWindow(Context context){
+    public static void removeWindow(Context context){
         if(null != sFloatWindow){
             WindowManagerUtil.closeWindow(context.getApplicationContext(), sFloatWindow);
         }else{
-            AppLog.logw(TAG, "FloatWindow instance NULL, nothing to be closed");
+            AppLog.logw(TAG, "FloatWindow instance is NULL, nothing to be closed");
         }
     }
 
@@ -68,9 +85,9 @@ public class FloatWindowManager {
 
             String action = intent.getAction();
             if(AppConstant.LocalBroadcasts.BROADCAST_LOCKER_STARTED.equals(action)){
-                closeWindow(context.getApplicationContext());
+                toggleWindow(context.getApplicationContext(), false);
             }else if(AppConstant.LocalBroadcasts.BROADCAST_LOCKER_STOPPED.equals(action)){
-                showWindow(context.getApplicationContext());
+                toggleWindow(context.getApplicationContext(), true);
             }
         }
     };

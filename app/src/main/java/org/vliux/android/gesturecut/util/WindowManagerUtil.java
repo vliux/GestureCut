@@ -57,7 +57,7 @@ public class WindowManagerUtil {
 
     public static void closeWindow(Context context, View dialogView){
         if(null == dialogView.getParent()){
-            AppLog.loge(TAG, "view doesn't have any parent yet, unable to closeWindow()");
+            AppLog.loge(TAG, "view doesn't have any parent yet, unable to removeWindow()");
             return;
         }
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);

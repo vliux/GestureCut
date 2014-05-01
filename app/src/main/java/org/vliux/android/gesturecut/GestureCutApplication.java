@@ -46,13 +46,12 @@ public class GestureCutApplication extends Application {
             mHandler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    //FloatWindowManager.registerLockerStatusReceiver(GestureCutApplication.this);
-                    FloatWindowManager.showWindow(GestureCutApplication.this);
+                    FloatWindowManager.registerLockerStatusReceiver(GestureCutApplication.this);
                 }
             }, 300L);
         }else{
-            //FloatWindowManager.unregisterLockerStatusReceiver(GestureCutApplication.this);
-            //FloatWindowManager.closeWindow(this);
+            FloatWindowManager.unregisterLockerStatusReceiver(GestureCutApplication.this);
+            FloatWindowManager.removeWindow(this);
         }
     }
 
@@ -63,17 +62,6 @@ public class GestureCutApplication extends Application {
             AppLog.setLoggingEnabled(debug);
         }
     }
-
-
-
-    /*public static void startTargetActivity(Context context) {
-        if (null != sTargetComponentName) {
-            Intent intent = new Intent();
-            intent.setComponent(sTargetComponentName);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(intent);
-        }
-    }*/
 
     private Handler mHandler = new Handler();
 }
