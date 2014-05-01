@@ -44,9 +44,9 @@ public class SettingsActivity extends BaseActivity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(getString(R.string.pref_key_lockscreen_status).equals(key)){
                 if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_lockscreen_status, true)){
-                    GuestKeyGuardService.startKeyGuard(getActivity());
+                    GuestKeyGuardService.setLockingEnable(getActivity(), true);
                 }else{
-                    GuestKeyGuardService.stopKeyGuard(getActivity());
+                    GuestKeyGuardService.setLockingEnable(getActivity(), false);
                 }
             }
         }

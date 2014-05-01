@@ -37,11 +37,11 @@ public class GestureCutApplication extends Application {
 
     private void initDb(){
         DbManager.init(getApplicationContext());
-        GuestKeyGuardService.startKeyGuard(this);
     }
 
     private void initKeyguardRelated(){
         PhoneStateMonitor.init(this);
+        GuestKeyGuardService.startKeyGuard(this);
     }
 
     private void controlFloatWindow(final boolean isToShow) {

@@ -22,16 +22,32 @@ public class GuestKeyGuardService extends Service {
     public static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
     public static final String SCREEN_ON = "android.intent.action.SCREEN_ON";
 
-    public static void startKeyGuard(Context context) {
-        Context appContext = context.getApplicationContext();
-        if(PreferenceHelper.getUserPref(appContext, R.string.pref_key_lockscreen_status, true)){
-            Intent intent = new Intent(appContext, GuestKeyGuardService.class);
-            appContext.startService(intent);
-            // register monitor for incomming calls
-            PhoneStateMonitor.getInstance().register();
-        }
+    private static class IntentKeys{
+        public static final String INTENT_KEY_INT_TYPE = "org.vliux.android.gesturecut.SERVICE_TYPE";
+        public static final int INTENT_VALUE_INT_TYPE_INVALID = -1;
+
+        public static final int INTENT_VALUE_INT_TYPE_LOCK_ENABLED = 100;
+        public static final String INTENT_KEY_BOOLEAN_LOCK_ENABLED = "org.vliux.android.gesturecut.LOCKING_ENABLED";
     }
 
+    private boolean mLockingEnabled = true;
+
+    public static void startKeyGuard(Context context) {
+        Context appContext = context.getApplicationContext();
+        Intent intent = new Intent(appContext, GuestKeyGuardService.class);
+        intent.putExtra(IntentKeys.INTENT_KEY_INT_TYPE, IntentKeys.INTENT_VALUE_INT_TYPE_LOCK_ENABLED);
+        if(PreferenceHelper.getUserPref(appContext, R.string.pref_key_lockscreen_status, true)){
+            intent.putExtra(IntentKeys.INTENT_KEY_BOOLEAN_LOCK_ENABLED, true);
+        }else{
+            intent.putExtra(IntentKeys.INTENT_KEY_BOOLEAN_LOCK_ENABLED, false);
+        }
+        appContext.startService(intent);
+        // register monitor for incomming calls
+        PhoneStateMonitor.getInstance().register();
+
+    }
+
+    /*
     public static void stopKeyGuard(Context context){
         Context appContext = context.getApplicationContext();
         if(!PreferenceHelper.getUserPref(appContext, R.string.pref_key_lockscreen_status, true)){
@@ -39,6 +55,14 @@ public class GuestKeyGuardService extends Service {
             appContext.stopService(intent);
             PhoneStateMonitor.getInstance().unregister();
         }
+    }*/
+
+    public static void setLockingEnable(Context context, boolean enabled){
+        Context appContext = context.getApplicationContext();
+        Intent intent = new Intent(appContext, GuestKeyGuardService.class);
+        intent.putExtra(IntentKeys.INTENT_KEY_INT_TYPE, IntentKeys.INTENT_VALUE_INT_TYPE_LOCK_ENABLED);
+        intent.putExtra(IntentKeys.INTENT_KEY_BOOLEAN_LOCK_ENABLED, enabled);
+        appContext.getApplicationContext().startService(intent);
     }
 
     @Override
@@ -50,6 +74,19 @@ public class GuestKeyGuardService extends Service {
     public void onCreate() {
         super.onCreate();
         registerBizReceivers();
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        super.onStartCommand(intent, flags, startId);
+        if(null != intent){
+            switch (intent.getIntExtra(IntentKeys.INTENT_KEY_INT_TYPE, IntentKeys.INTENT_VALUE_INT_TYPE_INVALID)){
+                case IntentKeys.INTENT_VALUE_INT_TYPE_LOCK_ENABLED:
+                    mLockingEnabled = intent.getBooleanExtra(IntentKeys.INTENT_KEY_BOOLEAN_LOCK_ENABLED, true);
+                    break;
+            }
+        }
+        return START_STICKY;
     }
 
     @Override
@@ -76,7 +113,8 @@ public class GuestKeyGuardService extends Service {
                 return;
             }
             String action = intent.getAction();
-            if(SCREEN_OFF.equals(action)
+            if(mLockingEnabled
+                    && SCREEN_OFF.equals(action)
                     && !PhoneStateMonitor.getInstance().isOnCall()){
                 Intent mainIntent = new Intent(context, MainActivity.class);
                 mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
