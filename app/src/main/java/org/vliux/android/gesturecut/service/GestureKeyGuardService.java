@@ -15,8 +15,8 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
 /**
  * Created by vliux on 4/3/14.
  */
-public class GuestKeyGuardService extends Service {
-    private static final String TAG = GuestKeyGuardService.class.getSimpleName();
+public class GestureKeyGuardService extends Service {
+    private static final String TAG = GestureKeyGuardService.class.getSimpleName();
 
     /* SCREEN_ON and SCREEN_OFF have to be registered by code only */
     public static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
@@ -34,7 +34,7 @@ public class GuestKeyGuardService extends Service {
 
     public static void startKeyGuard(Context context) {
         Context appContext = context.getApplicationContext();
-        Intent intent = new Intent(appContext, GuestKeyGuardService.class);
+        Intent intent = new Intent(appContext, GestureKeyGuardService.class);
         intent.putExtra(IntentKeys.INTENT_KEY_INT_TYPE, IntentKeys.INTENT_VALUE_INT_TYPE_LOCK_ENABLED);
         if(PreferenceHelper.getUserPref(appContext, R.string.pref_key_lockscreen_status, true)){
             intent.putExtra(IntentKeys.INTENT_KEY_BOOLEAN_LOCK_ENABLED, true);
@@ -51,7 +51,7 @@ public class GuestKeyGuardService extends Service {
     public static void stopKeyGuard(Context context){
         Context appContext = context.getApplicationContext();
         if(!PreferenceHelper.getUserPref(appContext, R.string.pref_key_lockscreen_status, true)){
-            Intent intent = new Intent(appContext, GuestKeyGuardService.class);
+            Intent intent = new Intent(appContext, GestureKeyGuardService.class);
             appContext.stopService(intent);
             PhoneStateMonitor.getInstance().unregister();
         }
@@ -59,7 +59,7 @@ public class GuestKeyGuardService extends Service {
 
     public static void setLockingEnable(Context context, boolean enabled){
         Context appContext = context.getApplicationContext();
-        Intent intent = new Intent(appContext, GuestKeyGuardService.class);
+        Intent intent = new Intent(appContext, GestureKeyGuardService.class);
         intent.putExtra(IntentKeys.INTENT_KEY_INT_TYPE, IntentKeys.INTENT_VALUE_INT_TYPE_LOCK_ENABLED);
         intent.putExtra(IntentKeys.INTENT_KEY_BOOLEAN_LOCK_ENABLED, enabled);
         appContext.getApplicationContext().startService(intent);

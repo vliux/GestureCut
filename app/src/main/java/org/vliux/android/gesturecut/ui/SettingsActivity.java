@@ -3,10 +3,9 @@ package org.vliux.android.gesturecut.ui;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.preference.PreferenceScreen;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.service.GuestKeyGuardService;
+import org.vliux.android.gesturecut.service.GestureKeyGuardService;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
 
 /**
@@ -44,9 +43,9 @@ public class SettingsActivity extends BaseActivity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(getString(R.string.pref_key_lockscreen_status).equals(key)){
                 if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_lockscreen_status, true)){
-                    GuestKeyGuardService.setLockingEnable(getActivity(), true);
+                    GestureKeyGuardService.setLockingEnable(getActivity(), true);
                 }else{
-                    GuestKeyGuardService.setLockingEnable(getActivity(), false);
+                    GestureKeyGuardService.setLockingEnable(getActivity(), false);
                 }
             }
         }
