@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
@@ -140,6 +141,9 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
                         getString(R.string.start_activity_from_gesture),
                         Toast.LENGTH_SHORT).show();*/
                 AnimUtil.getStartActivityAnimatorSet(MainActivity.this, mIvAppIconAnim, resolvedComponent, null).start();
+            }else{
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.no_gesture_match), Toast.LENGTH_SHORT).show();
             }
         }
     };

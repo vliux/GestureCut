@@ -32,7 +32,7 @@ public class AnimUtil {
         ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(targetView, "scaleY", 1.0f, 3.0f);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(800L);
+        animatorSet.setDuration(500L);
         animatorSet.setInterpolator(new OvershootInterpolator());
         animatorSet.play(transxObjAnimator).with(alphaObjAnimator).with(scalexAnimator).with(scaleyAnimator);
         animatorSet.addListener(new Animator.AnimatorListener() {

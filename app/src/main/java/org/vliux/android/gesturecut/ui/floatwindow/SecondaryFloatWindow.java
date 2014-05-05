@@ -16,6 +16,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
@@ -115,15 +116,15 @@ public class SecondaryFloatWindow extends LinearLayout
     private void useGesture(Gesture gesture){
         ResolvedComponent resolvedComponent = GesturePersistence.loadGesture(getContext(), gesture);
         if(null != resolvedComponent){
-            /*Toast.makeText(getContext(),
-                    getContext().getString(R.string.start_activity_from_gesture),
-                    Toast.LENGTH_SHORT).show();*/
             AnimUtil.getStartActivityAnimatorSet(getContext(), mIvAppIconUseAnim, resolvedComponent, new Runnable(){
                 @Override
                 public void run() {
                     WindowManagerUtil.closeWindow(getContext(), SecondaryFloatWindow.this);
                 }
             }).start();
+        }else{
+            Toast.makeText(getContext(),
+                    getContext().getString(R.string.no_gesture_match), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -9,6 +9,7 @@
     <string name="saving_gesture_completed">Gesture %s saved</string>
     <string name="start_activity_from_gesture">Starting activity from gesture ...</string>
     <string name="start_activity_failed">Sorry, unable to start your task</string>
+    <string name="no_gesture_match">No gesture match</string>
 
     <string name="gesture_list_title">Your gestures</string>
     <string name="gesture_list_no_defined">You do not have any gesture defined yet. Add gestures first.</string>
