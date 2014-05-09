@@ -21,6 +21,7 @@ import android.widget.Toast;
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.AppLog;
+import org.vliux.android.gesturecut.util.ScreenUtil;
 
 /**
  * Created by vliux on 4/15/14.
@@ -32,8 +33,8 @@ public class UnlockBar extends LinearLayout {
     private ViewGroup mTargetViewGroup;
     private ImageView mIvUnlock;
     private OnUnlockListener mUnlockListener;
-    private float mInitY = -1;
     private Drawable mOrgBkDrawable;
+    private int mThresholdY;
 
     public UnlockBar(Context context) {
         super(context);
@@ -54,6 +55,7 @@ public class UnlockBar extends LinearLayout {
         LayoutInflater.from(getContext()).inflate(R.layout.view_unlock_bar, this, true);
         mIvUnlock = (ImageView)findViewById(R.id.iv_unlock);
         mGestureDetector = new GestureDetectorCompat(getContext(), mOnGestureListener);
+        mThresholdY = ScreenUtil.getScreenSize(getContext())[1]/3;
     }
 
     public void setTargetViewGroup(ViewGroup viewGroup){
@@ -87,9 +89,9 @@ public class UnlockBar extends LinearLayout {
         }
     }
 
+    private boolean mUnlockAfterActionUp = false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        //return super.onTouchEvent(event);
         mGestureDetector.onTouchEvent(event);
         super.onTouchEvent(event);
         switch (event.getAction()){
@@ -98,7 +100,11 @@ public class UnlockBar extends LinearLayout {
                 break;
             case MotionEvent.ACTION_UP:
                 changeBkColor(false);
-                if(!mIsInAnim){
+                if(mUnlockAfterActionUp){
+                    AppLog.logd(TAG, "flyAway() as unlockAfterActionUp=TRUE");
+                    flyAway();
+                }else if(!mIsInAnim){
+                    AppLog.logd(TAG, "reset() from onTouchEvent().ACTION_UP");
                     reset();
                 }
                 break;
@@ -127,17 +133,21 @@ public class UnlockBar extends LinearLayout {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            if(mInitY < 0){
-                mInitY = UnlockBar.this.getY();
-            }
-
             if(null != mTargetViewGroup){
                 float deltaY = e2.getRawY() - e1.getRawY();
-                AppLog.logd(TAG, String.format("deltaY = %s, translationY = %s",
-                        String.valueOf(deltaY), String.valueOf(mTargetViewGroup.getTranslationY())));
+                AppLog.logd(TAG, String.format("deltaY = %s, distanceY = %s",
+                        deltaY, distanceY));
                 if((deltaY <= 0)
                         || (deltaY >=0 && mTargetViewGroup.getTranslationY() <= 0)){
                     mTargetViewGroup.setTranslationY(deltaY);
+                }
+
+                if(!mUnlockAfterActionUp && deltaY <= -mThresholdY){
+                    AppLog.logd(TAG, "unlockAfterActionUp=TRUE");
+                    mUnlockAfterActionUp = true;
+                }else if(mUnlockAfterActionUp && deltaY > -mThresholdY){
+                    AppLog.logd(TAG, "unlockAfterActionUp=FALSE");
+                    mUnlockAfterActionUp = false;
                 }
             }
 
@@ -152,8 +162,10 @@ public class UnlockBar extends LinearLayout {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             AppLog.logd(TAG, "onFling(): velocityY = " + velocityY);
             if(velocityY < AppConstant.LockScreen.MIN_UNLOCK_FLOING_VELOCITY){
+                AppLog.logd(TAG, "flyAway() from onFling()");
                 flyAway();
-            }else {
+            }else if(!mUnlockAfterActionUp){
+                AppLog.logd(TAG, "reset() from onFling()");
                 reset();
             }
             return true;
@@ -202,7 +214,7 @@ public class UnlockBar extends LinearLayout {
             mIsInAnim = true;
             ObjectAnimator flyAnim = ObjectAnimator.ofFloat(mTargetViewGroup, "translationY",
                     mTargetViewGroup.getTranslationY(), -mTargetViewGroup.getHeight());
-            flyAnim.setDuration(500L);
+            flyAnim.setDuration(800L);
             flyAnim.setInterpolator(new OvershootInterpolator());
             flyAnim.addListener(new Animator.AnimatorListener() {
                 @Override
