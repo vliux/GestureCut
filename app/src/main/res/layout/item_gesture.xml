@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/gesture_list_item_height"
     android:paddingTop="@dimen/gesture_list_item_padding_vertical"
-    android:paddingBottom="@dimen/gesture_list_item_padding_vertical">
+    android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+    style="@style/activated">
 
     <ImageView
         android:id="@+id/item_gesture_icon"

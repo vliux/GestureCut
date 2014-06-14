@@ -5,6 +5,10 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="activated" parent="AppTheme">
+        <item name="android:background">@drawable/gesture_list_selector_activated</item>
+    </style>
+
     <style name="text_basic_style">
         <item name="android:textColor">@color/gesture_cur_blue</item>
     </style>

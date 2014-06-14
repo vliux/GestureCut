@@ -25,6 +25,7 @@ public class BottomBar extends FrameLayout {
     private boolean mIsHidingBottomBar = false;
     private boolean mIsBottomBarShown = false;
     private ImageView mIvDelete;
+    private BottomBarAwaredListView mBottomBarAwaredListView;
 
     public BottomBar(Context context) {
         super(context);
@@ -44,6 +45,14 @@ public class BottomBar extends FrameLayout {
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gl_bottom_bar, this, true);
         mIvDelete = (ImageView)findViewById(R.id.gesture_bottom_bar_del);
+    }
+
+    /**
+     * BottomBarAwaredListView.setBottomBar() will call this method.
+     * @param listView
+     */
+    void setBottomBarAwaredListView(BottomBarAwaredListView listView){
+        mBottomBarAwaredListView = listView;
     }
 
     public void setOnDeleteClicked(final OnClickListener onDeleteClicked){
@@ -148,6 +157,10 @@ public class BottomBar extends FrameLayout {
             });
         }
         mAnimatorHide.start();
+
+        if(null != mBottomBarAwaredListView){
+            mBottomBarAwaredListView.resetActivatedState();
+        }
     }
 
 }
