@@ -48,7 +48,7 @@ public class GestureCutApplication extends Application {
                 public void run() {
                     FloatWindowManager.registerLockerStatusReceiver(GestureCutApplication.this);
                 }
-            }, 300L);
+            }, AppConstant.Anim.ANIM_DURATION_NORMAL);
         }else{
             FloatWindowManager.unregisterLockerStatusReceiver(GestureCutApplication.this);
             FloatWindowManager.removeWindow(this);

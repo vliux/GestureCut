@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 
@@ -32,7 +33,7 @@ public class AnimUtil {
         ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(targetView, "scaleY", 1.0f, 3.0f);
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(500L);
+        animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
         animatorSet.setInterpolator(new OvershootInterpolator());
         animatorSet.play(transxObjAnimator).with(alphaObjAnimator).with(scalexAnimator).with(scaleyAnimator);
         animatorSet.addListener(new Animator.AnimatorListener() {

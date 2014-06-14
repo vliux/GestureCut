@@ -11,6 +11,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 
 /**
@@ -74,7 +75,7 @@ public class BottomBar extends FrameLayout {
         }
         if (null == mAnimatorShow) {
             mAnimatorShow = new AnimatorSet();
-            mAnimatorShow.setDuration(300L);
+            mAnimatorShow.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
             mAnimatorShow.setInterpolator(new AccelerateDecelerateInterpolator());
             ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(this, "translationY", getHeight(), 0.0f);
             mAnimatorShow.play(translationYAnimator);
@@ -118,7 +119,7 @@ public class BottomBar extends FrameLayout {
         }
         if (null == mAnimatorHide) {
             mAnimatorHide = new AnimatorSet();
-            mAnimatorHide.setDuration(300L);
+            mAnimatorHide.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
             mAnimatorHide.setInterpolator(new AccelerateDecelerateInterpolator());
             ObjectAnimator translationYAnimator = ObjectAnimator.ofFloat(this, "translationY", 0.0f, getHeight());
             mAnimatorHide.play(translationYAnimator);

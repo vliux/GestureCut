@@ -18,6 +18,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
@@ -29,6 +30,7 @@ import org.w3c.dom.Text;
 
 /**
  * Created by vliux on 4/18/14.
+ * The dialog view for confirmation of adding new gesture.
  */
 public class FwDialogView extends FrameLayout implements View.OnClickListener {
     private TextView mTvTitle;
@@ -167,7 +169,7 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(500L);
+        animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
         //animatorSet.play(scaleXAnimator).with(scaleYAnimator).with(alphaAnimator);
         animatorSet.play(alphaAnimator);
         animatorSet.addListener(new Animator.AnimatorListener() {

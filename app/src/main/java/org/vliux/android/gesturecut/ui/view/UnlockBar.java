@@ -182,7 +182,7 @@ public class UnlockBar extends LinearLayout {
             mIsInAnim = true;
             ObjectAnimator returnAnim = ObjectAnimator.ofFloat(mTargetViewGroup, "translationY",
                     mTargetViewGroup.getTranslationY(), 0.0f);
-            returnAnim.setDuration(500L);
+            returnAnim.setDuration(AppConstant.Anim.ANIM_DURATION_LONGER);
             returnAnim.setInterpolator(new OvershootInterpolator());
             returnAnim.addListener(new Animator.AnimatorListener() {
                 @Override

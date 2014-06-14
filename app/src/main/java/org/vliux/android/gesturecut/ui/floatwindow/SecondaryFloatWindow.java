@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskFilterManager;
@@ -219,7 +220,7 @@ public class SecondaryFloatWindow extends LinearLayout
         ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "translationX", ScreenUtil.getScreenSize(getContext())[0], 0.0f);
         ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "alpha", 0.0f, 1.0f);
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(500L);
+        animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
         animatorSet.setInterpolator(new OvershootInterpolator());
         animatorSet.play(translationXAnimator).with(alphaAnimator);
 

@@ -29,4 +29,9 @@ public class AppConstant {
         public static final String BROADCAST_LOCKER_STARTED = "org.vliux.android.gesturecut.LOCKER_STARTED";
         public static final String BROADCAST_LOCKER_STOPPED = "org.vliux.android.gesturecut.LOCKER_STOPED";
     }
+
+    public static class Anim{
+        public static final long ANIM_DURATION_NORMAL = 300L;
+        public static final long ANIM_DURATION_LONGER = 500L;
+    }
 }

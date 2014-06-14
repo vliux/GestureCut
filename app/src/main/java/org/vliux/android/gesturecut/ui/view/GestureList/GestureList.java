@@ -314,7 +314,7 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         }
 
         AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(500L);
+        animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
         animatorSet.setInterpolator(new OvershootInterpolator());
         animatorSet.play(transxObjAnimator).with(alphaObjAnimator);
         return animatorSet;
