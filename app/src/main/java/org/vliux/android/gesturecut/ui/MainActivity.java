@@ -32,11 +32,10 @@ import java.util.Locale;
 /**
  * Created by vliux on 4/3/14.
  */
-public class MainActivity extends BaseActivity implements View.OnClickListener{
+public class MainActivity extends BaseActivity {
     private ViewGroup mOutmostLayout;
     private GestureOverlayView mGesutreOverLayView;
     private SimplifiedGestureListView mSimplifiedGestureListView;
-    private ImageView mIvSettings; //outmost settings btn
     private UnlockBar mUnlockBar;
     private TextView mTvTime;
     private TextView mTvDate;
@@ -52,7 +51,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mOutmostLayout = (ViewGroup)findViewById(R.id.main_outmost_layout);
         mGesutreOverLayView = (GestureOverlayView)findViewById(R.id.main_gesture_overlay);
         mSimplifiedGestureListView = (SimplifiedGestureListView)findViewById(R.id.main_gesture_simp_listview);
-        mIvSettings = (ImageView)findViewById(R.id.main_settings_outmost);
         mUnlockBar = (UnlockBar)findViewById(R.id.main_unlock_bar);
         mTvTime = (TextView)findViewById(R.id.main_tv_time);
         mTvDate = (TextView)findViewById(R.id.main_tv_date);
@@ -60,7 +58,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
 
         loadCustomFont();
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
-        mIvSettings.setOnClickListener(this);
         mUnlockBar.setTargetViewGroup(mOutmostLayout);
         mUnlockBar.setOnUnlockListener(new UnlockBar.OnUnlockListener() {
             @Override
@@ -103,14 +100,6 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         mUnlockBar.setAnimationEffects(false);
         mTimeChangeReceiver.unregister();
         AppBroadcastManager.sendLockerStoppedBroadcast(this);
-    }
-
-    @Override
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.main_settings_outmost:
-                break;
-        }
     }
 
     @Override
