@@ -31,6 +31,8 @@
     <dimen name="gesture_list_tite_btns_padding_verti">10dp</dimen>
     <dimen name="gesture_list_bottom_bar_height">60dp</dimen>
 
+    <dimen name="gesture_simple_list_small_icon_dimen">30dp</dimen>
+
     <dimen name="text_size_tiny">14dp</dimen>
     <dimen name="text_size_general">16dp</dimen>
     <dimen name="text_size_small_title">22dp</dimen>

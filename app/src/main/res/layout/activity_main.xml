@@ -61,11 +61,12 @@
         android:layout_gravity="bottom">
     </org.vliux.android.gesturecut.ui.view.UnlockBar>
 
-    <org.vliux.android.gesturecut.ui.view.GestureList.GestureList
-        android:id="@+id/main_gesture_list_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        extend:showHideRequired="true"></org.vliux.android.gesturecut.ui.view.GestureList.GestureList>
+    <org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView
+        android:id="@+id/main_gesture_simp_listview"
+        android:layout_width="@dimen/gesture_list_item_height"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left|center_vertical">
+        </org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView>
 
     <!-- ImageView for animator when starting activty of defined gestures -->
     <ImageView

@@ -21,6 +21,7 @@ import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GestureList.GestureList;
 import org.vliux.android.gesturecut.ui.view.UnlockBar;
+import org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
@@ -34,7 +35,7 @@ import java.util.Locale;
 public class MainActivity extends BaseActivity implements View.OnClickListener{
     private ViewGroup mOutmostLayout;
     private GestureOverlayView mGesutreOverLayView;
-    private GestureList mGesutreListLayout;
+    private SimplifiedGestureListView mSimplifiedGestureListView;
     private ImageView mIvSettings; //outmost settings btn
     private UnlockBar mUnlockBar;
     private TextView mTvTime;
@@ -50,7 +51,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         setContentView(R.layout.activity_main);
         mOutmostLayout = (ViewGroup)findViewById(R.id.main_outmost_layout);
         mGesutreOverLayView = (GestureOverlayView)findViewById(R.id.main_gesture_overlay);
-        mGesutreListLayout = (GestureList)findViewById(R.id.main_gesture_list_layout);
+        mSimplifiedGestureListView = (SimplifiedGestureListView)findViewById(R.id.main_gesture_simp_listview);
         mIvSettings = (ImageView)findViewById(R.id.main_settings_outmost);
         mUnlockBar = (UnlockBar)findViewById(R.id.main_unlock_bar);
         mTvTime = (TextView)findViewById(R.id.main_tv_time);
@@ -89,7 +90,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onResume() {
         super.onResume();
-        mGesutreListLayout.setAutoRefresh(true);
+        mSimplifiedGestureListView.setAutoRefresh(true);
         mUnlockBar.setAnimationEffects(true);
         mTimeChangeReceiver.register();
         AppBroadcastManager.sendLockerStartedBroadcast(this);
@@ -98,7 +99,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     @Override
     protected void onPause() {
         super.onPause();
-        mGesutreListLayout.setAutoRefresh(false);
+        mSimplifiedGestureListView.setAutoRefresh(false);
         mUnlockBar.setAnimationEffects(false);
         mTimeChangeReceiver.unregister();
         AppBroadcastManager.sendLockerStoppedBroadcast(this);
@@ -108,16 +109,13 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
     public void onClick(View view){
         switch (view.getId()){
             case R.id.main_settings_outmost:
-                mGesutreListLayout.show();
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        if(mGesutreListLayout.isShown()){
-            mGesutreListLayout.hide();
-        }
+        // do nothing
     }
 
     private void setKeyGuardFlags(){
