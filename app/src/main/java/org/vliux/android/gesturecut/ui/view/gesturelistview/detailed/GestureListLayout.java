@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view.GestureList;
+package org.vliux.android.gesturecut.ui.view.gesturelistview.detailed;
 
 import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
@@ -46,8 +46,8 @@ import java.util.List;
 /**
  * Created by vliux on 4/11/14.
  */
-public class GestureList extends LinearLayout implements View.OnClickListener {
-    private static final String TAG = GestureList.class.getSimpleName();
+public class GestureListLayout extends LinearLayout implements View.OnClickListener {
+    private static final String TAG = GestureListLayout.class.getSimpleName();
     /**
      * Whether show() and hide() are required to make the view visible/invisible.
      * If it is faluse, then the view is by default visible.
@@ -61,17 +61,17 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
     private GestureListViewAdapter mListViewAdapter;
     private BottomBar mBottomBar;
 
-    public GestureList(Context context) {
+    public GestureListLayout(Context context) {
         super(context);
         init(null);
     }
 
-    public GestureList(Context context, AttributeSet attrs) {
+    public GestureListLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public GestureList(Context context, AttributeSet attrs, int defStyle) {
+    public GestureListLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs);
     }
@@ -92,8 +92,8 @@ public class GestureList extends LinearLayout implements View.OnClickListener {
         mGestureListView.setOnItemLongClickListener(mOnItemLongClickListener);
 
         if(null != attrs){
-            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureList);
-            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureList_showHideRequired, false);
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListLayout);
+            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListLayout_showHideRequired, false);
         }else{
             mNeedShowHide = false;
         }

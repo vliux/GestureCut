@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view.GestureList;
+package org.vliux.android.gesturecut.ui.view.gesturelistview.detailed;
 
 import android.content.Context;
 import android.os.Handler;

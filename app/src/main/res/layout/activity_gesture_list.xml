@@ -3,9 +3,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <org.vliux.android.gesturecut.ui.view.GestureList.GestureList
+    <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.GestureListLayout
         android:id="@+id/actv_gesture_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </org.vliux.android.gesturecut.ui.view.GestureList.GestureList>
+    </org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.GestureListLayout>
 </LinearLayout>
