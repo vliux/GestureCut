@@ -29,6 +29,8 @@ public class SimplifiedGestureListView extends ListView {
     }
 
     private void init(){
+        setVerticalScrollBarEnabled(false);
+        setHorizontalScrollBarEnabled(false);
         setAdapter(new SimplifiedGestureListAdapter(getContext()));
     }
 }

@@ -57,6 +57,7 @@ public class MainActivity extends BaseActivity {
         mIvAppIconAnim = (ImageView)findViewById(R.id.main_appicon_startactiv);
 
         loadCustomFont();
+        mSimplifiedGestureListView.getLayoutParams().height = decideSimplifiedGestureListViewHeight();
         mGesutreOverLayView.addOnGesturePerformedListener(mOnGesutrePerformedListener);
         mUnlockBar.setTargetViewGroup(mOutmostLayout);
         mUnlockBar.setOnUnlockListener(new UnlockBar.OnUnlockListener() {
@@ -76,6 +77,12 @@ public class MainActivity extends BaseActivity {
                 WelcomeActivity.startWelcomeIfNeeded(MainActivity.this);
             }
         }, 1000L);
+    }
+
+    private int decideSimplifiedGestureListViewHeight(){
+        float sizeA = getResources().getDimension(R.dimen.gesture_list_item_height) * 4;
+        float sizeB = ScreenUtil.getScreenSize(this)[1]/2;
+        return (int)(sizeA > sizeB ? sizeA : sizeB);
     }
 
     private void loadCustomFont(){
