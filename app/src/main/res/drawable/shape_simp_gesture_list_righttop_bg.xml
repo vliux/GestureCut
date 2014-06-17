@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- shape for background of right-top images of items in simplified gesture listview. -->
+<shape
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+    <solid android:color="@color/simp_ges_listview_rt_bg" />
+    <corners android:radius="5dip" />
+</shape>
