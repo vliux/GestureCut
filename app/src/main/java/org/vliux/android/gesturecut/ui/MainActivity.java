@@ -93,7 +93,6 @@ public class MainActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         mSimplifiedGestureListView.setAutoRefresh(true);
-        mUnlockBar.setAnimationEffects(true);
         mTimeChangeReceiver.register();
         AppBroadcastManager.sendLockerStartedBroadcast(this);
     }
@@ -102,7 +101,6 @@ public class MainActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         mSimplifiedGestureListView.setAutoRefresh(false);
-        mUnlockBar.setAnimationEffects(false);
         mTimeChangeReceiver.unregister();
         AppBroadcastManager.sendLockerStoppedBroadcast(this);
     }

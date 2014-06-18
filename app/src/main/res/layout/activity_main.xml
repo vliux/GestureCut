@@ -54,9 +54,9 @@
 
     <org.vliux.android.gesturecut.ui.view.UnlockBar
         android:id="@+id/main_unlock_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom">
+        android:layout_width="@dimen/gesture_list_item_height"
+        android:layout_height="45dp"
+        android:layout_gravity="bottom|center_horizontal">
     </org.vliux.android.gesturecut.ui.view.UnlockBar>
 
     <!-- ImageView for animator when starting activty of defined gestures -->

@@ -3,6 +3,12 @@ package org.vliux.android.gesturecut.ui.view;
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.RectF;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -12,8 +18,10 @@ import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -26,15 +34,20 @@ import org.vliux.android.gesturecut.util.ScreenUtil;
 /**
  * Created by vliux on 4/15/14.
  */
-public class UnlockBar extends LinearLayout {
+public class UnlockBar extends View {
     private static final String TAG = UnlockBar.class.getSimpleName();
+    private static final float sStrokeWidth = 2.0f;
 
     private GestureDetectorCompat mGestureDetector;
     private ViewGroup mTargetViewGroup;
-    private ImageView mIvUnlock;
     private OnUnlockListener mUnlockListener;
-    private Drawable mOrgBkDrawable;
     private int mThresholdY;
+    private Paint mPaint;
+    private boolean mShowReverse = false;
+    private Bitmap mArrowBitmap;
+
+    private RectF mCachedCircleRectF;
+    private Rect mCachedArrowRect;
 
     public UnlockBar(Context context) {
         super(context);
@@ -52,10 +65,13 @@ public class UnlockBar extends LinearLayout {
     }
 
     private void init(){
-        LayoutInflater.from(getContext()).inflate(R.layout.view_unlock_bar, this, true);
-        mIvUnlock = (ImageView)findViewById(R.id.iv_unlock);
         mGestureDetector = new GestureDetectorCompat(getContext(), mOnGestureListener);
         mThresholdY = ScreenUtil.getScreenSize(getContext())[1]/3;
+        mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setStrokeWidth(sStrokeWidth);
+        mPaint.setColor(getResources().getColor(R.color.lock_screen_up_arrow_bg));
+        mArrowBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_unlock09);
     }
 
     public void setTargetViewGroup(ViewGroup viewGroup){
@@ -66,27 +82,47 @@ public class UnlockBar extends LinearLayout {
         mUnlockListener = listener;
     }
 
-    public void setAnimationEffects(boolean play){
-        AnimationDrawable animationDrawable = (AnimationDrawable)mIvUnlock.getDrawable();
-        if(play){
-            animationDrawable.start();
-        }else{
-            animationDrawable.stop();
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        int width = 0;
+        int height = 0;
+        if(null == mCachedCircleRectF) {
+            width = getWidth();
+            height = getHeight();
+            mCachedCircleRectF = new RectF();
+            mCachedCircleRectF.top = sStrokeWidth;
+            mCachedCircleRectF.left = sStrokeWidth;
+            mCachedCircleRectF.bottom = height * 2 - sStrokeWidth;
+            mCachedCircleRectF.right = width - sStrokeWidth;
         }
+
+        if(mShowReverse){
+            mPaint.setStyle(Paint.Style.FILL);
+            canvas.drawOval(mCachedCircleRectF, mPaint);
+            //canvas.drawArc(mCachedCircleRectF, -180.0f, 180.0f, false, mPaint);
+        }
+
+        if(null == mCachedArrowRect) {
+            mCachedArrowRect = new Rect();
+            int bmpWidth = mArrowBitmap.getWidth();
+            int bmpHeight = mArrowBitmap.getHeight();
+            mCachedArrowRect.top = height / 2 - bmpHeight / 2;
+            mCachedArrowRect.left = width / 2 - bmpWidth / 2;
+            mCachedArrowRect.bottom = height / 2 + bmpHeight / 2;
+            mCachedArrowRect.right = width / 2 + bmpWidth / 2;
+        }
+        canvas.drawBitmap(mArrowBitmap, null, mCachedArrowRect, mPaint);
     }
 
     private void changeBkColor(boolean onPress){
         if(onPress){
-            if(null == mOrgBkDrawable){
-                mOrgBkDrawable = getBackground();
-            }
-            setBackgroundDrawable(new GradientDrawable(GradientDrawable.Orientation.TOP_BOTTOM,
-                    new int[]{getContext().getResources().getColor(R.color.gesture_cur_blue),
-                            getContext().getResources().getColor(R.color.gesture_cur_blue_transparent)}));
-
+            mShowReverse = true;
         }else {
-            setBackgroundDrawable(mOrgBkDrawable);
+            mShowReverse = false;
         }
+
+        invalidate();
     }
 
     private boolean mUnlockAfterActionUp = false;
