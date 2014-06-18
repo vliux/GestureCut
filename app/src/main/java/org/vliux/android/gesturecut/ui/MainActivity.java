@@ -1,5 +1,7 @@
 package org.vliux.android.gesturecut.ui;
 
+import android.animation.Animator;
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -8,16 +10,19 @@ import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.ui.ctl.GestureItemTouchedEventBus;
 import org.vliux.android.gesturecut.ui.view.UnlockBar;
 import org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
@@ -40,7 +45,8 @@ public class MainActivity extends BaseActivity {
     private TimeChangeReceiver mTimeChangeReceiver;
     private int mScreenHeight;
     private ImageView mIvAppIconAnim; // ImageView of Animator for starting activity for the given gesture
-    private ViewGroup mMaskLayer;
+    private View mMaskLayer;
+    private MaskLayerAnimation mMaskLayerAnim;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +60,7 @@ public class MainActivity extends BaseActivity {
         mTvTime = (TextView)findViewById(R.id.main_tv_time);
         mTvDate = (TextView)findViewById(R.id.main_tv_date);
         mIvAppIconAnim = (ImageView)findViewById(R.id.main_appicon_startactiv);
-        mMaskLayer = (ViewGroup)findViewById(R.id.main_mask_layer);
-
-        // set mask layer for simplified gesture listview
-        mSimplifiedGestureListView.setMaskLayer(mMaskLayer);
+        mMaskLayer = findViewById(R.id.main_mask_layer);
 
         loadCustomFont();
         mSimplifiedGestureListView.getLayoutParams().height = decideSimplifiedGestureListViewHeight();
@@ -80,6 +83,20 @@ public class MainActivity extends BaseActivity {
                 WelcomeActivity.startWelcomeIfNeeded(MainActivity.this);
             }
         }, 1000L);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        // register eventbus for show/hide mask layer
+        GestureItemTouchedEventBus.register(mSimplGestureListViewItemTouchedEventHandler);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onDestroy();
+        // unregister eventbus
+        GestureItemTouchedEventBus.unregister(mSimplGestureListViewItemTouchedEventHandler);
     }
 
     private int decideSimplifiedGestureListViewHeight(){
@@ -169,5 +186,96 @@ public class MainActivity extends BaseActivity {
             mTvDate.setText(new SimpleDateFormat("yyyy-MM-dd | EEEE", Locale.CHINA).format(date));
         }
 
+    }
+
+    private GestureItemTouchedEventBus.TouchedEventHandler mSimplGestureListViewItemTouchedEventHandler = new GestureItemTouchedEventBus.TouchedEventHandler() {
+        @Override
+        public void onEvent(GestureItemTouchedEventBus.TouchedEvent touchedEvent) {
+            if(null == mMaskLayerAnim){
+                mMaskLayerAnim = new MaskLayerAnimation(mMaskLayer);
+            }
+
+            if(touchedEvent.isTouchDown()){
+                mMaskLayerAnim.showMaskLayer();
+            }else{
+                mMaskLayerAnim.hideMaskLayer();
+            }
+        }
+    };
+
+    private static class MaskLayerAnimation{
+        private View mMaskLayer;
+        private Animator mPrevShowAnimator;
+        private Animator mPrevHideAnimator;
+
+        public MaskLayerAnimation(View maskLayer){
+            mMaskLayer = maskLayer;
+        }
+
+        public void showMaskLayer(){
+            if(null != mPrevShowAnimator && mPrevShowAnimator.isStarted()){
+                return;
+            }else if(null != mPrevHideAnimator && mPrevHideAnimator.isStarted()){
+                mPrevHideAnimator.cancel();
+            }
+
+            final Animator animator = ObjectAnimator.ofFloat(mMaskLayer, "alpha", 0.0f, 1.0f);
+            animator.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mPrevShowAnimator = animator;
+                    mMaskLayer.setVisibility(View.VISIBLE);
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mPrevShowAnimator = null;
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    mPrevShowAnimator = null;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+            animator.start();
+        }
+
+        private void hideMaskLayer(){
+            if(null != mPrevHideAnimator && mPrevHideAnimator.isStarted()){
+                return;
+            }else if(null != mPrevShowAnimator && mPrevShowAnimator.isStarted()){
+                mPrevShowAnimator.cancel();
+            }
+
+            final Animator animator = ObjectAnimator.ofFloat(mMaskLayer, "alpha", 1.0f, 0.0f);
+            animator.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
+            animator.addListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                    mPrevHideAnimator = animator;
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    mPrevHideAnimator = null;
+                    mMaskLayer.setVisibility(View.GONE);
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                    mPrevHideAnimator = null;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+            animator.start();
+        }
     }
 }

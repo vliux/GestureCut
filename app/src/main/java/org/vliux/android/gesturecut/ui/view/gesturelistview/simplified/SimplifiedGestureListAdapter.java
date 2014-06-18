@@ -14,6 +14,7 @@ import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
@@ -70,44 +71,34 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        SimpListViewItem listViewItem = null;
+
         if(null == convertView){
-            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gesture_simplified, parent, false);
-            viewHolder = new ViewHolder();
-            viewHolder.mAppIcon = (ImageView)convertView.findViewById(R.id.item_simple_app_icon);
-            viewHolder.mGestureIcon = (ImageView)convertView.findViewById(R.id.item_simple_ges_icon);
-            convertView.setTag(viewHolder);
+            listViewItem = new SimpListViewItem(mContext);
         }else{
-            viewHolder = (ViewHolder)convertView.getTag();
+            listViewItem = (SimpListViewItem)convertView;
         }
 
         ConcurrentControl.submitTask(
                 new LoadGestureDataRunnable(mHandler,
                         mGestureNames.get(position),
-                        viewHolder,
-                        mContext.getPackageManager())
+                        listViewItem)
         );
-        return convertView;
-    }
-
-    class ViewHolder{
-        public ImageView mAppIcon;
-        public ImageView mGestureIcon;
+        return listViewItem;
     }
 
     private class LoadGestureDataRunnable implements Runnable{
         private Handler notifyHandler;
         private String gestureName;
-        private ViewHolder viewHolder;
+        private SimpListViewItem listViewItem;
         private int iconWidth;
         private int iconHeight;
 
         public LoadGestureDataRunnable(Handler handler, String gesName,
-                                       ViewHolder vh,
-                                       PackageManager pm){
+                                       SimpListViewItem item){
             notifyHandler = handler;
             gestureName = gesName;
-            viewHolder = vh;
+            listViewItem = item;
             iconWidth = (int)mContext.getResources().getDimension(R.dimen.gesture_simple_list_small_icon_dimen);
             iconHeight = iconWidth;
         }
@@ -125,9 +116,10 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
 
                 if(null != bmp){
                     NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
-                    notifyHandlerData.viewHolder = viewHolder;
+                    notifyHandlerData.listViewItem = listViewItem;
                     notifyHandlerData.appIconBitmap = TaskManager.getIcon(mContext, dbData.resolvedComponent);
                     notifyHandlerData.gestureIconBitmap = bmp;
+                    notifyHandlerData.resolvedComponent = dbData.resolvedComponent;
                     Message message = notifyHandler.obtainMessage(WHAT_ITEM_LOADED, notifyHandlerData);
                     mHandler.sendMessage(message);
                 }
@@ -136,9 +128,10 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
     }
 
     class NotifyHandlerData{
-        public ViewHolder viewHolder;
+        public SimpListViewItem listViewItem;
         public Drawable appIconBitmap;
         public Bitmap gestureIconBitmap;
+        public ResolvedComponent resolvedComponent;
     }
 
     private final int WHAT_ITEM_LOADED = 100;
@@ -150,8 +143,10 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
             switch (msg.what){
                 case WHAT_ITEM_LOADED:
                     NotifyHandlerData handlerData = (NotifyHandlerData)msg.obj;
-                    handlerData.viewHolder.mAppIcon.setImageDrawable(handlerData.appIconBitmap);
-                    handlerData.viewHolder.mGestureIcon.setImageBitmap(handlerData.gestureIconBitmap);
+                    SimpListViewItem simpListViewItem = handlerData.listViewItem;
+                    simpListViewItem.setAppIcon(handlerData.appIconBitmap);
+                    simpListViewItem.setGestureIcon(handlerData.gestureIconBitmap);
+                    simpListViewItem.setResolvedComponent(handlerData.resolvedComponent);
                     break;
             }
         }
