@@ -45,6 +45,27 @@
         </LinearLayout>
     </android.gesture.GestureOverlayView>
 
+    <!-- mask layer
+        it is shown when the SimplifiedGestureListView is touched,
+        and hidden when the SimplifiedGestureListView is not touched any more.
+    -->
+    <LinearLayout
+        android:id="@+id/main_mask_layer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gesture_create_bg_semi_transparent"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/gesture_list_outter_margin"
+            android:layout_marginLeft="@dimen/lock_screen_gesture_list_hint_margin_left"
+            android:layout_gravity="center_vertical|right"
+            android:gravity="center"
+            android:text="@string/lock_screen_mask_layer_msg"
+            android:textSize="@dimen/text_size_small_title"/>
+    </LinearLayout>
+
     <org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView
         android:id="@+id/main_gesture_simp_listview"
         android:layout_width="@dimen/gesture_list_item_height"

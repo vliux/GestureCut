@@ -50,4 +50,6 @@
     <string name="pref_key_lockscreen_status">PREF_KEY_LOCKSCREEN_STATUS</string>
     <string name="pref_key_welcome_already_shown">PREF_KEY_WELCOME_ALREADY_SHOWN</string>
 
+    <!-- mask layer on lock screen -->
+    <string name="lock_screen_mask_layer_msg">Drag the icon to launch the app</string>
 </resources>

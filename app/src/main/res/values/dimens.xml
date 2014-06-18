@@ -31,6 +31,9 @@
     <dimen name="gesture_list_tite_btns_padding_verti">10dp</dimen>
     <dimen name="gesture_list_bottom_bar_height">60dp</dimen>
 
+    <!-- must be larger than gesture_list_item_height to keep safe distance -->
+    <dimen name="lock_screen_gesture_list_hint_margin_left">100dp</dimen>
+
     <dimen name="gesture_simple_list_small_icon_dimen">22dp</dimen>
 
     <dimen name="text_size_tiny">14dp</dimen>

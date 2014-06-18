@@ -40,6 +40,7 @@ public class MainActivity extends BaseActivity {
     private TimeChangeReceiver mTimeChangeReceiver;
     private int mScreenHeight;
     private ImageView mIvAppIconAnim; // ImageView of Animator for starting activity for the given gesture
+    private ViewGroup mMaskLayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,10 @@ public class MainActivity extends BaseActivity {
         mTvTime = (TextView)findViewById(R.id.main_tv_time);
         mTvDate = (TextView)findViewById(R.id.main_tv_date);
         mIvAppIconAnim = (ImageView)findViewById(R.id.main_appicon_startactiv);
+        mMaskLayer = (ViewGroup)findViewById(R.id.main_mask_layer);
+
+        // set mask layer for simplified gesture listview
+        mSimplifiedGestureListView.setMaskLayer(mMaskLayer);
 
         loadCustomFont();
         mSimplifiedGestureListView.getLayoutParams().height = decideSimplifiedGestureListViewHeight();
