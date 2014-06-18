@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
@@ -43,6 +44,11 @@ public class AnimUtil {
                     targetView.setImageDrawable(TaskManager.getIcon(context, resolvedComponent));
                 }
                 targetView.setVisibility(View.VISIBLE);
+                // vibrate
+                Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+                if(null != vibrator){
+                    vibrator.vibrate(AppConstant.Anim.ANIM_DURATION_NORMAL);
+                }
             }
 
             @Override
