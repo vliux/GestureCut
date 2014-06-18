@@ -45,7 +45,9 @@ public class MainActivity extends BaseActivity {
     private TimeChangeReceiver mTimeChangeReceiver;
     private int mScreenHeight;
     private ImageView mIvAppIconAnim; // ImageView of Animator for starting activity for the given gesture
+
     private View mMaskLayer;
+    private TextView mMaskLayerTextView;
     private MaskLayerAnimation mMaskLayerAnim;
 
     @Override
@@ -61,6 +63,7 @@ public class MainActivity extends BaseActivity {
         mTvDate = (TextView)findViewById(R.id.main_tv_date);
         mIvAppIconAnim = (ImageView)findViewById(R.id.main_appicon_startactiv);
         mMaskLayer = findViewById(R.id.main_mask_layer);
+        mMaskLayerTextView = (TextView)findViewById(R.id.main_mask_layer_text);
 
         loadCustomFont();
         mSimplifiedGestureListView.getLayoutParams().height = decideSimplifiedGestureListViewHeight();
@@ -190,29 +193,28 @@ public class MainActivity extends BaseActivity {
 
     private GestureItemTouchedEventBus.TouchedEventHandler mSimplGestureListViewItemTouchedEventHandler = new GestureItemTouchedEventBus.TouchedEventHandler() {
         @Override
-        public void onEvent(GestureItemTouchedEventBus.TouchedEvent touchedEvent) {
+        public void onEventMainThread(GestureItemTouchedEventBus.TouchedEvent touchedEvent) {
             if(null == mMaskLayerAnim){
-                mMaskLayerAnim = new MaskLayerAnimation(mMaskLayer);
+                mMaskLayerAnim = new MaskLayerAnimation();
             }
 
             if(touchedEvent.isTouchDown()){
-                mMaskLayerAnim.showMaskLayer();
+                if(mMaskLayer.getVisibility() != View.VISIBLE) {
+                    mMaskLayerAnim.showMaskLayer(touchedEvent.getSecondsLeft());
+                }else{
+                    mMaskLayerTextView.setText(String.format(getString(R.string.lock_screen_mask_layer_msg), touchedEvent.getSecondsLeft()));
+                }
             }else{
                 mMaskLayerAnim.hideMaskLayer();
             }
         }
     };
 
-    private static class MaskLayerAnimation{
-        private View mMaskLayer;
+    private class MaskLayerAnimation{
         private Animator mPrevShowAnimator;
         private Animator mPrevHideAnimator;
 
-        public MaskLayerAnimation(View maskLayer){
-            mMaskLayer = maskLayer;
-        }
-
-        public void showMaskLayer(){
+        public void showMaskLayer(final int secondsLeft){
             if(null != mPrevShowAnimator && mPrevShowAnimator.isStarted()){
                 return;
             }else if(null != mPrevHideAnimator && mPrevHideAnimator.isStarted()){
@@ -226,6 +228,7 @@ public class MainActivity extends BaseActivity {
                 public void onAnimationStart(Animator animation) {
                     mPrevShowAnimator = animator;
                     mMaskLayer.setVisibility(View.VISIBLE);
+                    mMaskLayerTextView.setText(String.format(getString(R.string.lock_screen_mask_layer_msg), secondsLeft));
                 }
 
                 @Override

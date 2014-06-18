@@ -35,17 +35,28 @@ public class GestureItemTouchedEventBus {
     }
 
     public interface TouchedEventHandler{
-        public void onEvent(TouchedEvent touchedEvent);
+        public void onEventMainThread(TouchedEvent touchedEvent);
     }
 
     public static class TouchedEvent{
         private View view;
         private boolean isTouchDown;
+        private int secondsLeft;
 
-        public TouchedEvent(View targetView, boolean isDown){
+        public static TouchedEvent newTouchDownEvent(View targetView, int secLeft){
+            return new TouchedEvent(targetView, true, secLeft);
+        }
+
+        public static TouchedEvent newTouchUpEvent(View targetView){
+            return new TouchedEvent(targetView, false, 0);
+        }
+
+        private TouchedEvent(View targetView, boolean isDown, int secLeft){
             view = targetView;
             isTouchDown = isDown;
+            secondsLeft = secLeft;
         }
+
 
         public View getView() {
             return view;
@@ -53,6 +64,10 @@ public class GestureItemTouchedEventBus {
 
         public boolean isTouchDown() {
             return isTouchDown;
+        }
+
+        public int getSecondsLeft(){
+            return secondsLeft;
         }
     }
 }

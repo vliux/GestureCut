@@ -56,6 +56,7 @@
         android:background="@color/gesture_create_bg_semi_transparent"
         android:visibility="gone">
         <TextView
+            android:id="@+id/main_mask_layer_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/gesture_list_outter_margin"
