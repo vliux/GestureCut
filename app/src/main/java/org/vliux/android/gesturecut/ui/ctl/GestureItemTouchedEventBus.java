@@ -2,6 +2,8 @@ package org.vliux.android.gesturecut.ui.ctl;
 
 import android.view.View;
 
+import org.vliux.android.gesturecut.biz.ResolvedComponent;
+
 import de.greenrobot.event.EventBus;
 
 /**
@@ -40,30 +42,45 @@ public class GestureItemTouchedEventBus {
 
     public static class TouchedEvent{
         private View view;
-        private boolean isTouchDown;
+        private EventType eventType;
         private int secondsLeft;
+        private ResolvedComponent resolvedComponent;
+
+        public enum EventType{
+            ACTION_UP,
+            ACTION_DOWN,
+            START_TASK
+        }
 
         public static TouchedEvent newTouchDownEvent(View targetView, int secLeft){
-            return new TouchedEvent(targetView, true, secLeft);
+            return new TouchedEvent(targetView, EventType.ACTION_DOWN, secLeft, null);
         }
 
         public static TouchedEvent newTouchUpEvent(View targetView){
-            return new TouchedEvent(targetView, false, 0);
+            return new TouchedEvent(targetView, EventType.ACTION_UP, 0, null);
         }
 
-        private TouchedEvent(View targetView, boolean isDown, int secLeft){
+        public static TouchedEvent newStartTaskEvent(ResolvedComponent rc){
+            return new TouchedEvent(null, EventType.START_TASK, 0, rc);
+        }
+
+        private TouchedEvent(View targetView, EventType type, int secLeft, ResolvedComponent rc){
             view = targetView;
-            isTouchDown = isDown;
+            eventType = type;
             secondsLeft = secLeft;
+            resolvedComponent = rc;
         }
-
 
         public View getView() {
             return view;
         }
 
-        public boolean isTouchDown() {
-            return isTouchDown;
+        public EventType getEventType() {
+            return eventType;
+        }
+
+        public ResolvedComponent getResolvedComponent() {
+            return resolvedComponent;
         }
 
         public int getSecondsLeft(){

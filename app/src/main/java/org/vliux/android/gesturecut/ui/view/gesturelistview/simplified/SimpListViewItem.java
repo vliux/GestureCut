@@ -138,11 +138,7 @@ public class SimpListViewItem extends FrameLayout {
                 GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newTouchDownEvent(SimpListViewItem.this, secondsLeft));
                 secondsLeft--;
             }else{
-                GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newTouchUpEvent(SimpListViewItem.this));
-                mHandler.sendMessage(mHandler.obtainMessage(WHAT_CANCEL_TIMER));
-                if(null != mRelatedResolvedComponent){
-                    mRelatedResolvedComponent.startActivity(getContext());
-                }
+                GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newStartTaskEvent(SimpListViewItem.this.mRelatedResolvedComponent));
             }
         }
     }

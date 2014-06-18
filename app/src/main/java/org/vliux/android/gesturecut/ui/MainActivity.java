@@ -198,14 +198,21 @@ public class MainActivity extends BaseActivity {
                 mMaskLayerAnim = new MaskLayerAnimation();
             }
 
-            if(touchedEvent.isTouchDown()){
-                if(mMaskLayer.getVisibility() != View.VISIBLE) {
-                    mMaskLayerAnim.showMaskLayer(touchedEvent.getSecondsLeft());
-                }else{
-                    mMaskLayerTextView.setText(String.format(getString(R.string.lock_screen_mask_layer_msg), touchedEvent.getSecondsLeft()));
-                }
-            }else{
-                mMaskLayerAnim.hideMaskLayer();
+            switch (touchedEvent.getEventType()){
+                case ACTION_DOWN:
+                    if(mMaskLayer.getVisibility() != View.VISIBLE) {
+                        mMaskLayerAnim.showMaskLayer(touchedEvent.getSecondsLeft());
+                    }else{
+                        mMaskLayerTextView.setText(String.format(getString(R.string.lock_screen_mask_layer_msg), touchedEvent.getSecondsLeft()));
+                    }
+                    break;
+                case START_TASK:
+                    AnimUtil.getStartActivityAnimatorSet(MainActivity.this, mIvAppIconAnim, touchedEvent.getResolvedComponent(), null).start();
+                case ACTION_UP:
+                    if(mMaskLayer.getVisibility() != View.GONE){
+                        mMaskLayerAnim.hideMaskLayer();
+                    }
+                    break;
             }
         }
     };
