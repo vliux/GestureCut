@@ -4,7 +4,8 @@
     android:layout_width="@dimen/gesture_list_item_height"
     android:layout_height="@dimen/gesture_list_item_height"
     android:paddingTop="@dimen/gesture_list_item_padding_vertical"
-    android:paddingBottom="@dimen/gesture_list_item_padding_vertical">
+    android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+    android:alpha="0.8">
 
     <ImageView
         android:id="@+id/item_simple_app_icon"
