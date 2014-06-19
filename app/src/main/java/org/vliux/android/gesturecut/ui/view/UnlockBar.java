@@ -27,7 +27,8 @@ import org.vliux.android.gesturecut.util.ScreenUtil;
  */
 public class UnlockBar extends View {
     private static final String TAG = UnlockBar.class.getSimpleName();
-    private static final float sStrokeWidth = 2.0f;
+    private static final float sStrokeWidthCircleWrap = 4.0f;
+    private static final float sStrokeWidthArrow = 2.0f;
 
     private GestureDetectorCompat mGestureDetector;
     private ViewGroup mTargetViewGroup;
@@ -38,6 +39,7 @@ public class UnlockBar extends View {
     private Bitmap mArrowBitmap;
 
     private RectF mCachedCircleRectF;
+    private RectF mCachedCircleWrapRectF;
     private Rect mCachedArrowRect;
 
     public UnlockBar(Context context) {
@@ -60,7 +62,6 @@ public class UnlockBar extends View {
         mThresholdY = ScreenUtil.getScreenSize(getContext())[1]/3;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(sStrokeWidth);
         mPaint.setColor(getResources().getColor(R.color.lock_screen_up_arrow_bg));
         mArrowBitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_unlock09);
     }
@@ -81,17 +82,28 @@ public class UnlockBar extends View {
         if(null == mCachedCircleRectF) {
             width = getWidth();
             height = getHeight();
+
             mCachedCircleRectF = new RectF();
-            mCachedCircleRectF.top = sStrokeWidth;
-            mCachedCircleRectF.left = sStrokeWidth;
-            mCachedCircleRectF.bottom = height * 2 - sStrokeWidth;
-            mCachedCircleRectF.right = width - sStrokeWidth;
+            float gap = sStrokeWidthArrow * 3;
+            mCachedCircleRectF.top = gap;
+            mCachedCircleRectF.left = gap;
+            mCachedCircleRectF.bottom = height * 2 - gap;
+            mCachedCircleRectF.right = width - gap;
+
+            mCachedCircleWrapRectF = new RectF();
+            gap = sStrokeWidthArrow;
+            mCachedCircleWrapRectF.top = gap;
+            mCachedCircleWrapRectF.left = gap;
+            mCachedCircleWrapRectF.bottom = height * 2 - gap;
+            mCachedCircleWrapRectF.right = width - gap;
         }
 
         if(mShowReverse){
             mPaint.setStyle(Paint.Style.FILL);
             canvas.drawOval(mCachedCircleRectF, mPaint);
-            //canvas.drawArc(mCachedCircleRectF, -180.0f, 180.0f, false, mPaint);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(sStrokeWidthCircleWrap);
+            canvas.drawArc(mCachedCircleWrapRectF, 0.0f, 360.0f, false, mPaint);
         }
 
         if(null == mCachedArrowRect) {
@@ -103,6 +115,7 @@ public class UnlockBar extends View {
             mCachedArrowRect.bottom = height / 2 + bmpHeight / 2;
             mCachedArrowRect.right = width / 2 + bmpWidth / 2;
         }
+        mPaint.setStrokeWidth(sStrokeWidthArrow);
         canvas.drawBitmap(mArrowBitmap, null, mCachedArrowRect, mPaint);
     }
 
