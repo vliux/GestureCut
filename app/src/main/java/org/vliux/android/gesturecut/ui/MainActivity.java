@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -86,6 +88,13 @@ public class MainActivity extends BaseActivity {
                 WelcomeActivity.startWelcomeIfNeeded(MainActivity.this);
             }
         }, 1000L);
+    }
+
+    private void setLayoutHeightExceedScreen(){
+        Rect decroWndRect = new Rect();
+        mOutmostLayout.getWindowVisibleDisplayFrame(decroWndRect);
+        mOutmostLayout.getLayoutParams().height = decroWndRect.height() +
+            mUnlockBar.getLayoutParams().height/2;
     }
 
     @Override

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<org.vliux.android.gesturecut.ui.view.ExceededFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:extend="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_outmost_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/red_warning">
 
     <android.gesture.GestureOverlayView
         android:id="@+id/main_gesture_overlay"
@@ -77,7 +78,7 @@
     <org.vliux.android.gesturecut.ui.view.UnlockBar
         android:id="@+id/main_unlock_bar"
         android:layout_width="@dimen/gesture_list_item_height"
-        android:layout_height="45dp"
+        android:layout_height="@dimen/gesture_list_item_height"
         android:layout_gravity="bottom|center_horizontal">
     </org.vliux.android.gesturecut.ui.view.UnlockBar>
 
@@ -88,4 +89,4 @@
         android:layout_height="@dimen/icon_dimen_global_large"
         android:layout_gravity="bottom|center_horizontal"
         android:visibility="gone"/>
-</FrameLayout>
+</org.vliux.android.gesturecut.ui.view.ExceededFrameLayout>
