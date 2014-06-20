@@ -87,14 +87,14 @@ public class UnlockBar extends View {
             float gap = sStrokeWidthArrow * 3;
             mCachedCircleRectF.top = gap;
             mCachedCircleRectF.left = gap;
-            mCachedCircleRectF.bottom = height * 2 - gap;
+            mCachedCircleRectF.bottom = height - gap;
             mCachedCircleRectF.right = width - gap;
 
             mCachedCircleWrapRectF = new RectF();
             gap = sStrokeWidthArrow;
             mCachedCircleWrapRectF.top = gap;
             mCachedCircleWrapRectF.left = gap;
-            mCachedCircleWrapRectF.bottom = height * 2 - gap;
+            mCachedCircleWrapRectF.bottom = height - gap;
             mCachedCircleWrapRectF.right = width - gap;
         }
 
@@ -110,9 +110,9 @@ public class UnlockBar extends View {
             mCachedArrowRect = new Rect();
             int bmpWidth = mArrowBitmap.getWidth();
             int bmpHeight = mArrowBitmap.getHeight();
-            mCachedArrowRect.top = height / 2 - bmpHeight / 2;
+            mCachedArrowRect.top = height / 4 - bmpHeight / 2;
             mCachedArrowRect.left = width / 2 - bmpWidth / 2;
-            mCachedArrowRect.bottom = height / 2 + bmpHeight / 2;
+            mCachedArrowRect.bottom = height / 4 + bmpHeight / 2;
             mCachedArrowRect.right = width / 2 + bmpWidth / 2;
         }
         mPaint.setStrokeWidth(sStrokeWidthArrow);

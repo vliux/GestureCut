@@ -4,8 +4,7 @@
     xmlns:extend="http://schemas.android.com/apk/res-auto"
     android:id="@+id/main_outmost_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/red_warning">
+    android:layout_height="match_parent">
 
     <android.gesture.GestureOverlayView
         android:id="@+id/main_gesture_overlay"
