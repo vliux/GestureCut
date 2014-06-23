@@ -43,7 +43,6 @@ public class GestureItemTouchedEventBus {
     public static class TouchedEvent{
         private View view;
         private EventType eventType;
-        private int secondsLeft;
         private ResolvedComponent resolvedComponent;
 
         public enum EventType{
@@ -52,22 +51,21 @@ public class GestureItemTouchedEventBus {
             START_TASK
         }
 
-        public static TouchedEvent newTouchDownEvent(View targetView, int secLeft){
-            return new TouchedEvent(targetView, EventType.ACTION_DOWN, secLeft, null);
+        public static TouchedEvent newTouchDownEvent(View targetView){
+            return new TouchedEvent(targetView, EventType.ACTION_DOWN, null);
         }
 
         public static TouchedEvent newTouchUpEvent(View targetView){
-            return new TouchedEvent(targetView, EventType.ACTION_UP, 0, null);
+            return new TouchedEvent(targetView, EventType.ACTION_UP, null);
         }
 
         public static TouchedEvent newStartTaskEvent(ResolvedComponent rc){
-            return new TouchedEvent(null, EventType.START_TASK, 0, rc);
+            return new TouchedEvent(null, EventType.START_TASK, rc);
         }
 
-        private TouchedEvent(View targetView, EventType type, int secLeft, ResolvedComponent rc){
+        private TouchedEvent(View targetView, EventType type, ResolvedComponent rc){
             view = targetView;
             eventType = type;
-            secondsLeft = secLeft;
             resolvedComponent = rc;
         }
 
@@ -81,10 +79,6 @@ public class GestureItemTouchedEventBus {
 
         public ResolvedComponent getResolvedComponent() {
             return resolvedComponent;
-        }
-
-        public int getSecondsLeft(){
-            return secondsLeft;
         }
     }
 }

@@ -31,7 +31,6 @@ public class SimpListViewItem extends FrameLayout {
     private GestureDetectorCompat mGestureDetector;
 
     private static final int SECONDS_LEFT_TO_START_TASK = 2;
-    private Timer mCountDownTimer;
 
     public SimpListViewItem(Context context) {
         super(context);
@@ -53,6 +52,7 @@ public class SimpListViewItem extends FrameLayout {
         mAppIcon = (ImageView)findViewById(R.id.item_simple_app_icon);
         mGestureIcon = (ImageView)findViewById(R.id.item_simple_ges_icon);
         mGestureDetector = new GestureDetectorCompat(getContext(), mGestureListener);
+        mGestureDetector.setOnDoubleTapListener(mDoubleTapListener);
     }
 
     public void setAppIcon(Drawable appDrawable){
@@ -78,15 +78,29 @@ public class SimpListViewItem extends FrameLayout {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 setBackgroundColor(getResources().getColor(R.color.gesture_cur_blue_transparent));
-                if(null != mCountDownTimer){
-                    mCountDownTimer.cancel();
-                    mCountDownTimer = null;
-                }
                 GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newTouchUpEvent(this));
                 break;
         }
         return true;
     }
+
+    private GestureDetector.OnDoubleTapListener mDoubleTapListener = new GestureDetector.OnDoubleTapListener() {
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onDoubleTap(MotionEvent e) {
+            GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newStartTaskEvent(mRelatedResolvedComponent));
+            return true;
+        }
+
+        @Override
+        public boolean onDoubleTapEvent(MotionEvent e) {
+            return false;
+        }
+    };
 
     private GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
         @Override
@@ -106,56 +120,19 @@ public class SimpListViewItem extends FrameLayout {
 
         @Override
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            Log.d("vliux",
-                    String.format("SimpListViewItem.onScroll(%s, %s, %f, %f)", e1.toString(), e2.toString(), distanceX, distanceY));
+            //Log.d("vliux",
+            //        String.format("SimpListViewItem.onScroll(%s, %s, %f, %f)", e1.toString(), e2.toString(), distanceX, distanceY));
             return false;
         }
 
         @Override
         public void onLongPress(MotionEvent e) {
-            if (null == mCountDownTimer) {
-                mCountDownTimer = new Timer(true);
-            }
-            mCountDownTimer.schedule(new LongPressTimerTask(SECONDS_LEFT_TO_START_TASK), 0L, 1000L);
+            GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newTouchDownEvent(SimpListViewItem.this));
         }
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             return false;
-        }
-    };
-
-    class LongPressTimerTask extends TimerTask{
-        private int secondsLeft;
-
-        public LongPressTimerTask(int secLeft){
-            secondsLeft = secLeft;
-        }
-
-        @Override
-        public void run() {
-            if(secondsLeft > 0){
-                GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newTouchDownEvent(SimpListViewItem.this, secondsLeft));
-                secondsLeft--;
-            }else{
-                GestureItemTouchedEventBus.post(GestureItemTouchedEventBus.TouchedEvent.newStartTaskEvent(SimpListViewItem.this.mRelatedResolvedComponent));
-            }
-        }
-    }
-
-    private static final int WHAT_CANCEL_TIMER = 100;
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what){
-                case WHAT_CANCEL_TIMER:
-                    if(null != mCountDownTimer){
-                        mCountDownTimer.cancel();
-                        mCountDownTimer = null;
-                    }
-                    break;
-            }
         }
     };
 }

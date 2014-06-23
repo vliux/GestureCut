@@ -210,9 +210,7 @@ public class MainActivity extends BaseActivity {
             switch (touchedEvent.getEventType()){
                 case ACTION_DOWN:
                     if(mMaskLayer.getVisibility() != View.VISIBLE) {
-                        mMaskLayerAnim.showMaskLayer(touchedEvent.getSecondsLeft());
-                    }else{
-                        mMaskLayerTextView.setText(String.format(getString(R.string.lock_screen_mask_layer_msg), touchedEvent.getSecondsLeft()));
+                        mMaskLayerAnim.showMaskLayer();
                     }
                     break;
                 case START_TASK:
@@ -230,7 +228,7 @@ public class MainActivity extends BaseActivity {
         private Animator mPrevShowAnimator;
         private Animator mPrevHideAnimator;
 
-        public void showMaskLayer(final int secondsLeft){
+        public void showMaskLayer(){
             if(null != mPrevShowAnimator && mPrevShowAnimator.isStarted()){
                 return;
             }else if(null != mPrevHideAnimator && mPrevHideAnimator.isStarted()){
@@ -244,7 +242,7 @@ public class MainActivity extends BaseActivity {
                 public void onAnimationStart(Animator animation) {
                     mPrevShowAnimator = animator;
                     mMaskLayer.setVisibility(View.VISIBLE);
-                    mMaskLayerTextView.setText(String.format(getString(R.string.lock_screen_mask_layer_msg), secondsLeft));
+                    mMaskLayerTextView.setText(getString(R.string.lock_screen_mask_layer_msg));
                 }
 
                 @Override
