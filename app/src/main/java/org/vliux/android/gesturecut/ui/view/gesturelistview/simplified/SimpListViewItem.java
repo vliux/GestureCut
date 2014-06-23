@@ -30,8 +30,6 @@ public class SimpListViewItem extends FrameLayout {
     private ResolvedComponent mRelatedResolvedComponent;
     private GestureDetectorCompat mGestureDetector;
 
-    private static final int SECONDS_LEFT_TO_START_TASK = 2;
-
     public SimpListViewItem(Context context) {
         super(context);
         init();
