@@ -109,6 +109,14 @@ public class GesturePersistence {
         return gestureDbTable.getGesture(gestureName);
     }
 
+    public static GestureDbTable.DbData loadGestureEx(Context context, String gestureName){
+        if(GestureUtil.getInstance().getGestureNames().contains(gestureName)){
+            GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
+            return gestureDbTable.getGesture(gestureName);
+        }
+        return null;
+    }
+
     /**
      * Failed to save gesture to Android GestureLibrary.
      */
