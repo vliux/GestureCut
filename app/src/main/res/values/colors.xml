@@ -23,4 +23,7 @@
     <color name="simp_ges_listview_rt_bg">#55FFFFFF</color>
 
     <color name="lock_screen_up_arrow_bg">#55FFFFFF</color>
+
+    <!-- widget -->
+    <color name="widget_bkground">#DDFFFFFF</color>
 </resources>

@@ -6,9 +6,12 @@ import android.appwidget.AppWidgetProvider;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.widget.RemoteViews;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.GestureListActivity;
@@ -42,8 +45,18 @@ public class LockScreenWidget extends AppWidgetProvider {
                 }
 
                 if (null != bmp) {
-                    views.setBitmap(R.id.widget_gesture_icon, "setImageBitmap", bmp);
+                    views.setImageViewBitmap(R.id.widget_gesture_icon, bmp);
                 }
+
+                Drawable appIconDrawable = TaskManager.getIcon(context, dbData.resolvedComponent);
+                if(appIconDrawable instanceof BitmapDrawable){
+                    Bitmap appIcon = ((BitmapDrawable)appIconDrawable).getBitmap();
+                    views.setImageViewBitmap(R.id.widget_app_icon, appIcon);
+                }
+
+                String[] descs = TaskManager.getDescription(context, dbData.resolvedComponent, false);
+                views.setTextViewText(R.id.widget_appname, descs[0]);
+                views.setTextViewText(R.id.widget_appdetail, descs[1]);
             }
 
             appWidgetManager.updateAppWidget(appWidgetId, views);
