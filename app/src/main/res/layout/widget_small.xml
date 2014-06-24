@@ -3,8 +3,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/widget_small_bg"
-    android:padding="3dp">
+    android:background="@drawable/widget_small_bg">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -18,7 +17,7 @@
             android:layout_gravity="center"
             android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
             android:scaleType="center"
-            android:background="@color/gesture_cur_blue"/>
+            android:background="@drawable/widget_small_left_bg"/>
 
         <!-- app icon -->
         <ImageView

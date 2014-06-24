@@ -25,5 +25,5 @@
     <color name="lock_screen_up_arrow_bg">#55FFFFFF</color>
 
     <!-- widget -->
-    <color name="widget_bkground">#DDFFFFFF</color>
+    <color name="widget_bkground">#EFEFEF</color>
 </resources>
