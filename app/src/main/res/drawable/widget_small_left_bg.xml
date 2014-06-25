@@ -2,9 +2,10 @@
 <shape
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="rectangle">
-    <gradient android:angle="0"
+    <!--<gradient android:angle="0"
         android:startColor="@color/gesture_cur_blue"
-        android:endColor="@color/widget_bkground"/>
+        android:endColor="@color/widget_bkground"/>-->
+    <solid android:color="@color/gesture_cur_blue_light_semi_transparent" />
     <corners android:topLeftRadius="3dip"
         android:bottomLeftRadius="3dip"/>
 </shape>

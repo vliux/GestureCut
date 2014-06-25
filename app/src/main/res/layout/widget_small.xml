@@ -15,9 +15,15 @@
             android:layout_width="@dimen/gesture_list_item_icon_dimen"
             android:layout_height="match_parent"
             android:layout_gravity="center"
+            android:scaleType="center"/>
+
+        <ImageView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/widget_small_next_prev_btns_margin_top"
+            android:layout_marginBottom="@dimen/widget_small_next_prev_btns_margin_top"
             android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-            android:scaleType="center"
-            android:background="@drawable/widget_small_left_bg"/>
+            android:src="@color/gesture_cur_blue"/>
 
         <!-- app icon -->
         <ImageView
