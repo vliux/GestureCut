@@ -57,5 +57,5 @@
     <dimen name="welcome_start_btn_padding_vertical">15dp</dimen>
 
     <!-- widget -->
-    <dimen name="widget_small_next_prev_btns_margin_top">4dp</dimen>
+    <dimen name="widget_small_next_prev_btns_margin_top">8dp</dimen>
 </resources>
