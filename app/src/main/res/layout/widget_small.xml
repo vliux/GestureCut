@@ -54,4 +54,26 @@
         </LinearLayout>
     </LinearLayout>
 
+    <!-- next or previous item buttons -->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|right"
+        android:layout_marginRight="@dimen/widget_small_next_prev_btns_margin_top"
+        android:layout_marginTop="@dimen/widget_small_next_prev_btns_margin_top">
+        <ImageView
+            android:id="@+id/widget_prev"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/widget_small_next_prev_btns_margin_top"
+            android:background="@drawable/btn_bg_transparent"
+            android:src="@drawable/arrow_left_blue" />
+        <ImageView
+            android:id="@+id/widget_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg_transparent"
+            android:src="@drawable/arrow_right_blue" />
+    </LinearLayout>
 </FrameLayout>
