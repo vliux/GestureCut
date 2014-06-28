@@ -31,10 +31,6 @@ public class SimplifiedGestureListView extends ListView {
         init();
     }
 
-    public void setAutoRefresh(boolean autoRefresh){
-
-    }
-
     private void init(){
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);

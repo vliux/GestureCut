@@ -25,6 +25,7 @@ import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.ctl.GestureItemTouchedEventBus;
+import org.vliux.android.gesturecut.ui.ctl.GestureOverlayTouchedEventBus;
 import org.vliux.android.gesturecut.ui.view.UnlockBar;
 import org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
@@ -100,6 +101,7 @@ public class MainActivity extends Activity {
         super.onStart();
         // register eventbus for show/hide mask layer
         GestureItemTouchedEventBus.register(mSimplGestureListViewItemTouchedEventHandler);
+        GestureOverlayTouchedEventBus.register(mGestureOverlayTouchedEventHandler);
     }
 
     @Override
@@ -107,6 +109,7 @@ public class MainActivity extends Activity {
         super.onDestroy();
         // unregister eventbus
         GestureItemTouchedEventBus.unregister(mSimplGestureListViewItemTouchedEventHandler);
+        GestureOverlayTouchedEventBus.unregister(mGestureOverlayTouchedEventHandler);
     }
 
     private int decideSimplifiedGestureListViewHeight(){
@@ -124,7 +127,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
-        mSimplifiedGestureListView.setAutoRefresh(true);
         mTimeChangeReceiver.register();
         AppBroadcastManager.sendLockerStartedBroadcast(this);
     }
@@ -132,7 +134,6 @@ public class MainActivity extends Activity {
     @Override
     protected void onPause() {
         super.onPause();
-        mSimplifiedGestureListView.setAutoRefresh(false);
         mTimeChangeReceiver.unregister();
         AppBroadcastManager.sendLockerStoppedBroadcast(this);
     }
@@ -198,6 +199,9 @@ public class MainActivity extends Activity {
 
     }
 
+    /**
+     * EventHandler when the user clicking on an item in SimplifiedGestureListView.
+     */
     private final GestureItemTouchedEventBus.TouchedEventHandler mSimplGestureListViewItemTouchedEventHandler = new GestureItemTouchedEventBus.TouchedEventHandler() {
         @Override
         public void onEventMainThread(GestureItemTouchedEventBus.TouchedEvent touchedEvent) {
@@ -208,7 +212,7 @@ public class MainActivity extends Activity {
             switch (touchedEvent.getEventType()){
                 case ACTION_DOWN:
                     if(mMaskLayer.getVisibility() != View.VISIBLE) {
-                        mMaskLayerAnim.showMaskLayer();
+                        mMaskLayerAnim.showMaskLayer(getString(R.string.lock_screen_mask_layer_msg_on_listview_item));
                     }
                     break;
                 case START_TASK:
@@ -222,11 +226,36 @@ public class MainActivity extends Activity {
         }
     };
 
+    /**
+     * EventHandler when the user clicking on GestureOverlay view.
+     */
+    private final GestureOverlayTouchedEventBus.TouchedEventHandler mGestureOverlayTouchedEventHandler = new GestureOverlayTouchedEventBus.TouchedEventHandler() {
+        @Override
+        public void onEventMainThread(GestureOverlayTouchedEventBus.TouchedEvent touchedEvent) {
+            if(null == mMaskLayerAnim){
+                mMaskLayerAnim = new MaskLayerAnimation();
+            }
+
+            switch (touchedEvent.getEventType()){
+                case ACTION_DOWN:
+                    if(mMaskLayer.getVisibility() != View.VISIBLE) {
+                        mMaskLayerAnim.showMaskLayer(getString(R.string.lock_screen_mask_layer_msg_on_gestureoverlay));
+                    }
+                    break;
+                case ACTION_UP:
+                    if(mMaskLayer.getVisibility() != View.GONE){
+                        mMaskLayerAnim.hideMaskLayer();
+                    }
+                    break;
+            }
+        }
+    };
+
     private class MaskLayerAnimation{
         private Animator mPrevShowAnimator;
         private Animator mPrevHideAnimator;
 
-        public void showMaskLayer(){
+        public void showMaskLayer(final String text){
             if(null != mPrevShowAnimator && mPrevShowAnimator.isStarted()){
                 return;
             }else if(null != mPrevHideAnimator && mPrevHideAnimator.isStarted()){
@@ -240,7 +269,7 @@ public class MainActivity extends Activity {
                 public void onAnimationStart(Animator animation) {
                     mPrevShowAnimator = animator;
                     mMaskLayer.setVisibility(View.VISIBLE);
-                    mMaskLayerTextView.setText(getString(R.string.lock_screen_mask_layer_msg));
+                    mMaskLayerTextView.setText(text);
                 }
 
                 @Override

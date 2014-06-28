@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.gesture.GestureOverlayView
+    <org.vliux.android.gesturecut.ui.view.LockScreenGestureOverlayView
         android:id="@+id/main_gesture_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,7 +44,7 @@
                 android:shadowDy="1"
                 android:shadowRadius="1"/>
         </LinearLayout>
-    </android.gesture.GestureOverlayView>
+    </org.vliux.android.gesturecut.ui.view.LockScreenGestureOverlayView>
 
     <!-- mask layer
         it is shown when the SimplifiedGestureListView is touched,
@@ -64,7 +64,7 @@
             android:layout_marginLeft="@dimen/lock_screen_gesture_list_hint_margin_left"
             android:layout_gravity="center_vertical|right"
             android:gravity="center"
-            android:text="@string/lock_screen_mask_layer_msg"
+            android:text="@string/lock_screen_mask_layer_msg_on_listview_item"
             android:textSize="@dimen/text_size_small_title"/>
     </LinearLayout>
 

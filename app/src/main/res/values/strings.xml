@@ -53,5 +53,6 @@
     <string name="pref_key_widget_index">PREF_KEY_WIDGET_INDEX</string>
 
     <!-- mask layer on lock screen -->
-    <string name="lock_screen_mask_layer_msg">Double click to start the app ~</string>
+    <string name="lock_screen_mask_layer_msg_on_listview_item">Double click to start the app</string>
+    <string name="lock_screen_mask_layer_msg_on_gestureoverlay">To draw a gesture, continue moving your finger</string>
 </resources>

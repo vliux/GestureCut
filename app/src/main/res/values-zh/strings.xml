@@ -47,5 +47,6 @@
     <string name="setting_help_summary">显示引导页</string>
 
     <!-- mask layer on lock screen -->
-    <string name="lock_screen_mask_layer_msg">双击来启动应用~</string>
+    <string name="lock_screen_mask_layer_msg_on_listview_item">双击来启动应用</string>
+    <string name="lock_screen_mask_layer_msg_on_gestureoverlay">继续移动手指，以画出你的手势</string>
 </resources>
