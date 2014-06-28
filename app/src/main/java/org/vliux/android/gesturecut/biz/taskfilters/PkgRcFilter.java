@@ -4,7 +4,7 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 
 /**
  * Created by vliux on 4/26/14.

@@ -5,6 +5,7 @@ import android.content.Context;
 import org.vliux.android.gesturecut.biz.taskfilters.PkgRcFilter;
 import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
 import org.vliux.android.gesturecut.biz.taskfilters.IAddGestureFilter;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.util.AppLog;
 
 import java.util.ArrayList;

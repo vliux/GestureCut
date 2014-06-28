@@ -3,14 +3,16 @@ package org.vliux.android.gesturecut.biz;
 import android.app.ActivityManager;
 import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.widget.Toast;
 
-import org.vliux.android.gesturecut.GestureCutApplication;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.util.AppLog;
 
 import java.util.List;
 
@@ -18,6 +20,38 @@ import java.util.List;
  * Created by vliux on 4/9/14.
  */
 public class TaskManager {
+    private static final String TAG = TaskManager.class.getSimpleName();
+
+    public static void startActivity(Context context, ResolvedComponent resolvedComponent){
+        if(null == resolvedComponent){
+            throw new NullPointerException();
+        }
+
+        Intent intent = null;
+        switch (resolvedComponent.getType()){
+            case COMPONENT_NAME:
+                intent = new Intent();
+                intent.setComponent(resolvedComponent.getComponentName());
+                break;
+            case PACKAGE_NAME:
+                PackageManager packageManager = context.getPackageManager();
+                intent = packageManager.getLaunchIntentForPackage(resolvedComponent.getPackageName());
+                break;
+        }
+        if(null != intent){
+            try{
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.getApplicationContext().startActivity(intent);
+                return;
+            }catch (Exception e){
+                AppLog.loge(TAG, "TaskManager.startActivity() throws Exception");
+                e.printStackTrace();
+            }
+        }
+        Toast.makeText(context.getApplicationContext(),
+                context.getApplicationContext().getString(R.string.start_activity_failed),
+                Toast.LENGTH_SHORT).show();
+    }
 
     public static ResolvedComponent getTopComponent(Context context){
         ComponentName componentName = null;

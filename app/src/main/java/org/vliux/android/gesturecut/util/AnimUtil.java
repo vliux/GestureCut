@@ -10,7 +10,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.AppConstant;
-import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 
 /**
@@ -54,7 +54,7 @@ public class AnimUtil {
             @Override
             public void onAnimationEnd(Animator animation) {
                 if(null != resolvedComponent){
-                    resolvedComponent.startActivity(context.getApplicationContext());
+                    TaskManager.startActivity(context.getApplicationContext(), resolvedComponent);
                 }
                 targetView.setVisibility(View.GONE);
                 if(null != animEndRunnable){

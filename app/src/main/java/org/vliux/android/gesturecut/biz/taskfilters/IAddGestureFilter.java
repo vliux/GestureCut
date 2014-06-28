@@ -2,7 +2,7 @@ package org.vliux.android.gesturecut.biz.taskfilters;
 
 import android.content.Context;
 
-import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 
 /**
  * Created by vliux on 4/26/14.

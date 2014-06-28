@@ -2,7 +2,7 @@ package org.vliux.android.gesturecut.ui.ctl;
 
 import android.view.View;
 
-import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 
 import de.greenrobot.event.EventBus;
 

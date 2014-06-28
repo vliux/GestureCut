@@ -3,11 +3,8 @@ package org.vliux.android.gesturecut.ui.view.gesturelistview.simplified;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v4.view.GestureDetectorCompat;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,11 +12,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.biz.ResolvedComponent;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.ctl.GestureItemTouchedEventBus;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 /**
  * Created by vliux on 6/18/14.

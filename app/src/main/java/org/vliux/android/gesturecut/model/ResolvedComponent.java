@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.biz;
+package org.vliux.android.gesturecut.model;
 
 import android.content.ComponentName;
 import android.content.Context;
@@ -47,30 +47,4 @@ public class ResolvedComponent {
         return packageName;
     }
 
-    public void startActivity(Context context){
-        Intent intent = null;
-        switch (type){
-            case COMPONENT_NAME:
-                intent = new Intent();
-                intent.setComponent(componentName);
-                break;
-            case PACKAGE_NAME:
-                PackageManager packageManager = context.getPackageManager();
-                intent = packageManager.getLaunchIntentForPackage(packageName);
-                break;
-        }
-        if(null != intent){
-            try{
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.getApplicationContext().startActivity(intent);
-                return;
-            }catch (Exception e){
-                AppLog.loge(TAG, "startActivity() of ResolvedComponent throws Exception");
-                e.printStackTrace();
-            }
-        }
-        Toast.makeText(context.getApplicationContext(),
-                context.getApplicationContext().getString(R.string.start_activity_failed),
-                Toast.LENGTH_SHORT).show();
-    }
 }
