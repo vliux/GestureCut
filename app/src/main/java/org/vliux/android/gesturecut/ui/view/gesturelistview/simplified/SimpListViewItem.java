@@ -76,7 +76,7 @@ public class SimpListViewItem extends FrameLayout {
         return true;
     }
 
-    private GestureDetector.OnDoubleTapListener mDoubleTapListener = new GestureDetector.OnDoubleTapListener() {
+    private final GestureDetector.OnDoubleTapListener mDoubleTapListener = new GestureDetector.OnDoubleTapListener() {
         @Override
         public boolean onSingleTapConfirmed(MotionEvent e) {
             return false;
@@ -94,7 +94,7 @@ public class SimpListViewItem extends FrameLayout {
         }
     };
 
-    private GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
+    private final GestureDetector.OnGestureListener mGestureListener = new GestureDetector.OnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
             return false;

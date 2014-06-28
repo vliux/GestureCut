@@ -28,8 +28,8 @@ import org.vliux.android.gesturecut.util.AppLog;
  * Created by vliux on 8/7/13.
  */
 public class ImageUtil {
-    public static final String TAG = ImageUtil.class.getSimpleName();
-    public static final Bitmap.CompressFormat DEFAULT_COMPRESS_FORMAT = Bitmap.CompressFormat.PNG;
+    private static final String TAG = ImageUtil.class.getSimpleName();
+    private static final Bitmap.CompressFormat DEFAULT_COMPRESS_FORMAT = Bitmap.CompressFormat.PNG;
 
     public static void recycleBitmap(Bitmap bitmap) {
         if (null == bitmap) {
@@ -118,7 +118,7 @@ public class ImageUtil {
         return ret;
     }
 
-    public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+    private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
         // Raw height and width of image
         final int height = options.outHeight;
         final int width = options.outWidth;

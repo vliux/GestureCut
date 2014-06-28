@@ -13,7 +13,7 @@ import org.vliux.android.gesturecut.R;
  * Created by vliux on 4/23/14.
  */
 public class DrawBoundsGestureOverlayView extends GestureOverlayView {
-    private Paint mPaint = new Paint();
+    private final Paint mPaint = new Paint();
 
     public DrawBoundsGestureOverlayView(Context context) {
         super(context);

@@ -19,8 +19,8 @@ public class GestureKeyGuardService extends Service {
     private static final String TAG = GestureKeyGuardService.class.getSimpleName();
 
     /* SCREEN_ON and SCREEN_OFF have to be registered by code only */
-    public static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
-    public static final String SCREEN_ON = "android.intent.action.SCREEN_ON";
+    private static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
+    private static final String SCREEN_ON = "android.intent.action.SCREEN_ON";
 
     private static class IntentKeys{
         public static final String INTENT_KEY_INT_TYPE = "org.vliux.android.gesturecut.SERVICE_TYPE";
@@ -106,7 +106,7 @@ public class GestureKeyGuardService extends Service {
         unregisterReceiver(mScreenOnOffReceiver);
     }
 
-    private BroadcastReceiver mScreenOnOffReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mScreenOnOffReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(null == intent){

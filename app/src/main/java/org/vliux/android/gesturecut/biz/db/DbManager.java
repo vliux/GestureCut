@@ -19,8 +19,8 @@ public class DbManager {
     private static final String TAG = DbManager.class.getSimpleName();
 
     private static DbManager sInstance;
-    private HashMap<Class, DbTable> mDbTables;
-    private DbHelper mDbHelper;
+    private final HashMap<Class, DbTable> mDbTables;
+    private final DbHelper mDbHelper;
 
     /**
      * Must call init() first.

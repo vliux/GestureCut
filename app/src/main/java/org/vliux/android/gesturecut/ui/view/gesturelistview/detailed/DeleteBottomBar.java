@@ -16,7 +16,7 @@ import org.vliux.android.gesturecut.R;
 /**
  * Created by vliux on 4/29/14.
  */
-public class DeleteBottomBar extends FrameLayout {
+class DeleteBottomBar extends FrameLayout {
 
     private AnimatorSet mAnimatorShow;
     private AnimatorSet mAnimatorHide;

@@ -100,7 +100,7 @@ public class SecondaryFloatWindow extends LinearLayout
         }
     }
 
-    private GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
+    private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, final Gesture gesture) {
             switch (mTabLikeView.getType()){

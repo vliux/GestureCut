@@ -76,7 +76,7 @@ public class FloatWindowManager {
         }
     }
 
-    private static BroadcastReceiver sLockerStatusReceiver = new BroadcastReceiver() {
+    private final static BroadcastReceiver sLockerStatusReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(null == intent){

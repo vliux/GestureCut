@@ -130,7 +130,7 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
      * Load gesture icon from file system.
      */
     class LoadExistingGestureIconRunnable implements Runnable{
-        private String mIconPath;
+        private final String mIconPath;
 
         public LoadExistingGestureIconRunnable(String iconPath){
             mIconPath = iconPath;
@@ -214,7 +214,7 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
     }
 
     private static final int WHAT_GESTURE_ICON_LOADED = 100;
-    private Handler mHandler = new Handler(){
+    private final Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){

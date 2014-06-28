@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.ui;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,7 +17,7 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
 /**
  * Created by vliux on 4/26/14.
  */
-public class WelcomeActivity extends BaseActivity implements View.OnClickListener{
+public class WelcomeActivity extends Activity implements View.OnClickListener{
     private static final int NUM_PAGES = 4;
     private ViewPager mViewPager;
 
@@ -37,7 +38,7 @@ public class WelcomeActivity extends BaseActivity implements View.OnClickListene
         mViewPager.setAdapter(mViewPagerAdapter);
     }
 
-    private PagerAdapter mViewPagerAdapter = new PagerAdapter() {
+    private final PagerAdapter mViewPagerAdapter = new PagerAdapter() {
         @Override
         public int getCount() {
             return NUM_PAGES;

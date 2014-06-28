@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.ui;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -11,7 +12,7 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
 /**
  * Created by vliux on 4/28/14.
  */
-public class SettingsActivity extends BaseActivity {
+public class SettingsActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -2,6 +2,7 @@ package org.vliux.android.gesturecut.ui;
 
 import android.animation.Animator;
 import android.animation.ObjectAnimator;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -36,7 +37,7 @@ import java.util.Locale;
 /**
  * Created by vliux on 4/3/14.
  */
-public class MainActivity extends BaseActivity {
+public class MainActivity extends Activity {
     private ViewGroup mOutmostLayout;
     private GestureOverlayView mGesutreOverLayView;
     private SimplifiedGestureListView mSimplifiedGestureListView;
@@ -153,7 +154,7 @@ public class MainActivity extends BaseActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
     }
 
-    private GestureOverlayView.OnGesturePerformedListener mOnGesutrePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
+    private final GestureOverlayView.OnGesturePerformedListener mOnGesutrePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
             ResolvedComponent resolvedComponent = GesturePersistence.loadGesture(getApplicationContext(), gesture);
@@ -197,7 +198,7 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    private GestureItemTouchedEventBus.TouchedEventHandler mSimplGestureListViewItemTouchedEventHandler = new GestureItemTouchedEventBus.TouchedEventHandler() {
+    private final GestureItemTouchedEventBus.TouchedEventHandler mSimplGestureListViewItemTouchedEventHandler = new GestureItemTouchedEventBus.TouchedEventHandler() {
         @Override
         public void onEventMainThread(GestureItemTouchedEventBus.TouchedEvent touchedEvent) {
             if(null == mMaskLayerAnim){

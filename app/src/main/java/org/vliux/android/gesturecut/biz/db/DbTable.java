@@ -21,8 +21,8 @@ public abstract class DbTable{
     protected final String PRIMARY_COLUMN_NAME = "_id";
     protected final String DB_COLUMN_PREFIX = "DB_COL_";
     protected final int DB_COLUMN_SECTIONS = 4;
-    protected HashMap<String, DbColumnDef> mColumnDefinitions = new HashMap<String, DbColumnDef>();
-    protected DbManager.DbHelper mDbHelper;
+    protected final HashMap<String, DbColumnDef> mColumnDefinitions = new HashMap<String, DbColumnDef>();
+    protected final DbManager.DbHelper mDbHelper;
 
     protected DbTable(DbManager.DbHelper helper) {
         mDbHelper = helper;

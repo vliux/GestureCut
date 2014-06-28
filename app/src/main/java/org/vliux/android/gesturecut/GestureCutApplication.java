@@ -63,5 +63,5 @@ public class GestureCutApplication extends Application {
         }
     }
 
-    private Handler mHandler = new Handler();
+    private final Handler mHandler = new Handler();
 }

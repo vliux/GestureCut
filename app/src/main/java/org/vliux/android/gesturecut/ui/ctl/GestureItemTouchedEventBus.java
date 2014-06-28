@@ -41,9 +41,9 @@ public class GestureItemTouchedEventBus {
     }
 
     public static class TouchedEvent{
-        private View view;
-        private EventType eventType;
-        private ResolvedComponent resolvedComponent;
+        private final View view;
+        private final EventType eventType;
+        private final ResolvedComponent resolvedComponent;
 
         public enum EventType{
             ACTION_UP,

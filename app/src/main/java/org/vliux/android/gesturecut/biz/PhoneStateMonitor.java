@@ -22,7 +22,7 @@ import org.vliux.android.gesturecut.util.AppLog;
  * Created by diaoling.jj on 14-1-3.
  */
 public class PhoneStateMonitor extends BroadcastReceiver {
-    public static final String TAG = PhoneStateMonitor.class.getSimpleName();
+    private static final String TAG = PhoneStateMonitor.class.getSimpleName();
     private static PhoneStateMonitor sInstance;
     /**
      * 兼容多设备来电Broadcast Intents
@@ -35,8 +35,8 @@ public class PhoneStateMonitor extends BroadcastReceiver {
             "android.intent.action.NEW_OUTGOING_CALL"
     };
 
-    private Context mAppContext;
-    private TelephonyManager mTelephonyManager;
+    private final Context mAppContext;
+    private final TelephonyManager mTelephonyManager;
     private boolean mIsOnCall = false;
 
     public static void init(Context context){

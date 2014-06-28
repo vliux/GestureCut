@@ -13,7 +13,7 @@ import android.widget.ListView;
  * Created by vliux on 4/29/14.
  * When this ListView is touched, the bottom bar will be hidden.
  */
-public class DeleteBottomBarAwaredListView extends ListView {
+class DeleteBottomBarAwaredListView extends ListView {
     private DeleteBottomBar mBottomBar;
 
     private static final int LAST_LONG_CLICK_POS_INVALID = -1;
@@ -80,7 +80,7 @@ public class DeleteBottomBarAwaredListView extends ListView {
 
     private static final int WHAT_HIDE_BOTTOM_BAR = 100;
 
-    private Handler mHandler = new Handler(){
+    private final Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
@@ -97,7 +97,7 @@ public class DeleteBottomBarAwaredListView extends ListView {
      * when an item is single clicked, its activated state is persisted.
      * we don't want this state to be kept in single click.
      */
-    private OnItemClickListener mRmActivationItemClickedListener = new OnItemClickListener() {
+    private final OnItemClickListener mRmActivationItemClickedListener = new OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             setItemChecked(position, false);
@@ -107,7 +107,7 @@ public class DeleteBottomBarAwaredListView extends ListView {
     /**
      * when an item is long clicked, we want to keep the activated state.
      */
-    private OnItemLongClickListener mActivateItemLongClickedListener = new OnItemLongClickListener() {
+    private final OnItemLongClickListener mActivateItemLongClickedListener = new OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             setItemChecked(position, true);

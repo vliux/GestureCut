@@ -132,7 +132,7 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
         }
     }
 
-    private OnClickListener mOnBottomBarClickedListener = new OnClickListener() {
+    private final OnClickListener mOnBottomBarClickedListener = new OnClickListener() {
         @Override
         public void onClick(View v) {
             if(mLastLongClickPosition >= 0 && mLastLongClickPosition < mListViewAdapter.getCount()){
@@ -218,11 +218,11 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
     }
 
     private class LoadGestureDataRunnable implements Runnable{
-        private Handler notifyHandler;
-        private String gestureName;
-        private GestureListViewHolder viewHolder;
-        private int iconWidth;
-        private int iconHeight;
+        private final Handler notifyHandler;
+        private final String gestureName;
+        private final GestureListViewHolder viewHolder;
+        private final int iconWidth;
+        private final int iconHeight;
 
         public LoadGestureDataRunnable(Handler handler, String gesName,
                                        GestureListViewHolder vh,
@@ -266,7 +266,7 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
     }
 
     public static final int WHAT_GESTURE_ICON_LOADED = 100;
-    private Handler mHandler = new Handler(){
+    private final Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             switch (msg.what){
@@ -323,7 +323,7 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
         return animatorSet;
     }
 
-    private BroadcastReceiver mGestureAddedBroadcastReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mGestureAddedBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             if(null != intent){
@@ -338,7 +338,7 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
     };
 
     private int mLastLongClickPosition = -1;
-    private AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
+    private final AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
         @Override
         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
             mBottomBar.showBottomBar();

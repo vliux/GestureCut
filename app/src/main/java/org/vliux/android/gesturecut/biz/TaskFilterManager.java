@@ -18,7 +18,7 @@ public class TaskFilterManager {
     private static final String TAG = TaskFilterManager.class.getSimpleName();
 
     private static TaskFilterManager sInstance;
-    private List<IAddGestureFilter> mAddFilter;
+    private final List<IAddGestureFilter> mAddFilter;
 
     public static TaskFilterManager getInstance(){
         if(null == sInstance){

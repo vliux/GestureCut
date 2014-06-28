@@ -17,7 +17,7 @@ import java.util.Set;
  */
 public class GestureUtil {
     private static GestureUtil sInstance;
-    private GestureLibrary mGestureLibrary;
+    private final GestureLibrary mGestureLibrary;
 
     public static void init(Context appContext){
         sInstance = new GestureUtil(appContext);

@@ -9,7 +9,7 @@ import java.util.concurrent.Future;
  * Created by vliux on 4/9/14.
  */
 public class ConcurrentControl {
-    private static ExecutorService executorService = Executors.newFixedThreadPool(3);
+    private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
 
     public static void closeExecutorService(){
         executorService.shutdown();

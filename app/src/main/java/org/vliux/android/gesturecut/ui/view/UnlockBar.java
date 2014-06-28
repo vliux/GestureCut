@@ -150,7 +150,7 @@ public class UnlockBar extends View {
         return true;
     }
 
-    private GestureDetector.OnGestureListener mOnGestureListener = new GestureDetector.OnGestureListener() {
+    private final GestureDetector.OnGestureListener mOnGestureListener = new GestureDetector.OnGestureListener() {
         @Override
         public boolean onDown(MotionEvent e) {
             return false;

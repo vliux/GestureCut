@@ -28,7 +28,7 @@ import java.util.List;
 class SimplifiedGestureListAdapter extends BaseAdapter {
 
     private List<String> mGestureNames;
-    private Context mContext;
+    private final Context mContext;
 
     public SimplifiedGestureListAdapter(Context context){
         mContext = context;
@@ -85,11 +85,11 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
     }
 
     private class LoadGestureDataRunnable implements Runnable{
-        private Handler notifyHandler;
-        private String gestureName;
-        private SimpListViewItem listViewItem;
-        private int iconWidth;
-        private int iconHeight;
+        private final Handler notifyHandler;
+        private final String gestureName;
+        private final SimpListViewItem listViewItem;
+        private final int iconWidth;
+        private final int iconHeight;
 
         public LoadGestureDataRunnable(Handler handler, String gesName,
                                        SimpListViewItem item){
