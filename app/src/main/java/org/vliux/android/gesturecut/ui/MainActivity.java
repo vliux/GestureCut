@@ -44,7 +44,6 @@ public class MainActivity extends BaseActivity {
     private TextView mTvTime;
     private TextView mTvDate;
     private TimeChangeReceiver mTimeChangeReceiver;
-    private int mScreenHeight;
     private ImageView mIvAppIconAnim; // ImageView of Animator for starting activity for the given gesture
 
     private View mMaskLayer;
@@ -78,7 +77,6 @@ public class MainActivity extends BaseActivity {
         });
 
         mTimeChangeReceiver = new TimeChangeReceiver();
-        mScreenHeight = ScreenUtil.getScreenSize(this)[1];
 
         // show welcome page after 1000ms
         mOutmostLayout.postDelayed(new Runnable() {

@@ -42,7 +42,7 @@
             android:layout_height="@dimen/listview_divider_thick"
             android:background="@color/gesture_cur_blue"/>-->
 
-        <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.BottomBarAwaredListView
+        <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.DeleteBottomBarAwaredListView
             android:id="@+id/gesture_listview"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -53,7 +53,7 @@
             android:divider="@color/gesture_cur_blue_light_semi_transparent"
             android:dividerHeight="@dimen/listview_divider_thin"
             android:listSelector="@drawable/gesture_list_selector_pressed">
-        </org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.BottomBarAwaredListView>
+        </org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.DeleteBottomBarAwaredListView>
         <!-- empty view for ListView -->
         <TextView
             android:id="@+id/gesture_empty_tv"
@@ -69,11 +69,11 @@
             android:visibility="gone" />
     </LinearLayout>
     <!-- bottom bar -->
-    <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.BottomBar
+    <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.DeleteBottomBar
         android:id="@+id/gesture_bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/gesture_list_bottom_bar_height"
         android:layout_gravity="bottom"
         android:visibility="gone">
-    </org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.BottomBar>
+    </org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.DeleteBottomBar>
 </FrameLayout>

@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
@@ -17,41 +16,39 @@ import org.vliux.android.gesturecut.R;
 /**
  * Created by vliux on 4/29/14.
  */
-public class BottomBar extends FrameLayout {
+public class DeleteBottomBar extends FrameLayout {
 
     private AnimatorSet mAnimatorShow;
     private AnimatorSet mAnimatorHide;
     private boolean mIsShowingBottomBar = false;
     private boolean mIsHidingBottomBar = false;
     private boolean mIsBottomBarShown = false;
-    private ImageView mIvDelete;
-    private BottomBarAwaredListView mBottomBarAwaredListView;
+    private DeleteBottomBarAwaredListView mBottomBarAwaredListView;
 
-    public BottomBar(Context context) {
+    public DeleteBottomBar(Context context) {
         super(context);
         init();
     }
 
-    public BottomBar(Context context, AttributeSet attrs) {
+    public DeleteBottomBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public BottomBar(Context context, AttributeSet attrs, int defStyle) {
+    public DeleteBottomBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gl_bottom_bar, this, true);
-        mIvDelete = (ImageView)findViewById(R.id.gesture_bottom_bar_del);
     }
 
     /**
      * BottomBarAwaredListView.setBottomBar() will call this method.
      * @param listView
      */
-    void setBottomBarAwaredListView(BottomBarAwaredListView listView){
+    void setBottomBarAwaredListView(DeleteBottomBarAwaredListView listView){
         mBottomBarAwaredListView = listView;
     }
 
@@ -60,7 +57,7 @@ public class BottomBar extends FrameLayout {
             @Override
             public void onClick(View v) {
                 if(null != onDeleteClicked){
-                    onDeleteClicked.onClick(BottomBar.this);
+                    onDeleteClicked.onClick(DeleteBottomBar.this);
                 }
                 hideBottomBar();
             }

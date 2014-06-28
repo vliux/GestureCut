@@ -26,8 +26,6 @@ public class AppLog {
                 Log.d(tag, msg);
             }
         }
-
-        return;
     }
 
     public static void loge(String tag, String msg) {
@@ -36,8 +34,6 @@ public class AppLog {
                 Log.e(tag, msg);
             }
         }
-
-        return;
     }
 
     public static void logi(String tag, String msg) {
@@ -46,8 +42,6 @@ public class AppLog {
                 Log.i(tag, msg);
             }
         }
-
-        return;
     }
 
     public static void logv(String tag, String msg) {
@@ -56,8 +50,6 @@ public class AppLog {
                 Log.v(tag, msg);
             }
         }
-
-        return;
     }
 
     public static void logw(String tag, String msg) {
@@ -66,8 +58,6 @@ public class AppLog {
                 Log.w(tag, msg);
             }
         }
-        return;
     }
-
 
 }

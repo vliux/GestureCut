@@ -120,12 +120,7 @@ public class UnlockBar extends View {
     }
 
     private void changeBkColor(boolean onPress){
-        if(onPress){
-            mShowReverse = true;
-        }else {
-            mShowReverse = false;
-        }
-
+        mShowReverse = onPress;
         invalidate();
     }
 

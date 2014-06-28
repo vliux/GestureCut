@@ -90,7 +90,7 @@ public abstract class DbTable{
             if (ret != -1L) {
                 sqliteDb.setTransactionSuccessful();
             }
-            return (-1L != ret ? true : false);
+            return (-1L != ret);
         }catch(SQLiteException e){
             e.printStackTrace();
             throw e;
@@ -110,7 +110,7 @@ public abstract class DbTable{
             if (ret != -1L) {
                 sqliteDb.setTransactionSuccessful();
             }
-            return (-1L != ret ? true : false);
+            return (-1L != ret);
         } catch (SQLiteException ex) {
             AppLog.loge(getTableName(), ex.toString());
             throw ex;
@@ -130,7 +130,7 @@ public abstract class DbTable{
             if (ret > 0) {
                 sqliteDb.setTransactionSuccessful();
             }
-            return (0 < ret ? true : false);
+            return (0 < ret);
         } catch (SQLiteException ex) {
             AppLog.loge(getTableName(), ex.toString());
             throw ex;
@@ -150,7 +150,7 @@ public abstract class DbTable{
             if (ret > 0) {
                 sqliteDb.setTransactionSuccessful();
             }
-            return (0 < ret ? true : false);
+            return (0 < ret);
         } catch (SQLiteException ex) {
             AppLog.loge(getTableName(), ex.toString());
             throw ex;

@@ -55,11 +55,11 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
     private boolean mNeedShowHide = false;
 
     private ImageView mIvSetting;
-    private BottomBarAwaredListView mGestureListView;
+    private DeleteBottomBarAwaredListView mGestureListView;
     private int mScreenWidth;
     private boolean mIsShown = false;
     private GestureListViewAdapter mListViewAdapter;
-    private BottomBar mBottomBar;
+    private DeleteBottomBar mBottomBar;
 
     public GestureListLayout(Context context) {
         super(context);
@@ -79,8 +79,8 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
     private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
         mIvSetting = (ImageView)findViewById(R.id.gesture_list_settings);
-        mGestureListView = (BottomBarAwaredListView)findViewById(R.id.gesture_listview);
-        mBottomBar = (BottomBar)findViewById(R.id.gesture_bottom_bar);
+        mGestureListView = (DeleteBottomBarAwaredListView)findViewById(R.id.gesture_listview);
+        mBottomBar = (DeleteBottomBar)findViewById(R.id.gesture_bottom_bar);
 
         mBottomBar.setOnDeleteClicked(mOnBottomBarClickedListener);
         mIvSetting.setOnClickListener(this);
@@ -143,6 +143,9 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
         }
     };
 
+    /**
+     * Adapter
+     */
     private class GestureListViewAdapter extends BaseAdapter{
         private List<String> mGestureNames;
 
@@ -205,7 +208,7 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
                             getContext().getPackageManager()));
             return convertView;
         }
-    };
+    }
 
     private class GestureListViewHolder{
         public ImageView gestureIcon;

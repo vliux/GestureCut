@@ -27,8 +27,7 @@ public class GesturePersistence {
     public static Bitmap toBitmap(Context context, Gesture gesture){
         int thumbWidth = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_width);
         int thumbHeight = (int)context.getResources().getDimension(R.dimen.gesture_thumbnail_height);
-        Bitmap gestureBitmap = gesture.toBitmap(thumbWidth, thumbHeight, 10, 0xFFFF0000);
-        return gestureBitmap;
+        return gesture.toBitmap(thumbWidth, thumbHeight, 10, 0xFFFF0000);
     }
 
     public static void saveGesture(Context context, Gesture gesture, ResolvedComponent resolvedComponent)
