@@ -16,7 +16,7 @@
     <dimen name="settings_outmost_margin">10dp</dimen>
 
     <!-- global icon dimension -->
-    <dimen name="icon_dimen_global">30dp</dimen>
+    <dimen name="icon_dimen_global">32dp</dimen>
     <dimen name="icon_dimen_global_large">60dp</dimen>
 
     <dimen name="title_bar_height">45dp</dimen>
