@@ -20,7 +20,7 @@ public class SettingsActivity extends BaseActivity {
                 .replace(android.R.id.content, new SettingsFragment()).commit();
     }
 
-    static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+    public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
