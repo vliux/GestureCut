@@ -155,6 +155,8 @@ public class UnlockBar extends View {
     }
 
     private final GestureDetector.OnGestureListener mOnGestureListener = new GestureDetector.OnGestureListener() {
+        private float mLastScrollDeltaY = 0.0f;
+
         @Override
         public boolean onDown(MotionEvent e) {
             return false;
@@ -181,14 +183,24 @@ public class UnlockBar extends View {
                     mTargetViewGroup.setTranslationY(deltaY);
                 }
 
+                // check condition to enable mUnlockAfterActionUp
                 if(!mUnlockAfterActionUp && deltaY <= -mThresholdYAbs){
                     // when moving distance exceeds half of screen upward
                     AppLog.logd(TAG, "onScroll(): unlockAfterActionUp=TRUE");
                     mUnlockAfterActionUp = true;
-                }else if(mUnlockAfterActionUp && deltaY > -mThresholdYAbs){
-                    AppLog.logd(TAG, "onScroll(): unlockAfterActionUp=FALSE");
+                }
+
+                // check conditoin to disable mUnlockAfterActionUp
+                if(mUnlockAfterActionUp && deltaY > -mThresholdYAbs){
+                    // when moving distance is less than half of screen height upward
+                    AppLog.logd(TAG, "onScroll(): A");
+                    mUnlockAfterActionUp = false;
+                }else if(mUnlockAfterActionUp && deltaY >= mLastScrollDeltaY + AppConstant.LockScreen.MIN_DELTA_SCROLL_LAST_DELTA_Y){
+                    AppLog.logd(TAG, String.format("onScroll(): deltaY = %s, lastDeltaY = %s", deltaY, mLastScrollDeltaY));
                     mUnlockAfterActionUp = false;
                 }
+
+                mLastScrollDeltaY = deltaY;
             }
 
             return true;
@@ -202,15 +214,20 @@ public class UnlockBar extends View {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             AppLog.logd(TAG, "onFling(): velocityY = " + velocityY);
             if(velocityY < AppConstant.LockScreen.MIN_UNLOCK_FLOING_VELOCITY){
+                // fling upward at enough speed
                 AppLog.logd(TAG, "onFling(): flyAway() from onFling()");
                 flyAway();
             }else if(velocityY > 0){
-                // moving downward at the end
+                // fling downward at the end, ignore other conditions to make the reset
                 reset();
             }else if(mUnlockAfterActionUp){
                 // MIN_UNLOCK_FLOING_VELOCITY <= velocityY <= 0
+                // fling upward but speed is not enough, check whether moved distance is enough
                 AppLog.logd(TAG, "onFling(): flyAway() from onFling()");
                 flyAway();
+            }else{
+                // otherwise reset
+                reset();
             }
             return true;
         }
