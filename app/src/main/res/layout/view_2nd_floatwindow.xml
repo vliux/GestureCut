@@ -9,16 +9,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- action bar -->
+        <!-- action bar -->z
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
             android:background="@color/gesture_cur_blue">
+            <ImageView
+                android:layout_width="@dimen/icon_dimen_global"
+                android:layout_height="@dimen/icon_dimen_global"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="@dimen/title_bar_gc_icon_left_margin"
+                android:src="@drawable/ic_launcher"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="@dimen/settings_outmost_margin"
+                android:layout_marginLeft="@dimen/title_bar_height"
                 android:gravity="center"
                 android:text="@string/app_name"
                 android:textColor="@color/global_bkground"

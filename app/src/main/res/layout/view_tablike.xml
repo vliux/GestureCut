@@ -25,7 +25,7 @@
         <View
             android:id="@+id/tablike_underscore_use"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="6dp"
             android:background="@color/gesture_cur_blue"/>
         <!-- grey bottom line -->
         <View
@@ -52,7 +52,7 @@
         <View
             android:id="@+id/tablike_underscore_add"
             android:layout_width="match_parent"
-            android:layout_height="4dp"
+            android:layout_height="6dp"
             android:background="@color/gesture_cur_blue"
             android:visibility="invisible"/>
         <!-- grey bottom line -->

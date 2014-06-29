@@ -20,6 +20,7 @@
     <dimen name="icon_dimen_global_large">60dp</dimen>
 
     <dimen name="title_bar_height">45dp</dimen>
+    <dimen name="title_bar_gc_icon_left_margin">6dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
     <dimen name="gesture_list_outter_margin">10dp</dimen>
