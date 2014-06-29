@@ -7,10 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.util.AppLog;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 
 /**
  * Created by vliux on 4/9/14.

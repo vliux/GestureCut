@@ -3,7 +3,6 @@ package org.vliux.android.gesturecut.ui.view;
 import android.content.Context;
 import android.gesture.GestureOverlayView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 
 import org.vliux.android.gesturecut.ui.ctl.GestureOverlayTouchedEventBus;

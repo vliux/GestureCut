@@ -11,8 +11,6 @@ import android.widget.LinearLayout;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
-import java.util.List;
-
 /**
  * Created by vliux on 4/3/14.
  */

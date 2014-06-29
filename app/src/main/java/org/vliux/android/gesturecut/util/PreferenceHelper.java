@@ -5,7 +5,6 @@ import android.preference.PreferenceManager;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 
 public class PreferenceHelper {
 

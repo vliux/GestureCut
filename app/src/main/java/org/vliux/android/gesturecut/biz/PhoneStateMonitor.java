@@ -1,6 +1,5 @@
 package org.vliux.android.gesturecut.biz;
 
-import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;

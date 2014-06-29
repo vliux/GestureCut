@@ -1,13 +1,6 @@
 package org.vliux.android.gesturecut.model;
 
 import android.content.ComponentName;
-import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.widget.Toast;
-
-import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.util.AppLog;
 
 /**
  * Created by vliux on 4/14/14.

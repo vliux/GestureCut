@@ -40,7 +40,7 @@ public abstract class DbTable{
                     AppLog.loge(getTableName(), msgError);
                     throw new SQLiteException(msgError);
                 }
-                Integer dbVer = Integer.valueOf(sects[sects.length - 1]);
+                int dbVer = Integer.parseInt(sects[sects.length - 1]);
                 String dbType = sects[sects.length - 2];
                 String dbColumnName = null;
                 try {
@@ -52,7 +52,7 @@ public abstract class DbTable{
                 if (null != dbColumnName && null != dbType) {
                     DbColumnDef columnDef = new DbColumnDef();
                     columnDef.setColumn(dbColumnName);
-                    columnDef.setIntroducedVersion(dbVer.intValue());
+                    columnDef.setIntroducedVersion(dbVer);
                     columnDef.setType(dbType);
                     mColumnDefinitions.put(dbColumnName, columnDef);
                 }

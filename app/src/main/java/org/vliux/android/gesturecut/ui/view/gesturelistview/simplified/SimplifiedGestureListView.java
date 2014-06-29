@@ -1,14 +1,8 @@
 package org.vliux.android.gesturecut.ui.view.gesturelistview.simplified;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.ListView;
-
-import org.vliux.android.gesturecut.AppConstant;
 
 /**
  * Created by vliux on 6/16/14.
