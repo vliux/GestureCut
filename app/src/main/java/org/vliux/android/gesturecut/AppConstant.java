@@ -7,6 +7,7 @@ public class AppConstant {
 
     public static class LockScreen{
         public static final float MIN_UNLOCK_FLOING_VELOCITY = -100.0f;
+        // the min deleta value between the latest two deltaY in onScroll()
         public static final float MIN_DELTA_SCROLL_LAST_DELTA_Y = 2.0f;
     }
 

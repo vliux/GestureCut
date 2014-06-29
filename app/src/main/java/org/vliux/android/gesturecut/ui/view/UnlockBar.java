@@ -193,10 +193,11 @@ public class UnlockBar extends View {
                 // check conditoin to disable mUnlockAfterActionUp
                 if(mUnlockAfterActionUp && deltaY > -mThresholdYAbs){
                     // when moving distance is less than half of screen height upward
-                    AppLog.logd(TAG, "onScroll(): A");
+                    AppLog.logd(TAG, "onScroll(): unlockAfterActionUp=FALSE, condition A");
                     mUnlockAfterActionUp = false;
                 }else if(mUnlockAfterActionUp && deltaY >= mLastScrollDeltaY + AppConstant.LockScreen.MIN_DELTA_SCROLL_LAST_DELTA_Y){
-                    AppLog.logd(TAG, String.format("onScroll(): deltaY = %s, lastDeltaY = %s", deltaY, mLastScrollDeltaY));
+                    // if the latest scroll is downward
+                    AppLog.logd(TAG, String.format("onScroll(): unlockAfterActionUp=FALSE, condition B: deltaY = %s, lastDeltaY = %s", deltaY, mLastScrollDeltaY));
                     mUnlockAfterActionUp = false;
                 }
 

@@ -58,4 +58,5 @@
 
     <!-- widget -->
     <dimen name="widget_small_next_prev_btns_margin_top">8dp</dimen>
+    <dimen name="widet_out_margin">8dp</dimen>
 </resources>
