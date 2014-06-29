@@ -36,6 +36,7 @@
             android:layout_marginTop="@dimen/gesture_list_outter_margin" />
 
         <LinearLayout
+            android:id="@+id/widget_app_info_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/settings_outmost_margin"
@@ -56,7 +57,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="top"
-                android:textColor="@color/gesture_cur_grey"
+                android:textColor="@color/gesture_cur_grey_light"
                 android:textSize="@dimen/text_size_tiny" />
         </LinearLayout>
     </LinearLayout>

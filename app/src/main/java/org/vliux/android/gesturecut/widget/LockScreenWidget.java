@@ -16,6 +16,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.GestureListActivity;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
@@ -59,7 +60,7 @@ public class LockScreenWidget extends AppWidgetProvider {
     private void updateAppWidget(Context context, AppWidgetManager appWidgetManager, int appWidgetId, ACTIONS actions){
         Log.d(TAG, String.format("updateAppWidget(%d, %s) ...", appWidgetId, actions.name()));
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_small);
-        setStartActivityPendingIntent(context, views);
+        setStartSettingsPendingIntent(context, views);
 
         String gestureName = getGestureNameForWidget(context, actions);
         Log.d(TAG, "    gestureName = " + gestureName);
@@ -87,6 +88,7 @@ public class LockScreenWidget extends AppWidgetProvider {
             String[] descs = TaskManager.getDescription(context, dbData.resolvedComponent, false);
             views.setTextViewText(R.id.widget_appname, descs[0]);
             views.setTextViewText(R.id.widget_appdetail, descs[1]);
+            setStartTaskPendingIntent(context, views, dbData.resolvedComponent);
         }
         setForwardPendingIntent(context, views);
         setBackwardPendingIntent(context, views);
@@ -124,10 +126,19 @@ public class LockScreenWidget extends AppWidgetProvider {
         }
     }
 
-    private void setStartActivityPendingIntent(Context context, RemoteViews remoteViews){
+    private void setStartSettingsPendingIntent(Context context, RemoteViews remoteViews){
         Intent intent = new Intent(context, GestureListActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_gesture_icon, pendingIntent);
+    }
+
+    private void setStartTaskPendingIntent(Context context, RemoteViews remoteViews, ResolvedComponent resolvedComponent){
+        Intent intent = TaskManager.getStartActivityIntent(context, resolvedComponent);
+        if(null != intent){
+            PendingIntent pendingIntent = PendingIntent.getActivity(context, 1, intent, 0);
+            remoteViews.setOnClickPendingIntent(R.id.widget_app_info_layout, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.widget_app_icon, pendingIntent);
+        }
     }
 
     private void setForwardPendingIntent(Context context, RemoteViews remoteViews){

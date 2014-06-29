@@ -22,9 +22,9 @@ import java.util.List;
 public class TaskManager {
     private static final String TAG = TaskManager.class.getSimpleName();
 
-    public static void startActivity(Context context, ResolvedComponent resolvedComponent){
+    public static Intent getStartActivityIntent(Context context, ResolvedComponent resolvedComponent){
         if(null == resolvedComponent){
-            throw new NullPointerException();
+            return null;
         }
 
         Intent intent = null;
@@ -38,9 +38,21 @@ public class TaskManager {
                 intent = packageManager.getLaunchIntentForPackage(resolvedComponent.getPackageName());
                 break;
         }
+
+        if(null != intent){
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        }
+        return intent;
+    }
+
+    public static void startActivity(Context context, ResolvedComponent resolvedComponent){
+        if(null == resolvedComponent){
+            throw new NullPointerException();
+        }
+
+        Intent intent = getStartActivityIntent(context, resolvedComponent);
         if(null != intent){
             try{
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.getApplicationContext().startActivity(intent);
                 return;
             }catch (Exception e){
