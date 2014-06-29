@@ -33,7 +33,7 @@ public class UnlockBar extends View {
     private GestureDetectorCompat mGestureDetector;
     private ViewGroup mTargetViewGroup;
     private OnUnlockListener mUnlockListener;
-    private int mThresholdY;
+    private int mThresholdYAbs;
     private Paint mPaint;
     private boolean mShowReverse = false;
     private Bitmap mArrowBitmap;
@@ -59,7 +59,7 @@ public class UnlockBar extends View {
 
     private void init(){
         mGestureDetector = new GestureDetectorCompat(getContext(), mOnGestureListener);
-        mThresholdY = ScreenUtil.getScreenSize(getContext())[1]/3;
+        mThresholdYAbs = ScreenUtil.getScreenSize(getContext())[1]/3;
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(getResources().getColor(R.color.lock_screen_up_arrow_bg));
@@ -124,6 +124,10 @@ public class UnlockBar extends View {
         invalidate();
     }
 
+    /**
+     * assign value in GestureDetector, and check it in onTouchEvent().ACTION_UP
+     * to decide whether to flyAway() or reset() when gesture is not obvious.
+     */
     private boolean mUnlockAfterActionUp = false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -170,18 +174,19 @@ public class UnlockBar extends View {
         public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
             if(null != mTargetViewGroup){
                 float deltaY = e2.getRawY() - e1.getRawY();
-                AppLog.logd(TAG, String.format("deltaY = %s, distanceY = %s",
+                AppLog.logd(TAG, String.format("onScroll(): deltaY = %s, distanceY = %s",
                         deltaY, distanceY));
                 if((deltaY <= 0)
                         || (deltaY >=0 && mTargetViewGroup.getTranslationY() <= 0)){
                     mTargetViewGroup.setTranslationY(deltaY);
                 }
 
-                if(!mUnlockAfterActionUp && deltaY <= -mThresholdY){
-                    AppLog.logd(TAG, "unlockAfterActionUp=TRUE");
+                if(!mUnlockAfterActionUp && deltaY <= -mThresholdYAbs){
+                    // when moving distance exceeds half of screen upward
+                    AppLog.logd(TAG, "onScroll(): unlockAfterActionUp=TRUE");
                     mUnlockAfterActionUp = true;
-                }else if(mUnlockAfterActionUp && deltaY > -mThresholdY){
-                    AppLog.logd(TAG, "unlockAfterActionUp=FALSE");
+                }else if(mUnlockAfterActionUp && deltaY > -mThresholdYAbs){
+                    AppLog.logd(TAG, "onScroll(): unlockAfterActionUp=FALSE");
                     mUnlockAfterActionUp = false;
                 }
             }
@@ -197,11 +202,15 @@ public class UnlockBar extends View {
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
             AppLog.logd(TAG, "onFling(): velocityY = " + velocityY);
             if(velocityY < AppConstant.LockScreen.MIN_UNLOCK_FLOING_VELOCITY){
-                AppLog.logd(TAG, "flyAway() from onFling()");
+                AppLog.logd(TAG, "onFling(): flyAway() from onFling()");
                 flyAway();
-            }else if(!mUnlockAfterActionUp){
-                AppLog.logd(TAG, "reset() from onFling()");
+            }else if(velocityY > 0){
+                // moving downward at the end
                 reset();
+            }else if(mUnlockAfterActionUp){
+                // MIN_UNLOCK_FLOING_VELOCITY <= velocityY <= 0
+                AppLog.logd(TAG, "onFling(): flyAway() from onFling()");
+                flyAway();
             }
             return true;
         }
