@@ -13,8 +13,8 @@ public class WindowManagerUtil {
     private static final String TAG = WindowManagerUtil.class.getSimpleName();
 
     public enum WindowScope {
-        GLOBAL, // always shown on screen
-        APP // show in app lifecycle
+        FIRST_FLOAT_WND, // always shown on screen
+        SECOND_FLOAT_WND // show in app lifecycle
     }
 
     public static WindowManager.LayoutParams showWindow(Context context, View view, WindowScope windowScope){
@@ -25,7 +25,7 @@ public class WindowManagerUtil {
         WindowManager.LayoutParams lp = null;
         int[] screenSize = ScreenUtil.getScreenSize(context);
         switch (windowScope){
-            case GLOBAL:
+            case FIRST_FLOAT_WND:
                 lp = new WindowManager.LayoutParams(
                         WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
                         WindowManager.LayoutParams.TYPE_PHONE,
@@ -35,11 +35,11 @@ public class WindowManagerUtil {
                 lp.x = screenSize[0];
                 lp.y = screenSize[1]/2;
                 break;
-            case APP:
+            case SECOND_FLOAT_WND:
                 lp = new WindowManager.LayoutParams(
-                        //(int)(screenSize[0] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
-                        //(int)(screenSize[1] - context.getResources().getDimension(R.dimen.fw2_outmost_margin)),
-                        WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
+                        (int)(screenSize[0] * 0.93),
+                        (int)(screenSize[1] * 0.93),
+                        //WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
                         WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
                         WindowManager.LayoutParams.FLAG_FULLSCREEN,
                         PixelFormat.TRANSLUCENT);

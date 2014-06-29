@@ -62,7 +62,7 @@ public class FloatWindowManager {
         }
 
         WindowManager.LayoutParams lp =
-                    WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, WindowManagerUtil.WindowScope.GLOBAL);
+                    WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, WindowManagerUtil.WindowScope.FIRST_FLOAT_WND);
         if(null != lp){
             sFloatWindow.setWindowLayoutParams(lp);
         }

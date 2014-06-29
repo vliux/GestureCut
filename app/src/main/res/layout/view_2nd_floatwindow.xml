@@ -4,12 +4,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
+        android:id="@+id/gesture_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gesture_create_bg_semi_transparent"
+        style="@style/gesture_overlay_use">
+        <TextView
+            android:id="@+id/gesture_hint"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="@dimen/text_size_small_title"
+            android:textColor="@color/gesture_cur_blue_light" />
+    </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- action bar -->z
+        <!-- action bar -->
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
@@ -46,56 +62,39 @@
             android:layout_height="@dimen/switch_layout_height"
             android:background="@color/global_bkground"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
 
-        <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
-            android:id="@+id/gesture_overlay"
+        <LinearLayout
+            android:id="@+id/gesture_appinfo_layout"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/gesture_create_bg_semi_transparent"
-            style="@style/gesture_overlay_use">
-
-            <LinearLayout
-                android:id="@+id/gesture_appinfo_layout"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="top"
-                android:visibility="gone">
-                <!-- warning text for invalid target ResolvedComponent -->
-                <TextView
-                    android:id="@+id/gesture_tv_invalid_rc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="@dimen/settings_outmost_margin"
-                    android:paddingLeft="@dimen/settings_outmost_margin"
-                    android:paddingRight="@dimen/settings_outmost_margin"
-                    android:textColor="@color/red_warning"
-                    android:textSize="@dimen/text_size_general"
-                    android:textStyle="bold"
-                    android:background="@color/beige_light_semi_transparent"
-                    android:visibility="gone"/>
-                <!-- target app info, when adding a new gesture -->
-                <org.vliux.android.gesturecut.ui.view.AppInfoView
-                    android:id="@+id/gesture_appinfoview"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/settings_outmost_margin"
-                    android:background="@color/beige_light_semi_transparent">
-                 </org.vliux.android.gesturecut.ui.view.AppInfoView>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1px"
-                    android:background="@color/gesture_cur_blue"/>
-            </LinearLayout>
-
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:visibility="gone">
+            <!-- warning text for invalid target ResolvedComponent -->
             <TextView
-                android:id="@+id/gesture_hint"
+                android:id="@+id/gesture_tv_invalid_rc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="@dimen/text_size_large_title"
-                android:textColor="@color/gesture_cur_blue" />
-        </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
+                android:paddingTop="@dimen/settings_outmost_margin"
+                android:paddingLeft="@dimen/settings_outmost_margin"
+                android:paddingRight="@dimen/settings_outmost_margin"
+                android:textColor="@color/red_warning"
+                android:textSize="@dimen/text_size_general"
+                android:textStyle="bold"
+                android:background="@color/beige_light_semi_transparent"
+                android:visibility="gone"/>
+            <!-- target app info, when adding a new gesture -->
+            <org.vliux.android.gesturecut.ui.view.AppInfoView
+                android:id="@+id/gesture_appinfoview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/settings_outmost_margin"
+                android:background="@color/beige_light_semi_transparent">
+            </org.vliux.android.gesturecut.ui.view.AppInfoView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1px"
+                android:background="@color/gesture_cur_blue"/>
+        </LinearLayout>
     </LinearLayout>
 
     <!-- layer above, show confirmation dialog -->
