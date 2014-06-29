@@ -3,8 +3,8 @@ See it on <a href="https://play.google.com/store/apps/details?id=org.vliux.andro
 
 ![alt tag](https://github.com/vliux/GestureCut/raw/master/ued/add_gesture.png)
 ![alt tag](https://github.com/vliux/GestureCut/raw/master/ued/lock_use_gesture.png)
-The application recogonizes the gesture from device screen, and starts the relevant task for you, as a shorcut way!
+The application recognizes the gesture from device screen, and starts the relevant task for you, as a shortcut way!
 There are two components which interacts with the user:
-- the screen saveer, which is the MainActivity. Users can launch tasks by applying gestures.
+- the screen saver, which is the MainActivity. Users can launch tasks by applying gestures.
 - the top-level floating window, uses can both define and apply gestures.
 

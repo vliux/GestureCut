@@ -46,13 +46,13 @@ public class DrawBoundsGestureOverlayView extends GestureOverlayView {
     private void resetPaint(){
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
-        mPaint.setColor(getContext().getResources().getColor(R.color.gesture_cur_blue));
+        mPaint.setColor(getResources().getColor(R.color.gesture_cur_blue));
         setPaintStrokeWidth(2.0f);
     }
 
     private void setPaintStrokeWidth(float dp){
         float strokeWidth = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getContext().getResources().getDisplayMetrics());
+                getResources().getDisplayMetrics());
         mPaint.setStrokeWidth(strokeWidth);
     }
 }

@@ -40,9 +40,15 @@ public class AppInfoView extends LinearLayout{
     }
 
     private void readAttrs(AttributeSet attrs){
-        TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.AppInfoView);
-        mLongClzName = typedArray.getBoolean(R.styleable.AppInfoView_longClassName, true);
-        typedArray.recycle();
+        TypedArray typedArray = null;
+        try {
+            typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.AppInfoView);
+            mLongClzName = typedArray.getBoolean(R.styleable.AppInfoView_longClassName, true);
+        }finally {
+            if(null != typedArray) {
+                typedArray.recycle();
+            }
+        }
     }
 
     private void init(){

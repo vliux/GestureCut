@@ -22,9 +22,9 @@ public class WelcomeActivity extends Activity implements View.OnClickListener{
     private ViewPager mViewPager;
 
     public static void startWelcomeIfNeeded(Context context){
-        boolean isAleadyShown =
+        boolean isAlreadyShown =
                 PreferenceHelper.getUserPref(context.getApplicationContext(), R.string.pref_key_welcome_already_shown, false);
-        if(!isAleadyShown){
+        if(!isAlreadyShown){
             context.startActivity(new Intent(context, WelcomeActivity.class));
             PreferenceHelper.setUserPref(context.getApplicationContext(), R.string.pref_key_welcome_already_shown, true);
         }

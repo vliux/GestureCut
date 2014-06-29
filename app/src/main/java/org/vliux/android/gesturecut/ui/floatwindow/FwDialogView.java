@@ -138,7 +138,7 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
 
         @Override
         public void run() {
-            int iconWidth = (int)getContext().getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
+            int iconWidth = (int)getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
             int iconHeight = iconWidth;
             Bitmap bmp = null;
             if (null != mIconPath && mIconPath.length() > 0) {

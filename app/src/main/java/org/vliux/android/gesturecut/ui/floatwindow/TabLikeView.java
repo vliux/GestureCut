@@ -55,16 +55,16 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mTvUse.setTypeface(null, Typeface.BOLD);
                     mUnderscoreAdd.setVisibility(INVISIBLE);
                     mUnderscoreUse.setVisibility(VISIBLE);
-                    mTvAdd.setTextColor(getContext().getResources().getColor(R.color.gesture_cur_grey));
-                    mTvUse.setTextColor(getContext().getResources().getColor(R.color.gesture_cur_blue));
+                    mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
+                    mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_blue));
                     break;
                 case ADD:
                     mTvAdd.setTypeface(null, Typeface.BOLD);
                     mTvUse.setTypeface(null, Typeface.NORMAL);
                     mUnderscoreAdd.setVisibility(VISIBLE);
                     mUnderscoreUse.setVisibility(INVISIBLE);
-                    mTvAdd.setTextColor(getContext().getResources().getColor(R.color.gesture_cur_blue));
-                    mTvUse.setTextColor(getContext().getResources().getColor(R.color.gesture_cur_grey));
+                    mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_blue));
+                    mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
                     break;
             }
             mCurrentType = type;

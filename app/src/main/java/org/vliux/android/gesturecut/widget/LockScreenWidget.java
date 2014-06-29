@@ -98,7 +98,7 @@ public class LockScreenWidget extends AppWidgetProvider {
     private String getGestureNameForWidget(Context context, ACTIONS action){
         Set<String> gestureNames = GestureUtil.getInstance().getGestureNames();
         int setSize = gestureNames.size();
-        if(null == gestureNames || setSize <= 0){
+        if(setSize <= 0){
             Log.d(TAG, "    GestureUtil.getGestureNames() returns null");
             return null;
         }else{

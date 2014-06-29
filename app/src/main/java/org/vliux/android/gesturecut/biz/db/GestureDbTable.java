@@ -4,6 +4,7 @@ import android.content.ComponentName;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.text.TextUtils;
 
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.util.AppLog;
@@ -71,6 +72,10 @@ public class GestureDbTable extends DbTable {
             for(; !cursor.isAfterLast(); cursor.moveToNext()){
                 String iconPath = cursor.getString(0);
                 String componentName = cursor.getString(1);
+                if(TextUtils.isEmpty(componentName)){
+                    continue;
+                }
+
                 String typeTxt = cursor.getString(2);
                 ResolvedComponent resolvedComponent = null;
                 try{
@@ -84,17 +89,14 @@ public class GestureDbTable extends DbTable {
                             resolvedComponent = new ResolvedComponent(componentName);
                             break;
                     }
-                }catch(IllegalArgumentException e){
-                    AppLog.loge(TAG, "invalid resolvedType from DB: " + typeTxt);
-                    return null;
-                }
-
-                if(null != resolvedComponent){
                     DbData dbData = new DbData();
                     dbData.gestureName = gestureName;
                     dbData.iconPath = iconPath;
                     dbData.resolvedComponent = resolvedComponent;
                     return dbData;
+                }catch(IllegalArgumentException e){
+                    AppLog.loge(TAG, "invalid resolvedType from DB: " + typeTxt);
+                    return null;
                 }
             }
             return null;

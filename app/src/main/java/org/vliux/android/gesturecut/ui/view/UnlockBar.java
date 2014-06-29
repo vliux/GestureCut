@@ -190,7 +190,7 @@ public class UnlockBar extends View {
                     mUnlockAfterActionUp = true;
                 }
 
-                // check conditoin to disable mUnlockAfterActionUp
+                // check condition to disable mUnlockAfterActionUp
                 if(mUnlockAfterActionUp && deltaY > -mThresholdYAbs){
                     // when moving distance is less than half of screen height upward
                     AppLog.logd(TAG, "onScroll(): unlockAfterActionUp=FALSE, condition A");
