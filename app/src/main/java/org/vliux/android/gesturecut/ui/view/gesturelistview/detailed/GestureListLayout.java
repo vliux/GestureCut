@@ -29,6 +29,7 @@ import android.widget.TextView;
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
@@ -116,6 +117,14 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
         }else{
             LocalBroadcastManager.getInstance(getContext()).unregisterReceiver(mGestureAddedBroadcastReceiver);
         }
+    }
+
+    public void registerPkgRemovedEventHandler(){
+        PkgRemovedEventBus.getInstance().register(mPkgRemovedEventHandler);
+    }
+
+    public void unregisterPkgRemovedEventHandler(){
+        PkgRemovedEventBus.getInstance().unregister(mPkgRemovedEventHandler);
     }
 
     private void setEmptyGestureView(ListView gestureListView){
@@ -360,4 +369,13 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
             return super.dispatchKeyEvent(event);
         }
     }
+
+    private final PkgRemovedEventBus.PkgRemovedHandler mPkgRemovedEventHandler = new PkgRemovedEventBus.PkgRemovedHandler() {
+        @Override
+        public void onEventMainThread(PkgRemovedEventBus.PkgRemovedEvent event) {
+            if(null != mListViewAdapter){
+                mListViewAdapter.notifyDataSetChanged();
+            }
+        }
+    };
 }

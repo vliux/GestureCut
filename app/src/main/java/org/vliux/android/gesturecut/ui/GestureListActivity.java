@@ -33,4 +33,16 @@ public class GestureListActivity extends Activity{
         mGestureList.setAutoRefresh(false);
         mGestureList.hide();
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        mGestureList.registerPkgRemovedEventHandler();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mGestureList.unregisterPkgRemovedEventHandler();
+    }
 }
