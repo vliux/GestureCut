@@ -4,11 +4,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
+import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
+
 /**
  * Created by vliux on 6/16/14.
  * Simplified ListView in which, for an item, there are only app icon with gesture icon shown at right corner.
  */
 public class SimplifiedGestureListView extends ListView {
+    private SimplifiedGestureListAdapter mAdapter;
 
     public SimplifiedGestureListView(Context context) {
         super(context);
@@ -25,11 +28,29 @@ public class SimplifiedGestureListView extends ListView {
         init();
     }
 
+    public void registerPkgRemoveEventHandler(){
+        PkgRemovedEventBus.getInstance().register(mPkgRemovedHandler);
+    }
+
+    public void unregisterPkgRemoveEventHandler(){
+        PkgRemovedEventBus.getInstance().unregister(mPkgRemovedHandler);
+    }
+
     private void init(){
         setVerticalScrollBarEnabled(false);
         setHorizontalScrollBarEnabled(false);
         setDivider(null);
-        setAdapter(new SimplifiedGestureListAdapter(getContext()));
+        mAdapter = new SimplifiedGestureListAdapter(getContext());
+        setAdapter(mAdapter);
     }
+
+    private final PkgRemovedEventBus.PkgRemovedHandler mPkgRemovedHandler = new PkgRemovedEventBus.PkgRemovedHandler() {
+        @Override
+        public void onEventMainThread(PkgRemovedEventBus.PkgRemovedEvent event) {
+            if(null != mAdapter){
+                mAdapter.notifyDataSetChanged();
+            }
+        }
+    };
 
 }

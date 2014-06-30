@@ -102,6 +102,7 @@ public class MainActivity extends Activity {
         // register eventbus for show/hide mask layer
         GestureItemTouchedEventBus.register(mSimplGestureListViewItemTouchedEventHandler);
         GestureOverlayTouchedEventBus.register(mGestureOverlayTouchedEventHandler);
+        mSimplifiedGestureListView.registerPkgRemoveEventHandler();
     }
 
     @Override
@@ -110,6 +111,7 @@ public class MainActivity extends Activity {
         // unregister eventbus
         GestureItemTouchedEventBus.unregister(mSimplGestureListViewItemTouchedEventHandler);
         GestureOverlayTouchedEventBus.unregister(mGestureOverlayTouchedEventHandler);
+        mSimplifiedGestureListView.unregisterPkgRemoveEventHandler();
     }
 
     private int decideSimplifiedGestureListViewHeight(){

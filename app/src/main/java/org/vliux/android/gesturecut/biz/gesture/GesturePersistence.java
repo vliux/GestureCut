@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
@@ -81,6 +82,18 @@ public class GesturePersistence {
 
             // delete from db
             gestureDbTable.removeGesture(gestureName);
+        }
+    }
+
+    /**
+     * Actions to perform when an package has been removed from device.
+     * @param context
+     * @param packageName
+     */
+    public static void onPackageRemovedOnDevice(Context context, String packageName){
+        GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
+        if(gestureDbTable.removeGesturesByPackage(packageName)) {
+            PkgRemovedEventBus.getInstance().post(new PkgRemovedEventBus.PkgRemovedEvent());
         }
     }
 

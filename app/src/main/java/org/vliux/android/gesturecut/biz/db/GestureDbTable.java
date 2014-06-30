@@ -5,9 +5,13 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
+import android.util.Log;
 
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.util.AppLog;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vliux on 4/9/14.
@@ -101,6 +105,49 @@ public class GestureDbTable extends DbTable {
             }
             return null;
         }
+    }
+
+    public boolean removeGesturesByPackage(String packageName){
+        // remove rows directly matches packageName
+        boolean anyRemoved = super.delete(
+                String.format("%s=? AND %s=?", DB_COL_COMPONENT_TYPE_TEXT_1, DB_COL_COMPONENT_NAME_TEXT_1),
+                new String[]{ResolvedComponent.ResolvedType.PACKAGE_NAME.name(), packageName});
+
+        Log.d("vliux", "ResolvedType=PACKAGE has rows deleted");
+        // remove rows indirectly matches
+        List<Integer> removeIds = new ArrayList<Integer>();
+        String[] columns = new String[]{
+            PRIMARY_COLUMN_NAME,
+            DB_COL_COMPONENT_NAME_TEXT_1
+        };
+        ContentValues conditions = new ContentValues();
+        conditions.put(DB_COL_COMPONENT_TYPE_TEXT_1, ResolvedComponent.ResolvedType.COMPONENT_NAME.name());
+        Cursor cursor = __select(columns, conditions, null);
+        if(null == cursor || cursor.getCount() <= 0){
+            return anyRemoved;
+        }else {
+            cursor.moveToFirst();
+            for (; !cursor.isAfterLast(); cursor.moveToNext()) {
+                int id = cursor.getInt(0);
+                String componentName = cursor.getString(1);
+                if (TextUtils.isEmpty(componentName)) {
+                    continue;
+                }
+
+                ComponentName cn = ComponentName.unflattenFromString(componentName);
+                if (packageName.equals(cn.getPackageName())) {
+                    removeIds.add(id);
+                }
+            }
+        }
+
+        for(int id : removeIds){
+            Log.d("vliux", "remove row primary id = " + id);
+            delete(String.format("%s=?", PRIMARY_COLUMN_NAME),
+                    new String[]{String.valueOf(id)});
+        }
+
+        return anyRemoved || removeIds.size() > 0;
     }
 
     public static class DbData{

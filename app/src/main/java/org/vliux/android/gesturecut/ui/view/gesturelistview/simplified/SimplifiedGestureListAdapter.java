@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
