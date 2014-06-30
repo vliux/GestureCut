@@ -107,24 +107,24 @@ public class GestureDbTable extends DbTable {
         }
     }
 
-    public boolean removeGesturesByPackage(String packageName){
-        // remove rows directly matches packageName
-        boolean anyRemoved = super.delete(
-                String.format("%s=? AND %s=?", DB_COL_COMPONENT_TYPE_TEXT_1, DB_COL_COMPONENT_NAME_TEXT_1),
-                new String[]{ResolvedComponent.ResolvedType.PACKAGE_NAME.name(), packageName});
-
-        Log.d("vliux", "ResolvedType=PACKAGE has rows deleted");
-        // remove rows indirectly matches
+    /**
+     *
+     * @param packageName
+     * @return names of the gestures which are removed.
+     */
+    public List<String> removeGesturesByPackage(String packageName){
+        List<String> removedNames = new ArrayList<String>();
         List<Integer> removeIds = new ArrayList<Integer>();
         String[] columns = new String[]{
             PRIMARY_COLUMN_NAME,
-            DB_COL_COMPONENT_NAME_TEXT_1
+            DB_COL_COMPONENT_NAME_TEXT_1,
+            DB_COL_COMPONENT_TYPE_TEXT_1,
+            DB_COL_GESTURE_NAME_TEXT_1,
         };
-        ContentValues conditions = new ContentValues();
-        conditions.put(DB_COL_COMPONENT_TYPE_TEXT_1, ResolvedComponent.ResolvedType.COMPONENT_NAME.name());
-        Cursor cursor = __select(columns, conditions, null);
+
+        Cursor cursor = __select(columns, null, null);
         if(null == cursor || cursor.getCount() <= 0){
-            return anyRemoved;
+            return removedNames;
         }else {
             cursor.moveToFirst();
             for (; !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -134,10 +134,25 @@ public class GestureDbTable extends DbTable {
                     continue;
                 }
 
-                ComponentName cn = ComponentName.unflattenFromString(componentName);
-                if (packageName.equals(cn.getPackageName())) {
-                    removeIds.add(id);
+                ResolvedComponent.ResolvedType resolvedType =
+                        ResolvedComponent.ResolvedType.valueOf(cursor.getString(2));
+                String gestureName = cursor.getString(3);
+                switch (resolvedType) {
+                    case COMPONENT_NAME:
+                        ComponentName cn = ComponentName.unflattenFromString(componentName);
+                        if (packageName.equals(cn.getPackageName())) {
+                            removeIds.add(id);
+                            removedNames.add(gestureName);
+                        }
+                        break;
+                    case PACKAGE_NAME:
+                        if(packageName.equals(componentName)){
+                            removeIds.add(id);
+                            removedNames.add(gestureName);
+                        }
+                        break;
                 }
+
             }
         }
 
@@ -147,7 +162,7 @@ public class GestureDbTable extends DbTable {
                     new String[]{String.valueOf(id)});
         }
 
-        return anyRemoved || removeIds.size() > 0;
+        return removedNames;
     }
 
     public static class DbData{

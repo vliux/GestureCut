@@ -4,6 +4,7 @@ import android.content.Context;
 import android.gesture.Gesture;
 import android.gesture.Prediction;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
@@ -18,6 +19,7 @@ import org.vliux.android.gesturecut.util.ImageUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by vliux on 4/9/14.
@@ -92,9 +94,15 @@ public class GesturePersistence {
      */
     public static void onPackageRemovedOnDevice(Context context, String packageName){
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
-        if(gestureDbTable.removeGesturesByPackage(packageName)) {
-            PkgRemovedEventBus.getInstance().post(new PkgRemovedEventBus.PkgRemovedEvent());
+
+        List<String> gesturesRemoved = gestureDbTable.removeGesturesByPackage(packageName);
+        for(String gestureName : gesturesRemoved) {
+            Log.d("vliux", "remove gesture " + gestureName);
+            GestureUtil.getInstance().deleteGesture(gestureName);
         }
+        Log.d("vliux", "post PkgRemovedEvent to EventBus");
+        PkgRemovedEventBus.getInstance().post(new PkgRemovedEventBus.PkgRemovedEvent());
+
     }
 
     public static ResolvedComponent loadGesture(Context context, Gesture gesture){

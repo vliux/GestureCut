@@ -2,6 +2,7 @@ package org.vliux.android.gesturecut.ui.view.gesturelistview.simplified;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ListView;
 
 import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
@@ -48,6 +49,7 @@ public class SimplifiedGestureListView extends ListView {
         @Override
         public void onEventMainThread(PkgRemovedEventBus.PkgRemovedEvent event) {
             if(null != mAdapter){
+                Log.d("vliux", "PkgRemovedHandler.onEventMainThread() called");
                 mAdapter.notifyDataSetChanged();
             }
         }
