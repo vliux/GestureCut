@@ -3,6 +3,7 @@ package org.vliux.android.gesturecut.ui.floatwindow;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,7 +18,8 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  */
 public class FloatWindow extends LinearLayout implements View.OnClickListener {
     private static final String TAG = FloatWindow.class.getSimpleName();
-
+    private float mSysBarHeight;
+    private float mMoveDistantThreshold;
     private WindowManager.LayoutParams mLayoutParams;
 
     public FloatWindow(Context context) {
@@ -37,7 +39,8 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_floatwindow, this, true);
-        this.setOnClickListener(this);
+        mSysBarHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
+        mMoveDistantThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
     }
 
     /**
@@ -65,7 +68,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         float rawX = event.getRawX();
-        float rawY = event.getRawY() - 25;
+        float rawY = event.getRawY() - mSysBarHeight;
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
@@ -77,11 +80,11 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 Log.d(TAG, String.format("DOWN: %f, %f; %f, %f", mDownX, mDownY, event.getX(), event.getY()));
                 break;
             case MotionEvent.ACTION_MOVE:
-                if(isMoving(event)){
+                if(isMoving(rawX, rawY)){
                     mIsPrevMoved = true;
                     mLayoutParams.x = (int)(rawX - mDownInnerX);
                     mLayoutParams.y = (int)(rawY - mDownInnerY);
-                    Log.d(TAG, String.format("MOVE: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
+                    Log.d(TAG, "mIsPrevMoved = true");Log.d(TAG, String.format("MOVE: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                     WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, false);
                 }
                 break;
@@ -94,11 +97,15 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 mIsPrevMoved = false;
                 break;
             case MotionEvent.ACTION_UP:
-                mLayoutParams.x = (int)(rawX - mDownInnerX);
-                mLayoutParams.y = (int)(rawY - mDownInnerY);
                 Log.d(TAG, String.format("UP: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                 if(mIsPrevMoved) {
+                    Log.d(TAG, "mIsPrevMoved = true");
+                    mLayoutParams.x = (int)(rawX - mDownInnerX);
+                    mLayoutParams.y = (int)(rawY - mDownInnerY);
                     WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, true);
+                }else{
+                    Log.d(TAG, "mIsPrevMoved = false");
+                    onClick(this);
                 }
 
                 mIsPrevMoved = false;
@@ -108,13 +115,15 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 mDownY = 0;
                 break;
         }
-        return super.onTouchEvent(event);
+        return true;
     }
 
-    private boolean isMoving(MotionEvent event){
-        float offsetX = Math.abs(event.getRawX() - mDownX);
-        float offsetY = Math.abs(event.getRawY() - mDownY);
-        if (offsetX > 10 || offsetY > 10) {
+    private boolean isMoving(float rawX, float rawY){
+        float offsetX = Math.abs(rawX - mDownX);
+        float offsetY = Math.abs(rawY - mDownY);
+        Log.d(TAG, String.format("offsetX=%f, offsetY=%f, threshold=%f",
+                offsetX, offsetY, mMoveDistantThreshold));
+        if (offsetX > mMoveDistantThreshold || offsetY > mMoveDistantThreshold) {
             return true;
         }
         return false;
