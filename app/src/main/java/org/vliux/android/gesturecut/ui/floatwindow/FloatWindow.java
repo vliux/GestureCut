@@ -1,6 +1,7 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.content.Context;
+import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -23,6 +24,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
     private float mSysBarHeight;
     private float mMoveDistantThreshold;
     private WindowManager.LayoutParams mLayoutParams;
+    private Vibrator mVibrator;
 
     public FloatWindow(Context context) {
         super(context);
@@ -50,6 +52,8 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
         mMoveDistantThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 AppConstant.FloatWindow.THRESHOLD_MOVE_DISTANCE,
                 getResources().getDisplayMetrics());
+
+        mVibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     /**
@@ -87,6 +91,9 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 mDownInnerX = event.getX();
                 mDownInnerY = event.getY();
                 Log.d(TAG, String.format("DOWN: %f, %f; %f, %f", mDownX, mDownY, event.getX(), event.getY()));
+                if(null != mVibrator){
+                    mVibrator.vibrate(AppConstant.FloatWindow.ACTION_DOWN_VIBRATE_DURATION);
+                }
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(isMoving(rawX, rawY)){
