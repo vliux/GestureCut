@@ -49,4 +49,10 @@
     <!-- mask layer on lock screen -->
     <string name="lock_screen_mask_layer_msg_on_listview_item">双击来启动应用</string>
     <string name="lock_screen_mask_layer_msg_on_gestureoverlay">继续移动手指，以画出你的手势</string>
+
+    <!-- welcome -->
+    <string name="welcome_page_1_tv">1. 桌面悬浮窗是执行您的任务的快捷入口。在某些设备如小米上，您需要在系统设置中打开悬浮窗选项。</string>
+    <string name="welcome_page_2_tv">2. 创建一个新的手势来关联到某个app。</string>
+    <string name="welcome_page_3_tv">3. 关联后, 您可以在锁屏和桌面上使用手势来启动app。</string>
+    <string name="welcome_start_tour">关闭此引导</string>
 </resources>

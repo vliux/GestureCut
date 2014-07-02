@@ -49,4 +49,10 @@
     <!-- mask layer on lock screen -->
     <string name="lock_screen_mask_layer_msg_on_listview_item">Double click to start the app</string>
     <string name="lock_screen_mask_layer_msg_on_gestureoverlay">To draw a gesture, continue moving your finger</string>
+
+    <!-- welcome -->
+    <string name="welcome_page_1_tv">1. The float window on desktop is the shortcut to run your task. On some devices like Xiaomi, you need to enable the float window in System Settings</string>
+    <string name="welcome_page_2_tv">2. Correlate a new gesture to an app.</string>
+    <string name="welcome_page_3_tv">3. After correlation, you can draw the gesture on lock screen or desktop, to start the app.</string>
+    <string name="welcome_start_tour">Finish this guide</string>
 </resources>

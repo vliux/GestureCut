@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/gesture_list_outter_margin"
-    android:paddingRight="@dimen/gesture_list_outter_margin"
-    android:background="@drawable/welcome_bg">
+    android:paddingRight="@dimen/gesture_list_outter_margin">
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/gesture_list_outter_margin"
-            android:text="3. 查看已定义的手势"
+            android:text="@string/welcome_page_3_tv"
             android:textSize="@dimen/text_size_small_title"
             android:textColor="@color/global_bkground"
             android:textStyle="bold" />
@@ -28,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/welcome_lock_lefttop" />
+            android:src="@drawable/welcome_lockscreen" />
     </LinearLayout>
 
     <!-- dots -->
@@ -51,11 +50,20 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/gesture_list_outter_margin"
             android:src="@drawable/welcome_dot_active"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/welcome_dot_normal"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/welcome_start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/welcome_dots_margin_bottom"
+        android:paddingTop="@dimen/welcome_start_btn_padding_vertical"
+        android:paddingBottom="@dimen/welcome_start_btn_padding_vertical"
+        android:text="@string/welcome_start_tour"
+        android:textSize="@dimen/text_size_small_title"
+        android:textColor="@color/global_bkground"
+        android:textStyle="bold"
+        android:background="@drawable/btn_bg_start"/>
 </FrameLayout>

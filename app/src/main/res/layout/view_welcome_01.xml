@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/gesture_list_outter_margin"
-    android:paddingRight="@dimen/gesture_list_outter_margin"
-    android:background="@drawable/welcome_bg">
+    android:paddingRight="@dimen/gesture_list_outter_margin">
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/gesture_list_outter_margin"
-            android:text="1. 认识浮动小划块"
+            android:text="@string/welcome_page_1_tv"
             android:textSize="@dimen/text_size_small_title"
             android:textColor="@color/global_bkground"
             android:textStyle="bold" />
@@ -28,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:adjustViewBounds="true"
-            android:src="@drawable/welcome_float_window" />
+            android:src="@drawable/welcome_floatwnd" />
     </LinearLayout>
 
     <!-- dots -->
@@ -52,10 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/gesture_list_outter_margin"
-            android:src="@drawable/welcome_dot_normal"/>
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:src="@drawable/welcome_dot_normal"/>
     </LinearLayout>
 </FrameLayout>

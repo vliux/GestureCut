@@ -18,7 +18,7 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
  * Created by vliux on 4/26/14.
  */
 public class WelcomeActivity extends Activity implements View.OnClickListener{
-    private static final int NUM_PAGES = 4;
+    private static final int NUM_PAGES = 3;
     private ViewPager mViewPager;
 
     public static void startWelcomeIfNeeded(Context context){
@@ -66,9 +66,6 @@ public class WelcomeActivity extends Activity implements View.OnClickListener{
                     break;
                 case 2:
                     pageView = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.view_welcome_03, null);
-                    break;
-                case 3:
-                    pageView = LayoutInflater.from(WelcomeActivity.this).inflate(R.layout.view_welcome_04, null);
                     Button startBtn = (Button)pageView.findViewById(R.id.welcome_start_btn);
                     startBtn.setOnClickListener(WelcomeActivity.this);
                     break;

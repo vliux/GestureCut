@@ -24,4 +24,10 @@
     <style name="gesture_overlay_add" parent="gesture_overlay">
         <item name="android:gestureColor">#FF3344FF</item>
     </style>
+
+    <style name="Welcome.Theme.Transparent" parent="android:Theme.NoTitleBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/transparent_black</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 </resources>
