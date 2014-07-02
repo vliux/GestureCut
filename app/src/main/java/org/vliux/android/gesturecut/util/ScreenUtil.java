@@ -15,19 +15,22 @@ public class ScreenUtil {
         if (wm != null) {
             DisplayMetrics dm = new DisplayMetrics();
             wm.getDefaultDisplay().getMetrics(dm);
-            int w = dm.widthPixels;
-            int h = dm.heightPixels;
-            // in case screen is in landscape mode
-            if (h > w) {
-                screenSize[0] = w;
-                screenSize[1] = h;
-            } else {
-                screenSize[0] = h;
-                screenSize[1] = w;
-            }
+            /*
+             * respect the change of orientation
+             */
+            screenSize[0] = dm.widthPixels;
+            screenSize[1] = dm.heightPixels;
+
         }
         return screenSize;
     }
 
-
+    public static int getStatusBarHeight(Context context) {
+        int result = -1;
+        int resourceId = context.getResources().getIdentifier("status_bar_height", "dimen", "android");
+        if (resourceId > 0) {
+            result = context.getResources().getDimensionPixelSize(resourceId);
+        }
+        return result;
+    }
 }

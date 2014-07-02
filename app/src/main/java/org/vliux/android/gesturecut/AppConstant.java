@@ -4,6 +4,11 @@ package org.vliux.android.gesturecut;
  * Created by vliux on 4/3/14.
  */
 public class AppConstant {
+    public static final float DEFAULT_SYS_NOTIFICATION_BAR_HEIGHT = 25f;
+
+    public static class FloatWindow{
+        public static final float THRESHOLD_MOVE_DISTANCE = 10f;
+    }
 
     public static class LockScreen{
         public static final float MIN_UNLOCK_FLOING_VELOCITY = -100.0f;

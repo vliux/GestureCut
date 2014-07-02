@@ -10,7 +10,9 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
 
+import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.util.ScreenUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
@@ -39,8 +41,15 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_floatwindow, this, true);
-        mSysBarHeight = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 25, getResources().getDisplayMetrics());
-        mMoveDistantThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, getResources().getDisplayMetrics());
+        int notifBarHeight = ScreenUtil.getStatusBarHeight(getContext());
+        mSysBarHeight = (notifBarHeight > 0) ?
+                notifBarHeight :
+                TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                        AppConstant.DEFAULT_SYS_NOTIFICATION_BAR_HEIGHT,
+                        getResources().getDisplayMetrics());
+        mMoveDistantThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                AppConstant.FloatWindow.THRESHOLD_MOVE_DISTANCE,
+                getResources().getDisplayMetrics());
     }
 
     /**
