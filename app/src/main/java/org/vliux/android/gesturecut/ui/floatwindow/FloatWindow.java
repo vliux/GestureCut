@@ -2,6 +2,7 @@ package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -15,6 +16,7 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  * Created by vliux on 4/3/14.
  */
 public class FloatWindow extends LinearLayout implements View.OnClickListener {
+    private static final String TAG = FloatWindow.class.getSimpleName();
 
     private WindowManager.LayoutParams mLayoutParams;
 
@@ -52,28 +54,58 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
         WindowManagerUtil.showWindow(getContext(), expandedFloatWindow, WindowManagerUtil.WindowScope.SECOND_FLOAT_WND);
     }
 
+    // raw location of ACTION_DOWN, which is screen-coordinator-based.
     private float mDownX;
     private float mDownY;
+    // location of ACTION_DOWN inside this view
+    private float mDownInnerX;
+    private float mDownInnerY;
+    // checked by ACTION_UP, if there was not any movement, won't update window.
+    private boolean mIsPrevMoved = false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        float rawX = event.getRawX();
+        float rawY = event.getRawY() - 25;
+
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
-                mDownX = event.getRawX();
-                mDownY = event.getRawY();
+                mIsPrevMoved = false;
+                mDownX = rawX;
+                mDownY = rawY;
+                mDownInnerX = event.getX();
+                mDownInnerY = event.getY();
+                Log.d(TAG, String.format("DOWN: %f, %f; %f, %f", mDownX, mDownY, event.getX(), event.getY()));
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(isMoving(event)){
-                    mLayoutParams.x = (int)event.getRawX();
-                    mLayoutParams.y = (int)event.getRawY();
+                    mIsPrevMoved = true;
+                    mLayoutParams.x = (int)(rawX - mDownInnerX);
+                    mLayoutParams.y = (int)(rawY - mDownInnerY);
+                    Log.d(TAG, String.format("MOVE: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                     WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, false);
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
+                mDownInnerX = 0;
+                mDownInnerY = 0;
+                mDownX = 0;
+                mDownY = 0;
+                Log.d(TAG, String.format("CANCEL: %f, %f; %f, %f", rawX, rawY, event.getX(), event.getY()));
+                mIsPrevMoved = false;
                 break;
             case MotionEvent.ACTION_UP:
-                mLayoutParams.x = (int)event.getRawX();
-                mLayoutParams.y = (int)event.getRawY();
-                WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, true);
+                mLayoutParams.x = (int)(rawX - mDownInnerX);
+                mLayoutParams.y = (int)(rawY - mDownInnerY);
+                Log.d(TAG, String.format("UP: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
+                if(mIsPrevMoved) {
+                    WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, true);
+                }
+
+                mIsPrevMoved = false;
+                mDownInnerX = 0;
+                mDownInnerY = 0;
+                mDownX = 0;
+                mDownY = 0;
                 break;
         }
         return super.onTouchEvent(event);
