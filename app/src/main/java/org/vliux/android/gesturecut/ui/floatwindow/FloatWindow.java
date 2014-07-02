@@ -65,11 +65,15 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 if(isMoving(event)){
                     mLayoutParams.x = (int)event.getRawX();
                     mLayoutParams.y = (int)event.getRawY();
-                    WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams);
+                    WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, false);
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
+                break;
             case MotionEvent.ACTION_UP:
+                mLayoutParams.x = (int)event.getRawX();
+                mLayoutParams.y = (int)event.getRawY();
+                WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, true);
                 break;
         }
         return super.onTouchEvent(event);
