@@ -1,6 +1,12 @@
 apply plugin: 'android'
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     compileSdkVersion 19
     buildToolsVersion '19.1.0'
     defaultConfig {
@@ -17,6 +23,7 @@ android {
     }
     productFlavors {
     }
+
 }
 
 dependencies {

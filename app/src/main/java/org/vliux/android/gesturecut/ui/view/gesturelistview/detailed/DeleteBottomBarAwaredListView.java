@@ -13,7 +13,7 @@ import android.widget.ListView;
  * Created by vliux on 4/29/14.
  * When this ListView is touched, the bottom bar will be hidden.
  */
-class DeleteBottomBarAwaredListView extends ListView {
+public class DeleteBottomBarAwaredListView extends ListView {
     private DeleteBottomBar mBottomBar;
 
     private static final int LAST_LONG_CLICK_POS_INVALID = -1;
