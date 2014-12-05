@@ -1,90 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<org.vliux.android.gesturecut.ui.view.ExceededFrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main_outmost_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.vliux.android.gesturecut.ui.view.LockScreenGestureOverlayView
-        android:id="@+id/main_gesture_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="@dimen/gesture_overlay_margin"
-        style="@style/gesture_overlay_use">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginRight="@dimen/main_actv_time_margin_left">
-            <TextView
-                android:id="@+id/main_tv_time"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:gravity="bottom|right"
-                android:textSize="@dimen/text_size_clock"
-                android:textColor="@color/clock_textv_color"
-                android:shadowColor="@android:color/black"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"/>
-            <TextView
-                android:id="@+id/main_tv_date"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="4"
-                android:gravity="top|right"
-                android:text="2014-04-12 | Saturday"
-                android:textColor="@color/clock_textv_color"
-                android:textSize="@dimen/text_size_small_title"
-                android:shadowColor="@android:color/black"
-                android:shadowDx="1"
-                android:shadowDy="1"
-                android:shadowRadius="1"/>
-        </LinearLayout>
-    </org.vliux.android.gesturecut.ui.view.LockScreenGestureOverlayView>
-
-    <!-- mask layer
-        it is shown when the SimplifiedGestureListView is touched,
-        and hidden when the SimplifiedGestureListView is not touched any more.
-    -->
-    <LinearLayout
-        android:id="@+id/main_mask_layer"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gesture_create_bg_semi_transparent"
-        android:visibility="gone">
-        <TextView
-            android:id="@+id/main_mask_layer_text"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/gesture_list_outter_margin"
-            android:layout_marginLeft="@dimen/lock_screen_gesture_list_hint_margin_left"
-            android:layout_gravity="center_vertical|right"
-            android:gravity="center"
-            android:text="@string/lock_screen_mask_layer_msg_on_listview_item"
-            android:textSize="@dimen/text_size_small_title"/>
-    </LinearLayout>
-
-    <org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView
-        android:id="@+id/main_gesture_simp_listview"
-        android:layout_width="@dimen/gesture_list_item_height"
-        android:layout_height="wrap_content"
-        android:layout_gravity="left|center_vertical">
-        </org.vliux.android.gesturecut.ui.view.gesturelistview.simplified.SimplifiedGestureListView>
-
-    <org.vliux.android.gesturecut.ui.view.UnlockBar
-        android:id="@+id/main_unlock_bar"
-        android:layout_width="@dimen/gesture_list_item_height"
-        android:layout_height="@dimen/gesture_list_item_height"
-        android:layout_gravity="bottom|center_horizontal">
-    </org.vliux.android.gesturecut.ui.view.UnlockBar>
-
-    <!-- ImageView for animator when starting activty of defined gestures -->
-    <ImageView
-        android:id="@+id/main_appicon_startactiv"
-        android:layout_width="@dimen/icon_dimen_global_large"
-        android:layout_height="@dimen/icon_dimen_global_large"
-        android:layout_gravity="bottom|center_horizontal"
-        android:visibility="gone"/>
-</org.vliux.android.gesturecut.ui.view.ExceededFrameLayout>
+    
+</FrameLayout>

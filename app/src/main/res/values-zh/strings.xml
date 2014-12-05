@@ -55,4 +55,10 @@
     <string name="welcome_page_2_tv">2. 创建一个新的手势来关联到某个app。</string>
     <string name="welcome_page_3_tv">3. 关联后, 您可以在锁屏和桌面上使用手势来启动app。</string>
     <string name="welcome_start_tour">关闭此引导</string>
+
+
+    <!-- 1.3.0 -->
+    <string name="actbar_add">添加手势</string>
+    <string name="actbar_setting">设置</string>
+    <string name="actbar_delete">删除手势</string>
 </resources>

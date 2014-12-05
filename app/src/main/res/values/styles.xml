@@ -1,9 +1,15 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/GcActionBar</item>
     </style>
+
+    <style name="GcActionBar"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/gesture_cur_blue</item>
+    </style>
+
 
     <style name="activated" parent="AppTheme">
         <item name="android:background">@drawable/gesture_list_selector_activated</item>

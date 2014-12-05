@@ -31,10 +31,7 @@
         </receiver>
 
         <activity android:name=".ui.MainActivity"
-            android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
-            android:excludeFromRecents="true"
-            android:screenOrientation="portrait">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

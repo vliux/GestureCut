@@ -55,4 +55,10 @@
     <string name="welcome_page_2_tv">2. Correlate a new gesture to an app.</string>
     <string name="welcome_page_3_tv">3. After correlation, you can draw the gesture on lock screen or desktop, to start the app.</string>
     <string name="welcome_start_tour">Finish this guide</string>
+
+
+    <!-- 1.3.0 -->
+    <string name="actbar_add">Add</string>
+    <string name="actbar_setting">Setting</string>
+    <string name="actbar_delete">Delete</string>
 </resources>
