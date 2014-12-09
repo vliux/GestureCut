@@ -13,6 +13,7 @@ import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.ui.view.baoyz.SwipeMenu;
 import org.vliux.android.gesturecut.ui.view.baoyz.SwipeMenuCreator;
@@ -39,6 +40,12 @@ public class MainActivity extends Activity {
         mSwipeListView = (SwipeMenuListView)findViewById(R.id.main_listview);
         mSwipeListView.setAdapter(new GestureListViewAdapter(this));
         mSwipeListView.setMenuCreator(mSwipeMenuCreator);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        AppBroadcastManager.sendLockerStoppedBroadcast(this);
     }
 
     @Override
