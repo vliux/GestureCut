@@ -60,7 +60,7 @@ public class MainActivity extends Activity {
         public void create(SwipeMenu menu) {
             SwipeMenuItem delete = new SwipeMenuItem(MainActivity.this);
             Resources res = getResources();
-            delete.setBackground(R.color.red_warning);
+            delete.setBackground(R.color.smlv_del_bk);
             delete.setWidth((int)res.getDimension(R.dimen.smlv_del_width));
             delete.setIcon(R.drawable.ic_swipe_delete);
             menu.addMenuItem(delete);

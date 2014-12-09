@@ -28,4 +28,7 @@
 
     <!-- widget -->
     <color name="widget_bkground">#77000000</color>
+
+    <!-- SwipeMenuListView.delete.background -->
+    <color name="smlv_del_bk">#f93f25</color>
 </resources>
