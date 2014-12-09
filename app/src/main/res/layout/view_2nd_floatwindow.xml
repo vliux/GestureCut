@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/gesture_cur_blue_light" />
+            android:textColor="@color/main_theme_light" />
     </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
 
     <LinearLayout
@@ -30,7 +30,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_bar_height"
-            android:background="@color/gesture_cur_blue">
+            android:background="@color/main_theme">
             <ImageView
                 android:layout_width="@dimen/icon_dimen_global"
                 android:layout_height="@dimen/icon_dimen_global"
@@ -94,7 +94,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1px"
-                android:background="@color/gesture_cur_blue"/>
+                android:background="@color/main_theme"/>
         </LinearLayout>
     </LinearLayout>
 

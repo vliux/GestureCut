@@ -19,14 +19,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/float_window_2nd_tab_use"
-            android:textColor="@color/gesture_cur_blue"
+            android:textColor="@color/main_theme"
             android:textSize="@dimen/text_size_general"
             android:textStyle="bold"/>
         <View
             android:id="@+id/tablike_underscore_use"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@color/gesture_cur_blue"/>
+            android:background="@color/main_theme"/>
         <!-- grey bottom line -->
         <View
             android:layout_width="match_parent"
@@ -53,7 +53,7 @@
             android:id="@+id/tablike_underscore_add"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@color/gesture_cur_blue"
+            android:background="@color/main_theme"
             android:visibility="invisible"/>
         <!-- grey bottom line -->
         <View

@@ -7,7 +7,7 @@
 
     <style name="GcActionBar"
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/gesture_cur_blue</item>
+        <item name="android:background">@color/main_theme</item>
     </style>
 
 
@@ -16,7 +16,7 @@
     </style>
 
     <style name="text_basic_style">
-        <item name="android:textColor">@color/gesture_cur_blue</item>
+        <item name="android:textColor">@color/main_theme</item>
     </style>
 
     <style name="gesture_overlay">

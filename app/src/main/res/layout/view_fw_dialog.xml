@@ -23,13 +23,13 @@
             android:gravity="center"
             android:textSize="@dimen/text_size_small_title"
             android:text="Are you sure?"
-            android:textColor="@color/gesture_cur_blue" />
+            android:textColor="@color/main_theme" />
 
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_margin="@dimen/gesture_list_outter_margin"
-            android:background="@color/gesture_cur_blue" />
+            android:background="@color/main_theme" />
         <!-- dialog content -->
         <TextView
             android:id="@+id/fw2_layer2_content"
@@ -39,7 +39,7 @@
             android:gravity="center"
             android:textSize="@dimen/text_size_general"
             android:text="Add the new gesture into your gesture store?"
-            android:textColor="@color/gesture_cur_blue" />
+            android:textColor="@color/main_theme" />
 
         <TableLayout
             android:stretchColumns="*"

@@ -46,7 +46,7 @@ public class DrawBoundsGestureOverlayView extends GestureOverlayView {
     private void resetPaint(){
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setAntiAlias(true);
-        mPaint.setColor(getResources().getColor(R.color.gesture_cur_blue));
+        mPaint.setColor(getResources().getColor(R.color.main_theme));
         setPaintStrokeWidth(2.0f);
     }
 

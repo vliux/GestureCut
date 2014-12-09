@@ -5,11 +5,6 @@
         android:title="@string/actbar_add"
         android:showAsAction="ifRoom"></item>
 
-    <item android:id="@+id/action_delete"
-        android:icon="@drawable/ic_delete"
-        android:title="@string/actbar_delete"
-        android:showAsAction="collapseActionView"></item>
-
     <item android:id="@+id/action_settings"
         android:icon="@drawable/ic_settings"
         android:title="@string/actbar_setting"
