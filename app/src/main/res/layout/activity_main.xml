@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main_outmost_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.GestureListLayout
+    <org.vliux.android.gesturecut.ui.view.baoyz.SwipeMenuListView
+        android:id="@+id/main_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </FrameLayout>

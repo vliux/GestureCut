@@ -1,21 +1,22 @@
-package org.vliux.android.gesturecut.ui.view.gesturelistview.simplified;
+package org.vliux.android.gesturecut.ui.view.gesturelistview.detailed;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
-import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
-import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 
@@ -24,14 +25,13 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by vliux on 6/16/14.
+ * Created by vliux on 12/9/14.
  */
-class SimplifiedGestureListAdapter extends BaseAdapter {
-
+public class GestureListViewAdapter extends BaseAdapter {
     private List<String> mGestureNames;
-    private final Context mContext;
+    private Context mContext;
 
-    public SimplifiedGestureListAdapter(Context context){
+    public GestureListViewAdapter(Context context){
         mContext = context;
         loadData();
     }
@@ -44,6 +44,10 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
         }
         mGestureNames.addAll(GestureUtil.getInstance().getGestureNames());
         Collections.sort(mGestureNames);
+    }
+
+    public String getGestureName(int position){
+        return mGestureNames.get(position);
     }
 
     @Override
@@ -69,35 +73,46 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        SimpListViewItem listViewItem = null;
-
+        GestureListViewHolder viewHolder = null;
         if(null == convertView){
-            listViewItem = new SimpListViewItem(mContext);
+            convertView = LayoutInflater.from(mContext).inflate(R.layout.item_gesture, parent, false);
+            viewHolder = new GestureListViewHolder();
+            viewHolder.gestureIcon = (ImageView)convertView.findViewById(R.id.item_gesture_icon);
+            viewHolder.appInfoView = (AppInfoView)convertView.findViewById(R.id.item_gesture_appinfo);
+            convertView.setTag(viewHolder);
         }else{
-            listViewItem = (SimpListViewItem)convertView;
+            viewHolder = (GestureListViewHolder)convertView.getTag();
         }
 
         ConcurrentControl.submitTask(
                 new LoadGestureDataRunnable(mHandler,
                         mGestureNames.get(position),
-                        listViewItem)
-        );
-        return listViewItem;
+                        viewHolder,
+                        mContext.getPackageManager()));
+        return convertView;
+    }
+
+    private class GestureListViewHolder{
+        public ImageView gestureIcon;
+        //public ImageView appIcon;
+        //public TextView textView;
+        public AppInfoView appInfoView;
     }
 
     private class LoadGestureDataRunnable implements Runnable{
         private final Handler notifyHandler;
         private final String gestureName;
-        private final SimpListViewItem listViewItem;
+        private final GestureListViewHolder viewHolder;
         private final int iconWidth;
         private final int iconHeight;
 
         public LoadGestureDataRunnable(Handler handler, String gesName,
-                                       SimpListViewItem item){
+                                       GestureListViewHolder vh,
+                                       PackageManager pm){
             notifyHandler = handler;
             gestureName = gesName;
-            listViewItem = item;
-            iconWidth = (int)mContext.getResources().getDimension(R.dimen.gesture_simple_list_small_icon_dimen);
+            viewHolder = vh;
+            iconWidth = (int)mContext.getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
             iconHeight = iconWidth;
         }
 
@@ -114,37 +129,33 @@ class SimplifiedGestureListAdapter extends BaseAdapter {
 
                 if(null != bmp){
                     NotifyHandlerData notifyHandlerData = new NotifyHandlerData();
-                    notifyHandlerData.listViewItem = listViewItem;
-                    notifyHandlerData.appIconBitmap = TaskManager.getIcon(mContext, dbData.resolvedComponent);
-                    notifyHandlerData.gestureIconBitmap = bmp;
+                    notifyHandlerData.viewHolder = viewHolder;
+                    notifyHandlerData.bitmap = bmp;
+                    notifyHandlerData.gestureName = gestureName;
                     notifyHandlerData.resolvedComponent = dbData.resolvedComponent;
-                    Message message = notifyHandler.obtainMessage(WHAT_ITEM_LOADED, notifyHandlerData);
+                    Message message = notifyHandler.obtainMessage(WHAT_GESTURE_ICON_LOADED, notifyHandlerData);
                     mHandler.sendMessage(message);
                 }
             }
         }
     }
 
-    class NotifyHandlerData{
-        public SimpListViewItem listViewItem;
-        public Drawable appIconBitmap;
-        public Bitmap gestureIconBitmap;
+    private class NotifyHandlerData{
+        public String gestureName;
+        public GestureListViewHolder viewHolder;
         public ResolvedComponent resolvedComponent;
+        public Bitmap bitmap; // bitmap for gesture snapshot
     }
 
-    private final int WHAT_ITEM_LOADED = 100;
-
-    private Handler mHandler = new Handler(){
+    public static final int WHAT_GESTURE_ICON_LOADED = 100;
+    private final Handler mHandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
-            super.handleMessage(msg);
             switch (msg.what){
-                case WHAT_ITEM_LOADED:
-                    NotifyHandlerData handlerData = (NotifyHandlerData)msg.obj;
-                    SimpListViewItem simpListViewItem = handlerData.listViewItem;
-                    simpListViewItem.setAppIcon(handlerData.appIconBitmap);
-                    simpListViewItem.setGestureIcon(handlerData.gestureIconBitmap);
-                    simpListViewItem.setResolvedComponent(handlerData.resolvedComponent);
+                case WHAT_GESTURE_ICON_LOADED:
+                    NotifyHandlerData notifyHandlerData = (NotifyHandlerData)msg.obj;
+                    notifyHandlerData.viewHolder.gestureIcon.setImageBitmap(notifyHandlerData.bitmap);
+                    notifyHandlerData.viewHolder.appInfoView.setResolvedComponent(notifyHandlerData.resolvedComponent);
                     break;
             }
         }

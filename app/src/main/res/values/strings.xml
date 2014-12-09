@@ -60,5 +60,4 @@
     <!-- 1.3.0 -->
     <string name="actbar_add">Add</string>
     <string name="actbar_setting">Setting</string>
-    <string name="actbar_delete">Delete</string>
 </resources>

@@ -60,4 +60,7 @@
     <!-- widget -->
     <dimen name="widget_small_next_prev_btns_margin_top">8dp</dimen>
     <dimen name="widet_out_margin">8dp</dimen>
+
+    <!-- SwipeMenuListView.delete -->
+    <dimen name="smlv_del_width">80dp</dimen>
 </resources>
