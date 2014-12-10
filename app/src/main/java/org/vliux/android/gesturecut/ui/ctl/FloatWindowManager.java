@@ -14,6 +14,7 @@ import android.view.WindowManager;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.ui.MainActivity;
+import org.vliux.android.gesturecut.ui.floatwindow.SecondaryFloatWindow;
 import org.vliux.android.gesturecut.ui.view.satellite.SatelliteMenu;
 import org.vliux.android.gesturecut.ui.view.satellite.SatelliteMenuItem;
 import org.vliux.android.gesturecut.util.AppLog;
@@ -66,6 +67,10 @@ public class FloatWindowManager {
                         @Override
                         public void eventOccured(int id) {
                             switch (id) {
+                                case 1:
+                                    SecondaryFloatWindow secondaryFloatWindow = new SecondaryFloatWindow(context);
+                                    WindowManagerUtil.showWindow(context, secondaryFloatWindow, getLayoutParamsToppest());
+                                    break;
                                 case 2:
                                     Intent intent = new Intent(context, MainActivity.class);
                                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -78,6 +83,20 @@ public class FloatWindowManager {
             }
         }
 
+        WindowManager.LayoutParams lp = getLayoutParamsToppest();
+        WindowPositionStore.setLayoutParamsPosition(context, lp);
+        WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, lp);
+    }
+
+    private static void removeWindow(Context context) {
+        if (null != sFloatWindow) {
+            WindowManagerUtil.closeWindow(context.getApplicationContext(), sFloatWindow);
+        } else {
+            AppLog.logw(TAG, "FloatWindow instance is NULL, nothing to be closed");
+        }
+    }
+
+    private static WindowManager.LayoutParams getLayoutParamsToppest(){
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams(
                 WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
                 WindowManager.LayoutParams.TYPE_SYSTEM_ERROR,
@@ -88,17 +107,7 @@ public class FloatWindowManager {
                         | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
                 PixelFormat.TRANSLUCENT);
         lp.gravity = Gravity.LEFT | Gravity.TOP;
-        WindowPositionStore.setLayoutParamsPosition(context, lp);
-
-        WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, lp);
-    }
-
-    public static void removeWindow(Context context) {
-        if (null != sFloatWindow) {
-            WindowManagerUtil.closeWindow(context.getApplicationContext(), sFloatWindow);
-        } else {
-            AppLog.logw(TAG, "FloatWindow instance is NULL, nothing to be closed");
-        }
+        return lp;
     }
 
     /**
