@@ -20,7 +20,7 @@
         android:icon="@drawable/ic_launcher"
         android:theme="@style/AppTheme">
 
-        <service android:name=".service.GestureKeyGuardService"
+        <service android:name=".service.GestureService"
             android:label="GuestKeyGuardService" />
 
         <receiver android:name=".receiver.PackageRemovedReceiver">

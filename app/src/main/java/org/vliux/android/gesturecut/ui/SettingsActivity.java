@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.service.GestureKeyGuardService;
-import org.vliux.android.gesturecut.util.PreferenceHelper;
 
 /**
  * Created by vliux on 4/28/14.

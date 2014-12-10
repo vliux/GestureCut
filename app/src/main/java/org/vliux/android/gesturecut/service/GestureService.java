@@ -5,17 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.vliux.android.gesturecut.ui.floatwindow.FloatWindowManager;
+import org.vliux.android.gesturecut.ui.ctl.FloatWindowManager;
 
 /**
  * Created by vliux on 4/3/14.
  */
-public class GestureKeyGuardService extends Service {
-    private static final String TAG = GestureKeyGuardService.class.getSimpleName();
+public class GestureService extends Service {
+    private static final String TAG = GestureService.class.getSimpleName();
     private static final String INTENT_SHOW_FLOATING = "org.vliux.android.gesturecut.SHOW_FLOAT";
 
     public static void showFloating(Context context){
-        Intent intent = new Intent(context, GestureKeyGuardService.class);
+        Intent intent = new Intent(context, GestureService.class);
         intent.setAction(INTENT_SHOW_FLOATING);
         context.startService(intent);
     }

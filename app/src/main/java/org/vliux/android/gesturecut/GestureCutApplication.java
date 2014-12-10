@@ -4,7 +4,7 @@ import android.app.Application;
 import android.content.pm.ApplicationInfo;
 
 import org.vliux.android.gesturecut.biz.db.DbManager;
-import org.vliux.android.gesturecut.service.GestureKeyGuardService;
+import org.vliux.android.gesturecut.service.GestureService;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.util.GestureUtil;
 
@@ -19,7 +19,7 @@ public class GestureCutApplication extends Application {
         checkDebuggable();
         GestureUtil.init(getApplicationContext());
         initDb();
-        GestureKeyGuardService.showFloating(this);
+        GestureService.showFloating(this);
     }
 
     @Override
