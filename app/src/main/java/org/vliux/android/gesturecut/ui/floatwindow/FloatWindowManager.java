@@ -12,9 +12,15 @@ import android.view.View;
 import android.view.WindowManager;
 
 import org.vliux.android.gesturecut.AppConstant;
+import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
+import org.vliux.android.gesturecut.ui.view.satellite.SatelliteMenu;
+import org.vliux.android.gesturecut.ui.view.satellite.SatelliteMenuItem;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by vliux on 10/15/13.
@@ -23,7 +29,7 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  */
 public class FloatWindowManager {
     private static final String TAG = FloatWindowManager.class.getSimpleName();
-    private static FloatWindow sFloatWindow;
+    private static SatelliteMenu sFloatWindow;
 
     /**
      * Show or hide the float window.
@@ -48,7 +54,11 @@ public class FloatWindowManager {
         if(null == sFloatWindow){
             synchronized (FloatWindowManager.class){
                 if (null == sFloatWindow) {
-                    sFloatWindow = new FloatWindow(context.getApplicationContext());
+                    sFloatWindow = new SatelliteMenu(context.getApplicationContext());
+                    List<SatelliteMenuItem> menuItemList = new ArrayList<SatelliteMenuItem>();
+                    menuItemList.add(new SatelliteMenuItem(1, R.drawable.ic_add));
+                    menuItemList.add(new SatelliteMenuItem(2, R.drawable.ic_settings));
+                    sFloatWindow.addItems(menuItemList);
                 }
             }
         }
@@ -56,7 +66,7 @@ public class FloatWindowManager {
         WindowManager.LayoutParams lp =
                     WindowManagerUtil.showWindow(context.getApplicationContext(), sFloatWindow, WindowManagerUtil.WindowScope.FIRST_FLOAT_WND);
         if(null != lp){
-            sFloatWindow.setWindowLayoutParams(lp);
+            //sFloatWindow.setWindowLayoutParams(lp);
         }
     }
 
