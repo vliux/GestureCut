@@ -43,11 +43,11 @@ public class SettingsActivity extends Activity {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(getString(R.string.pref_key_lockscreen_status).equals(key)){
-                if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_lockscreen_status, true)){
-                    GestureKeyGuardService.setLockingEnable(getActivity(), true);
+                /*if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_lockscreen_status, true)){
+                    GestureKeyGuardServiceshi.setLockingEnable(getActivity(), true);
                 }else{
                     GestureKeyGuardService.setLockingEnable(getActivity(), false);
-                }
+                }*/
             }
         }
     }

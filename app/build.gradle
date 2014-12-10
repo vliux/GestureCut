@@ -7,13 +7,13 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
-    compileSdkVersion 19
+    compileSdkVersion 18
     buildToolsVersion '19.1.0'
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
         versionCode 4
-        versionName '1.2'
+        versionName '1.3'
     }
     buildTypes {
         release {
@@ -29,6 +29,6 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:support-v4:+'
-    compile 'de.greenrobot:eventbus:2.2.0@jar'
+    compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.jakewharton:butterknife:6.0.0'
 }

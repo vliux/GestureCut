@@ -25,14 +25,6 @@ public class FloatWindowManager {
     private static final String TAG = FloatWindowManager.class.getSimpleName();
     private static FloatWindow sFloatWindow;
 
-    public static void registerLockerStatusReceiver(Context context){
-        AppBroadcastManager.registerLockerStateChangesReceiver(context.getApplicationContext(), sLockerStatusReceiver);
-    }
-
-    public static void unregisterLockerStatusReceiver(Context context){
-        LocalBroadcastManager.getInstance(context.getApplicationContext()).unregisterReceiver(sLockerStatusReceiver);
-    }
-
     /**
      * Show or hide the float window.
      * If there is no instance yet, will call addWindow() then.
@@ -75,22 +67,6 @@ public class FloatWindowManager {
             AppLog.logw(TAG, "FloatWindow instance is NULL, nothing to be closed");
         }
     }
-
-    private final static BroadcastReceiver sLockerStatusReceiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if(null == intent){
-                return;
-            }
-
-            String action = intent.getAction();
-            if(AppConstant.LocalBroadcasts.BROADCAST_LOCKER_STARTED.equals(action)){
-                toggleWindow(context.getApplicationContext(), false);
-            }else if(AppConstant.LocalBroadcasts.BROADCAST_LOCKER_STOPPED.equals(action)){
-                toggleWindow(context.getApplicationContext(), true);
-            }
-        }
-    };
 
 }
 
