@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.GestureListLayout
-        android:id="@+id/actv_gesture_list"
+
+    <ListView
+        android:id="@+id/add_ges_listview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.GestureListLayout>
+        android:layout_height="match_parent"></ListView>
 </LinearLayout>

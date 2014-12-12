@@ -31,16 +31,17 @@
         </receiver>
 
         <activity android:name=".ui.MainActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.GestureListActivity"
+        <activity android:name=".activity.AddGestureActivity"
+            android:label="@string/add_gesture"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
         </activity>
 

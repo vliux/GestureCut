@@ -1,17 +1,20 @@
 package org.vliux.android.gesturecut.ui;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.activity.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
 import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
@@ -53,6 +56,30 @@ public class MainActivity extends Activity {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main, menu);
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_add:
+                addGesture();
+                return true;
+            case R.id.action_settings:
+                showSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void addGesture(){
+        Intent intent = new Intent(this, AddGestureActivity.class);
+        startActivity(intent);
+    }
+
+    private void showSettings(){
+        Intent intent = new Intent(this, SettingsActivity.class);
+        startActivity(intent);
     }
 
     private final SwipeMenuCreator mSwipeMenuCreator = new SwipeMenuCreator() {

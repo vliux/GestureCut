@@ -17,7 +17,7 @@ import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.GestureListActivity;
+import org.vliux.android.gesturecut.ui.MainActivity;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
@@ -127,7 +127,7 @@ public class LockScreenWidget extends AppWidgetProvider {
     }
 
     private void setStartSettingsPendingIntent(Context context, RemoteViews remoteViews){
-        Intent intent = new Intent(context, GestureListActivity.class);
+        Intent intent = new Intent(context, MainActivity.class);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, 0);
         remoteViews.setOnClickPendingIntent(R.id.widget_gesture_icon, pendingIntent);
     }

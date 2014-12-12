@@ -60,4 +60,5 @@
     <!-- 1.3.0 -->
     <string name="actbar_add">Add</string>
     <string name="actbar_setting">Setting</string>
+    <string name="add_gesture">Add gesture</string>
 </resources>

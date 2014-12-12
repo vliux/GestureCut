@@ -3,8 +3,4 @@
     <declare-styleable name="AppInfoView">
         <attr name="longClassName" format="boolean"/>
     </declare-styleable>
-
-    <declare-styleable name="GestureListLayout">
-        <attr name="showHideRequired" format="boolean"/> <!-- whether show() and hide() are supported -->
-    </declare-styleable>
 </resources>

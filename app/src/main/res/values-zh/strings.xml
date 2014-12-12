@@ -60,4 +60,5 @@
     <!-- 1.3.0 -->
     <string name="actbar_add">添加手势</string>
     <string name="actbar_setting">设置</string>
+    <string name="add_gesture">新增手势</string>
 </resources>
