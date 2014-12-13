@@ -13,6 +13,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -219,11 +220,11 @@ public class SecondaryFloatWindow extends LinearLayout
 
     private AnimatorSet getAnimatorSetOnSwitchTab(final TabLikeView.TabType tabType){
         ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "translationY", -ScreenUtil.getScreenSize(getContext())[1], 0.0f);
-        ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "alpha", 0.0f, 1.0f);
+        //ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "alpha", 0.0f, 1.0f);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
-        animatorSet.setInterpolator(new OvershootInterpolator());
-        animatorSet.play(translationXAnimator).with(alphaAnimator);
+        animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
+        animatorSet.play(translationXAnimator);
 
         animatorSet.addListener(new Animator.AnimatorListener() {
             @Override

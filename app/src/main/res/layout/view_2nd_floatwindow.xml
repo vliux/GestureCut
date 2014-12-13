@@ -26,42 +26,34 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- action bar -->
-        <FrameLayout
+        <!-- tabs -->
+        <LinearLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_height"
-            android:background="@color/gesture_cur_blue">
-            <ImageView
-                android:layout_width="@dimen/icon_dimen_global"
-                android:layout_height="@dimen/icon_dimen_global"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="@dimen/title_bar_gc_icon_left_margin"
-                android:src="@drawable/ic_launcher"/>
-            <TextView
-                android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/global_bkground">
+            <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
+                android:id="@+id/gesture_tablike"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/switch_layout_height"
+                android:layout_weight="1"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
+            <View
+                android:layout_width="1dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left|center_vertical"
-                android:layout_marginLeft="@dimen/title_bar_height"
-                android:gravity="center"
-                android:text="@string/app_name"
-                android:textColor="@color/global_bkground"
-                android:textSize="@dimen/text_size_small_title"/>
+                android:layout_marginTop="@dimen/back_imgv_margin_horiz"
+                android:layout_marginBottom="@dimen/back_imgv_margin_horiz"
+                android:background="@color/gesture_cur_blue"/>
+
             <ImageView
                 android:id="@+id/gesture_more"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:padding="@dimen/back_imgv_margin_horiz"
                 android:layout_gravity="right|center_vertical"
-                android:src="@drawable/ic_info"
+                android:src="@drawable/ic_list"
                 android:background="@drawable/btn_bg_transparent"/>
-        </FrameLayout>
+        </LinearLayout>
 
-        <!-- tabs -->
-        <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
-            android:id="@+id/gesture_tablike"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/switch_layout_height"
-            android:background="@color/global_bkground"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
 
         <LinearLayout
             android:id="@+id/gesture_appinfo_layout"
