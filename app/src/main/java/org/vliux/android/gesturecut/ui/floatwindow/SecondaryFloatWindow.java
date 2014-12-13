@@ -94,10 +94,11 @@ public class SecondaryFloatWindow extends LinearLayout
     public void onClick(View view){
         switch (view.getId()){
             case R.id.gesture_more:
-                Intent intent = new Intent(getContext(), GestureListActivity.class);
+                Context context = getContext();
+                Intent intent = new Intent(context, GestureListActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                getContext().startActivity(intent);
-                WindowManagerUtil.closeWindow(getContext(), this);
+                context.startActivity(intent);
+                WindowManagerUtil.closeWindow(context, this);
                 break;
         }
     }
