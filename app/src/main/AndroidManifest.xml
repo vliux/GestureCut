@@ -21,7 +21,13 @@
         android:theme="@style/AppTheme">
 
         <service android:name=".service.GestureKeyGuardService"
-            android:label="GuestKeyGuardService" />
+            android:label="GuestKeyGuardService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="org.vliux.android.gesture.SHOW_WND"/>
+                <action android:name="org.vliux.android.gesture.HIDE_WND"/>
+            </intent-filter>
+        </service>
 
         <receiver android:name=".receiver.PackageRemovedReceiver">
             <intent-filter>

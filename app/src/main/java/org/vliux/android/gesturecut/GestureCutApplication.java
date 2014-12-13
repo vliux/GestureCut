@@ -21,7 +21,7 @@ public class GestureCutApplication extends Application {
         super.onCreate();
         checkDebuggable();
         initKeyguardRelated();
-        controlFloatWindow(true);
+        //controlFloatWindow(true);
         GestureUtil.init(getApplicationContext());
         initDb();
     }
@@ -29,7 +29,7 @@ public class GestureCutApplication extends Application {
     @Override
     public void onTerminate() {
         super.onTerminate();
-        controlFloatWindow(false);
+        //controlFloatWindow(false);
     }
 
     private void initDb(){
@@ -38,7 +38,7 @@ public class GestureCutApplication extends Application {
 
     private void initKeyguardRelated(){
         PhoneStateMonitor.init(this);
-        GestureKeyGuardService.startKeyGuard(this);
+        GestureKeyGuardService.showWindow(this);
     }
 
     private void controlFloatWindow(final boolean isToShow) {
