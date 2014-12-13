@@ -25,26 +25,25 @@ public class WindowManagerUtil {
             AppLog.loge(TAG, "view already has a parent, unable to showWindow()");
             return null;
         }
-        WindowManager.LayoutParams lp = null;
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.type = WindowManager.LayoutParams.TYPE_SYSTEM_ERROR;
+        lp.flags = WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+                | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+        lp.format = PixelFormat.TRANSLUCENT;
         int[] screenSize = ScreenUtil.getScreenSize(context);
+
         switch (windowScope){
             case FIRST_FLOAT_WND:
-                lp = new WindowManager.LayoutParams(
-                        WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT,
-                        WindowManager.LayoutParams.TYPE_PHONE,
-                        WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                        PixelFormat.TRANSLUCENT);
+                lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+                lp.flags |= WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE;
                 lp.gravity = Gravity.LEFT | Gravity.TOP;
                 setLayoutParamsLocation(context, lp, screenSize);
                 break;
             case SECOND_FLOAT_WND:
-                lp = new WindowManager.LayoutParams(
-                        (int)(screenSize[0] * 0.93),
-                        (int)(screenSize[1] * 0.93),
-                        //WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT,
-                        WindowManager.LayoutParams.TYPE_SYSTEM_ALERT,
-                        WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                        PixelFormat.TRANSLUCENT);
+                lp.width = (int)(screenSize[0] * 0.93);
+                lp.height = (int)(screenSize[1] * 0.93);
                 lp.gravity = Gravity.CENTER;
                 break;
         }
