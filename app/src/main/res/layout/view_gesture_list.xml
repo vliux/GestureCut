@@ -10,38 +10,6 @@
         android:layout_height="match_parent"
         android:background="@color/gesture_list_bkground">
 
-        <!-- title bar -->
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/title_bar_height"
-            android:background="@color/gesture_cur_blue">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_margin="@dimen/gesture_list_outter_margin"
-                style="@style/text_basic_style"
-                android:textSize="@dimen/text_size_small_title"
-                android:text="@string/gesture_list_title"
-                android:textColor="@color/global_bkground" />
-
-            <ImageView
-                android:id="@+id/gesture_list_settings"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:paddingTop="@dimen/gesture_list_tite_btns_padding_verti"
-                android:paddingBottom="@dimen/gesture_list_tite_btns_padding_verti"
-                android:src="@drawable/ic_settings"
-                android:background="@drawable/btn_bg_transparent" />
-        </RelativeLayout>
-
-        <!--<View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/listview_divider_thick"
-            android:background="@color/gesture_cur_blue"/>-->
-
         <org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.DeleteBottomBarAwaredListView
             android:id="@+id/gesture_listview"
             android:layout_width="match_parent"

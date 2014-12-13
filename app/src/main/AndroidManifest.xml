@@ -30,10 +30,9 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.MainActivity"
+        <activity android:name=".ui.GestureListActivity"
+            android:label="@string/your_gesture_list"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Wallpaper.NoTitleBar"
-            android:excludeFromRecents="true"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,11 +40,11 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.GestureListActivity"
+        <!--<activity android:name=".ui.GestureListActivity"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
-        </activity>
+        </activity>-->
 
         <activity android:name=".ui.WelcomeActivity"
             android:launchMode="singleTop"
@@ -54,8 +53,8 @@
         </activity>
 
         <activity android:name=".ui.SettingsActivity"
+            android:label="@string/settings"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.Holo.Light"
             android:screenOrientation="portrait">
         </activity>
 

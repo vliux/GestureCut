@@ -47,7 +47,7 @@ import java.util.List;
 /**
  * Created by vliux on 4/11/14.
  */
-public class GestureListLayout extends LinearLayout implements View.OnClickListener {
+public class GestureListLayout extends LinearLayout {
     private static final String TAG = GestureListLayout.class.getSimpleName();
     /**
      * Whether show() and hide() are required to make the view visible/invisible.
@@ -55,7 +55,6 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
      */
     private boolean mNeedShowHide = false;
 
-    private ImageView mIvSetting;
     private DeleteBottomBarAwaredListView mGestureListView;
     private int mScreenWidth;
     private boolean mIsShown = false;
@@ -79,12 +78,10 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
 
     private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
-        mIvSetting = (ImageView)findViewById(R.id.gesture_list_settings);
         mGestureListView = (DeleteBottomBarAwaredListView)findViewById(R.id.gesture_listview);
         mBottomBar = (DeleteBottomBar)findViewById(R.id.gesture_bottom_bar);
 
         mBottomBar.setOnDeleteClicked(mOnBottomBarClickedListener);
-        mIvSetting.setOnClickListener(this);
         mGestureListView.setBottomBar(mBottomBar);
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
@@ -130,15 +127,6 @@ public class GestureListLayout extends LinearLayout implements View.OnClickListe
     private void setEmptyGestureView(ListView gestureListView){
         TextView tvEmpty = (TextView)findViewById(R.id.gesture_empty_tv);
         gestureListView.setEmptyView(tvEmpty);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch(v.getId()){
-            case R.id.gesture_list_settings:
-                getContext().startActivity(new Intent(getContext(), SettingsActivity.class));
-                break;
-        }
     }
 
     private final OnClickListener mOnBottomBarClickedListener = new OnClickListener() {

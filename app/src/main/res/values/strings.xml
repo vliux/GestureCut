@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">GestureCut</string>
+    <string name="settings">Settings</string>
+    <string name="your_gesture_list">Your gestures</string>
 
     <!-- text in background for recording a new gesture -->
     <string name="gesture_bg_title_record">Draw new gesture here</string>

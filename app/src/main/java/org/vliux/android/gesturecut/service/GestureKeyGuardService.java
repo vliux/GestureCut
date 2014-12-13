@@ -9,7 +9,6 @@ import android.os.IBinder;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
-import org.vliux.android.gesturecut.ui.MainActivity;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
 
 /**
@@ -113,13 +112,7 @@ public class GestureKeyGuardService extends Service {
                 return;
             }
             String action = intent.getAction();
-            if(mLockingEnabled
-                    && SCREEN_OFF.equals(action)
-                    && !PhoneStateMonitor.getInstance().isOnCall()){
-                Intent mainIntent = new Intent(context, MainActivity.class);
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(mainIntent);
+            if(mLockingEnabled && SCREEN_OFF.equals(action) && !PhoneStateMonitor.getInstance().isOnCall()){
             }
         }
     };
