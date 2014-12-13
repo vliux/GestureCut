@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view.gesturelistview.detailed;
+package org.vliux.android.gesturecut.ui.view.gesturelist;
 
 import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
@@ -34,7 +34,6 @@ import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
-import org.vliux.android.gesturecut.ui.SettingsActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;

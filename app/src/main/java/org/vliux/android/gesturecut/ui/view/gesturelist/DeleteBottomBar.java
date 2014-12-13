@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view.gesturelistview.detailed;
+package org.vliux.android.gesturecut.ui.view.gesturelist;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

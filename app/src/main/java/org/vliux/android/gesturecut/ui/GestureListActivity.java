@@ -2,14 +2,13 @@ package org.vliux.android.gesturecut.ui;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.ui.view.gesturelistview.detailed.GestureListLayout;
+import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout;
 
 /**
  * Created by vliux on 4/21/14.
