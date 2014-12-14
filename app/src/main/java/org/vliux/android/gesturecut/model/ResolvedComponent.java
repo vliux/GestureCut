@@ -37,6 +37,12 @@ public class ResolvedComponent {
     }
 
     public String getPackageName() {
+        switch (type){
+            case COMPONENT_NAME:
+                return componentName.getPackageName();
+            case PACKAGE_NAME:
+                return packageName;
+        }
         return packageName;
     }
 

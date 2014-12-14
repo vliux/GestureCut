@@ -55,9 +55,27 @@ public class TaskManager {
             try{
                 context.getApplicationContext().startActivity(intent);
                 return;
-            }catch (Exception e){
+            }catch (Throwable e){
                 AppLog.loge(TAG, "TaskManager.startActivity() throws Exception");
                 e.printStackTrace();
+
+                PackageManager packageManager = context.getPackageManager();
+                String pkgName = resolvedComponent.getPackageName();
+                if(null != pkgName) {
+                    Intent launcherIntent = packageManager.getLaunchIntentForPackage(pkgName);
+                    if(null != launcherIntent) {
+                        try {
+                            AppLog.logw(TAG, String.format("try to launch the component from launcher intent, pkgName=%s", pkgName));
+                            context.getApplicationContext().startActivity(launcherIntent);
+                            return;
+                        } catch (Throwable ee) {
+                            AppLog.logw(TAG, "also failed launch the component from launcher intent, so I'm unable to start it ...");
+                            ee.printStackTrace();
+                        }
+                    }else{
+                        AppLog.logw(TAG, String.format("package %s doesn't have any launcher intent, so I'm unable to start it ...", pkgName));
+                    }
+                }
             }
         }
         Toast.makeText(context.getApplicationContext(),
