@@ -54,6 +54,11 @@
                 android:background="@drawable/btn_bg_transparent"/>
         </LinearLayout>
 
+        <!-- grey line at the bottom of tabs  -->
+        <!--<View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gesture_cur_grey"/>-->
 
         <LinearLayout
             android:id="@+id/gesture_appinfo_layout"
