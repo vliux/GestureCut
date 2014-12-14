@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/gesture_cur_blue_light" />
+            android:textColor="@color/gesture_cur_blue" />
     </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
 
     <LinearLayout
