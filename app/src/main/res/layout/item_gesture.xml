@@ -7,6 +7,8 @@
     android:layout_height="@dimen/gesture_list_item_height"
     android:paddingTop="@dimen/gesture_list_item_padding_vertical"
     android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+    android:paddingLeft="@dimen/gesture_list_outter_margin"
+    android:paddingRight="@dimen/gesture_list_outter_margin"
     style="@style/activated">
 
     <ImageView
@@ -23,32 +25,13 @@
         android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
         android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"/>
 
-    <!--<ImageView
-        android:id="@+id/item_gesture_app_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:scaleType="center"/>
-
-    <TextView
-        android:id="@+id/item_gesture_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-        android:gravity="left|center_vertical"
-        style="@style/text_basic_style"
-        android:textSize="@dimen/text_size_general"/>-->
-
-    <FrameLayout
+    <org.vliux.android.gesturecut.ui.view.AppInfoView
+        android:id="@+id/item_gesture_appinfo"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:layout_weight="1">
-        <org.vliux.android.gesturecut.ui.view.AppInfoView
-            android:id="@+id/item_gesture_appinfo"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="left"
-            custom:longClassName="false">
-        </org.vliux.android.gesturecut.ui.view.AppInfoView>
-    </FrameLayout>
+        android:layout_weight="1"
+        android:layout_gravity="left"
+        custom:longClassName="false">
+    </org.vliux.android.gesturecut.ui.view.AppInfoView>
+
 </LinearLayout>
