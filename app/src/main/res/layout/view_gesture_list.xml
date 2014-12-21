@@ -18,7 +18,7 @@
             android:cacheColorHint="@color/gesture_list_bkground"
             android:divider="@color/gesture_cur_blue_light_semi_transparent"
             android:dividerHeight="@dimen/listview_divider_thin"
-            android:listSelector="@drawable/gesture_list_selector_pressed">
+            android:listSelector="@drawable/gesture_list_selector_activated">
         </org.vliux.android.gesturecut.ui.view.gesturelist.DeleteBottomBarAwaredListView>
         <!-- empty view for ListView -->
         <TextView

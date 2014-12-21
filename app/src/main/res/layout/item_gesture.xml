@@ -5,10 +5,6 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="@dimen/gesture_list_item_height"
-    android:paddingTop="@dimen/gesture_list_item_padding_vertical"
-    android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
-    android:paddingLeft="@dimen/gesture_list_outter_margin"
-    android:paddingRight="@dimen/gesture_list_outter_margin"
     style="@style/activated">
 
     <ImageView
@@ -16,14 +12,19 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:scaleType="center"/>
+        android:paddingTop="@dimen/gesture_list_item_padding_vertical"
+        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+        android:paddingLeft="@dimen/gesture_list_outter_margin"
+        android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
+        android:scaleType="center"
+        android:background="@drawable/gesture_list_selector_pressed"/>
 
     <View
         android:layout_width="@dimen/listview_divider_thin"
         android:layout_height="match_parent"
-        android:background="@color/gesture_cur_blue_light_semi_transparent"
-        android:layout_marginLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-        android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"/>
+        android:paddingTop="@dimen/gesture_list_item_padding_vertical"
+        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+        android:background="@color/gesture_cur_blue_light_semi_transparent"/>
 
     <org.vliux.android.gesturecut.ui.view.AppInfoView
         android:id="@+id/item_gesture_appinfo"
@@ -31,6 +32,10 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:layout_gravity="left"
+        android:paddingTop="@dimen/gesture_list_item_padding_vertical"
+        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+        android:paddingRight="@dimen/gesture_list_outter_margin"
+        android:paddingLeft="@dimen/gesture_list_item_vertical_divider_margin_horiz"
         custom:longClassName="false">
     </org.vliux.android.gesturecut.ui.view.AppInfoView>
 
