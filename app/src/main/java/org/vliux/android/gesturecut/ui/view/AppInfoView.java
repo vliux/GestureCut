@@ -67,4 +67,8 @@ public class AppInfoView extends LinearLayout{
             mTvAppDetail.setText(descStrings[1]);
         }
     }
+
+    public ResolvedComponent getResolvedComponent(){
+        return mResolvedComponent;
+    }
 }

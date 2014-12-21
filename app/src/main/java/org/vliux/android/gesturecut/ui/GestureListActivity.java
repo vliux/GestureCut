@@ -8,20 +8,23 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout;
+import org.vliux.android.gesturecut.biz.TaskManager;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListView;
 
 /**
  * Created by vliux on 4/21/14.
  */
 public class GestureListActivity extends Activity{
-    private GestureListLayout mGestureList;
+    private GestureListView mGestureList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture_list);
 
-        mGestureList = (GestureListLayout)findViewById(R.id.actv_gesture_list);
+        mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
+        mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
     }
 
     @Override
@@ -68,4 +71,11 @@ public class GestureListActivity extends Activity{
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private final GestureListView.OnGestureItemClickedListener mOnGestureItemClicked = new GestureListView.OnGestureItemClickedListener() {
+        @Override
+        public void onGestureItemClicked(ResolvedComponent rc) {
+            TaskManager.startActivity(GestureListActivity.this, rc);
+        }
+    };
 }

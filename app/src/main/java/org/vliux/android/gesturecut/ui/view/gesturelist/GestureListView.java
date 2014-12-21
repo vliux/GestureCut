@@ -46,8 +46,19 @@ import java.util.List;
 /**
  * Created by vliux on 4/11/14.
  */
-public class GestureListLayout extends LinearLayout {
-    private static final String TAG = GestureListLayout.class.getSimpleName();
+public class GestureListView extends LinearLayout {
+    private static final String TAG = GestureListView.class.getSimpleName();
+
+    /**
+     * Click listener when an item in the GestureListView has been clicked, and the relevant
+     * ResolvedComponent is not NULL.
+     */
+    public static interface OnGestureItemClickedListener{
+        void onGestureItemClicked(ResolvedComponent rc);
+    }
+
+    private OnGestureItemClickedListener mOnGestureItemClickedListener;
+
     /**
      * Whether show() and hide() are required to make the view visible/invisible.
      * If it is faluse, then the view is by default visible.
@@ -60,17 +71,17 @@ public class GestureListLayout extends LinearLayout {
     private GestureListViewAdapter mListViewAdapter;
     private DeleteBottomBar mBottomBar;
 
-    public GestureListLayout(Context context) {
+    public GestureListView(Context context) {
         super(context);
         init(null);
     }
 
-    public GestureListLayout(Context context, AttributeSet attrs) {
+    public GestureListView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public GestureListLayout(Context context, AttributeSet attrs, int defStyle) {
+    public GestureListView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs);
     }
@@ -89,8 +100,8 @@ public class GestureListLayout extends LinearLayout {
         mGestureListView.setOnItemLongClickListener(mOnItemLongClickListener);
 
         if(null != attrs){
-            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListLayout);
-            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListLayout_showHideRequired, false);
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListView);
+            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListView_showHideRequired, false);
         }else{
             mNeedShowHide = false;
         }
@@ -100,6 +111,10 @@ public class GestureListLayout extends LinearLayout {
         }
 
         setEmptyGestureView(mGestureListView);
+    }
+
+    public void setOnGestureItemClickedListener(OnGestureItemClickedListener listener){
+        mOnGestureItemClickedListener = listener;
     }
 
     /**
@@ -193,6 +208,22 @@ public class GestureListLayout extends LinearLayout {
                 viewHolder.gestureIcon = (ImageView)convertView.findViewById(R.id.item_gesture_icon);
                 viewHolder.appInfoView = (AppInfoView)convertView.findViewById(R.id.item_gesture_appinfo);
                 convertView.setTag(viewHolder);
+
+                // OnGestureItemClickedListener
+                if(null != mOnGestureItemClickedListener){
+                    final GestureListViewHolder finalViewHolder = viewHolder;
+                    viewHolder.gestureIcon.setOnClickListener(new OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if(null != mOnGestureItemClickedListener){
+                                AppInfoView appInfoView = finalViewHolder.appInfoView;
+                                if(null != appInfoView && null != appInfoView.getResolvedComponent()){
+                                    mOnGestureItemClickedListener.onGestureItemClicked(appInfoView.getResolvedComponent());
+                                }
+                            }
+                        }
+                    });
+                }
             }else{
                 viewHolder = (GestureListViewHolder)convertView.getTag();
             }
@@ -208,8 +239,6 @@ public class GestureListLayout extends LinearLayout {
 
     private class GestureListViewHolder{
         public ImageView gestureIcon;
-        //public ImageView appIcon;
-        //public TextView textView;
         public AppInfoView appInfoView;
     }
 
