@@ -1,8 +1,12 @@
 package org.vliux.android.gesturecut.ui.floatwindow;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.os.Vibrator;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -19,41 +23,119 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
 /**
  * Created by vliux on 4/3/14.
  */
-public class FloatWindow extends LinearLayout implements View.OnClickListener {
+public class FloatWindow extends View implements View.OnClickListener {
     private static final String TAG = FloatWindow.class.getSimpleName();
+    private static final int OUTTER_STROKE_WIDTH_DP = 3;
+    private static final int CHAR_STROKE_WIDTH_DP = 1;
+
+    private int mOutterStrokeWidth;
+    private int mCharStrokeWidth;
+
+    private Paint mPaintStroke;
+    private Paint mPaintSlight;
     private float mSysBarHeight;
     private float mMoveDistantThreshold;
     private WindowManager.LayoutParams mLayoutParams;
     private Vibrator mVibrator;
+    private int mDimenSize;
 
     public FloatWindow(Context context) {
         super(context);
-        init();
+        init(context);
     }
 
     public FloatWindow(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init();
+        init(context);
     }
 
     public FloatWindow(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init();
+        init(context);
     }
 
-    private void init(){
-        LayoutInflater.from(getContext()).inflate(R.layout.view_floatwindow, this, true);
-        int notifBarHeight = ScreenUtil.getStatusBarHeight(getContext());
-        mSysBarHeight = (notifBarHeight > 0) ?
-                notifBarHeight :
+    private void init(Context context){
+        DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+
+        // system bar height
+        int notifBarHeight = ScreenUtil.getStatusBarHeight(context);
+        mSysBarHeight = (notifBarHeight > 0) ? notifBarHeight :
                 TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                         AppConstant.DEFAULT_SYS_NOTIFICATION_BAR_HEIGHT,
-                        getResources().getDisplayMetrics());
+                        displayMetrics);
+
         mMoveDistantThreshold = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
                 AppConstant.FloatWindow.THRESHOLD_MOVE_DISTANCE,
-                getResources().getDisplayMetrics());
+                displayMetrics);
 
-        mVibrator = (Vibrator)getContext().getSystemService(Context.VIBRATOR_SERVICE);
+        mDimenSize = (int)getResources().getDimension(R.dimen.float_wnd_dimen);
+        mVibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+
+        // painters
+        mOutterStrokeWidth = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, OUTTER_STROKE_WIDTH_DP, displayMetrics);
+        mCharStrokeWidth = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CHAR_STROKE_WIDTH_DP, displayMetrics);
+        mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintStroke.setStyle(Paint.Style.STROKE);
+        mPaintStroke.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18f, displayMetrics));
+        mPaintStroke.setTextAlign(Paint.Align.CENTER);
+
+        mPaintSlight = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintSlight.setStyle(Paint.Style.FILL);
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(mDimenSize, mDimenSize);
+    }
+
+    private boolean mIsPressed = false;
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+        int width = getWidth();
+        int height = getHeight();
+
+        RectF oval = new RectF();
+        oval.top = mOutterStrokeWidth;
+        oval.bottom = height - mOutterStrokeWidth;
+        oval.left = mOutterStrokeWidth;
+        oval.right = width - mOutterStrokeWidth;
+
+        // outter circle in red
+        mPaintStroke.setStrokeWidth(mOutterStrokeWidth);
+        if(!mIsPressed) {
+            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_red));
+        }else{
+            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue_semi_transparent));
+        }
+        canvas.drawArc(oval, 0.0f, 360.0f, false, mPaintStroke);
+
+        // inner circle in white
+
+        oval.top += mOutterStrokeWidth;
+        oval.bottom -= mOutterStrokeWidth;
+        oval.left += mOutterStrokeWidth;
+        oval.right -= mOutterStrokeWidth;
+        if(!mIsPressed){
+            mPaintStroke.setColor(getResources().getColor(R.color.global_bkground));
+        }else{
+            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue));
+        }
+        canvas.drawArc(oval, 0.0f, 360.0f, false, mPaintStroke);
+
+        // semi-transparent background of circle
+        if(!mIsPressed) {
+            mPaintSlight.setColor(getResources().getColor(R.color.gesture_cur_blue_semi_transparent));
+        }else{
+            mPaintSlight.setColor(getResources().getColor(R.color.gesture_cur_blue));
+        }
+        canvas.drawArc(oval, 0.0f, 360.0f, true, mPaintSlight);
+
+        // center text
+        float txtWidth = mPaintStroke.measureText("G");
+        mPaintStroke.setStrokeWidth(mCharStrokeWidth);
+        canvas.drawText("G", width/2, (height + txtWidth)/2, mPaintStroke);
     }
 
     /**
@@ -85,6 +167,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
 
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
+                mIsPressed = true;
                 mIsPrevMoved = false;
                 mDownX = rawX;
                 mDownY = rawY;
@@ -94,6 +177,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 if(null != mVibrator){
                     mVibrator.vibrate(AppConstant.FloatWindow.ACTION_DOWN_VIBRATE_DURATION);
                 }
+                invalidate();
                 break;
             case MotionEvent.ACTION_MOVE:
                 if(isMoving(rawX, rawY)){
@@ -105,14 +189,17 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
+                mIsPressed = false;
                 mDownInnerX = 0;
                 mDownInnerY = 0;
                 mDownX = 0;
                 mDownY = 0;
                 Log.d(TAG, String.format("CANCEL: %f, %f; %f, %f", rawX, rawY, event.getX(), event.getY()));
                 mIsPrevMoved = false;
+                invalidate();
                 break;
             case MotionEvent.ACTION_UP:
+                mIsPressed = false;
                 Log.d(TAG, String.format("UP: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                 if(mIsPrevMoved) {
                     Log.d(TAG, "mIsPrevMoved = true");
@@ -129,6 +216,7 @@ public class FloatWindow extends LinearLayout implements View.OnClickListener {
                 mDownInnerY = 0;
                 mDownX = 0;
                 mDownY = 0;
+                invalidate();
                 break;
         }
         return true;

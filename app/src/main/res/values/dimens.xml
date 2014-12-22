@@ -3,6 +3,8 @@
     <dimen name="gesture_thumbnail_width">60dp</dimen>
     <dimen name="gesture_thumbnail_height">60dp</dimen>
 
+    <dimen name="float_wnd_dimen">58dp</dimen>
+
     <dimen name="gesture_overlay_margin">12dp</dimen>
 
     <!-- main activity -->
