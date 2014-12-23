@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">弹指</string>
     <string name="settings">设置</string>
+    <string name="add_gesture">添加手势</string>
     <string name="your_gesture_list">您的手势</string>
 
     <!-- text in background for recording a new gesture -->

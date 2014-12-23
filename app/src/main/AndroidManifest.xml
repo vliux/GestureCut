@@ -46,11 +46,10 @@
             </intent-filter>
         </activity>
 
-        <!--<activity android:name=".ui.GestureListActivity"
+        <activity android:name=".ui.AddGestureActivity"
             android:launchMode="singleTop"
-            android:theme="@android:style/Theme.NoTitleBar"
             android:screenOrientation="portrait">
-        </activity>-->
+        </activity>
 
         <activity android:name=".ui.WelcomeActivity"
             android:launchMode="singleTop"

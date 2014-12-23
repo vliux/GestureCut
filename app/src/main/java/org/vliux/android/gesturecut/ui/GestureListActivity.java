@@ -62,9 +62,14 @@ public class GestureListActivity extends Activity{
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = null;
         switch (item.getItemId()) {
+            case R.id.action_add:
+                intent = new Intent(this, AddGestureActivity.class);
+                startActivity(intent);
+                return true;
             case R.id.action_settings:
-                Intent intent = new Intent(this, SettingsActivity.class);
+                intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 return true;
             default:
