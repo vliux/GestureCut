@@ -47,6 +47,7 @@
         </activity>
 
         <activity android:name=".ui.AddGestureActivity"
+            android:label="@string/add_gesture"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
