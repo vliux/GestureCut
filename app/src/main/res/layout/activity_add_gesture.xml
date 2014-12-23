@@ -7,7 +7,11 @@
     <ListView
         android:id="@+id/list_packges"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></ListView>
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/gesture_list_bkground"
+        android:divider="@color/gesture_cur_blue_light_semi_transparent"
+        android:dividerHeight="@dimen/listview_divider_thin"
+        android:listSelector="@drawable/gesture_list_selector_activated"/>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"

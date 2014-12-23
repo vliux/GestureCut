@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.melnykov.fab.FloatingActionButton;
+
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
@@ -22,6 +24,9 @@ import java.util.List;
 public class AddGestureActivity extends Activity {
     private ListView mListView;
     private PkgListAdapter mListAdapter;
+    private FloatingActionButton mFab;
+    private int mListItemPaddingHoriz = 0;
+    private int mListItemPaddingVerti = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +34,14 @@ public class AddGestureActivity extends Activity {
         setContentView(R.layout.activity_add_gesture);
 
         mListView = (ListView)findViewById(R.id.list_packges);
+        mFab = (FloatingActionButton)findViewById(R.id.fab);
+
         mListAdapter = new PkgListAdapter(getPackageManager());
         mListView.setAdapter(mListAdapter);
+        mFab.attachToListView(mListView);
+
+        mListItemPaddingHoriz = (int)getResources().getDimension(R.dimen.gesture_list_outter_margin);
+        mListItemPaddingVerti = (int)getResources().getDimension(R.dimen.gesture_list_item_padding_vertical);
     }
 
     @Override
@@ -80,6 +91,7 @@ public class AddGestureActivity extends Activity {
                 appInfoView = (AppInfoView)convertView;
             }else{
                 appInfoView = new AppInfoView(AddGestureActivity.this);
+                appInfoView.setPadding(mListItemPaddingHoriz, mListItemPaddingVerti, mListItemPaddingHoriz, mListItemPaddingVerti);
             }
 
             appInfoView.setResolvedComponent(installedComponents.get(position));
