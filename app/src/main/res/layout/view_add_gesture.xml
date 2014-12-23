@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gesture_create_bg_semi_transparent"
+        style="@style/gesture_overlay_use">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/gesture_bg_title_record"
+            android:textSize="@dimen/text_size_small_title"
+            android:textColor="@color/gesture_cur_blue" />
+
+        <!-- layer above, show confirmation dialog -->
+        <org.vliux.android.gesturecut.ui.floatwindow.FwDialogView
+            android:id="@+id/add_gesture_fwdialog"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+        </org.vliux.android.gesturecut.ui.floatwindow.FwDialogView>
+    </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
+</merge>
