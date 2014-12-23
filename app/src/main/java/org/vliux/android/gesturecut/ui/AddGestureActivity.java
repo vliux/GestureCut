@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -24,7 +25,6 @@ import java.util.List;
 public class AddGestureActivity extends Activity {
     private ListView mListView;
     private PkgListAdapter mListAdapter;
-    private FloatingActionButton mFab;
     private int mListItemPaddingHoriz = 0;
     private int mListItemPaddingVerti = 0;
 
@@ -34,11 +34,9 @@ public class AddGestureActivity extends Activity {
         setContentView(R.layout.activity_add_gesture);
 
         mListView = (ListView)findViewById(R.id.list_packges);
-        mFab = (FloatingActionButton)findViewById(R.id.fab);
-
         mListAdapter = new PkgListAdapter(getPackageManager());
         mListView.setAdapter(mListAdapter);
-        mFab.attachToListView(mListView);
+        mListView.setOnItemClickListener(mOnItemClickListener);
 
         mListItemPaddingHoriz = (int)getResources().getDimension(R.dimen.gesture_list_outter_margin);
         mListItemPaddingVerti = (int)getResources().getDimension(R.dimen.gesture_list_item_padding_vertical);
@@ -98,4 +96,11 @@ public class AddGestureActivity extends Activity {
             return appInfoView;
         }
     }
+
+    private final AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        }
+    };
 }

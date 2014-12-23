@@ -6,25 +6,33 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+
+import com.melnykov.fab.FloatingActionButton;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListView;
+import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout;
 
 /**
  * Created by vliux on 4/21/14.
  */
 public class GestureListActivity extends Activity{
-    private GestureListView mGestureList;
+    private GestureListLayout mGestureList;
+    private FloatingActionButton mFab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture_list);
 
-        mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
+        mGestureList = (GestureListLayout)findViewById(R.id.actv_gesture_list);
         mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
+
+        mFab = (FloatingActionButton)findViewById(R.id.fab);
+        mFab.attachToListView(mGestureList.getListView());
+        mFab.setOnClickListener(mFabOnClickListener);
     }
 
     @Override
@@ -77,10 +85,18 @@ public class GestureListActivity extends Activity{
         }
     }
 
-    private final GestureListView.OnGestureItemClickedListener mOnGestureItemClicked = new GestureListView.OnGestureItemClickedListener() {
+    private final GestureListLayout.OnGestureItemClickedListener mOnGestureItemClicked = new GestureListLayout.OnGestureItemClickedListener() {
         @Override
         public void onGestureItemClicked(ResolvedComponent rc) {
             TaskManager.startActivity(GestureListActivity.this, rc);
+        }
+    };
+
+    private final View.OnClickListener mFabOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(GestureListActivity.this, AddGestureActivity.class);
+            startActivity(intent);
         }
     };
 }

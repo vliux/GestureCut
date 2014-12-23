@@ -46,8 +46,8 @@ import java.util.List;
 /**
  * Created by vliux on 4/11/14.
  */
-public class GestureListView extends LinearLayout {
-    private static final String TAG = GestureListView.class.getSimpleName();
+public class GestureListLayout extends LinearLayout {
+    private static final String TAG = GestureListLayout.class.getSimpleName();
 
     /**
      * Click listener when an item in the GestureListView has been clicked, and the relevant
@@ -71,17 +71,17 @@ public class GestureListView extends LinearLayout {
     private GestureListViewAdapter mListViewAdapter;
     private DeleteBottomBar mBottomBar;
 
-    public GestureListView(Context context) {
+    public GestureListLayout(Context context) {
         super(context);
         init(null);
     }
 
-    public GestureListView(Context context, AttributeSet attrs) {
+    public GestureListLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public GestureListView(Context context, AttributeSet attrs, int defStyle) {
+    public GestureListLayout(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init(attrs);
     }
@@ -100,8 +100,8 @@ public class GestureListView extends LinearLayout {
         mGestureListView.setOnItemLongClickListener(mOnItemLongClickListener);
 
         if(null != attrs){
-            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListView);
-            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListView_showHideRequired, false);
+            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListLayout);
+            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListLayout_showHideRequired, false);
         }else{
             mNeedShowHide = false;
         }
@@ -394,4 +394,8 @@ public class GestureListView extends LinearLayout {
             }
         }
     };
+
+    public ListView getListView(){
+        return mGestureListView;
+    }
 }
