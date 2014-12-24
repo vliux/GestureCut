@@ -4,6 +4,7 @@
     android:layout_height="match_parent">
 
     <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
+        android:id="@+id/add_ges_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gesture_create_bg_semi_transparent"

@@ -11,7 +11,9 @@ import android.widget.FrameLayout;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.AddGestureView;
+import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
 /**
@@ -24,11 +26,21 @@ class AnimPresenter {
     private FrameLayout mParentLayout;
     private AddGestureView mAddGestureView;
 
-    public AnimPresenter(Context context, View listItemView, FrameLayout parentLayout){
+    public AnimPresenter(Context context, View listItemView, FrameLayout parentLayout, AddGestureView addGestureView){
         mContext = context;
         mListItemTranslated = listItemView;
         mListItemOrgBg = mListItemTranslated.getBackground();
         mParentLayout = parentLayout;
+        mAddGestureView = addGestureView;
+    }
+
+    public ResolvedComponent getRelatedResolvedComponent(){
+        if(null != mListItemTranslated && mListItemTranslated instanceof AppInfoView){
+            AppInfoView appInfoView = (AppInfoView)mListItemTranslated;
+            return appInfoView.getResolvedComponent();
+        }
+
+        return null;
     }
 
     public void show(){
@@ -117,7 +129,6 @@ class AnimPresenter {
      Show it at the bottom.
      */
     private void showAddGestureView(int height){
-        mAddGestureView = new AddGestureView(mContext);
         final FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 height,
                 Gravity.BOTTOM);

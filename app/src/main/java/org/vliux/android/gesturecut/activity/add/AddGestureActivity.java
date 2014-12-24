@@ -1,13 +1,11 @@
 package org.vliux.android.gesturecut.activity.add;
 
-import android.animation.Animator;
-import android.animation.ObjectAnimator;
 import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.drawable.Drawable;
+import android.gesture.Gesture;
+import android.gesture.GestureOverlayView;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -15,12 +13,10 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 
-import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.AddGestureView;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
-import org.vliux.android.gesturecut.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +31,7 @@ public class AddGestureActivity extends Activity {
     private int mListItemPaddingHoriz = 0;
     private int mListItemPaddingVerti = 0;
 
+    private AddGestureView mAddGestureView;
     private AnimPresenter mAnimPresenter;
 
     @Override
@@ -50,6 +47,8 @@ public class AddGestureActivity extends Activity {
 
         mListItemPaddingHoriz = (int)getResources().getDimension(R.dimen.gesture_list_outter_margin);
         mListItemPaddingVerti = (int)getResources().getDimension(R.dimen.gesture_list_item_padding_vertical);
+        mAddGestureView = new AddGestureView(this);
+        mAddGestureView.getGestureOverlay().addOnGesturePerformedListener(mOnGesturePerformed);
     }
 
     @Override
@@ -111,7 +110,7 @@ public class AddGestureActivity extends Activity {
         @Override
         public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
             if(null == mAnimPresenter){
-                mAnimPresenter = new AnimPresenter(AddGestureActivity.this, view, mLayout);
+                mAnimPresenter = new AnimPresenter(AddGestureActivity.this, view, mLayout, mAddGestureView);
                 mAnimPresenter.show();
             }
         }
@@ -126,4 +125,17 @@ public class AddGestureActivity extends Activity {
             super.onBackPressed();
         }
     }
+
+    private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformed = new GestureOverlayView.OnGesturePerformedListener() {
+        @Override
+        public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
+            if(null != mAnimPresenter){
+                ResolvedComponent rc = mAnimPresenter.getRelatedResolvedComponent();
+                if(null != rc){
+                    GesturePerformedPresenter presenter = new GesturePerformedPresenter(AddGestureActivity.this, rc);
+                    presenter.addGesture(gesture);
+                }
+            }
+        }
+    };
 }
