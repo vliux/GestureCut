@@ -101,7 +101,11 @@ public class GestureListLayout extends LinearLayout {
 
         if(null != attrs){
             TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListLayout);
-            mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListLayout_showHideRequired, false);
+            try {
+                mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListLayout_showHideRequired, false);
+            }finally {
+                typedArray.recycle();
+            }
         }else{
             mNeedShowHide = false;
         }

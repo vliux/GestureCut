@@ -7,4 +7,10 @@
     <declare-styleable name="GestureListLayout">
         <attr name="showHideRequired" format="boolean"/> <!-- whether show() and hide() are supported -->
     </declare-styleable>
+
+    <declare-styleable name="DrawBoundsGestureOverlayView">
+        <attr name="boundColor" format="color"/>
+        <attr name="boundWidth" format="float"/>
+    </declare-styleable>
+
 </resources>

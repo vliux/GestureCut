@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,15 +9,19 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gesture_create_bg_semi_transparent"
+        custom:boundColor="@color/beige_light_semi_transparent"
+        custom:boundWidth="6"
         style="@style/gesture_overlay_use">
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/gesture_bg_title_record"
             android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/gesture_cur_blue" />
+            android:textColor="@color/beige_light_semi_transparent"
+            android:drawableLeft="@drawable/ic_pencil"
+            android:drawablePadding="8dp"/>
 
         <!-- layer above, show confirmation dialog -->
         <org.vliux.android.gesturecut.ui.floatwindow.FwDialogView
