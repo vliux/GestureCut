@@ -30,6 +30,7 @@ public class GestureListActivity extends Activity{
 
         mGestureList = (GestureListLayout)findViewById(R.id.actv_gesture_list);
         mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
+        mGestureList.setAutoRefresh(true);
 
         mFab = (FloatingActionButton)findViewById(R.id.fab);
         mFab.attachToListView(mGestureList.getListView());
@@ -73,6 +74,9 @@ public class GestureListActivity extends Activity{
     public boolean onOptionsItemSelected(MenuItem item) {
         Intent intent = null;
         switch (item.getItemId()) {
+            case R.id.action_refresh:
+                mGestureList.refresh();
+                return true;
             case R.id.action_settings:
                 intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);

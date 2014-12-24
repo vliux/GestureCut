@@ -138,6 +138,10 @@ public class GestureListLayout extends LinearLayout {
         PkgRemovedEventBus.getInstance().unregister(mPkgRemovedEventHandler);
     }
 
+    public void refresh(){
+        mListViewAdapter.notifyDataSetChanged();
+    }
+
     private void setEmptyGestureView(ListView gestureListView){
         TextView tvEmpty = (TextView)findViewById(R.id.gesture_empty_tv);
         gestureListView.setEmptyView(tvEmpty);
