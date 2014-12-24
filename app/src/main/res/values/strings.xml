@@ -2,6 +2,7 @@
     <string name="app_name">GestureCut</string>
     <string name="settings">Settings</string>
     <string name="add_gesture">Add gesture</string>
+    <string name="refresh">Refresh</string>
     <string name="your_gesture_list">Your gestures</string>
 
     <!-- text in background for recording a new gesture -->

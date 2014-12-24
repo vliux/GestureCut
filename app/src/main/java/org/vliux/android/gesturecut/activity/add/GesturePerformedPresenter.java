@@ -12,9 +12,6 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.floatwindow.FwDialogView;
-import org.vliux.android.gesturecut.ui.floatwindow.SecondaryFloatWindow;
-import org.vliux.android.gesturecut.util.ScreenUtil;
-import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
  * Created by vliux on 12/24/14.
