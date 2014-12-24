@@ -11,7 +11,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.floatwindow.FwDialogView;
+import org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog;
 
 /**
  * Created by vliux on 12/24/14.
@@ -30,7 +30,7 @@ public class GesturePerformedPresenter {
     public void addGesture(final Gesture gesture){
         if(null != mResolvedComponent){
             GestureDbTable.DbData dbData = GesturePersistence.loadGestureEx(mContext, gesture);
-            final FwDialogView mFwDialog = new FwDialogView(mContext);
+            final GestureConfirmDialog mFwDialog = new GestureConfirmDialog(mContext);
 
             if(null != dbData && null != dbData.resolvedComponent){
                 mWindowMgr.addView(mFwDialog, makeLayoutParams());

@@ -96,12 +96,12 @@
     </LinearLayout>
 
     <!-- layer above, show confirmation dialog -->
-    <org.vliux.android.gesturecut.ui.floatwindow.FwDialogView
+    <org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog
         android:id="@+id/gesture_fwdialog"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
-    </org.vliux.android.gesturecut.ui.floatwindow.FwDialogView>
+    </org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog>
 
     <!-- ImageView for animator when starting activty of defined gestures -->
     <ImageView

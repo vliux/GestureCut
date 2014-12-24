@@ -29,7 +29,7 @@ import org.vliux.android.gesturecut.util.ImageUtil;
  * Created by vliux on 4/18/14.
  * The dialog view for confirmation of adding new gesture.
  */
-public class FwDialogView extends FrameLayout implements View.OnClickListener {
+public class GestureConfirmDialog extends FrameLayout implements View.OnClickListener {
     private TextView mTvTitle;
     private TextView mTvContent;
 
@@ -43,17 +43,17 @@ public class FwDialogView extends FrameLayout implements View.OnClickListener {
     private Button mBtnSave;
     private Button mBtnCancel;
 
-    public FwDialogView(Context context) {
+    public GestureConfirmDialog(Context context) {
         super(context);
         init();
     }
 
-    public FwDialogView(Context context, AttributeSet attrs) {
+    public GestureConfirmDialog(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
     }
 
-    public FwDialogView(Context context, AttributeSet attrs, int defStyle) {
+    public GestureConfirmDialog(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         init();
     }

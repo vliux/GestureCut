@@ -43,7 +43,7 @@ public class SecondaryFloatWindow extends LinearLayout
     private GestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
-    private FwDialogView mFwDialog;
+    private GestureConfirmDialog mFwDialog;
 
     private AppInfoView mAppInfoView; // app info shown when adding new gesture
     private LinearLayout mAppInfoLayout; // layout containing AppInfoView
@@ -75,7 +75,7 @@ public class SecondaryFloatWindow extends LinearLayout
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
-        mFwDialog = (FwDialogView)findViewById(R.id.gesture_fwdialog);
+        mFwDialog = (GestureConfirmDialog)findViewById(R.id.gesture_fwdialog);
         mAppInfoView = (AppInfoView)findViewById(R.id.gesture_appinfoview);
         mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
         mAppInfoLayout = (LinearLayout)findViewById(R.id.gesture_appinfo_layout);
