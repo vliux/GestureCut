@@ -3,6 +3,7 @@
     <string name="settings">设置</string>
     <string name="add_gesture">添加手势</string>
     <string name="refresh">刷新</string>
+    <string name="remove">删除</string>
     <string name="your_gesture_list">您的手势</string>
 
     <!-- text in background for recording a new gesture -->

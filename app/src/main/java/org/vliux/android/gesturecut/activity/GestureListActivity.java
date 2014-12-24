@@ -22,6 +22,7 @@ import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout;
 public class GestureListActivity extends Activity{
     private GestureListLayout mGestureList;
     private FloatingActionButton mFab;
+    private MenuItem mRemoveMenuItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class GestureListActivity extends Activity{
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main, menu);
+        mRemoveMenuItem = menu.findItem(R.id.action_remove);
         return super.onCreateOptionsMenu(menu);
     }
 
