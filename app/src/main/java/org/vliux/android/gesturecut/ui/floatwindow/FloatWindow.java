@@ -25,7 +25,7 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  */
 public class FloatWindow extends View implements View.OnClickListener {
     private static final String TAG = FloatWindow.class.getSimpleName();
-    private static final int OUTTER_STROKE_WIDTH_DP = 3;
+    private static final int OUTTER_STROKE_WIDTH_DP = 4;
     private static final int CHAR_STROKE_WIDTH_DP = 1;
 
     private int mOutterStrokeWidth;
@@ -105,9 +105,9 @@ public class FloatWindow extends View implements View.OnClickListener {
         // outter circle in red
         mPaintStroke.setStrokeWidth(mOutterStrokeWidth);
         if(!mIsPressed) {
-            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_red));
+            mPaintStroke.setColor(getResources().getColor(R.color.beige_light_semi_transparent));
         }else{
-            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue_semi_transparent));
+            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue));
         }
         canvas.drawArc(oval, 0.0f, 360.0f, false, mPaintStroke);
 
@@ -118,7 +118,7 @@ public class FloatWindow extends View implements View.OnClickListener {
         oval.left += mOutterStrokeWidth;
         oval.right -= mOutterStrokeWidth;
         if(!mIsPressed){
-            mPaintStroke.setColor(getResources().getColor(R.color.global_bkground));
+            mPaintStroke.setColor(getResources().getColor(R.color.beige_light_semi_transparent));
         }else{
             mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue));
         }
@@ -128,13 +128,14 @@ public class FloatWindow extends View implements View.OnClickListener {
         if(!mIsPressed) {
             mPaintSlight.setColor(getResources().getColor(R.color.gesture_cur_blue_semi_transparent));
         }else{
-            mPaintSlight.setColor(getResources().getColor(R.color.gesture_cur_blue));
+            mPaintSlight.setColor(getResources().getColor(R.color.beige_light_semi_transparent));
         }
         canvas.drawArc(oval, 0.0f, 360.0f, true, mPaintSlight);
 
         // center text
         float txtWidth = mPaintStroke.measureText("G");
         mPaintStroke.setStrokeWidth(mCharStrokeWidth);
+        mPaintStroke.setColor(getResources().getColor(R.color.global_bkground));
         canvas.drawText("G", width/2, (height + txtWidth)/2, mPaintStroke);
     }
 

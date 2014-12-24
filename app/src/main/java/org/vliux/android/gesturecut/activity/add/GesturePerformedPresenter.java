@@ -40,7 +40,7 @@ public class GesturePerformedPresenter {
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                mFwDialog.hide();
+                                mWindowMgr.removeView(mFwDialog);
                             }
                         });
             }else{
@@ -66,7 +66,7 @@ public class GesturePerformedPresenter {
                         new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                mFwDialog.hide();
+                                mWindowMgr.removeView(mFwDialog);
                             }
                         }
                 );
