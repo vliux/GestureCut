@@ -14,7 +14,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout;
+import org.vliux.android.gesturecut.ui.view.GestureListLayout;
 
 /**
  * Created by vliux on 4/21/14.
@@ -31,7 +31,6 @@ public class GestureListActivity extends Activity{
 
         mGestureList = (GestureListLayout)findViewById(R.id.actv_gesture_list);
         mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
-        mGestureList.setAutoRefresh(true);
 
         mFab = (FloatingActionButton)findViewById(R.id.fab);
         mFab.attachToListView(mGestureList.getListView());
@@ -42,14 +41,12 @@ public class GestureListActivity extends Activity{
     protected void onResume() {
         super.onResume();
         mGestureList.setAutoRefresh(true);
-        mGestureList.show();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         mGestureList.setAutoRefresh(false);
-        mGestureList.hide();
     }
 
     @Override

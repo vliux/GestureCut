@@ -1,45 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/gesture_list_bkground">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <!-- empty view for ListView -->
+    <TextView
+        android:id="@+id/gesture_empty_tv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gesture_list_bkground">
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:paddingLeft="@dimen/gesture_list_outter_margin"
+        android:paddingRight="@dimen/gesture_list_outter_margin"
+        android:text="@string/gesture_list_no_defined"
+        android:textColor="@color/gesture_cur_blue"
+        android:textSize="@dimen/text_size_small_title"
+        android:visibility="gone" />
 
-        <org.vliux.android.gesturecut.ui.view.gesturelist.DeleteBottomBarAwaredListView
-            android:id="@+id/gesture_listview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:cacheColorHint="@color/gesture_list_bkground"
-            android:divider="@color/gesture_cur_blue_light_semi_transparent"
-            android:dividerHeight="@dimen/listview_divider_thin"
-            android:listSelector="@drawable/gesture_list_selector_activated">
-        </org.vliux.android.gesturecut.ui.view.gesturelist.DeleteBottomBarAwaredListView>
-        <!-- empty view for ListView -->
-        <TextView
-            android:id="@+id/gesture_empty_tv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:paddingLeft="@dimen/gesture_list_outter_margin"
-            android:paddingRight="@dimen/gesture_list_outter_margin"
-            android:gravity="center"
-            android:text="@string/gesture_list_no_defined"
-            android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/gesture_cur_blue"
-            android:visibility="gone" />
-    </LinearLayout>
-    <!-- bottom bar -->
-    <org.vliux.android.gesturecut.ui.view.gesturelist.DeleteBottomBar
-        android:id="@+id/gesture_bottom_bar"
+    <ListView
+        android:id="@+id/gesture_listview"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/gesture_list_bottom_bar_height"
-        android:layout_gravity="bottom"
-        android:visibility="gone">
-    </org.vliux.android.gesturecut.ui.view.gesturelist.DeleteBottomBar>
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/gesture_list_bkground"
+        android:divider="@color/gesture_cur_blue_light_semi_transparent"
+        android:dividerHeight="@dimen/listview_divider_thin"
+        android:listSelector="@drawable/gesture_list_selector_activated"/>
+
+</merge>

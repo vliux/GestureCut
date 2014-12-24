@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view.gesturelist;
+package org.vliux.android.gesturecut.ui.view;
 
 import android.animation.AnimatorSet;
 import android.animation.LayoutTransition;
@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -46,9 +47,7 @@ import java.util.List;
 /**
  * Created by vliux on 4/11/14.
  */
-public class GestureListLayout extends LinearLayout {
-    private static final String TAG = GestureListLayout.class.getSimpleName();
-
+public class GestureListLayout extends FrameLayout {
     /**
      * Click listener when an item in the GestureListView has been clicked, and the relevant
      * ResolvedComponent is not NULL.
@@ -59,17 +58,8 @@ public class GestureListLayout extends LinearLayout {
 
     private OnGestureItemClickedListener mOnGestureItemClickedListener;
 
-    /**
-     * Whether show() and hide() are required to make the view visible/invisible.
-     * If it is faluse, then the view is by default visible.
-     */
-    private boolean mNeedShowHide = false;
-
-    private DeleteBottomBarAwaredListView mGestureListView;
-    private int mScreenWidth;
-    private boolean mIsShown = false;
+    private ListView mGestureListView;
     private GestureListViewAdapter mListViewAdapter;
-    private DeleteBottomBar mBottomBar;
 
     public GestureListLayout(Context context) {
         super(context);
@@ -88,32 +78,10 @@ public class GestureListLayout extends LinearLayout {
 
     private void init(AttributeSet attrs){
         LayoutInflater.from(getContext()).inflate(R.layout.view_gesture_list, this, true);
-        mGestureListView = (DeleteBottomBarAwaredListView)findViewById(R.id.gesture_listview);
-        mBottomBar = (DeleteBottomBar)findViewById(R.id.gesture_bottom_bar);
+        mGestureListView = (ListView)findViewById(R.id.gesture_listview);
 
-        mBottomBar.setOnDeleteClicked(mOnBottomBarClickedListener);
-        mGestureListView.setBottomBar(mBottomBar);
         mListViewAdapter = new GestureListViewAdapter();
         mGestureListView.setAdapter(mListViewAdapter);
-        mScreenWidth = ScreenUtil.getScreenSize(getContext())[0];
-        mGestureListView.setLayoutTransition(new LayoutTransition());
-        mGestureListView.setOnItemLongClickListener(mOnItemLongClickListener);
-
-        if(null != attrs){
-            TypedArray typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.GestureListLayout);
-            try {
-                mNeedShowHide = typedArray.getBoolean(R.styleable.GestureListLayout_showHideRequired, false);
-            }finally {
-                typedArray.recycle();
-            }
-        }else{
-            mNeedShowHide = false;
-        }
-
-        if(mNeedShowHide){
-            setTranslationX(-mScreenWidth);
-        }
-
         setEmptyGestureView(mGestureListView);
     }
 
@@ -150,17 +118,6 @@ public class GestureListLayout extends LinearLayout {
         TextView tvEmpty = (TextView)findViewById(R.id.gesture_empty_tv);
         gestureListView.setEmptyView(tvEmpty);
     }
-
-    private final OnClickListener mOnBottomBarClickedListener = new OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            if(mLastLongClickPosition >= 0 && mLastLongClickPosition < mListViewAdapter.getCount()){
-                GesturePersistence.removeGesture(getContext(), mListViewAdapter.getGestureName(mLastLongClickPosition));
-                mListViewAdapter.notifyDataSetChanged();
-            }
-            mLastLongClickPosition = -1;
-        }
-    };
 
     /**
      * Adapter
@@ -312,50 +269,6 @@ public class GestureListLayout extends LinearLayout {
         }
     };
 
-    public boolean isShown(){
-        return mIsShown;
-    }
-
-    public void show(){
-        if(mNeedShowHide){
-            mIsShown = true;
-            getShowHideAnimatorSet(true).start();
-            mListViewAdapter.notifyDataSetChanged();
-        }
-    }
-
-    public void hide(){
-        if(mNeedShowHide){
-            mIsShown = false;
-            getShowHideAnimatorSet(false).start();
-        }
-    }
-
-    /**
-     * Get the AnimatorSet for showing or hiding this GestureList.
-     * @param forShown
-     * @return
-     */
-    private AnimatorSet getShowHideAnimatorSet(boolean forShown){
-        ObjectAnimator transxObjAnimator = null;
-        ObjectAnimator alphaObjAnimator = null;
-        if(forShown) {
-            // animators for showing
-            transxObjAnimator = ObjectAnimator.ofFloat(this, "translationX", -mScreenWidth, 0);
-            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 0.0f, 1.0f);
-        }else{
-            // animators for hiding
-            transxObjAnimator = ObjectAnimator.ofFloat(this, "translationX", 0, -mScreenWidth);
-            alphaObjAnimator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.0f);
-        }
-
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
-        animatorSet.setInterpolator(new OvershootInterpolator());
-        animatorSet.play(transxObjAnimator).with(alphaObjAnimator);
-        return animatorSet;
-    }
-
     private final BroadcastReceiver mGestureAddedBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -369,30 +282,6 @@ public class GestureListLayout extends LinearLayout {
             }
         }
     };
-
-    private int mLastLongClickPosition = -1;
-    private final AdapterView.OnItemLongClickListener mOnItemLongClickListener = new AdapterView.OnItemLongClickListener() {
-        @Override
-        public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-            mBottomBar.showBottomBar();
-            mLastLongClickPosition = position;
-            return true;
-        }
-    };
-
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK
-                && KeyEvent.ACTION_UP == event.getAction()){
-            if(mBottomBar.isShown()){
-                mBottomBar.hideBottomBar();
-                return true;
-            }
-            return false;
-        }else{
-            return super.dispatchKeyEvent(event);
-        }
-    }
 
     private final PkgRemovedEventBus.PkgRemovedHandler mPkgRemovedEventHandler = new PkgRemovedEventBus.PkgRemovedHandler() {
         @Override

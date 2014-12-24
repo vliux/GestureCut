@@ -4,11 +4,11 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout
+    <org.vliux.android.gesturecut.ui.view.GestureListLayout
         android:id="@+id/actv_gesture_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout>
+    </org.vliux.android.gesturecut.ui.view.GestureListLayout>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
