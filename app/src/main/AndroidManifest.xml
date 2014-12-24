@@ -36,7 +36,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.GestureListActivity"
+        <activity android:name=".activity.GestureListActivity"
             android:label="@string/your_gesture_list"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
@@ -46,19 +46,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.AddGestureActivity"
+        <activity android:name=".activity.add.AddGestureActivity"
             android:label="@string/add_gesture"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".ui.WelcomeActivity"
+        <activity android:name=".activity.WelcomeActivity"
             android:launchMode="singleTop"
             android:theme="@style/Welcome.Theme.Transparent"
             android:screenOrientation="portrait">
         </activity>
 
-        <activity android:name=".ui.SettingsActivity"
+        <activity android:name=".activity.SettingsActivity"
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">

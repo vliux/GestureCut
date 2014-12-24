@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui;
+package org.vliux.android.gesturecut.activity;
 
 import android.app.Activity;
 import android.content.SharedPreferences;

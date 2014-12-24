@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui;
+package org.vliux.android.gesturecut.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.view.View;
 import com.melnykov.fab.FloatingActionButton;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.gesturelist.GestureListLayout;
