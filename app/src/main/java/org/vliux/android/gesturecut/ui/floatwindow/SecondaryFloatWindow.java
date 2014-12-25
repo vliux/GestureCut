@@ -28,6 +28,7 @@ import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
 import org.vliux.android.gesturecut.activity.main.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
+import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
@@ -35,11 +36,8 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
 /**
  * Created by vliux on 4/9/14.
  */
-public class SecondaryFloatWindow extends LinearLayout
-        implements View.OnClickListener,
-        TabLikeView.OnTablikeChangedListener {
+public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.OnTablikeChangedListener {
 
-    private ImageView mIvMore; // button at right-top corner of action bar
     private GestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
@@ -49,6 +47,7 @@ public class SecondaryFloatWindow extends LinearLayout
     private LinearLayout mAppInfoLayout; // layout containing AppInfoView
     private ImageView mIvAppIconUseAnim; // app icon for animator when using gesture
     private TextView mTvInvalidRc; // show warning for invalid ResolvedComponent
+    private GestureListView mGestureListView;
 
     /* ResolvedComponent as a gesture target. This variable is is used for kepping the reference,
      * as far as, when actually saving the new gesture, the top-level component may be different than what is shown to user.
@@ -79,26 +78,13 @@ public class SecondaryFloatWindow extends LinearLayout
         mAppInfoView = (AppInfoView)findViewById(R.id.gesture_appinfoview);
         mIvAppIconUseAnim = (ImageView)findViewById(R.id.gesture_appicon_startactiv);
         mAppInfoLayout = (LinearLayout)findViewById(R.id.gesture_appinfo_layout);
-        mIvMore = (ImageView)findViewById(R.id.gesture_more);
         mTvInvalidRc = (TextView)findViewById(R.id.gesture_tv_invalid_rc);
+        mGestureListView = (GestureListView)findViewById(R.id.gesture_listview);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
         mTabLikeView.setOnTabChangedListener(this);
         refreshHint(mTabLikeView.getType());
-        mIvMore.setOnClickListener(this);
-    }
-
-    public void onClick(View view){
-        switch (view.getId()){
-            case R.id.gesture_more:
-                Context context = getContext();
-                Intent intent = new Intent(context, GestureListActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                context.startActivity(intent);
-                WindowManagerUtil.closeWindow(context, this);
-                break;
-        }
     }
 
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
@@ -208,13 +194,23 @@ public class SecondaryFloatWindow extends LinearLayout
                     mTvInvalidRc.setText(e.getMessage());
                 }
                 mAppInfoView.setResolvedComponent(mResolvedComponent);
+                mGestureOverlayView.setVisibility(VISIBLE);
+                mGestureListView.setVisibility(GONE);
+                getAnimatorSetOnSwitchTab(tabType).start();
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
-                //mAppInfoLayout.setVisibility(GONE);
+                mGestureOverlayView.setVisibility(VISIBLE);
+                mGestureListView.setVisibility(GONE);
+                getAnimatorSetOnSwitchTab(tabType).start();
+                break;
+            case LIST:
+                mAppInfoLayout.setVisibility(GONE);
+                mGestureListView.setVisibility(VISIBLE);
+                mGestureOverlayView.setVisibility(GONE);
+                mGestureListView.refresh();
                 break;
         }
-        getAnimatorSetOnSwitchTab(tabType).start();
     }
 
     private AnimatorSet getAnimatorSetOnSwitchTab(final TabLikeView.TabType tabType){

@@ -5,6 +5,7 @@ import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -18,6 +19,10 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
     private View mUnderscoreUse;
     private TextView mTvAdd;
     private View mUnderscoreAdd;
+
+    private ImageView mIvList;
+    private View mUnderscoreList;
+
     private TabType mCurrentType = TabType.USE;
     private OnTablikeChangedListener mTablikeChangedListener;
 
@@ -43,8 +48,12 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
         mUnderscoreUse = findViewById(R.id.tablike_underscore_use);
         mUnderscoreAdd = findViewById(R.id.tablike_underscore_add);
 
+        mIvList = (ImageView)findViewById(R.id.tablike_list);
+        mUnderscoreList = findViewById(R.id.tablike_underscore_list);
+
         mTvUse.setOnClickListener(this);
         mTvAdd.setOnClickListener(this);
+        mIvList.setOnClickListener(this);
     }
 
     public void switchTab(TabType type){
@@ -57,6 +66,7 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mUnderscoreUse.setVisibility(VISIBLE);
                     mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
                     mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_blue));
+                    mUnderscoreList.setVisibility(INVISIBLE);
                     break;
                 case ADD:
                     mTvAdd.setTypeface(null, Typeface.BOLD);
@@ -65,7 +75,17 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mUnderscoreUse.setVisibility(INVISIBLE);
                     mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_blue));
                     mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
+                    mUnderscoreList.setVisibility(INVISIBLE);
                     break;
+                case LIST:
+                    mTvAdd.setTypeface(null, Typeface.NORMAL);
+                    mTvUse.setTypeface(null, Typeface.NORMAL);
+                    mUnderscoreAdd.setVisibility(INVISIBLE);
+                    mUnderscoreUse.setVisibility(INVISIBLE);
+                    mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
+                    mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
+
+                    mUnderscoreList.setVisibility(VISIBLE);
             }
             mCurrentType = type;
             if(null != mTablikeChangedListener){
@@ -83,6 +103,9 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
             case R.id.tablike_tv_use:
                 switchTab(TabType.USE);
                 break;
+            case R.id.tablike_list:
+                switchTab(TabType.LIST);
+                break;
         }
     }
 
@@ -91,7 +114,7 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
     }
 
     public enum TabType{
-        USE, ADD
+        USE, ADD, LIST
     }
 
     public interface OnTablikeChangedListener {

@@ -3,13 +3,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/container_shadow">
+    android:background="@color/gesture_create_bg_semi_transparent">
+
+    <org.vliux.android.gesturecut.ui.view.GestureListView
+        android:id="@+id/gesture_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/global_bkground"
+        android:visibility="gone">
+    </org.vliux.android.gesturecut.ui.view.GestureListView>
 
     <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
         android:id="@+id/gesture_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/gesture_create_bg_semi_transparent"
         style="@style/gesture_overlay_use">
         <TextView
             android:id="@+id/gesture_hint"
@@ -27,38 +34,11 @@
         android:layout_height="match_parent">
 
         <!-- tabs -->
-        <LinearLayout
-            android:orientation="horizontal"
+        <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
+            android:id="@+id/gesture_tablike"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/global_bkground">
-            <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
-                android:id="@+id/gesture_tablike"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/switch_layout_height"
-                android:layout_weight="1"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginTop="@dimen/back_imgv_margin_horiz"
-                android:layout_marginBottom="@dimen/back_imgv_margin_horiz"
-                android:background="@color/gesture_cur_blue"/>
-
-            <ImageView
-                android:id="@+id/gesture_more"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:padding="@dimen/back_imgv_margin_horiz"
-                android:layout_gravity="right|center_vertical"
-                android:src="@drawable/ic_list"
-                android:background="@drawable/btn_bg_transparent"/>
-        </LinearLayout>
-
-        <!-- grey line at the bottom of tabs  -->
-        <!--<View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/gesture_cur_grey"/>-->
+            android:layout_height="@dimen/switch_layout_height"
+            android:background="@color/global_bkground"></org.vliux.android.gesturecut.ui.floatwindow.TabLikeView>
 
         <LinearLayout
             android:id="@+id/gesture_appinfo_layout"
