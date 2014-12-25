@@ -22,4 +22,15 @@
         android:src="@drawable/ic_add"
         fab:fab_colorNormal="@color/gesture_cur_blue"
         fab:fab_colorPressed="@color/gesture_cur_blue_light" />
+
+    <ProgressBar
+        android:id="@+id/list_ges_prog_bar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top"
+        android:layout_marginBottom="-8dp"
+        android:layout_marginTop="-8dp"
+        android:max="100"
+        android:visibility="gone"/>
 </FrameLayout>

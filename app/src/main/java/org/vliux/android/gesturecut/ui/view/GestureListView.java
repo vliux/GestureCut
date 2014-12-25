@@ -42,6 +42,7 @@ public class GestureListView extends ListView {
 
     private OnGestureItemClickedListener mOnGestureItemClickedListener;
     private GestureListViewAdapter mListViewAdapter;
+    private ConcurrentManager.IUiCallback<List<String>> mExternalUiCallback;
 
     public GestureListView(Context context) {
         super(context);
@@ -67,6 +68,10 @@ public class GestureListView extends ListView {
         mOnGestureItemClickedListener = listener;
     }
 
+    public void setExternalUiCallback(ConcurrentManager.IUiCallback<List<String>> uiCallback){
+        mExternalUiCallback = uiCallback;
+    }
+
     /**
      * Whether this view can automatically refresh for the change of gesture library.
      * @param autoRefresh
@@ -89,11 +94,57 @@ public class GestureListView extends ListView {
     }
 
     public void refresh(){
-        mListViewAdapter.notifyDataSetChanged();
+        ConcurrentManager.submitJob(new LoadGestureBizCallback(),
+                new LoadGestureUiCallback());
     }
 
     public String getGestureName(int position){
         return mListViewAdapter.getGestureName(position);
+    }
+
+    class LoadGestureBizCallback implements ConcurrentManager.IBizCallback<List<String>>{
+        @Override
+        public List<String> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
+            List<String> gestureNames = new ArrayList<String>();
+            gestureNames.addAll(GestureUtil.getInstance().getGestureNames());
+            job.publishJobProgress(50);
+            Collections.sort(gestureNames);
+            job.publishJobProgress(90);
+            return gestureNames;
+        }
+    }
+
+    class LoadGestureUiCallback extends ConcurrentManager.IUiCallback<List<String>>{
+
+        @Override
+        public void onPreExecute() {
+            if(null != mExternalUiCallback){
+                mExternalUiCallback.onPreExecute();
+            }
+        }
+
+        @Override
+        public void onPostExecute(List<String> strings) {
+            mListViewAdapter.mGestureNames = strings;
+            mListViewAdapter.notifyDataSetChanged();
+            if(null != mExternalUiCallback){
+                mExternalUiCallback.onPostExecute(strings);
+            }
+        }
+
+        @Override
+        public void onPregressUpdate(int percent) {
+            if(null != mExternalUiCallback){
+                mExternalUiCallback.onPregressUpdate(percent);
+            }
+        }
+
+        @Override
+        public void onCancelled() {
+            if(null != mExternalUiCallback){
+                mExternalUiCallback.onCancelled();
+            }
+        }
     }
 
     /**
@@ -103,17 +154,6 @@ public class GestureListView extends ListView {
         private List<String> mGestureNames;
 
         public GestureListViewAdapter() {
-            loadData();
-        }
-
-        private void loadData() {
-            if (null == mGestureNames) {
-                mGestureNames = new ArrayList<String>();
-            } else {
-                mGestureNames.clear();
-            }
-            mGestureNames.addAll(GestureUtil.getInstance().getGestureNames());
-            Collections.sort(mGestureNames);
         }
 
         public String getGestureName(int position) {
@@ -125,14 +165,8 @@ public class GestureListView extends ListView {
         }
 
         @Override
-        public void notifyDataSetChanged() {
-            loadData();
-            super.notifyDataSetChanged();
-        }
-
-        @Override
         public int getCount() {
-            return mGestureNames.size();
+            return null != mGestureNames? mGestureNames.size() : 0;
         }
 
         @Override
@@ -245,7 +279,7 @@ public class GestureListView extends ListView {
                 String action = intent.getAction();
                 if(AppConstant.LocalBroadcasts.BROADCAST_GESTURE_ADDED.equals(action)){
                     if(null != mListViewAdapter){
-                        mListViewAdapter.notifyDataSetChanged();
+                        refresh();
                     }
                 }
             }
@@ -256,7 +290,7 @@ public class GestureListView extends ListView {
         @Override
         public void onEventMainThread(PkgRemovedEventBus.PkgRemovedEvent event) {
             if(null != mListViewAdapter){
-                mListViewAdapter.notifyDataSetChanged();
+                refresh();
             }
         }
     };

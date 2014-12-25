@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -18,6 +19,9 @@ import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.util.ConcurrentManager;
+
+import java.util.List;
 
 /**
  * Created by vliux on 4/21/14.
@@ -26,16 +30,20 @@ public class GestureListActivity extends Activity{
     private GestureListView mGestureList;
     private FloatingActionButton mFab;
     private FabPresenter mFabPresenter;
+    private ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gesture_list);
 
+        mProgressBar = (ProgressBar)findViewById(R.id.list_ges_prog_bar);
+
         mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
         mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
         mGestureList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mGestureList.setOnItemClickListener(mListItemClicked);
+        mGestureList.setExternalUiCallback(mLoadGestureUiCallback);
 
         mFab = (FloatingActionButton)findViewById(R.id.fab);
         mFab.attachToListView(mGestureList);
@@ -46,13 +54,8 @@ public class GestureListActivity extends Activity{
     @Override
     protected void onResume() {
         super.onResume();
-        mGestureList.setAutoRefresh(true);
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
         mGestureList.refresh();
+        mGestureList.setAutoRefresh(true);
     }
 
     @Override
@@ -95,6 +98,29 @@ public class GestureListActivity extends Activity{
                 return super.onOptionsItemSelected(item);
         }
     }
+
+    private ConcurrentManager.IUiCallback<List<String>> mLoadGestureUiCallback = new ConcurrentManager.IUiCallback<List<String>>() {
+        @Override
+        public void onPreExecute() {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mProgressBar.setProgress(0);
+        }
+
+        @Override
+        public void onPostExecute(List<String> strings) {
+            mProgressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onPregressUpdate(int percent) {
+            mProgressBar.setProgress(percent);
+        }
+
+        @Override
+        public void onCancelled() {
+
+        }
+    };
 
     /**
      * Gesture image in the item is clicked.
