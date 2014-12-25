@@ -4,11 +4,15 @@
     xmlns:fab="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <org.vliux.android.gesturecut.ui.view.GestureListLayout
+    <org.vliux.android.gesturecut.ui.view.GestureListView
         android:id="@+id/actv_gesture_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </org.vliux.android.gesturecut.ui.view.GestureListLayout>
+        android:layout_height="match_parent"
+        android:cacheColorHint="@color/gesture_list_bkground"
+        android:divider="@color/gesture_cur_blue_light_semi_transparent"
+        android:dividerHeight="@dimen/listview_divider_thin"
+        android:listSelector="@drawable/gesture_list_selector_activated">
+    </org.vliux.android.gesturecut.ui.view.GestureListView>
 
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
