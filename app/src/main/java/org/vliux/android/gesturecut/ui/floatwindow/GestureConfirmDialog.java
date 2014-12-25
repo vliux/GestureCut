@@ -59,7 +59,7 @@ public class GestureConfirmDialog extends FrameLayout implements View.OnClickLis
     }
 
     private void init(){
-        LayoutInflater.from(getContext()).inflate(R.layout.view_fw_dialog, this, true);
+        LayoutInflater.from(getContext()).inflate(R.layout.dialog_gesture_confirm, this, true);
         mTvTitle = (TextView)findViewById(R.id.fw2_layer2_title);
         mTvContent = (TextView)findViewById(R.id.fw2_layer2_content);
         mBtnSave = (Button)findViewById(R.id.fw2_layer2_btn_save);

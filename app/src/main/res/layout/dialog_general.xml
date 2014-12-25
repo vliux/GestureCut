@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fw2_layer2"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/transparent_black">
-    <!-- dialog box -->
+
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="300dp"
+        android:layout_width="@dimen/dialog_size"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/dialog_white_bg">
         <!-- dialog title -->
         <TextView
-            android:id="@+id/fw2_layer2_title"
+            android:id="@+id/dlg_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -32,7 +31,7 @@
             android:background="@color/gesture_cur_blue" />
         <!-- dialog content -->
         <TextView
-            android:id="@+id/fw2_layer2_content"
+            android:id="@+id/dlg_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/gesture_list_outter_margin"
@@ -41,55 +40,13 @@
             android:text="Add the new gesture into your gesture store?"
             android:textColor="@color/gesture_cur_blue" />
 
-        <TableLayout
-            android:stretchColumns="*"
-            android:shrinkColumns="*"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gesture_list_outter_margin"
-            android:background="@drawable/beige_bg_round_corner">
-
-            <TableRow
-                android:background="@color/gesture_cur_blue_light_semi_transparent"
-                android:padding="@dimen/fw2_tablelayout_padding">
-                <TextView
-                    android:id="@+id/fw_layer2_tv_title1"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_size_general"
-                    android:textColor="@color/global_bkground"
-                    android:text="New gesture" />
-
-                <TextView
-                    android:id="@+id/fw_layer2_tv_title2"
-                    android:gravity="center"
-                    android:textSize="@dimen/text_size_general"
-                    android:textColor="@color/global_bkground"
-                    android:text="Target task" />
-            </TableRow>
-
-            <TableRow
-                android:padding="@dimen/fw2_tablelayout_padding">
-                <ImageView
-                    android:id="@+id/fw_layer2_iv1"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"/>
-
-                <ImageView
-                    android:id="@+id/fw_layer2_iv2"
-                    android:src="@drawable/ic_launcher"
-                    android:layout_gravity="center"
-                    android:scaleType="centerCrop"/>
-            </TableRow>
-        </TableLayout>
-
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <!-- button cancel -->
             <Button
-                android:id="@+id/fw2_layer2_btn_cancel"
+                android:id="@+id/dlg_btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -100,7 +57,7 @@
                 android:background="@drawable/btn_bg_cancel" />
             <!-- button save -->
             <Button
-                android:id="@+id/fw2_layer2_btn_save"
+                android:id="@+id/dlg_btn_ok"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -111,4 +68,4 @@
                 android:background="@drawable/btn_bg_ok" />
         </LinearLayout>
     </LinearLayout>
-</FrameLayout>
+</merge>

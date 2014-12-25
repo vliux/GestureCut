@@ -20,6 +20,16 @@ public class WindowManagerUtil {
         SECOND_FLOAT_WND // show in app lifecycle
     }
 
+    public static WindowManager.LayoutParams dialogLayoutParams(){
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION;
+        lp.format = PixelFormat.TRANSLUCENT;
+        lp.gravity = Gravity.CENTER;
+        return lp;
+    }
+
     public static WindowManager.LayoutParams showWindow(Context context, View view, WindowScope windowScope){
         if(null != view.getParent()){
             AppLog.loge(TAG, "view already has a parent, unable to showWindow()");

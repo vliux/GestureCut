@@ -3,6 +3,8 @@ package org.vliux.android.gesturecut.activity.main;
 import android.content.Context;
 import android.content.Intent;
 import android.util.SparseBooleanArray;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -11,7 +13,9 @@ import com.melnykov.fab.FloatingActionButton;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.ui.view.GeneralDialog;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
  * Created by vliux on 12/25/14.
@@ -28,11 +32,13 @@ class FabPresenter {
     private FloatingActionButton mFab;
     private GestureListView mGestureListView;
     private Context mContext;
+    private WindowManager mWindowMgr;
 
     public FabPresenter(Context context, FloatingActionButton fab, GestureListView gestureListView){
         mContext = context;
         mFab = fab;
         mGestureListView = gestureListView;
+        mWindowMgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
     }
 
     public void setDeleteMode(){
@@ -51,17 +57,36 @@ class FabPresenter {
 
     public void onFabClicked(){
         if(mCurrentModeDelete){
-            SparseBooleanArray booleanArray = mGestureListView.getCheckedItemPositions();
-            int size = booleanArray.size();
-            for(int i = 0; i < size; i++){
-                int position = booleanArray.keyAt(i);
-                String gestureName = mGestureListView.getGestureName(position);
-                Toast.makeText(mContext, "deleting gestures " + gestureName, Toast.LENGTH_SHORT).show();
-                GesturePersistence.removeGesture(mContext, gestureName);
-                mGestureListView.setItemChecked(position, false);
+            final SparseBooleanArray booleanArray = mGestureListView.getCheckedItemPositions();
+            final int size = booleanArray.size();
+            if(size > 0) {
+                final GeneralDialog dialog = new GeneralDialog(mContext);
+                dialog.setTitleContent("Deleting ...", String.format("Delete the %d gestures?", size));
+                dialog.setOnCancelClicked(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mWindowMgr.removeView(dialog);
+                    }
+                });
+
+                dialog.setOnOkClicked(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mWindowMgr.removeView(dialog);
+                        for (int i = 0; i < size; i++) {
+                            int position = booleanArray.keyAt(i);
+                            String gestureName = mGestureListView.getGestureName(position);
+                            Toast.makeText(mContext, "deleting gestures " + gestureName, Toast.LENGTH_SHORT).show();
+                            GesturePersistence.removeGesture(mContext, gestureName);
+                            mGestureListView.setItemChecked(position, false);
+                        }
+                        mGestureListView.refresh();
+                        setNormalMode();
+                    }
+                });
+
+                mWindowMgr.addView(dialog, WindowManagerUtil.dialogLayoutParams());
             }
-            mGestureListView.refresh();
-            setNormalMode();
         }else{
             Intent intent = new Intent(mContext, AddGestureActivity.class);
             mContext.startActivity(intent);

@@ -12,6 +12,7 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog;
+import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 import de.greenrobot.event.EventBus;
 
@@ -35,7 +36,7 @@ public class GesturePerformedPresenter {
             final GestureConfirmDialog mFwDialog = new GestureConfirmDialog(mContext);
 
             if(null != dbData && null != dbData.resolvedComponent){
-                mWindowMgr.addView(mFwDialog, makeLayoutParams());
+                mWindowMgr.addView(mFwDialog, WindowManagerUtil.dialogLayoutParams());
                 mFwDialog.showAlert(mContext.getString(R.string.add_gesture_alert_duplicate),
                         mContext.getString(R.string.add_gesture_alert_duplicate_content),
                         gesture, dbData,
@@ -46,7 +47,7 @@ public class GesturePerformedPresenter {
                             }
                         });
             }else{
-                mWindowMgr.addView(mFwDialog, makeLayoutParams());
+                mWindowMgr.addView(mFwDialog, WindowManagerUtil.dialogLayoutParams());
                 mFwDialog.showConfirm(mContext.getString(R.string.add_gesture_confirm_title),
                         mContext.getString(R.string.add_gesture_confirm_content),
                         gesture, mResolvedComponent,
@@ -76,15 +77,5 @@ public class GesturePerformedPresenter {
                 );
             }
         }
-    }
-
-    private WindowManager.LayoutParams makeLayoutParams(){
-        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-        lp.width = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        lp.type = WindowManager.LayoutParams.TYPE_APPLICATION;
-        lp.format = PixelFormat.TRANSLUCENT;
-        lp.gravity = Gravity.CENTER;
-        return lp;
     }
 }
