@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -98,6 +97,12 @@ class FabPresenter {
         public Boolean onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
             int size = sparseBooleanArray.size();
             for (int i = 0; i < size; i++) {
+                try {
+                    Thread.sleep(100L);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    return false;
+                }
                 int position = sparseBooleanArray.keyAt(i);
                 String gestureName = mGestureListView.getGestureName(position);
                 GesturePersistence.removeGesture(mContext, gestureName);
