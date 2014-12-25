@@ -16,12 +16,11 @@ import android.widget.ListView;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.biz.ConcurrentControl;
-import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
+import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
 
@@ -170,7 +169,7 @@ public class GestureListView extends ListView {
                 listItem = (GestureListItem) convertView;
             }
 
-            ConcurrentControl.submitTask(
+            ConcurrentManager.submitRunnable(
                     new LoadGestureDataRunnable(mHandler,
                             mGestureNames.get(position),
                             listItem));

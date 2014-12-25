@@ -18,11 +18,11 @@ import android.widget.TextView;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.biz.ConcurrentControl;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.ImageUtil;
 
 /**
@@ -92,7 +92,7 @@ public class GestureConfirmDialog extends FrameLayout implements View.OnClickLis
         mIvLeft.setImageBitmap(GesturePersistence.toBitmap(getContext(), newGesture));
         mIvRight.setImageDrawable(null);
         if(null != dbData && null != dbData.iconPath){
-            ConcurrentControl.submitTask(new LoadExistingGestureIconRunnable(dbData.iconPath));
+            ConcurrentManager.submitRunnable(new LoadExistingGestureIconRunnable(dbData.iconPath));
         }
 
         mSaveClicked = okClicked;
