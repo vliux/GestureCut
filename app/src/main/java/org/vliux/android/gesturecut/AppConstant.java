@@ -4,6 +4,8 @@ package org.vliux.android.gesturecut;
  * Created by vliux on 4/3/14.
  */
 public class AppConstant {
+    public static final int CONCURRENT_POOL_SIZE = 5;
+
     public static final float DEFAULT_SYS_NOTIFICATION_BAR_HEIGHT = 25f;
 
     public static class FloatWindow{

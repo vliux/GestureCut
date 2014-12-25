@@ -1,11 +1,11 @@
 package org.vliux.android.gesturecut.activity.main;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.melnykov.fab.FloatingActionButton;
@@ -15,6 +15,7 @@ import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GeneralDialog;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
@@ -73,15 +74,8 @@ class FabPresenter {
                     @Override
                     public void onClick(View v) {
                         mWindowMgr.removeView(dialog);
-                        for (int i = 0; i < size; i++) {
-                            int position = booleanArray.keyAt(i);
-                            String gestureName = mGestureListView.getGestureName(position);
-                            Toast.makeText(mContext, "deleting gestures " + gestureName, Toast.LENGTH_SHORT).show();
-                            GesturePersistence.removeGesture(mContext, gestureName);
-                            mGestureListView.setItemChecked(position, false);
-                        }
-                        mGestureListView.refresh();
-                        setNormalMode();
+                        ConcurrentManager.submitJob(new DeleteGesturesBizCallback(booleanArray),
+                                new DeleteGesturesUiCallback(booleanArray));
                     }
                 });
 
@@ -90,6 +84,66 @@ class FabPresenter {
         }else{
             Intent intent = new Intent(mContext, AddGestureActivity.class);
             mContext.startActivity(intent);
+        }
+    }
+
+    class DeleteGesturesBizCallback implements ConcurrentManager.IBizCallback<Boolean> {
+        private SparseBooleanArray sparseBooleanArray;
+
+        public DeleteGesturesBizCallback(SparseBooleanArray booleanArray){
+            sparseBooleanArray = booleanArray;
+        }
+
+        @Override
+        public Boolean onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
+            int size = sparseBooleanArray.size();
+            for (int i = 0; i < size; i++) {
+                int position = sparseBooleanArray.keyAt(i);
+                String gestureName = mGestureListView.getGestureName(position);
+                GesturePersistence.removeGesture(mContext, gestureName);
+                job.publishJobProgress(100 * (i+1)/size);
+            }
+            return true;
+        }
+    }
+
+    class DeleteGesturesUiCallback extends ConcurrentManager.IUiCallback<Boolean> {
+        private SparseBooleanArray sparseBooleanArray;
+        private ProgressDialog progressDialog;
+
+        public DeleteGesturesUiCallback(SparseBooleanArray booleanArray){
+            sparseBooleanArray = booleanArray;
+        }
+
+        @Override
+        public void onPreExecute() {
+            progressDialog = new ProgressDialog(mContext);
+            progressDialog.setIndeterminate(true);
+            progressDialog.setTitle("deleting ...");
+            progressDialog.show();
+        }
+
+        @Override
+        public void onPostExecute(Boolean aBoolean) {
+            progressDialog.dismiss();
+            int size = sparseBooleanArray.size();
+            for(int i = 0; i < size; i++){
+                mGestureListView.setItemChecked(sparseBooleanArray.keyAt(i), false);
+            }
+
+            mGestureListView.refresh();
+            setNormalMode();
+        }
+
+        @Override
+        public void onPregressUpdate(int percent) {
+            progressDialog.setTitle(String.format("deleting %d%% ...", percent));
+        }
+
+        @Override
+        public void onCancelled() {
+            mGestureListView.refresh();
+            setNormalMode();
         }
     }
 }
