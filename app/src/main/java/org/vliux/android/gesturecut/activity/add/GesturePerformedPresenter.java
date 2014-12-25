@@ -13,6 +13,8 @@ import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by vliux on 12/24/14.
  */
@@ -54,6 +56,8 @@ public class GesturePerformedPresenter {
                                 try {
                                     GesturePersistence.saveGesture(mContext, gesture, mResolvedComponent);
                                     mWindowMgr.removeView(mFwDialog);
+                                    // notify
+                                    EventBus.getDefault().post(new AddGestureEvent(AddGestureEvent.EventType.GESTURE_ADDED));
                                 } catch (GesturePersistence.GestureLibraryException e) {
                                     e.printStackTrace();
                                 } catch (GesturePersistence.GestureSaveIconException e) {

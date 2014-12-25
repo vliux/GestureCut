@@ -21,6 +21,8 @@ import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by vliux on 12/23/14.
  */
@@ -49,6 +51,8 @@ public class AddGestureActivity extends Activity {
         mListItemPaddingVerti = (int)getResources().getDimension(R.dimen.gesture_list_item_padding_vertical);
         mAddGestureView = new AddGestureView(this);
         mAddGestureView.getGestureOverlay().addOnGesturePerformedListener(mOnGesturePerformed);
+        // use EventBus to receive events from presenters.
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -138,4 +142,18 @@ public class AddGestureActivity extends Activity {
             }
         }
     };
+
+    /**
+     * For event bus.
+     * @param event
+     */
+    public void onEventMainThread(AddGestureEvent event){
+        if(event.getType() == AddGestureEvent.EventType.GESTURE_ADDED){
+            if(null != mAnimPresenter) {
+                mAnimPresenter.close();
+                mAnimPresenter = null;
+                mListAdapter.scanInstalledPackages();
+            }
+        }
+    }
 }
