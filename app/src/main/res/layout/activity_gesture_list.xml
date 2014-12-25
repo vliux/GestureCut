@@ -10,8 +10,7 @@
         android:layout_height="match_parent"
         android:cacheColorHint="@color/gesture_list_bkground"
         android:divider="@color/gesture_cur_blue_light_semi_transparent"
-        android:dividerHeight="@dimen/listview_divider_thin"
-        android:listSelector="@drawable/gesture_list_selector_activated">
+        android:dividerHeight="@dimen/listview_divider_thin">
     </org.vliux.android.gesturecut.ui.view.GestureListView>
 
     <com.melnykov.fab.FloatingActionButton
@@ -22,6 +21,5 @@
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
         fab:fab_colorNormal="@color/gesture_cur_blue"
-        fab:fab_colorPressed="@color/gesture_cur_blue_light"
-        fab:fab_colorRipple="@color/gesture_cur_red" />
+        fab:fab_colorPressed="@color/gesture_cur_blue_light" />
 </FrameLayout>

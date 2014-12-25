@@ -17,6 +17,7 @@ import android.widget.ListView;
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.ConcurrentControl;
+import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
@@ -92,6 +93,10 @@ public class GestureListView extends ListView {
         mListViewAdapter.notifyDataSetChanged();
     }
 
+    public String getGestureName(int position){
+        return mListViewAdapter.getGestureName(position);
+    }
+
     /**
      * Adapter
      */
@@ -113,7 +118,11 @@ public class GestureListView extends ListView {
         }
 
         public String getGestureName(int position) {
-            return mGestureNames.get(position);
+            if(position >= 0 && position < mGestureNames.size()) {
+                return mGestureNames.get(position);
+            }else{
+                return null;
+            }
         }
 
         @Override

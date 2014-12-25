@@ -36,7 +36,7 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".activity.GestureListActivity"
+        <activity android:name=".activity.main.GestureListActivity"
             android:label="@string/your_gesture_list"
             android:launchMode="singleTop"
             android:screenOrientation="portrait">

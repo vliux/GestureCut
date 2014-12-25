@@ -1,20 +1,19 @@
-package org.vliux.android.gesturecut.activity;
+package org.vliux.android.gesturecut.activity.main;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.activity.SettingsActivity;
 import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
@@ -26,6 +25,7 @@ import org.vliux.android.gesturecut.ui.view.GestureListView;
 public class GestureListActivity extends Activity{
     private GestureListView mGestureList;
     private FloatingActionButton mFab;
+    private FabPresenter mFabPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +34,13 @@ public class GestureListActivity extends Activity{
 
         mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
         mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
-        mGestureList.setOnItemClickListener(mOnListItemClickListener);
         mGestureList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        mGestureList.setOnItemClickListener(mListItemClicked);
 
         mFab = (FloatingActionButton)findViewById(R.id.fab);
         mFab.attachToListView(mGestureList);
         mFab.setOnClickListener(mFabOnClickListener);
+        mFabPresenter = new FabPresenter(this, mFab, mGestureList);
     }
 
     @Override
@@ -102,24 +103,18 @@ public class GestureListActivity extends Activity{
     private final View.OnClickListener mFabOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            Intent intent = new Intent(GestureListActivity.this, AddGestureActivity.class);
-            startActivity(intent);
+            mFabPresenter.onFabClicked();
         }
     };
 
-    /**
-     * The whole item is clicked.
-     */
-    private final AdapterView.OnItemClickListener mOnListItemClickListener = new AdapterView.OnItemClickListener() {
+    private final AdapterView.OnItemClickListener mListItemClicked = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            boolean activated = view.isActivated();
-            //Log.d("vliux", "actived before = " + activated);
-            boolean checked = mGestureList.isItemChecked(position);
-            Log.d("vliux", "actived before = " + checked);
-            mGestureList.setItemChecked(position, !checked);
-            checked = mGestureList.isItemChecked(position);
-            Log.d("vliux", "actived after = " + checked);
+            if(mGestureList.getCheckedItemCount() > 0){
+                mFabPresenter.setDeleteMode();
+            }else{
+                mFabPresenter.setNormalMode();
+            }
         }
     };
 }

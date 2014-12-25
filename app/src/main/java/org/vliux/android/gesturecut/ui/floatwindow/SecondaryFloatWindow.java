@@ -26,7 +26,7 @@ import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
-import org.vliux.android.gesturecut.activity.GestureListActivity;
+import org.vliux.android.gesturecut.activity.main.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
