@@ -1,25 +1,33 @@
 package org.vliux.android.gesturecut.activity.add;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.db.DbManager;
+import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.AddGestureView;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
+import org.vliux.android.gesturecut.util.ConcurrentManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import de.greenrobot.event.EventBus;
 
@@ -29,6 +37,7 @@ import de.greenrobot.event.EventBus;
 public class AddGestureActivity extends Activity {
     private FrameLayout mLayout;
     private ListView mListView;
+    private ProgressBar mProgressBar;
     private PkgListAdapter mListAdapter;
     private int mListItemPaddingHoriz = 0;
     private int mListItemPaddingVerti = 0;
@@ -40,6 +49,8 @@ public class AddGestureActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_gesture);
+
+        mProgressBar = (ProgressBar)findViewById(R.id.add_ges_prog_bar);
 
         mLayout = (FrameLayout)findViewById(R.id.add_ges_layout_top);
         mListView = (ListView)findViewById(R.id.list_packges);
@@ -58,9 +69,70 @@ public class AddGestureActivity extends Activity {
     @Override
     protected void onStart() {
         super.onStart();
-        mListAdapter.scanInstalledPackages();
+        scanUnGesturedPackagrsAsync();
     }
 
+    private void scanUnGesturedPackagrsAsync(){
+        ConcurrentManager.submitJob(new ScanPackagesBizCallback(),
+                new ScanPackagesUiCallback());
+    }
+
+    class ScanPackagesBizCallback implements ConcurrentManager.IBizCallback<List<ResolvedComponent>>{
+
+        @Override
+        public List<ResolvedComponent> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
+            List<ResolvedComponent> ungesturedRcList = new ArrayList<ResolvedComponent>();
+
+            // already gestured package set
+            GestureDbTable dbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
+            Set<String> packageNames = dbTable.getGesturedPackageNames();
+
+            PackageManager packageManager = AddGestureActivity.this.getPackageManager();
+            List<PackageInfo> pkgInfoList = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
+
+            int pkgInfoSize = pkgInfoList.size();
+            for(int i = 0; i < pkgInfoSize; i++){
+                PackageInfo pkgInfo = pkgInfoList.get(i);
+                if(!packageNames.contains(pkgInfo.packageName)) {
+                    ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
+                    ungesturedRcList.add(rc);
+                }
+                job.publishJobProgress(100 * (i+1)/pkgInfoSize);
+            }
+            return ungesturedRcList;
+        }
+    }
+
+    class ScanPackagesUiCallback extends ConcurrentManager.IUiCallback<List<ResolvedComponent>>{
+        @Override
+        public void onPreExecute() {
+            mProgressBar.setVisibility(View.VISIBLE);
+            mProgressBar.setProgress(0);
+        }
+
+        @Override
+        public void onPostExecute(List<ResolvedComponent> resolvedComponents) {
+            if(null != resolvedComponents && resolvedComponents.size() > 0){
+                mListAdapter.installedComponents = resolvedComponents;
+                mListAdapter.notifyDataSetChanged();
+            }
+            mProgressBar.setVisibility(View.GONE);
+        }
+
+        @Override
+        public void onPregressUpdate(int percent) {
+            mProgressBar.setProgress(percent);
+        }
+
+        @Override
+        public void onCancelled() {
+
+        }
+    }
+
+    /**
+     * Adapter of ListView.
+     */
     class PkgListAdapter extends BaseAdapter{
         private List<ResolvedComponent> installedComponents;
         private PackageManager packageManager;
@@ -68,16 +140,6 @@ public class AddGestureActivity extends Activity {
         public PkgListAdapter(PackageManager pkgMgr){
             packageManager = pkgMgr;
             installedComponents = new ArrayList<ResolvedComponent>();
-        }
-
-        private void scanInstalledPackages(){
-            installedComponents.clear();
-            List<PackageInfo> pkgInfoList = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
-            for(PackageInfo pkgInfo : pkgInfoList){
-                ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
-                installedComponents.add(rc);
-            }
-            notifyDataSetChanged();
         }
 
         @Override
@@ -109,6 +171,21 @@ public class AddGestureActivity extends Activity {
             return appInfoView;
         }
     } // end of adapter
+
+    private final int WHAT_DATA_LOAD_COMPLETE = 100;
+    private final Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case WHAT_DATA_LOAD_COMPLETE:
+                    List<ResolvedComponent> rcList = (List<ResolvedComponent>)msg.obj;
+                    mListAdapter.installedComponents = rcList;
+                    mListAdapter.notifyDataSetChanged();
+                    break;
+            }
+        }
+    };
 
     private final AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
@@ -152,7 +229,7 @@ public class AddGestureActivity extends Activity {
             if(null != mAnimPresenter) {
                 mAnimPresenter.close();
                 mAnimPresenter = null;
-                mListAdapter.scanInstalledPackages();
+                scanUnGesturedPackagrsAsync();
             }
         }
     }

@@ -11,7 +11,9 @@ import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.util.AppLog;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by vliux on 4/9/14.
@@ -59,6 +61,31 @@ public class GestureDbTable extends DbTable {
                 new String[]{gestureName});
     }
 
+    public Set<String> getGesturedPackageNames(){
+        String[] columns = new String[]{
+            DB_COL_COMPONENT_NAME_TEXT_1,
+            DB_COL_COMPONENT_TYPE_TEXT_1
+        };
+
+        Set<String> packageNames = new HashSet<String>();
+        ContentValues conditions = new ContentValues();
+        Cursor cursor = __select(columns, conditions, null);
+        if(null == cursor || cursor.getCount() <= 0){
+            return packageNames;
+        }
+
+        for(cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()){
+            String componentName = cursor.getString(0);
+            String componentType = cursor.getString(1);
+            ResolvedComponent rc = ResolvedComponent.restoreResolvedComponent(componentName, componentType);
+            if(null != rc){
+                packageNames.add(rc.getPackageName());
+            }
+        }
+
+        return packageNames;
+    }
+
     public DbData getGesture(String gestureName){
         String[] columns = new String[]{
             DB_COL_GESTURE_ICON_PATH_TEXT_1,
@@ -71,40 +98,26 @@ public class GestureDbTable extends DbTable {
         Cursor cursor = __select(columns, conditions, null, true);
         if(null == cursor || cursor.getCount() <= 0){
             return null;
-        }else{
-            cursor.moveToFirst();
-            for(; !cursor.isAfterLast(); cursor.moveToNext()){
-                String iconPath = cursor.getString(0);
-                String componentName = cursor.getString(1);
-                if(TextUtils.isEmpty(componentName)){
-                    continue;
-                }
-
-                String typeTxt = cursor.getString(2);
-                ResolvedComponent resolvedComponent = null;
-                try{
-                    ResolvedComponent.ResolvedType resolvedType =
-                            ResolvedComponent.ResolvedType.valueOf(typeTxt);
-                    switch (resolvedType){
-                        case COMPONENT_NAME:
-                            resolvedComponent = new ResolvedComponent(ComponentName.unflattenFromString(componentName));
-                            break;
-                        case PACKAGE_NAME:
-                            resolvedComponent = new ResolvedComponent(componentName);
-                            break;
-                    }
-                    DbData dbData = new DbData();
-                    dbData.gestureName = gestureName;
-                    dbData.iconPath = iconPath;
-                    dbData.resolvedComponent = resolvedComponent;
-                    return dbData;
-                }catch(IllegalArgumentException e){
-                    AppLog.loge(TAG, "invalid resolvedType from DB: " + typeTxt);
-                    return null;
-                }
-            }
-            return null;
         }
+
+        for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            String iconPath = cursor.getString(0);
+            String componentName = cursor.getString(1);
+            if (TextUtils.isEmpty(componentName)) {
+                continue;
+            }
+
+            String typeTxt = cursor.getString(2);
+            ResolvedComponent resolvedComponent = ResolvedComponent.restoreResolvedComponent(componentName, typeTxt);
+            if (null != resolvedComponent) {
+                DbData dbData = new DbData();
+                dbData.gestureName = gestureName;
+                dbData.iconPath = iconPath;
+                dbData.resolvedComponent = resolvedComponent;
+                return dbData;
+            }
+        }
+        return null;
     }
 
     /**

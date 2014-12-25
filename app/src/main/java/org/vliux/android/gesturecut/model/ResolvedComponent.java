@@ -2,6 +2,8 @@ package org.vliux.android.gesturecut.model;
 
 import android.content.ComponentName;
 
+import org.vliux.android.gesturecut.util.AppLog;
+
 /**
  * Created by vliux on 4/14/14.
  * Represent an entity of the top task.
@@ -44,6 +46,26 @@ public class ResolvedComponent {
                 return packageName;
         }
         return packageName;
+    }
+
+    public static ResolvedComponent restoreResolvedComponent(String componentName, String componentType){
+        ResolvedComponent resolvedComponent = null;
+        try {
+            ResolvedComponent.ResolvedType resolvedType =
+                    ResolvedComponent.ResolvedType.valueOf(componentType);
+            switch (resolvedType) {
+                case COMPONENT_NAME:
+                    resolvedComponent = new ResolvedComponent(ComponentName.unflattenFromString(componentName));
+                    break;
+                case PACKAGE_NAME:
+                    resolvedComponent = new ResolvedComponent(componentName);
+                    break;
+            }
+        }catch(IllegalArgumentException e){
+            AppLog.loge(TAG, "invalid resolvedType from DB: " + componentName);
+            return null;
+        }
+        return resolvedComponent;
     }
 
 }

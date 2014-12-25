@@ -64,4 +64,5 @@
     <dimen name="widet_out_margin">8dp</dimen>
 
     <dimen name="dialog_size">300dp</dimen>
+    <dimen name="progress_bar_height">4dp</dimen>
 </resources>

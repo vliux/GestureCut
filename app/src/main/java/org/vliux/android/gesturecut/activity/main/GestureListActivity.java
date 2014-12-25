@@ -50,6 +50,12 @@ public class GestureListActivity extends Activity{
     }
 
     @Override
+    protected void onRestart() {
+        super.onRestart();
+        mGestureList.refresh();
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
         mGestureList.setAutoRefresh(false);
