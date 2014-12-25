@@ -24,6 +24,7 @@
 
     <string name="cancel">Cancel</string>
     <string name="save">Save</string>
+    <string name="ok">Ok</string>
     <string name="get_it">OK, get it</string>
 
     <string name="appinfo_app_detail_clz">Class: \u0020</string>

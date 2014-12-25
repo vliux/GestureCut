@@ -62,7 +62,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:layout_margin="@dimen/gesture_list_outter_margin"
-                android:text="@string/save"
+                android:text="@string/ok"
                 android:textColor="@color/global_bkground"
                 android:textSize="@dimen/text_size_general"
                 android:background="@drawable/btn_bg_ok" />

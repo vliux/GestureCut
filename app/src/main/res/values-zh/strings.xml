@@ -24,6 +24,7 @@
 
     <string name="cancel">取消</string>
     <string name="save">保存</string>
+    <string name="ok">确定</string>
     <string name="get_it">知道了</string>
 
     <string name="appinfo_app_detail_clz">组件名: \u0020</string>
