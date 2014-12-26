@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.activity.add;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.PackageInfo;
@@ -64,6 +65,9 @@ public class AddGestureActivity extends Activity {
         mAddGestureView.getGestureOverlay().addOnGesturePerformedListener(mOnGesturePerformed);
         // use EventBus to receive events from presenters.
         EventBus.getDefault().register(this);
+
+        ActionBar actionBar = getActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

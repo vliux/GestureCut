@@ -7,6 +7,7 @@
     <style name="GcActionBar"
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/gesture_cur_blue</item>
+        <item name="android:displayOptions">showTitle</item>
     </style>
 
     <style name="activated" parent="AppTheme">
