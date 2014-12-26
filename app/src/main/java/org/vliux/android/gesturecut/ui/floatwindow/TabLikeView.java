@@ -15,6 +15,9 @@ import org.vliux.android.gesturecut.R;
  * Created by vliux on 4/17/14.
  */
 public class TabLikeView extends LinearLayout implements View.OnClickListener {
+    private static final int COLOR_ACTIVE = R.color.beige_light_semi_transparent;
+    private static final int COLOR_INACTIVE = R.color.global_bkground;
+
     private TextView mTvUse;
     private View mUnderscoreUse;
     private TextView mTvAdd;
@@ -64,8 +67,8 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mTvUse.setTypeface(null, Typeface.BOLD);
                     mUnderscoreAdd.setVisibility(INVISIBLE);
                     mUnderscoreUse.setVisibility(VISIBLE);
-                    mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
-                    mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_blue));
+                    mTvAdd.setTextColor(getResources().getColor(COLOR_INACTIVE));
+                    mTvUse.setTextColor(getResources().getColor(COLOR_ACTIVE));
                     mUnderscoreList.setVisibility(INVISIBLE);
                     break;
                 case ADD:
@@ -73,8 +76,8 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mTvUse.setTypeface(null, Typeface.NORMAL);
                     mUnderscoreAdd.setVisibility(VISIBLE);
                     mUnderscoreUse.setVisibility(INVISIBLE);
-                    mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_blue));
-                    mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
+                    mTvAdd.setTextColor(getResources().getColor(COLOR_ACTIVE));
+                    mTvUse.setTextColor(getResources().getColor(COLOR_INACTIVE));
                     mUnderscoreList.setVisibility(INVISIBLE);
                     break;
                 case LIST:
@@ -82,8 +85,8 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mTvUse.setTypeface(null, Typeface.NORMAL);
                     mUnderscoreAdd.setVisibility(INVISIBLE);
                     mUnderscoreUse.setVisibility(INVISIBLE);
-                    mTvAdd.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
-                    mTvUse.setTextColor(getResources().getColor(R.color.gesture_cur_grey));
+                    mTvAdd.setTextColor(getResources().getColor(COLOR_INACTIVE));
+                    mTvUse.setTextColor(getResources().getColor(COLOR_INACTIVE));
 
                     mUnderscoreList.setVisibility(VISIBLE);
             }

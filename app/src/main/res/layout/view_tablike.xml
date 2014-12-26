@@ -4,7 +4,8 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:baselineAligned="false">
+    android:baselineAligned="false"
+    android:background="@color/gesture_cur_blue">
 
     <!-- tab "Use gesture -->
     <LinearLayout
@@ -19,14 +20,14 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/float_window_2nd_tab_use"
-            android:textColor="@color/gesture_cur_blue"
+            android:textColor="@color/beige_light_semi_transparent"
             android:textSize="@dimen/text_size_general"
             android:textStyle="bold"/>
         <View
             android:id="@+id/tablike_underscore_use"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@color/gesture_cur_blue"/>
+            android:background="@color/beige_light_semi_transparent"/>
     </LinearLayout>
 
     <!-- Tab "Add gesture" -->
@@ -43,12 +44,12 @@
             android:gravity="center"
             android:text="@string/float_window_2nd_tab_add"
             android:textSize="@dimen/text_size_general"
-            android:textColor="@color/gesture_cur_grey"/>
+            android:textColor="@color/global_bkground"/>
         <View
             android:id="@+id/tablike_underscore_add"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@color/gesture_cur_blue"
+            android:background="@color/beige_light_semi_transparent"
             android:visibility="invisible"/>
     </LinearLayout>
 
@@ -57,7 +58,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/back_imgv_margin_horiz"
         android:layout_marginBottom="@dimen/back_imgv_margin_horiz"
-        android:background="@color/gesture_cur_blue"/>
+        android:background="@color/beige_light_semi_transparent"/>
 
     <!-- tab gesture list -->
     <LinearLayout
@@ -75,7 +76,7 @@
             android:id="@+id/tablike_underscore_list"
             android:layout_width="match_parent"
             android:layout_height="6dp"
-            android:background="@color/gesture_cur_blue"
+            android:background="@color/beige_light_semi_transparent"
             android:visibility="invisible"/>
     </LinearLayout>
 

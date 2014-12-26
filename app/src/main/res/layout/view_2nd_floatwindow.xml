@@ -33,12 +33,14 @@
             style="@style/gesture_overlay_use">
             <TextView
                 android:id="@+id/gesture_hint"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="@dimen/text_size_small_title"
-                android:textColor="@color/gesture_cur_blue" />
+                android:textColor="@color/beige_light_semi_transparent"
+                android:drawableLeft="@drawable/ic_pencil"
+                android:drawablePadding="4dp"/>
         </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
 
         <LinearLayout
