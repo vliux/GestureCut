@@ -171,7 +171,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
             if(mFwDialog.isShow()){
                 mFwDialog.hide();
             }else {
-                WindowManagerUtil.closeWindow(getContext().getApplicationContext(), this);
+                quitAnim();
             }
             return true;
         }else{
@@ -179,12 +179,46 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
         }
     }
 
-    @Override
-    public void onTabSwitched(TabLikeView.TabType newType) {
-        refreshHint(newType);
+    private boolean mQuitAnimLock = false;
+    private void quitAnim(){
+        if(mQuitAnimLock){
+            return;
+        }
+
+        mQuitAnimLock = true;
+        ObjectAnimator animator = ObjectAnimator.ofFloat(this, "alpha", 1.0f, 0.0f);
+        animator.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                WindowManagerUtil.closeWindow(getContext().getApplicationContext(), SecondaryFloatWindow.this);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+        animator.start();
     }
 
-    private void refreshHint(TabLikeView.TabType tabType){
+    @Override
+    public boolean onTabSwitched(TabLikeView.TabType newType) {
+        return refreshHint(newType);
+    }
+
+    private boolean refreshHint(TabLikeView.TabType tabType){
+        if(mSwitchTabAnimLock){
+            return false;
+        }
+
         switch (tabType){
             case ADD:
                 mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.beige_light_semi_transparent));
@@ -215,10 +249,13 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                 mGestureListView.refresh();
                 break;
         }
-        getAnimatorSetOnSwitchTab(tabType).start();
+        switchTabAnim(tabType);
+        return true;
     }
 
-    private AnimatorSet getAnimatorSetOnSwitchTab(final TabLikeView.TabType tabType){
+    private boolean mSwitchTabAnimLock = false;
+    private void switchTabAnim(final TabLikeView.TabType tabType){
+        mSwitchTabAnimLock = true;
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -241,10 +278,12 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        mSwitchTabAnimLock = false;
                     }
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
+                        mSwitchTabAnimLock = false;
                     }
 
                     @Override
@@ -267,10 +306,12 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        mSwitchTabAnimLock = false;
                     }
 
                     @Override
                     public void onAnimationCancel(Animator animation) {
+                        mSwitchTabAnimLock = false;
                     }
 
                     @Override
@@ -286,7 +327,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
         }else{
             animatorSet.play(mainAnimator);
         }
-        return animatorSet;
+        animatorSet.start();
     }
 
     private Animator appInfoLayoutAnimator(TabLikeView.TabType type){

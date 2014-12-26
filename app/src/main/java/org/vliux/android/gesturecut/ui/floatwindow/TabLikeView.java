@@ -61,6 +61,12 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
 
     public void switchTab(TabType type){
         if(mCurrentType != type){
+            if(null != mTablikeChangedListener){
+                if(!mTablikeChangedListener.onTabSwitched(type)){
+                    return;
+                }
+            }
+
             switch (type){
                 case USE:
                     mTvAdd.setTypeface(null, Typeface.NORMAL);
@@ -91,9 +97,6 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
                     mUnderscoreList.setVisibility(VISIBLE);
             }
             mCurrentType = type;
-            if(null != mTablikeChangedListener){
-                mTablikeChangedListener.onTabSwitched(type);
-            }
         }
     }
 
@@ -121,7 +124,12 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
     }
 
     public interface OnTablikeChangedListener {
-        public void onTabSwitched(TabType newType);
+        /**
+         *
+         * @param newType
+         * @return True if the tab switch can be proceed, False if the switch should be stopped.
+         */
+        public boolean onTabSwitched(TabType newType);
     }
 
     public TabType getType(){
