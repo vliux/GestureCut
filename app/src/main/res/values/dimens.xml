@@ -3,7 +3,7 @@
     <dimen name="gesture_thumbnail_width">60dp</dimen>
     <dimen name="gesture_thumbnail_height">60dp</dimen>
 
-    <dimen name="float_wnd_dimen">58dp</dimen>
+    <dimen name="float_wnd_dimen">52dp</dimen>
 
     <dimen name="gesture_overlay_margin">12dp</dimen>
 
@@ -49,7 +49,7 @@
     <dimen name="unlock_bar_margin_vertical">20dp</dimen>
 
     <!-- 2nd float window -->
-    <dimen name="switch_layout_height">45dp</dimen>
+    <dimen name="switch_layout_height">48dp</dimen>
     <dimen name="fw2_outmost_margin">45dp</dimen>
     <dimen name="fw2_tablelayout_padding">8dp</dimen>
 

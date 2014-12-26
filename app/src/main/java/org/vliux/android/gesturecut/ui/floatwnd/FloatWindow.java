@@ -26,6 +26,14 @@ public class FloatWindow extends View implements View.OnClickListener {
     private static final int OUTTER_STROKE_WIDTH_DP = 4;
     private static final int CHAR_STROKE_WIDTH_DP = 1;
 
+    private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.beige_light_semi_transparent;
+    private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.gesture_cur_blue;
+
+    private static final int COLOR_INNER_SPACE_NORMAL = R.color.gesture_cur_blue_light_semi_transparent;
+    private static final int COLOR_INNER_SPACE_PRESSED = R.color.beige_light_semi_transparent;
+
+    private static final int COLOR_TEXT_STROKE = R.color.global_bkground;
+
     private int mOutterStrokeWidth;
     private int mCharStrokeWidth;
 
@@ -100,40 +108,27 @@ public class FloatWindow extends View implements View.OnClickListener {
         oval.left = mOutterStrokeWidth;
         oval.right = width - mOutterStrokeWidth;
 
-        // outter circle in red
+        // outter circle
         mPaintStroke.setStrokeWidth(mOutterStrokeWidth);
         if(!mIsPressed) {
-            mPaintStroke.setColor(getResources().getColor(R.color.beige_light_semi_transparent));
+            mPaintStroke.setColor(getResources().getColor(COLOR_OUTTER_CIRCLE_NORMAL));
         }else{
-            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue));
-        }
-        canvas.drawArc(oval, 0.0f, 360.0f, false, mPaintStroke);
-
-        // inner circle in white
-
-        oval.top += mOutterStrokeWidth;
-        oval.bottom -= mOutterStrokeWidth;
-        oval.left += mOutterStrokeWidth;
-        oval.right -= mOutterStrokeWidth;
-        if(!mIsPressed){
-            mPaintStroke.setColor(getResources().getColor(R.color.beige_light_semi_transparent));
-        }else{
-            mPaintStroke.setColor(getResources().getColor(R.color.gesture_cur_blue));
+            mPaintStroke.setColor(getResources().getColor(COLOR_OUTTER_CIRCLE_PRESSED));
         }
         canvas.drawArc(oval, 0.0f, 360.0f, false, mPaintStroke);
 
         // semi-transparent background of circle
         if(!mIsPressed) {
-            mPaintSlight.setColor(getResources().getColor(R.color.gesture_cur_blue_semi_transparent));
+            mPaintSlight.setColor(getResources().getColor(COLOR_INNER_SPACE_NORMAL));
         }else{
-            mPaintSlight.setColor(getResources().getColor(R.color.beige_light_semi_transparent));
+            mPaintSlight.setColor(getResources().getColor(COLOR_INNER_SPACE_PRESSED));
         }
         canvas.drawArc(oval, 0.0f, 360.0f, true, mPaintSlight);
 
         // center text
         float txtWidth = mPaintStroke.measureText("G");
         mPaintStroke.setStrokeWidth(mCharStrokeWidth);
-        mPaintStroke.setColor(getResources().getColor(R.color.global_bkground));
+        mPaintStroke.setColor(getResources().getColor(COLOR_TEXT_STROKE));
         canvas.drawText("G", width/2, (height + txtWidth)/2, mPaintStroke);
     }
 
