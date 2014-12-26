@@ -22,16 +22,15 @@
     <View
         android:layout_width="@dimen/listview_divider_thin"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/gesture_list_item_padding_vertical"
-        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
-        android:background="@color/gesture_cur_blue_light_semi_transparent"/>
+        android:layout_marginTop="@dimen/gesture_list_item_padding_vertical"
+        android:layout_marginBottom="@dimen/gesture_list_item_padding_vertical"
+        android:background="@color/beige_light_semi_transparent"/>
 
     <org.vliux.android.gesturecut.ui.view.AppInfoView
         android:id="@+id/item_gesture_appinfo"
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:layout_gravity="left"
         android:paddingTop="@dimen/gesture_list_item_padding_vertical"
         android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
         android:paddingRight="@dimen/gesture_list_outter_margin"
