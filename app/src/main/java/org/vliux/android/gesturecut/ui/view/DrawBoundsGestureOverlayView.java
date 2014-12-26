@@ -45,6 +45,11 @@ public class DrawBoundsGestureOverlayView extends GestureOverlayView {
         }
     }
 
+    public void setBoundayColor(int color){
+        mBoundrayColor = color;
+        invalidate();
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);

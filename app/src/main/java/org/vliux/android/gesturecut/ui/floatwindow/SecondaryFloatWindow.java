@@ -28,6 +28,7 @@ import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
 import org.vliux.android.gesturecut.activity.main.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
+import org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
@@ -38,7 +39,7 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  */
 public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.OnTablikeChangedListener {
 
-    private GestureOverlayView mGestureOverlayView;
+    private DrawBoundsGestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
     private GestureConfirmDialog mFwDialog;
@@ -74,7 +75,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
         setOrientation(VERTICAL);
         setBackgroundResource(R.color.gesture_create_bg_semi_transparent);
 
-        mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
+        mGestureOverlayView = (DrawBoundsGestureOverlayView)findViewById(R.id.gesture_overlay);
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
         mFwDialog = (GestureConfirmDialog)findViewById(R.id.gesture_fwdialog);
@@ -186,6 +187,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
     private void refreshHint(TabLikeView.TabType tabType){
         switch (tabType){
             case ADD:
+                mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.beige_light_semi_transparent));
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
                 mResolvedComponent = TaskManager.getTopComponent(getContext());
                 try {
@@ -201,6 +203,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                 //mGestureListView.setVisibility(GONE);
                 break;
             case USE:
+                mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.gesture_cur_blue));
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
                 //mGestureOverlayView.setVisibility(VISIBLE);
                 //mGestureListView.setVisibility(GONE);
