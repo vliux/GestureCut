@@ -71,6 +71,9 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_2nd_floatwindow, this, true);
+        setOrientation(VERTICAL);
+        setBackgroundResource(R.color.gesture_create_bg_semi_transparent);
+
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
@@ -194,57 +197,144 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                     mTvInvalidRc.setText(e.getMessage());
                 }
                 mAppInfoView.setResolvedComponent(mResolvedComponent);
-                mGestureOverlayView.setVisibility(VISIBLE);
-                mGestureListView.setVisibility(GONE);
-                getAnimatorSetOnSwitchTab(tabType).start();
+                //mGestureOverlayView.setVisibility(VISIBLE);
+                //mGestureListView.setVisibility(GONE);
                 break;
             case USE:
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
-                mGestureOverlayView.setVisibility(VISIBLE);
-                mGestureListView.setVisibility(GONE);
-                getAnimatorSetOnSwitchTab(tabType).start();
+                //mGestureOverlayView.setVisibility(VISIBLE);
+                //mGestureListView.setVisibility(GONE);
                 break;
             case LIST:
-                mAppInfoLayout.setVisibility(GONE);
-                mGestureListView.setVisibility(VISIBLE);
-                mGestureOverlayView.setVisibility(GONE);
+                //mAppInfoLayout.setVisibility(INVISIBLE);
+                //mGestureListView.setVisibility(VISIBLE);
+                //mGestureOverlayView.setVisibility(GONE);
                 mGestureListView.refresh();
                 break;
         }
+        getAnimatorSetOnSwitchTab(tabType).start();
     }
 
     private AnimatorSet getAnimatorSetOnSwitchTab(final TabLikeView.TabType tabType){
-        ObjectAnimator translationXAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "translationY", -ScreenUtil.getScreenSize(getContext())[1], 0.0f);
-        //ObjectAnimator alphaAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "alpha", 0.0f, 1.0f);
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
         animatorSet.setInterpolator(new AccelerateDecelerateInterpolator());
-        animatorSet.play(translationXAnimator);
 
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                switch (tabType){
-                    case ADD:
-                        mAppInfoLayout.setVisibility(VISIBLE);
-                        break;
-                    case USE:
-                        mAppInfoLayout.setVisibility(GONE);
-                }
-            }
+        ObjectAnimator mainAnimator = null;
+        switch (tabType) {
+            case ADD:
+            case USE:
+                mainAnimator = ObjectAnimator.ofFloat(mGestureOverlayView, "alpha", 0.0f, 1.0f);
+                mainAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        if(mGestureListView.getVisibility() == VISIBLE){
+                            mGestureListView.setVisibility(GONE);
+                        }
+                        if(mGestureOverlayView.getVisibility() != VISIBLE){
+                            mGestureOverlayView.setVisibility(VISIBLE);
+                        }
+                    }
 
-            @Override
-            public void onAnimationEnd(Animator animation) {
-            }
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                    }
 
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
 
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                break;
+            case LIST:
+                mainAnimator = ObjectAnimator.ofFloat(mGestureListView, "alpha", 0.0f, 1.0f);
+                mainAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        if(mGestureListView.getVisibility() != VISIBLE){
+                            mGestureListView.setVisibility(VISIBLE);
+                        }
+                        if(mGestureOverlayView.getVisibility() == VISIBLE){
+                            mGestureOverlayView.setVisibility(GONE);
+                        }
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                break;
+        }
+
+        Animator appLayoutAnimator = appInfoLayoutAnimator(tabType);
+        if(null != appLayoutAnimator){
+            animatorSet.play(mainAnimator).with(appLayoutAnimator);
+        }else{
+            animatorSet.play(mainAnimator);
+        }
         return animatorSet;
+    }
+
+    private Animator appInfoLayoutAnimator(TabLikeView.TabType type){
+        ObjectAnimator translationYAnimator = null;
+        switch (type){
+            case ADD:
+                translationYAnimator = ObjectAnimator.ofFloat(mAppInfoLayout, "translationY", -mAppInfoLayout.getHeight(), 0.0f);
+                translationYAnimator.addListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                        mAppInfoLayout.setVisibility(VISIBLE);
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                });
+                break;
+            case USE:
+            case LIST:
+                if(mAppInfoLayout.getVisibility() == View.VISIBLE){
+                    translationYAnimator = ObjectAnimator.ofFloat(mAppInfoLayout, "translationY", 0.0f, -mAppInfoLayout.getHeight());
+                    translationYAnimator.addListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+                            mAppInfoLayout.setVisibility(INVISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+                        }
+                    });
+                }
+                break;
+        }
+        return translationYAnimator;
     }
 }
