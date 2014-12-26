@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwindow;
+package org.vliux.android.gesturecut.ui.floatwnd;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -9,11 +9,9 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;

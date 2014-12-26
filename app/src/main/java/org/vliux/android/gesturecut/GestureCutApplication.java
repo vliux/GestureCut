@@ -8,7 +8,7 @@ import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.service.GestureKeyGuardService;
 import org.vliux.android.gesturecut.util.AppLog;
-import org.vliux.android.gesturecut.ui.floatwindow.FloatWindowManager;
+import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
 
 /**

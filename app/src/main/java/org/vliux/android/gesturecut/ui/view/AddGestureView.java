@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.widget.FrameLayout;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog;
+import org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog;
 
 /**
  * Created by vliux on 12/23/14.

@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwindow;
+package org.vliux.android.gesturecut.ui.floatwnd;
 
 /**
  * Created by vliux on 4/3/14.

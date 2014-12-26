@@ -2,8 +2,6 @@ package org.vliux.android.gesturecut.activity.add;
 
 import android.content.Context;
 import android.gesture.Gesture;
-import android.graphics.PixelFormat;
-import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -11,7 +9,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog;
+import org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 import de.greenrobot.event.EventBus;

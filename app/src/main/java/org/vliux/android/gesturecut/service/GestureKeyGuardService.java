@@ -7,9 +7,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 
-import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
-import org.vliux.android.gesturecut.ui.floatwindow.FloatWindowManager;
+import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 
 /**
  * Created by vliux on 4/3/14.

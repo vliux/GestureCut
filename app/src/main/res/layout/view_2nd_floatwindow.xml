@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <org.vliux.android.gesturecut.ui.floatwindow.TabLikeView
+    <org.vliux.android.gesturecut.ui.floatwnd.TabLikeView
         android:id="@+id/gesture_tablike"
         android:layout_width="match_parent"
         android:layout_height="@dimen/switch_layout_height"
@@ -80,12 +80,12 @@
         </LinearLayout>
 
         <!-- layer above, show confirmation dialog -->
-        <org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog
+        <org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog
             android:id="@+id/gesture_fwdialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-        </org.vliux.android.gesturecut.ui.floatwindow.GestureConfirmDialog>
+        </org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog>
 
         <!-- ImageView for animator when starting activty of defined gestures -->
         <ImageView

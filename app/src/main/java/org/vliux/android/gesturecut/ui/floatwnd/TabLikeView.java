@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwindow;
+package org.vliux.android.gesturecut.ui.floatwnd;
 
 import android.content.Context;
 import android.graphics.Typeface;

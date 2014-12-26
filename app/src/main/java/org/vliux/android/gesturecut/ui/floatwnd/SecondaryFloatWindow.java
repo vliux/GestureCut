@@ -1,10 +1,9 @@
-package org.vliux.android.gesturecut.ui.floatwindow;
+package org.vliux.android.gesturecut.ui.floatwnd;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
-import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
@@ -26,12 +25,10 @@ import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
-import org.vliux.android.gesturecut.activity.main.GestureListActivity;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
-import org.vliux.android.gesturecut.util.ScreenUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
