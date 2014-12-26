@@ -55,6 +55,8 @@ public class WindowManagerUtil {
                 lp.width = (int)(screenSize[0] * 0.93);
                 lp.height = (int)(screenSize[1] * 0.93);
                 lp.gravity = Gravity.CENTER;
+                lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                lp.dimAmount = 0.5f;
                 break;
         }
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
