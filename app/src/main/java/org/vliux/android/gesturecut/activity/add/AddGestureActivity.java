@@ -76,6 +76,12 @@ public class AddGestureActivity extends Activity {
         scanUnGesturedPackagrsAsync();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
     private void scanUnGesturedPackagrsAsync(){
         ConcurrentManager.submitJob(new ScanPackagesBizCallback(),
                 new ScanPackagesUiCallback());
@@ -107,7 +113,7 @@ public class AddGestureActivity extends Activity {
         }
     }
 
-    class ScanPackagesUiCallback extends ConcurrentManager.IUiCallback<List<ResolvedComponent>>{
+    class ScanPackagesUiCallback implements ConcurrentManager.IUiCallback<List<ResolvedComponent>>{
         @Override
         public void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);

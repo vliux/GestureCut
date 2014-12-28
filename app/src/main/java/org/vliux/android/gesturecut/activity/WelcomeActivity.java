@@ -17,7 +17,7 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
 /**
  * Created by vliux on 4/26/14.
  */
-public class WelcomeActivity extends Activity implements View.OnClickListener{
+/*public class WelcomeActivity extends Activity implements View.OnClickListener{
     private static final int NUM_PAGES = 3;
     private ViewPager mViewPager;
 
@@ -83,4 +83,4 @@ public class WelcomeActivity extends Activity implements View.OnClickListener{
                 break;
         }
     }
-}
+}*/

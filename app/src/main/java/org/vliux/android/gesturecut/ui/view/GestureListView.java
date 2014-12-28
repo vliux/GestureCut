@@ -114,7 +114,7 @@ public class GestureListView extends ListView {
         }
     }
 
-    class LoadGestureUiCallback extends ConcurrentManager.IUiCallback<List<String>>{
+    class LoadGestureUiCallback implements ConcurrentManager.IUiCallback<List<String>>{
 
         @Override
         public void onPreExecute() {

@@ -5,6 +5,7 @@ import android.os.Looper;
 
 import org.vliux.android.gesturecut.AppConstant;
 
+import java.lang.ref.WeakReference;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -20,7 +21,7 @@ public class ConcurrentManager {
     }
 
     public static IJob submitJob(IBizCallback bizCallback,
-                                       IUiCallback uiCallback, Object... params){
+                                 IUiCallback uiCallback, Object... params){
         if(Looper.getMainLooper() != Looper.myLooper()){
             throw new IllegalStateException("submitJob() must be invoked on main thread");
         }
@@ -29,20 +30,11 @@ public class ConcurrentManager {
         return (IJob)jobAsyncTask.executeOnExecutor(sExecutorService, params);
     }
 
-    public static abstract class IUiCallback<Result> {
-        public abstract void onPreExecute();
-        public abstract void onPostExecute(Result result);
-        public abstract void onPregressUpdate(int percent);
-        public abstract void onCancelled();
-
-        private IJob mJob;
-        void setJob(IJob job){
-            mJob = job;
-        }
-
-        public IJob getJob() {
-            return mJob;
-        }
+    public static interface IUiCallback<Result> {
+        public void onPreExecute();
+        public void onPostExecute(Result result);
+        public void onPregressUpdate(int percent);
+        public void onCancelled();
     }
 
     public static interface IBizCallback<Result> {
@@ -55,14 +47,16 @@ public class ConcurrentManager {
         public void cancelJob();
     }
 
+    /**
+     * AsyncTask-based job.
+     */
     private static class JobAsyncTask<Result> extends AsyncTask<Object, Integer, Result> implements IJob {
-        private IUiCallback<Result> mUiCallbackRef;
-        private IBizCallback<Result> mBizCallbackRef;
+        private WeakReference<IUiCallback<Result>> mUiCallbackRef;
+        private WeakReference<IBizCallback<Result>> mBizCallbackRef;
 
         public JobAsyncTask(IBizCallback<Result> bizCallback, IUiCallback<Result> uiCallback){
-            uiCallback.setJob(this);
-            mBizCallbackRef = bizCallback;
-            mUiCallbackRef = uiCallback;
+            mBizCallbackRef = new WeakReference<IBizCallback<Result>>(bizCallback);
+            mUiCallbackRef = new WeakReference<IUiCallback<Result>>(uiCallback);
         }
 
         @Override
@@ -82,8 +76,9 @@ public class ConcurrentManager {
 
         @Override
         protected Result doInBackground(Object... params) {
-            if(null != mBizCallbackRef) {
-                return mBizCallbackRef.onBusinessLogicAsync(this, params);
+            IBizCallback<Result> bizCallback = mBizCallbackRef.get();
+            if(null != bizCallback) {
+                return bizCallback.onBusinessLogicAsync(this, params);
             }else{
                 return null;
             }
@@ -92,40 +87,45 @@ public class ConcurrentManager {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            if(null != mUiCallbackRef) {
-                mUiCallbackRef.onPreExecute();
+            IUiCallback<Result> uiCallback = mUiCallbackRef.get();
+            if(null != uiCallback) {
+                uiCallback.onPreExecute();
             }
         }
 
         @Override
         protected void onPostExecute(Result result) {
             super.onPostExecute(result);
-            if(null != mUiCallbackRef) {
-                mUiCallbackRef.onPostExecute(result);
+            IUiCallback<Result> uiCallback = mUiCallbackRef.get();
+            if(null != uiCallback) {
+                uiCallback.onPostExecute(result);
             }
         }
 
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            if(null != mUiCallbackRef) {
-                mUiCallbackRef.onPregressUpdate(values[0]);
+            IUiCallback<Result> uiCallback = mUiCallbackRef.get();
+            if(null != uiCallback) {
+                uiCallback.onPregressUpdate(values[0]);
             }
         }
 
         @Override
         protected void onCancelled() {
             super.onCancelled();
-            if(null != mUiCallbackRef) {
-                mUiCallbackRef.onCancelled();
+            IUiCallback<Result> uiCallback = mUiCallbackRef.get();
+            if(null != uiCallback) {
+                uiCallback.onCancelled();
             }
         }
 
         @Override
         protected void onCancelled(Result result) {
             super.onCancelled(result);
-            if(null != mUiCallbackRef) {
-                mUiCallbackRef.onCancelled();
+            IUiCallback<Result> uiCallback = mUiCallbackRef.get();
+            if(null != uiCallback) {
+                uiCallback.onCancelled();
             }
         }
     }

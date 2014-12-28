@@ -112,7 +112,7 @@ class FabPresenter {
         }
     }
 
-    class DeleteGesturesUiCallback extends ConcurrentManager.IUiCallback<Boolean> {
+    class DeleteGesturesUiCallback implements ConcurrentManager.IUiCallback<Boolean> {
         private SparseBooleanArray sparseBooleanArray;
         private ProgressDialog progressDialog;
 
