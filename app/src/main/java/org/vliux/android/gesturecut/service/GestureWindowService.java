@@ -13,8 +13,8 @@ import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 /**
  * Created by vliux on 4/3/14.
  */
-public class GestureKeyGuardService extends Service {
-    private static final String TAG = GestureKeyGuardService.class.getSimpleName();
+public class GestureWindowService extends Service {
+    private static final String TAG = GestureWindowService.class.getSimpleName();
 
     /* SCREEN_ON and SCREEN_OFF have to be registered by code only */
     private static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";

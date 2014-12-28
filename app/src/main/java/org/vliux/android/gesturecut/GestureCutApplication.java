@@ -6,7 +6,7 @@ import android.os.Handler;
 
 import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
 import org.vliux.android.gesturecut.biz.db.DbManager;
-import org.vliux.android.gesturecut.service.GestureKeyGuardService;
+import org.vliux.android.gesturecut.service.GestureWindowService;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
@@ -38,7 +38,7 @@ public class GestureCutApplication extends Application {
 
     private void initKeyguardRelated(){
         PhoneStateMonitor.init(this);
-        GestureKeyGuardService.showWindow(this);
+        GestureWindowService.showWindow(this);
     }
 
     private void controlFloatWindow(final boolean isToShow) {

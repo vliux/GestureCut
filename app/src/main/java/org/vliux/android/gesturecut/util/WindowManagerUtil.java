@@ -27,6 +27,8 @@ public class WindowManagerUtil {
         lp.type = WindowManager.LayoutParams.TYPE_APPLICATION;
         lp.format = PixelFormat.TRANSLUCENT;
         lp.gravity = Gravity.CENTER;
+        lp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        lp.dimAmount = 0.5f;
         return lp;
     }
 

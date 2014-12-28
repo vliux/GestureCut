@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceFragment;
 
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.service.GestureKeyGuardService;
+import org.vliux.android.gesturecut.service.GestureWindowService;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
 
 /**
@@ -44,9 +44,9 @@ public class SettingsActivity extends Activity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             if(getString(R.string.pref_key_lockscreen_status).equals(key)){
                 if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_lockscreen_status, true)){
-                    GestureKeyGuardService.showWindow(getActivity());
+                    GestureWindowService.showWindow(getActivity());
                 }else{
-                    GestureKeyGuardService.hideWindow(getActivity());
+                    GestureWindowService.hideWindow(getActivity());
                 }
             }
         }
