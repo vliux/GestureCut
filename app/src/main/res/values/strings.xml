@@ -6,6 +6,9 @@
     <string name="remove">Remove</string>
     <string name="your_gesture_list">Your gestures</string>
 
+    <string name="notification_title">Gesturecut</string>
+    <string name="notification_content">Press to see defined gestures</string>
+
     <!-- text in background for recording a new gesture -->
     <string name="gesture_bg_title_record">Draw new gesture here</string>
     <!-- text in background for starting activity from a gesture -->

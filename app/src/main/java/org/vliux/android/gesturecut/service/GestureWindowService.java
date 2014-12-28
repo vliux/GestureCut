@@ -1,12 +1,17 @@
 package org.vliux.android.gesturecut.service;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 
+import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.activity.main.GestureListActivity;
 import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
 import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 
@@ -15,6 +20,8 @@ import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
  */
 public class GestureWindowService extends Service {
     private static final String TAG = GestureWindowService.class.getSimpleName();
+
+    private static final int START_FOREGROUND_NOTIFY_ID = 999;
 
     /* SCREEN_ON and SCREEN_OFF have to be registered by code only */
     private static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
@@ -27,14 +34,14 @@ public class GestureWindowService extends Service {
         Context appContext = context.getApplicationContext();
         Intent intent = new Intent(INTENT_SHOW_WINDOW);
         appContext.startService(intent);
-        PhoneStateMonitor.getInstance().register();
+        //PhoneStateMonitor.getInstance().register();
     }
 
     public static void hideWindow(Context context) {
         Context appContext = context.getApplicationContext();
         Intent intent = new Intent(INTENT_HIDE_WINDOW);
         appContext.startService(intent);
-        PhoneStateMonitor.getInstance().register();
+        //PhoneStateMonitor.getInstance().register();
     }
 
     @Override
@@ -45,7 +52,7 @@ public class GestureWindowService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        registerBizReceivers();
+        //registerBizReceivers();
     }
 
     @Override
@@ -55,8 +62,10 @@ public class GestureWindowService extends Service {
             String action = intent.getAction();
             if(INTENT_SHOW_WINDOW.equals(action)){
                 FloatWindowManager.toggleWindow(this, true);
+                startForeground(START_FOREGROUND_NOTIFY_ID, getStartForegroundNotification());
             }else if(INTENT_HIDE_WINDOW.equals(action)){
                 FloatWindowManager.toggleWindow(this, false);
+                stopForeground(true);
             }
         }
         return START_REDELIVER_INTENT;
@@ -65,7 +74,7 @@ public class GestureWindowService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        unregisterBizReceivers();
+        //unregisterBizReceivers();
     }
 
     private void registerBizReceivers(){
@@ -91,5 +100,17 @@ public class GestureWindowService extends Service {
         }
     };
 
+    private Notification getStartForegroundNotification(){
+        Intent intent = new Intent(this, GestureListActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this)
+                .setContentText(getText(R.string.notification_content))
+                .setContentIntent(pendingIntent)
+                .setContentTitle(getText(R.string.notification_title))
+                .setSmallIcon(R.drawable.ic_launcher);
+
+        return builder.build();
+    }
 
 }
