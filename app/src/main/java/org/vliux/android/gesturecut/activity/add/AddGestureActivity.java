@@ -70,10 +70,19 @@ public class AddGestureActivity extends Activity {
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
+    private ConcurrentManager.IJob mScanJob;
     @Override
     protected void onStart() {
         super.onStart();
-        scanUnGesturedPackagrsAsync();
+        mScanJob = scanUnGesturedPackagrsAsync();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(null != mScanJob && !mScanJob.isJobCancelled()){
+            mScanJob.cancelJob();
+        }
     }
 
     @Override
@@ -82,13 +91,12 @@ public class AddGestureActivity extends Activity {
         EventBus.getDefault().unregister(this);
     }
 
-    private void scanUnGesturedPackagrsAsync(){
-        ConcurrentManager.submitJob(new ScanPackagesBizCallback(),
-                new ScanPackagesUiCallback());
+
+    private ConcurrentManager.IJob scanUnGesturedPackagrsAsync(){
+        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback);
     }
 
-    class ScanPackagesBizCallback implements ConcurrentManager.IBizCallback<List<ResolvedComponent>>{
-
+    private final ConcurrentManager.IBizCallback<List<ResolvedComponent>> mScanPkgsBizCallback = new ConcurrentManager.IBizCallback<List<ResolvedComponent>>() {
         @Override
         public List<ResolvedComponent> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
             List<ResolvedComponent> ungesturedRcList = new ArrayList<ResolvedComponent>();
@@ -111,9 +119,9 @@ public class AddGestureActivity extends Activity {
             }
             return ungesturedRcList;
         }
-    }
+    };
 
-    class ScanPackagesUiCallback implements ConcurrentManager.IUiCallback<List<ResolvedComponent>>{
+    private final ConcurrentManager.IUiCallback<List<ResolvedComponent>> mScanPackagesUiCallback = new ConcurrentManager.IUiCallback<List<ResolvedComponent>>() {
         @Override
         public void onPreExecute() {
             mProgressBar.setVisibility(View.VISIBLE);
@@ -138,7 +146,7 @@ public class AddGestureActivity extends Activity {
         public void onCancelled() {
 
         }
-    }
+    };
 
     /**
      * Adapter of ListView.

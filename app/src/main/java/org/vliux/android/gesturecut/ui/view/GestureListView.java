@@ -94,15 +94,14 @@ public class GestureListView extends ListView {
     }
 
     public void refresh(){
-        ConcurrentManager.submitJob(new LoadGestureBizCallback(),
-                new LoadGestureUiCallback());
+        ConcurrentManager.submitJob(mLoadGestureBizCallback, mLoadGestureUiCallback);
     }
 
     public String getGestureName(int position){
         return mListViewAdapter.getGestureName(position);
     }
 
-    class LoadGestureBizCallback implements ConcurrentManager.IBizCallback<List<String>>{
+    private final ConcurrentManager.IBizCallback<List<String>> mLoadGestureBizCallback = new ConcurrentManager.IBizCallback<List<String>>() {
         @Override
         public List<String> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
             List<String> gestureNames = new ArrayList<String>();
@@ -112,10 +111,9 @@ public class GestureListView extends ListView {
             job.publishJobProgress(90);
             return gestureNames;
         }
-    }
+    };
 
-    class LoadGestureUiCallback implements ConcurrentManager.IUiCallback<List<String>>{
-
+    private final ConcurrentManager.IUiCallback<List<String>> mLoadGestureUiCallback = new ConcurrentManager.IUiCallback<List<String>>() {
         @Override
         public void onPreExecute() {
             if(null != mExternalUiCallback){
@@ -145,7 +143,7 @@ public class GestureListView extends ListView {
                 mExternalUiCallback.onCancelled();
             }
         }
-    }
+    };
 
     /**
      * Adapter
