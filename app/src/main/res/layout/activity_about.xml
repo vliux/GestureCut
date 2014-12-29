@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_launcher"
+            android:scaleType="centerInside"/>
+        <TextView
+            android:id="@+id/about_content_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="@dimen/about_title_margin_big"
+            android:text="GestureCut 2.0.0"
+            android:textSize="@dimen/text_size_small_title"
+            android:textColor="@color/gesture_cur_blue"
+            android:textStyle="bold"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="false"
+            android:layout_marginTop="@dimen/about_title_margin_small"
+            android:text="Xin Liu\nswordmanliuxin@gmail.com"
+            android:textSize="@dimen/text_size_general"
+            android:textColor="@color/beige_light_semi_transparent"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:singleLine="false"
+            android:layout_marginTop="@dimen/about_title_margin_big"
+            android:text="@string/about_intro_app"
+            android:textSize="@dimen/text_size_tiny"
+            android:textColor="@color/gesture_cur_blue"/>
+    </LinearLayout>
+</FrameLayout>

@@ -52,8 +52,15 @@
         <activity android:name=".activity.SettingsActivity"
             android:label="@string/settings"
             android:launchMode="singleTop"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.main.GestureListActivity">
         </activity>
+
+        <activity android:name=".activity.AboutActivity"
+            android:label="@string/about"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".activity.SettingsActivity"/>
 
         <!-- widget -->
         <receiver android:name=".widget.LockScreenWidget" >

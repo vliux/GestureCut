@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">弹指</string>
     <string name="settings">设置</string>
+    <string name="about">关于</string>
     <string name="add_gesture">添加手势</string>
     <string name="refresh">刷新</string>
     <string name="remove">删除</string>
     <string name="your_gesture_list">您的手势</string>
 
     <string name="notification_title">弹指</string>
-    <string name="notification_content">点击查看已定义的手势</string>
+    <string name="notification_content">点击编辑已定义的手势</string>
 
     <!-- text in background for recording a new gesture -->
     <string name="gesture_bg_title_record">画出要添加的手势</string>
@@ -52,8 +53,7 @@
     <string name="setting_lockscreen_status">锁屏状态</string>
     <string name="setting_lockscreen_status_summary_on">锁屏已打开</string>
     <string name="setting_lockscreen_status_summary_off">锁屏已关闭</string>
-    <string name="setting_help_title">帮助</string>
-    <string name="setting_help_summary">显示引导页</string>
+    <string name="setting_about_title">关于</string>
 
     <!-- mask layer on lock screen -->
     <string name="lock_screen_mask_layer_msg_on_listview_item">双击来启动应用</string>
@@ -61,4 +61,6 @@
 
     <string name="del_gesture_confirm_title">删除...</string>
     <string name="del_gesture_confirm_content">删除选中的%d个手势?</string>
+
+    <string name="about_intro_app">手势，让切换变的简单～</string>
 </resources>

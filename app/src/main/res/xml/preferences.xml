@@ -10,9 +10,8 @@
         android:selectable="false"/>
 
     <Preference
-        android:title="@string/setting_help_title"
-        android:summary="@string/setting_help_summary">
-        <intent android:targetClass="org.vliux.android.gesturecut.ui.WelcomeActivity"
+        android:title="@string/setting_about_title">
+        <intent android:targetClass="org.vliux.android.gesturecut.activity.AboutActivity"
             android:targetPackage="org.vliux.android.gesturecut"/>
     </Preference>
 </PreferenceScreen>

@@ -1,13 +1,14 @@
 <resources>
     <string name="app_name">GestureCut</string>
     <string name="settings">Settings</string>
+    <string name="about">About</string>
     <string name="add_gesture">Add gesture</string>
     <string name="refresh">Refresh</string>
     <string name="remove">Remove</string>
     <string name="your_gesture_list">Your gestures</string>
 
     <string name="notification_title">Gesturecut</string>
-    <string name="notification_content">Press to see defined gestures</string>
+    <string name="notification_content">Press to edit defined gestures</string>
 
     <!-- text in background for recording a new gesture -->
     <string name="gesture_bg_title_record">Draw new gesture here</string>
@@ -52,8 +53,7 @@
     <string name="setting_lockscreen_status">Lock-screen</string>
     <string name="setting_lockscreen_status_summary_on">Lock-screen enabled</string>
     <string name="setting_lockscreen_status_summary_off">Lock-screen disabled</string>
-    <string name="setting_help_title">Help</string>
-    <string name="setting_help_summary">Show user guide pages</string>
+    <string name="setting_about_title">About</string>
 
     <!-- mask layer on lock screen -->
     <string name="lock_screen_mask_layer_msg_on_listview_item">Double click to start the app</string>
@@ -61,4 +61,6 @@
 
     <string name="del_gesture_confirm_title">Deleting...</string>
     <string name="del_gesture_confirm_content">Delete the %d gesture(s)?</string>
+
+    <string name="about_intro_app">Convenient task switching with gestures~</string>
 </resources>
