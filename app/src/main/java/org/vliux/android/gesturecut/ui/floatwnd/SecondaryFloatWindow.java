@@ -12,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -82,8 +83,11 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
         mTvInvalidRc = (TextView)findViewById(R.id.gesture_tv_invalid_rc);
         mGestureListView = (GestureListView)findViewById(R.id.gesture_listview);
 
+        mGestureListView.setOnItemClickListener(mOnGestureListItemClicked);
+
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
+
         mTabLikeView.setOnTabChangedListener(this);
         refreshHint(mTabLikeView.getType());
     }
@@ -98,6 +102,24 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                 case USE:
                     useGesture(gesture);
                     break;
+            }
+        }
+    };
+
+    private final AdapterView.OnItemClickListener mOnGestureListItemClicked = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            String gestureName = mGestureListView.getGestureName(position);
+            if(null != gestureName && gestureName.length() > 0){
+                GestureDbTable.DbData dbData = GesturePersistence.loadGestureEx(getContext(), gestureName);
+                if(null != dbData && null != dbData.resolvedComponent){
+                    AnimUtil.getStartActivityAnimatorSet(getContext(), mIvAppIconUseAnim, dbData.resolvedComponent, new Runnable(){
+                        @Override
+                        public void run() {
+                            WindowManagerUtil.closeWindow(getContext(), SecondaryFloatWindow.this);
+                        }
+                    }).start();
+                }
             }
         }
     };
