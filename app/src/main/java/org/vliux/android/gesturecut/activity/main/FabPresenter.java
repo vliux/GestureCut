@@ -17,6 +17,11 @@ import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 /**
  * Created by vliux on 12/25/14.
  */
@@ -57,11 +62,29 @@ class FabPresenter {
 
     public void onFabClicked(){
         if(mCurrentModeDelete){
-            final SparseBooleanArray booleanArray = mGestureListView.getCheckedItemPositions();
-            final int size = booleanArray.size();
+            SparseBooleanArray booleanArray = mGestureListView.getCheckedItemPositions();
+            // pick up checked items
+            int boolArraySize = booleanArray.size();
+            final Set<String> gestureNameSet = new HashSet<String>();
+            final List<Integer> checkedPositions = new ArrayList<Integer>();
+
+            for(int i = 0; i < boolArraySize; i++){
+                if(booleanArray.valueAt(i)) {
+                    int position = booleanArray.keyAt(i);
+                    String gestureName = mGestureListView.getGestureName(position);
+                    if (null != gestureName && gestureName.length() > 0) {
+                        gestureNameSet.add(gestureName);
+                        checkedPositions.add(position);
+                    }
+                }
+            }
+
+            int size = gestureNameSet.size();
             if(size > 0) {
                 final GeneralDialog dialog = new GeneralDialog(mContext);
-                dialog.setTitleContent("Deleting ...", String.format("Delete the %d gestures?", size));
+                dialog.setTitleContent(mContext.getText(R.string.del_gesture_confirm_title).toString(),
+                        String.format(mContext.getText(R.string.del_gesture_confirm_content).toString(), size));
+
                 dialog.setOnCancelClicked(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -73,8 +96,8 @@ class FabPresenter {
                     @Override
                     public void onClick(View v) {
                         mWindowMgr.removeView(dialog);
-                        ConcurrentManager.submitJob(new DeleteGesturesBizCallback(booleanArray),
-                                new DeleteGesturesUiCallback(booleanArray));
+                        ConcurrentManager.submitJob(new DeleteGesturesBizCallback(gestureNameSet),
+                                new DeleteGesturesUiCallback(checkedPositions));
                     }
                 });
 
@@ -87,37 +110,37 @@ class FabPresenter {
     }
 
     class DeleteGesturesBizCallback implements ConcurrentManager.IBizCallback<Boolean> {
-        private SparseBooleanArray sparseBooleanArray;
+        private Set<String> gestureNameSet;
 
-        public DeleteGesturesBizCallback(SparseBooleanArray booleanArray){
-            sparseBooleanArray = booleanArray;
+        public DeleteGesturesBizCallback(Set<String> gestureNameSet){
+            this.gestureNameSet = gestureNameSet;
         }
 
         @Override
         public Boolean onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
-            int size = sparseBooleanArray.size();
-            for (int i = 0; i < size; i++) {
+            int i = 1;
+            int size = gestureNameSet.size();
+            for (String gestureName : gestureNameSet) {
                 try {
                     Thread.sleep(100L);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                     return false;
                 }
-                int position = sparseBooleanArray.keyAt(i);
-                String gestureName = mGestureListView.getGestureName(position);
+
                 GesturePersistence.removeGesture(mContext, gestureName);
-                job.publishJobProgress(100 * (i+1)/size);
+                job.publishJobProgress(100 * i/size);
             }
             return true;
         }
     }
 
     class DeleteGesturesUiCallback implements ConcurrentManager.IUiCallback<Boolean> {
-        private SparseBooleanArray sparseBooleanArray;
         private ProgressDialog progressDialog;
+        private List<Integer> checkedPositions;
 
-        public DeleteGesturesUiCallback(SparseBooleanArray booleanArray){
-            sparseBooleanArray = booleanArray;
+        DeleteGesturesUiCallback(List<Integer> checkedPositions) {
+            this.checkedPositions = checkedPositions;
         }
 
         @Override
@@ -131,11 +154,7 @@ class FabPresenter {
         @Override
         public void onPostExecute(Boolean aBoolean) {
             progressDialog.dismiss();
-            int size = sparseBooleanArray.size();
-            for(int i = 0; i < size; i++){
-                mGestureListView.setItemChecked(sparseBooleanArray.keyAt(i), false);
-            }
-
+            uncheckItems();
             mGestureListView.refresh();
             setNormalMode();
         }
@@ -147,8 +166,15 @@ class FabPresenter {
 
         @Override
         public void onCancelled() {
+            uncheckItems();
             mGestureListView.refresh();
             setNormalMode();
+        }
+
+        private void uncheckItems(){
+            for(int position : checkedPositions){
+                mGestureListView.setItemChecked(position, false);
+            }
         }
     }
 }
