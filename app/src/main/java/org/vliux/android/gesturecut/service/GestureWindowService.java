@@ -117,7 +117,7 @@ public class GestureWindowService extends Service {
                 .setContentText(getText(R.string.notification_content))
                 .setContentIntent(pendingIntent)
                 .setContentTitle(getText(R.string.notification_title))
-                .setSmallIcon(R.drawable.ic_launcher);
+                .setSmallIcon(R.drawable.ic_launcher_bw);
 
         return builder.build();
     }
