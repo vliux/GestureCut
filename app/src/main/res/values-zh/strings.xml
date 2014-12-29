@@ -50,9 +50,11 @@
     <string name="add_gesture_subtitle_similar_gesture">已存在的手势</string>
 
     <!-- settings -->
-    <string name="setting_lockscreen_status">锁屏状态</string>
+    <!--<string name="setting_lockscreen_status">锁屏状态</string>
     <string name="setting_lockscreen_status_summary_on">锁屏已打开</string>
-    <string name="setting_lockscreen_status_summary_off">锁屏已关闭</string>
+    <string name="setting_lockscreen_status_summary_off">锁屏已关闭</string>-->
+    <string name="setting_rate_title">给我评分</string>
+    <string name="setting_rate_summary">让这款app越来越来好</string>
     <string name="setting_about_title">关于</string>
 
     <!-- mask layer on lock screen -->

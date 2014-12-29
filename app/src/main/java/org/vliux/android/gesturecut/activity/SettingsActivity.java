@@ -1,9 +1,13 @@
 package org.vliux.android.gesturecut.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceScreen;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.service.GestureWindowService;
@@ -50,6 +54,17 @@ public class SettingsActivity extends Activity {
                 }else{
                     GestureWindowService.hideWindow(getActivity());
                 }
+            }
+        }
+
+        @Override
+        public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
+            if(getText(R.string.setting_rate_title).equals(preference.getTitle())){
+                Intent rateIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + getActivity().getPackageName()));
+                startActivity(rateIntent);
+                return true;
+            }else {
+                return super.onPreferenceTreeClick(preferenceScreen, preference);
             }
         }
     }

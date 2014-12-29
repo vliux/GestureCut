@@ -50,9 +50,11 @@
     <string name="add_gesture_subtitle_similar_gesture">Existing gesture</string>
 
     <!-- settings -->
-    <string name="setting_lockscreen_status">Lock-screen</string>
+    <!--<string name="setting_lockscreen_status">Lock-screen</string>
     <string name="setting_lockscreen_status_summary_on">Lock-screen enabled</string>
-    <string name="setting_lockscreen_status_summary_off">Lock-screen disabled</string>
+    <string name="setting_lockscreen_status_summary_off">Lock-screen disabled</string>-->
+    <string name="setting_rate_title">Rate me</string>
+    <string name="setting_rate_summary">Help this app to be better</string>
     <string name="setting_about_title">About</string>
 
     <!-- mask layer on lock screen -->
