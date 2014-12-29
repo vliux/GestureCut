@@ -143,7 +143,7 @@ public class FloatWindow extends View implements View.OnClickListener {
     @Override
     public void onClick(View view){
         SecondaryFloatWindow expandedFloatWindow = new SecondaryFloatWindow(getContext().getApplicationContext());
-        WindowManagerUtil.showWindow(getContext(), expandedFloatWindow, WindowManagerUtil.WindowScope.SECOND_FLOAT_WND);
+        FloatWindowManager.showSecondaryFloatWindow(getContext(), expandedFloatWindow);
     }
 
     // raw location of ACTION_DOWN, which is screen-coordinator-based.
@@ -179,7 +179,7 @@ public class FloatWindow extends View implements View.OnClickListener {
                     mLayoutParams.x = (int)(rawX - mDownInnerX);
                     mLayoutParams.y = (int)(rawY - mDownInnerY);
                     Log.d(TAG, "mIsPrevMoved = true");Log.d(TAG, String.format("MOVE: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
-                    WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, false);
+                    FloatWindowManager.updateFloatWindow(getContext(), this, mLayoutParams, false);
                 }
                 break;
             case MotionEvent.ACTION_CANCEL:
@@ -199,7 +199,7 @@ public class FloatWindow extends View implements View.OnClickListener {
                     Log.d(TAG, "mIsPrevMoved = true");
                     mLayoutParams.x = (int)(rawX - mDownInnerX);
                     mLayoutParams.y = (int)(rawY - mDownInnerY);
-                    WindowManagerUtil.updateWindow(getContext(), this, mLayoutParams, true);
+                    FloatWindowManager.updateFloatWindow(getContext(), this, mLayoutParams, true);
                 }else{
                     Log.d(TAG, "mIsPrevMoved = false");
                     onClick(this);

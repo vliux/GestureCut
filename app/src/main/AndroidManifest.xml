@@ -21,12 +21,8 @@
         android:theme="@style/AppTheme">
 
         <service android:name=".service.GestureWindowService"
-            android:label="GuestKeyGuardService"
+            android:label="GestureWindowService"
             android:exported="false">
-            <intent-filter>
-                <action android:name="org.vliux.android.gesture.SHOW_WND"/>
-                <action android:name="org.vliux.android.gesture.HIDE_WND"/>
-            </intent-filter>
         </service>
 
         <receiver android:name=".receiver.PackageRemovedReceiver">
@@ -51,12 +47,6 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:parentActivityName=".activity.main.GestureListActivity">
-        </activity>
-
-        <activity android:name=".activity.WelcomeActivity"
-            android:launchMode="singleTop"
-            android:theme="@style/Welcome.Theme.Transparent"
-            android:screenOrientation="portrait">
         </activity>
 
         <activity android:name=".activity.SettingsActivity"

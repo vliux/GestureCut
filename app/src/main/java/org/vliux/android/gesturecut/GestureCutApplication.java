@@ -41,7 +41,7 @@ public class GestureCutApplication extends Application {
         GestureWindowService.showWindow(this);
     }
 
-    private void controlFloatWindow(final boolean isToShow) {
+    /*private void controlFloatWindow(final boolean isToShow) {
         if (isToShow) {
             mHandler.postDelayed(new Runnable() {
                 @Override
@@ -53,7 +53,7 @@ public class GestureCutApplication extends Application {
             FloatWindowManager.unregisterLockerStatusReceiver(GestureCutApplication.this);
             FloatWindowManager.removeWindow(this);
         }
-    }
+    }*/
 
     private void checkDebuggable() {
         ApplicationInfo applicationInfo = getApplicationInfo();

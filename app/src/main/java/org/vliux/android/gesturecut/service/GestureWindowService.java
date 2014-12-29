@@ -13,6 +13,7 @@ import android.support.v4.app.NotificationCompat;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.activity.main.GestureListActivity;
 import org.vliux.android.gesturecut.biz.PhoneStateMonitor;
+import org.vliux.android.gesturecut.ui.floatwnd.FloatWindow;
 import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 
 /**
@@ -27,20 +28,19 @@ public class GestureWindowService extends Service {
     private static final String SCREEN_OFF = "android.intent.action.SCREEN_OFF";
     private static final String SCREEN_ON = "android.intent.action.SCREEN_ON";
 
-    private static final String INTENT_SHOW_WINDOW = "org.vliux.android.gesture.SHOW_WND";
-    private static final String INTENT_HIDE_WINDOW = "org.vliux.android.gesture.HIDE_WND";
+    private FloatWindow mFloatWindow;
 
     public static void showWindow(Context context) {
         Context appContext = context.getApplicationContext();
-        Intent intent = new Intent(INTENT_SHOW_WINDOW);
+        Intent intent = new Intent(context, GestureWindowService.class);
         appContext.startService(intent);
         //PhoneStateMonitor.getInstance().register();
     }
 
     public static void hideWindow(Context context) {
         Context appContext = context.getApplicationContext();
-        Intent intent = new Intent(INTENT_HIDE_WINDOW);
-        appContext.startService(intent);
+        Intent intent = new Intent(context, GestureWindowService.class);
+        appContext.stopService(intent);
         //PhoneStateMonitor.getInstance().register();
     }
 
@@ -58,16 +58,8 @@ public class GestureWindowService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         super.onStartCommand(intent, flags, startId);
-        if(null != intent){
-            String action = intent.getAction();
-            if(INTENT_SHOW_WINDOW.equals(action)){
-                FloatWindowManager.toggleWindow(this, true);
-                startForeground(START_FOREGROUND_NOTIFY_ID, getStartForegroundNotification());
-            }else if(INTENT_HIDE_WINDOW.equals(action)){
-                FloatWindowManager.toggleWindow(this, false);
-                stopForeground(true);
-            }
-        }
+        showFloatWindow();
+        startForeground(START_FOREGROUND_NOTIFY_ID, getStartForegroundNotification());
         return START_REDELIVER_INTENT;
     }
 
@@ -75,6 +67,23 @@ public class GestureWindowService extends Service {
     public void onDestroy() {
         super.onDestroy();
         //unregisterBizReceivers();
+        closeFloatWindow();
+        stopForeground(true);
+    }
+
+    private void showFloatWindow(){
+        if(null == mFloatWindow){
+            mFloatWindow = new FloatWindow(this);
+        }
+        FloatWindowManager.showFloatWindow(this, mFloatWindow);
+    }
+
+    private void closeFloatWindow(){
+        if(null != mFloatWindow){
+            FloatWindowManager.closeWindow(this, mFloatWindow);
+        }
+
+        mFloatWindow = null;
     }
 
     private void registerBizReceivers(){
