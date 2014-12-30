@@ -65,4 +65,6 @@
     <string name="del_gesture_confirm_content">删除选中的%d个手势?</string>
 
     <string name="about_intro_app">手势，让切换变的简单～</string>
+
+    <string name="gesture_list_empty_msg">点我添加新手势, \n或右下角\"+\"按钮</string>
 </resources>

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
@@ -31,6 +32,7 @@ public class GestureListActivity extends Activity{
     private FloatingActionButton mFab;
     private FabPresenter mFabPresenter;
     private ProgressBar mProgressBar;
+    private TextView mTvEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +42,14 @@ public class GestureListActivity extends Activity{
         mProgressBar = (ProgressBar)findViewById(R.id.list_ges_prog_bar);
 
         mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
+        mTvEmptyView = (TextView)findViewById(R.id.actv_ges_list_empty_view);
+
         mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
         mGestureList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mGestureList.setOnItemClickListener(mListItemClicked);
         mGestureList.setExternalUiCallback(mLoadGestureUiCallback);
+        mGestureList.setEmptyView(mTvEmptyView);
+        mTvEmptyView.setOnClickListener(mOnEmptyViewClicked);
 
         mFab = (FloatingActionButton)findViewById(R.id.fab);
         mFab.attachToListView(mGestureList);
@@ -146,6 +152,16 @@ public class GestureListActivity extends Activity{
                 mFabPresenter.setDeleteMode();
             }else{
                 mFabPresenter.setNormalMode();
+            }
+        }
+    };
+
+    private final View.OnClickListener mOnEmptyViewClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            int id = v.getId();
+            if(R.id.actv_ges_list_empty_view == id){
+                mFabPresenter.onFabClicked();
             }
         }
     };

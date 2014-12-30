@@ -13,6 +13,19 @@
         android:dividerHeight="@dimen/listview_divider_thin">
     </org.vliux.android.gesturecut.ui.view.GestureListView>
 
+    <TextView
+        android:id="@+id/actv_ges_list_empty_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:drawablePadding="@dimen/drawable_padding_default"
+        android:drawableLeft="@drawable/ic_launcher"
+        android:gravity="left"
+        android:text="@string/gesture_list_empty_msg"
+        android:textColor="@color/gesture_cur_blue"
+        android:textSize="@dimen/text_size_small_title"
+        android:visibility="gone"/>
+
     <com.melnykov.fab.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"

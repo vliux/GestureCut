@@ -9,7 +9,7 @@
     <!-- vibrate when a task activity is started -->
     <uses-permission android:name="android.permission.VIBRATE" />
 
-    <uses-sdk android:maxSdkVersion="19"
+    <uses-sdk android:maxSdkVersion="21"
         android:minSdkVersion="14"
         android:targetSdkVersion="19"/>
 

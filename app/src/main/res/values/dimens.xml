@@ -68,4 +68,6 @@
 
     <dimen name="about_title_margin_big">12dp</dimen>
     <dimen name="about_title_margin_small">6dp</dimen>
+
+    <dimen name="drawable_padding_default">6dp</dimen>
 </resources>
