@@ -25,7 +25,7 @@
 
     <!-- gesture list view, for editing existing gestures -->
     <dimen name="gesture_list_outter_margin">10dp</dimen>
-    <dimen name="gesture_list_item_height">90dp</dimen>
+    <dimen name="gesture_list_item_height">82dp</dimen>
     <dimen name="gesture_list_item_icon_dimen">60dp</dimen>
     <dimen name="gesture_list_item_padding_vertical">4dp</dimen>
     <dimen name="gesture_list_item_vertical_divider_margin_horiz">6dp</dimen>
