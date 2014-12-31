@@ -28,7 +28,7 @@ import java.util.Set;
 class FabPresenter {
     private final int COLOR_NORMAL_NORMAL = R.color.gesture_cur_blue;
     private final int COLOR_NORMAL_PRESSED = R.color.gesture_cur_blue_light;
-    private final int COLOR_DELETE_NORMAL = R.color.gesture_cur_red;
+    private final int COLOR_DELETE_NORMAL = R.color.red_warning;
     private final int COLOR_DELETE_PRESSED = R.color.beige_light_semi_transparent;
     private final int NORMAL_BG = R.drawable.ic_add;
     private final int DELETE_BG = R.drawable.ic_del;

@@ -27,7 +27,7 @@
             android:layout_weight="1"
             android:gravity="bottom"
             android:textSize="@dimen/text_size_general"
-            android:textColor="@color/gesture_cur_blue"
+            android:textColor="@color/text_general"
             android:textStyle="bold" />
 
         <TextView
