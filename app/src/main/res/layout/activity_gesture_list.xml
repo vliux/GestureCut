@@ -8,6 +8,7 @@
         android:id="@+id/actv_gesture_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/gesture_list_bkground"
         android:cacheColorHint="@color/gesture_list_bkground"
         android:divider="@color/gesture_cur_grey"
         android:dividerHeight="@dimen/listview_divider_thin">

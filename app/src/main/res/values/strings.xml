@@ -49,8 +49,8 @@
     <string name="add_gesture_subtitle_target_task">Target task</string>
     <string name="add_gesture_subtitle_similar_gesture">Existing gesture</string>
 
-    <string name="add_ges_tab_sys_app">System apps</string>
-    <string name="add_ges_tab_usr_app">Downloaded apps</string>
+    <string name="add_ges_tab_sys_app">System</string>
+    <string name="add_ges_tab_usr_app">Downloaded</string>
 
     <!-- settings -->
     <string name="setting_vibrate">Vibration</string>
