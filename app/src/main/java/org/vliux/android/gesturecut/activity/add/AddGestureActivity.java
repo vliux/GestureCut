@@ -2,7 +2,6 @@ package org.vliux.android.gesturecut.activity.add;
 
 import android.app.ActionBar;
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.gesture.Gesture;
@@ -45,6 +44,7 @@ public class AddGestureActivity extends Activity {
 
     private AddGestureView mAddGestureView;
     private AnimPresenter mAnimPresenter;
+    private TabsPresenter mTabsPresenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,11 @@ public class AddGestureActivity extends Activity {
 
         ActionBar actionBar = getActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+        mTabsPresenter = new TabsPresenter(this, actionBar);
+        mTabsPresenter.initTabs();
     }
+
+
 
     private ConcurrentManager.IJob mScanJob;
     @Override
