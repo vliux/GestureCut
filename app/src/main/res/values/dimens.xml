@@ -12,8 +12,7 @@
     <dimen name="main_actv_topleft_iv_dimen">50dp</dimen> <!-- icon_dimen_global + 10dp + 10dp -->
 
     <!-- global listview dividers -->
-    <dimen name="listview_divider_thick">3dp</dimen>
-    <dimen name="listview_divider_thin">1dp</dimen>
+    <dimen name="listview_divider_thin">1px</dimen>
 
     <dimen name="settings_outmost_margin">10dp</dimen>
 
