@@ -18,7 +18,7 @@ import org.vliux.android.gesturecut.biz.TaskManager;
 public class AppInfoView extends LinearLayout{
     private ImageView mIvAppIcon;
     private TextView mTvAppName;
-    private TextView mTvAppDetail;
+    //private TextView mTvAppDetail;
     private ResolvedComponent mResolvedComponent;
     private boolean mLongClzName = true;
 
@@ -55,7 +55,7 @@ public class AppInfoView extends LinearLayout{
         LayoutInflater.from(getContext()).inflate(R.layout.view_appinfo, this, true);
         mIvAppIcon = (ImageView)findViewById(R.id.appinfo_app_icon);
         mTvAppName = (TextView)findViewById(R.id.appinfo_appname);
-        mTvAppDetail = (TextView)findViewById(R.id.appinfo_appdetail);
+        //mTvAppDetail = (TextView)findViewById(R.id.appinfo_appdetail);
     }
 
     public void setResolvedComponent(ResolvedComponent resolvedComponent){
@@ -64,7 +64,7 @@ public class AppInfoView extends LinearLayout{
         String[] descStrings = TaskManager.getDescription(getContext(), resolvedComponent, mLongClzName);
         if(null != descStrings && descStrings.length >= 2){
             mTvAppName.setText(descStrings[0]);
-            mTvAppDetail.setText(descStrings[1]);
+            //mTvAppDetail.setText(descStrings[1]);
         }
     }
 

@@ -23,21 +23,21 @@
         <TextView
             android:id="@+id/appinfo_appname"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="bottom"
+            android:gravity="center_vertical|left"
             android:textSize="@dimen/text_size_general"
             android:textColor="@color/text_general"
             android:textStyle="bold" />
 
-        <TextView
+        <!--<TextView
             android:id="@+id/appinfo_appdetail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="top"
             android:textSize="@dimen/text_size_tiny"
-            android:textColor="@color/gesture_cur_grey" />
+            android:textColor="@color/gesture_cur_grey" />-->
     </LinearLayout>
 
 </LinearLayout>
