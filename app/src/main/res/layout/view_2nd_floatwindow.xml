@@ -22,7 +22,7 @@
             android:layout_height="match_parent"
             android:background="@color/global_bkground"
             android:cacheColorHint="@color/gesture_list_bkground"
-            android:divider="@color/beige_light_semi_transparent"
+            android:divider="@color/gesture_cur_grey"
             android:dividerHeight="@dimen/listview_divider_thin"
             android:listSelector="@drawable/gesture_list_selector_pressed"
             android:visibility="gone">

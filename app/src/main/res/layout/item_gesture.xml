@@ -24,7 +24,7 @@
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/gesture_list_item_padding_vertical"
         android:layout_marginBottom="@dimen/gesture_list_item_padding_vertical"
-        android:background="@color/beige_light_semi_transparent"/>
+        android:background="@color/gesture_cur_grey"/>
 
     <org.vliux.android.gesturecut.ui.view.AppInfoView
         android:id="@+id/item_gesture_appinfo"
