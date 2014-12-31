@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -23,22 +24,24 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  */
 public class FloatWindow extends View implements View.OnClickListener {
     private static final String TAG = FloatWindow.class.getSimpleName();
-    private static final int OUTTER_STROKE_WIDTH_DP = 4;
+    private static final int OUTTER_STROKE_WIDTH_DP = 2;
     private static final int CHAR_STROKE_WIDTH_DP = 1;
 
-    private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.beige_light_semi_transparent;
+    private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.float_wnd_circle;
     private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.gesture_cur_blue;
 
     private static final int COLOR_INNER_SPACE_NORMAL = R.color.gesture_cur_blue_light_semi_transparent;
     private static final int COLOR_INNER_SPACE_PRESSED = R.color.beige_light_semi_transparent;
 
-    private static final int COLOR_TEXT_STROKE = R.color.global_bkground;
+    private static final int COLOR_TEXT_STROKE = R.color.beige_light_semi_transparent;
 
     private int mOutterStrokeWidth;
     private int mCharStrokeWidth;
 
     private Paint mPaintStroke;
     private Paint mPaintSlight;
+    private Paint mPaintText;
+
     private float mSysBarHeight;
     private float mMoveDistantThreshold;
     private WindowManager.LayoutParams mLayoutParams;
@@ -82,11 +85,20 @@ public class FloatWindow extends View implements View.OnClickListener {
         mCharStrokeWidth = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, CHAR_STROKE_WIDTH_DP, displayMetrics);
         mPaintStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintStroke.setStyle(Paint.Style.STROKE);
-        mPaintStroke.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18f, displayMetrics));
-        mPaintStroke.setTextAlign(Paint.Align.CENTER);
+        //mPaintStroke.setTextSize(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 18f, displayMetrics));
+        //mPaintStroke.setTextAlign(Paint.Align.CENTER);
 
         mPaintSlight = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaintSlight.setStyle(Paint.Style.FILL);
+
+        mPaintText = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mPaintText.setStyle(Paint.Style.FILL_AND_STROKE);
+        Typeface tf = Typeface.createFromAsset(context.getAssets(), "CodeLight.otf");
+        mPaintText.setTypeface(tf);
+        mPaintText.setStrokeWidth(mCharStrokeWidth);
+        mPaintText.setColor(getResources().getColor(COLOR_TEXT_STROKE));
+        mPaintText.setTextSize(mDimenSize/2);
+        mPaintText.setTextAlign(Paint.Align.CENTER);
     }
 
     @Override
@@ -126,10 +138,8 @@ public class FloatWindow extends View implements View.OnClickListener {
         canvas.drawArc(oval, 0.0f, 360.0f, true, mPaintSlight);
 
         // center text
-        float txtWidth = mPaintStroke.measureText("G");
-        mPaintStroke.setStrokeWidth(mCharStrokeWidth);
-        mPaintStroke.setColor(getResources().getColor(COLOR_TEXT_STROKE));
-        canvas.drawText("G", width/2, (height + txtWidth)/2, mPaintStroke);
+        float txtWidth = mPaintText.measureText("G");
+        canvas.drawText("G", width/2, (height + txtWidth)/2, mPaintText);
     }
 
     /**
