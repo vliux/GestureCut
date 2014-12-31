@@ -2,6 +2,7 @@ package org.vliux.android.gesturecut.activity.add;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.gesture.Gesture;
@@ -97,12 +98,13 @@ public class AddGestureActivity extends Activity {
 
 
     private ConcurrentManager.IJob scanUnGesturedPackagrsAsync(){
-        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback);
+        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback, mTabsPresenter.getSelectedTab(), mTabsPresenter.getSelectedTab());
     }
 
     private final ConcurrentManager.IBizCallback<List<ResolvedComponent>> mScanPkgsBizCallback = new ConcurrentManager.IBizCallback<List<ResolvedComponent>>() {
         @Override
         public List<ResolvedComponent> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
+            TabsPresenter.TabTag tabTag = (TabsPresenter.TabTag)params[0];
             List<ResolvedComponent> ungesturedRcList = new ArrayList<ResolvedComponent>();
 
             // already gestured package set
@@ -115,7 +117,10 @@ public class AddGestureActivity extends Activity {
             int pkgInfoSize = pkgInfoList.size();
             for(int i = 0; i < pkgInfoSize; i++){
                 PackageInfo pkgInfo = pkgInfoList.get(i);
-                if(!packageNames.contains(pkgInfo.packageName)) {
+                boolean condition = (tabTag == TabsPresenter.TabTag.SYSTEM_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1);
+                condition = (condition || (tabTag == TabsPresenter.TabTag.USER_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0));
+
+                if(condition && !packageNames.contains(pkgInfo.packageName)) {
                     ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
                     ungesturedRcList.add(rc);
                 }
@@ -247,12 +252,15 @@ public class AddGestureActivity extends Activity {
      * @param event
      */
     public void onEventMainThread(AddGestureEvent event){
-        if(event.getType() == AddGestureEvent.EventType.GESTURE_ADDED){
+        AddGestureEvent.EventType eventType = event.getType();
+        if(eventType == AddGestureEvent.EventType.GESTURE_ADDED){
             if(null != mAnimPresenter) {
                 mAnimPresenter.close();
                 mAnimPresenter = null;
                 scanUnGesturedPackagrsAsync();
             }
+        }else if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
+            scanUnGesturedPackagrsAsync();
         }
     }
 }
