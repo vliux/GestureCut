@@ -10,6 +10,7 @@ import android.view.animation.OvershootInterpolator;
 import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.AppConstant;
+import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskManager;
 
@@ -45,9 +46,11 @@ public class AnimUtil {
                 }
                 targetView.setVisibility(View.VISIBLE);
                 // vibrate
-                Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-                if(null != vibrator){
-                    vibrator.vibrate(AppConstant.Anim.ANIM_DURATION_NORMAL);
+                if(PreferenceHelper.getUserPref(context.getApplicationContext(), R.string.pref_key_vibrate, true)) {
+                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
+                    if (null != vibrator) {
+                        vibrator.vibrate(AppConstant.Anim.ANIM_DURATION_NORMAL);
+                    }
                 }
             }
 
