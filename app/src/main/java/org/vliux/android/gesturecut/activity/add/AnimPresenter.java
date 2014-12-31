@@ -49,7 +49,7 @@ class AnimPresenter {
         animator.addListener(new Animator.AnimatorListener() {
             @Override
             public void onAnimationStart(Animator animation) {
-                mListItemTranslated.setBackgroundColor(mContext.getResources().getColor(R.color.beige_light_semi_transparent));
+                mListItemTranslated.setBackgroundColor(mContext.getResources().getColor(R.color.yellow));
             }
 
             @Override

@@ -32,7 +32,7 @@
             android:layout_marginTop="@dimen/about_title_margin_small"
             android:text="Xin Liu\nhttp://vliux.me"
             android:textSize="@dimen/text_size_general"
-            android:textColor="@color/beige_light_semi_transparent"/>
+            android:textColor="@color/yellow"/>
 
         <!--<TextView
             android:layout_width="match_parent"

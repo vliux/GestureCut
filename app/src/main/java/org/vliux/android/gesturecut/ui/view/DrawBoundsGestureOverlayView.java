@@ -38,7 +38,7 @@ public class DrawBoundsGestureOverlayView extends GestureOverlayView {
             TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.DrawBoundsGestureOverlayView);
             try {
                 mBoundrayColor = typedArray.getColor(R.styleable.DrawBoundsGestureOverlayView_boundColor, context.getResources().getColor(R.color.gesture_cur_blue));
-                mBoundaryWidth = typedArray.getFloat(R.styleable.DrawBoundsGestureOverlayView_boundWidth, 2.0f);
+                mBoundaryWidth = typedArray.getFloat(R.styleable.DrawBoundsGestureOverlayView_boundWidth, 1.0f);
             } finally {
                 typedArray.recycle();
             }

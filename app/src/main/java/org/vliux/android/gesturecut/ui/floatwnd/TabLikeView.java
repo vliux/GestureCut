@@ -15,7 +15,7 @@ import org.vliux.android.gesturecut.R;
  * Created by vliux on 4/17/14.
  */
 public class TabLikeView extends LinearLayout implements View.OnClickListener {
-    private static final int COLOR_ACTIVE = R.color.beige_light_semi_transparent;
+    private static final int COLOR_ACTIVE = R.color.yellow;
     private static final int COLOR_INACTIVE = R.color.global_bkground;
 
     private TextView mTvUse;

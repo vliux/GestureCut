@@ -45,7 +45,7 @@
             android:id="@+id/gesture_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            custom:boundWidth="6"
+            custom:boundWidth="2"
             style="@style/gesture_overlay_use">
             <TextView
                 android:id="@+id/gesture_hint"
@@ -54,7 +54,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:textSize="@dimen/text_size_small_title"
-                android:textColor="@color/beige_light_semi_transparent"
+                android:textColor="@color/yellow"
                 android:drawableLeft="@drawable/ic_pencil"
                 android:drawablePadding="4dp"/>
         </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
@@ -77,20 +77,16 @@
                 android:textColor="@color/red_warning"
                 android:textSize="@dimen/text_size_general"
                 android:textStyle="bold"
-                android:background="@color/beige_light_semi_transparent"
+                android:background="@color/yellow"
                 android:visibility="gone"/>
             <!-- target app info, when adding a new gesture -->
             <org.vliux.android.gesturecut.ui.view.AppInfoView
                 android:id="@+id/gesture_appinfoview"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/settings_outmost_margin"
-                android:background="@color/beige_light_semi_transparent">
+                android:paddingLeft="@dimen/settings_outmost_margin"
+                android:background="@color/yellow">
             </org.vliux.android.gesturecut.ui.view.AppInfoView>
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1px"
-                android:background="@color/gesture_cur_blue"/>
         </LinearLayout>
 
         <!-- layer above, show confirmation dialog -->

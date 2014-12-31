@@ -245,7 +245,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
 
         switch (tabType){
             case ADD:
-                mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.beige_light_semi_transparent));
+                mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.yellow));
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
                 mResolvedComponent = TaskManager.getTopComponent(getContext());
                 try {

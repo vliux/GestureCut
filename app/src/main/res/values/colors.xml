@@ -12,7 +12,7 @@
     <color name="gesture_cur_blue_transparent">#000099cc</color>
     <!-- the bg color of GestureOverlayView on Second FloatWindow -->
     <color name="gesture_create_bg_semi_transparent">#BB000000</color>
-    <color name="beige_light_semi_transparent">#ffbb33</color>
+    <color name="yellow">#ffbb33</color>
 
     <color name="float_wnd_circle">#880ce6e8</color>
     <color name="float_wnd_inner_blue">#66104a89</color>

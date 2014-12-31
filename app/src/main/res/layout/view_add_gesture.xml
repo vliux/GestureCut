@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/gesture_create_bg_semi_transparent"
-        custom:boundColor="@color/beige_light_semi_transparent"
+        custom:boundColor="@color/yellow"
         custom:boundWidth="6"
         style="@style/gesture_overlay_use">
         <TextView
@@ -19,7 +19,7 @@
             android:gravity="center"
             android:text="@string/gesture_bg_title_record"
             android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/beige_light_semi_transparent"
+            android:textColor="@color/yellow"
             android:drawableLeft="@drawable/ic_pencil"
             android:drawablePadding="8dp"/>
 

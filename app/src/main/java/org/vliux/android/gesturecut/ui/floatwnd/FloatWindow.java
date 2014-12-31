@@ -17,7 +17,6 @@ import android.view.WindowManager;
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.util.ScreenUtil;
-import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
  * Created by vliux on 4/3/14.
@@ -31,9 +30,9 @@ public class FloatWindow extends View implements View.OnClickListener {
     private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.gesture_cur_blue;
 
     private static final int COLOR_INNER_SPACE_NORMAL = R.color.float_wnd_inner_blue;
-    private static final int COLOR_INNER_SPACE_PRESSED = R.color.beige_light_semi_transparent;
+    private static final int COLOR_INNER_SPACE_PRESSED = R.color.yellow;
 
-    private static final int COLOR_TEXT_STROKE = R.color.beige_light_semi_transparent;
+    private static final int COLOR_TEXT_STROKE = R.color.yellow;
 
     private int mOutterStrokeWidth;
     private int mCharStrokeWidth;
