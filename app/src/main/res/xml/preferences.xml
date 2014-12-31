@@ -1,22 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <SwitchPreference
-        android:key="@string/pref_key_vibrate"
-        android:title="@string/setting_vibrate"
-        android:summaryOff="@string/setting_vibrate_off"
-        android:summaryOn="@string/setting_vibrate_on"
-        android:defaultValue="true"
-        android:selectable="false"/>
 
-    <Preference
-        android:title="@string/setting_rate_title"
-        android:summary="@string/setting_rate_summary">
-    </Preference>
+    <PreferenceCategory android:title="@string/setting_categroy_basic">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_float_wnd"
+            android:selectable="false"
+            android:summaryOff="@string/setting_float_wnd_off"
+            android:summaryOn="@string/setting_float_wnd_on"
+            android:title="@string/setting_float_wnd" />
 
-    <Preference
-        android:title="@string/setting_about_title">
-        <intent android:targetClass="org.vliux.android.gesturecut.activity.AboutActivity"
-            android:targetPackage="org.vliux.android.gesturecut"/>
-    </Preference>
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="@string/pref_key_vibrate"
+            android:selectable="false"
+            android:summaryOff="@string/setting_vibrate_off"
+            android:summaryOn="@string/setting_vibrate_on"
+            android:title="@string/setting_vibrate" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_more">
+        <Preference
+            android:summary="@string/setting_rate_summary"
+            android:title="@string/setting_rate_title"></Preference>
+
+        <Preference android:title="@string/setting_about_title">
+            <intent
+                android:targetClass="org.vliux.android.gesturecut.activity.AboutActivity"
+                android:targetPackage="org.vliux.android.gesturecut" />
+        </Preference>
+    </PreferenceCategory>
 </PreferenceScreen>

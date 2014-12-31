@@ -30,11 +30,11 @@
             android:gravity="center"
             android:singleLine="false"
             android:layout_marginTop="@dimen/about_title_margin_small"
-            android:text="Xin Liu\nswordmanliuxin@gmail.com"
+            android:text="Xin Liu\nhttp://vliux.me"
             android:textSize="@dimen/text_size_general"
             android:textColor="@color/beige_light_semi_transparent"/>
 
-        <TextView
+        <!--<TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -42,6 +42,6 @@
             android:layout_marginTop="@dimen/about_title_margin_big"
             android:text="@string/about_intro_app"
             android:textSize="@dimen/text_size_tiny"
-            android:textColor="@color/gesture_cur_blue"/>
+            android:textColor="@color/gesture_cur_blue"/>-->
     </LinearLayout>
 </FrameLayout>

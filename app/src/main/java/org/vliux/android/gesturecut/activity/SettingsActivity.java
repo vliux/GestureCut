@@ -48,13 +48,13 @@ public class SettingsActivity extends Activity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            /*(if(getString(R.string.pref_key_vibrate).equals(key)){
-                if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_lockscreen_status, true)){
+            if(getString(R.string.pref_key_float_wnd).equals(key)){
+                if(PreferenceHelper.getUserPref(getActivity(), R.string.pref_key_float_wnd, true)){
                     GestureWindowService.showWindow(getActivity());
                 }else{
                     GestureWindowService.hideWindow(getActivity());
                 }
-            }*/
+            }
         }
 
         @Override

@@ -3,6 +3,7 @@
     <!-- preference keys,
      they are defined here because we need to use them across Java and layout -->
     <string name="pref_key_vibrate">PREF_KEY_VIBRATE</string>
+    <string name="pref_key_float_wnd">PREF_KEY_FLOAT_WND</string>
 
     <string name="pref_key_widget_index">PREF_KEY_WIDGET_INDEX</string>
     <string name="pref_key_float_wnd_xy">PREF_KEY_FLOAT_WND_XY</string>

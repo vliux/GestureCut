@@ -53,9 +53,16 @@
     <string name="add_ges_tab_usr_app">下载应用</string>
 
     <!-- settings -->
+    <string name="setting_categroy_basic">基本设置</string>
+    <string name="setting_category_more">更多</string>
+
     <string name="setting_vibrate">震动</string>
     <string name="setting_vibrate_on">启动任务时震动提示</string>
     <string name="setting_vibrate_off">启动任务时不震动</string>
+
+    <string name="setting_float_wnd">小浮窗</string>
+    <string name="setting_float_wnd_on">显示小浮窗</string>
+    <string name="setting_float_wnd_off">不显示小浮窗</string>
 
     <string name="setting_rate_title">给我评分</string>
     <string name="setting_rate_summary">让这款app越来越来好</string>

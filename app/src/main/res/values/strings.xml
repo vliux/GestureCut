@@ -53,9 +53,16 @@
     <string name="add_ges_tab_usr_app">Downloaded</string>
 
     <!-- settings -->
+    <string name="setting_categroy_basic">Basic</string>
+    <string name="setting_category_more">More</string>
+
     <string name="setting_vibrate">Vibration</string>
     <string name="setting_vibrate_on">Vibrate when task is being launched</string>
     <string name="setting_vibrate_off">Not vibrate when task is being launched</string>
+
+    <string name="setting_float_wnd">Float window</string>
+    <string name="setting_float_wnd_on">Show float window</string>
+    <string name="setting_float_wnd_off">Float window turned off</string>
 
     <string name="setting_rate_title">Rate me</string>
     <string name="setting_rate_summary">Help this app to be better</string>

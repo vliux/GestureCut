@@ -10,6 +10,7 @@ import org.vliux.android.gesturecut.service.GestureWindowService;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
+import org.vliux.android.gesturecut.util.PreferenceHelper;
 
 /**
  * Created by vliux on 4/3/14.
@@ -20,10 +21,12 @@ public class GestureCutApplication extends Application {
     public void onCreate() {
         super.onCreate();
         checkDebuggable();
-        initKeyguardRelated();
-        //controlFloatWindow(true);
         GestureUtil.init(getApplicationContext());
         initDb();
+
+        if(PreferenceHelper.getUserPref(this, R.string.pref_key_float_wnd, true)){
+            GestureWindowService.showWindow(this);
+        }
     }
 
     @Override
@@ -37,23 +40,8 @@ public class GestureCutApplication extends Application {
     }
 
     private void initKeyguardRelated(){
-        PhoneStateMonitor.init(this);
-        GestureWindowService.showWindow(this);
+        //PhoneStateMonitor.init(this);
     }
-
-    /*private void controlFloatWindow(final boolean isToShow) {
-        if (isToShow) {
-            mHandler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    FloatWindowManager.registerLockerStatusReceiver(GestureCutApplication.this);
-                }
-            }, AppConstant.Anim.ANIM_DURATION_NORMAL);
-        }else{
-            FloatWindowManager.unregisterLockerStatusReceiver(GestureCutApplication.this);
-            FloatWindowManager.removeWindow(this);
-        }
-    }*/
 
     private void checkDebuggable() {
         ApplicationInfo applicationInfo = getApplicationInfo();
