@@ -66,5 +66,6 @@
 
     <string name="about_intro_app">Convenient task switching with gestures~</string>
 
-    <string name="gesture_list_empty_msg">Press me to add a new gesture, \nor use \"+\" button\n at the right-bottom side</string>
+    <string name="main_gesture_list_empty_msg">Press \"+\" at right bottom\nto add a gesture</string>
+    <string name="float_gesture_list_empty_msg">No gesture defined yet</string>
 </resources>

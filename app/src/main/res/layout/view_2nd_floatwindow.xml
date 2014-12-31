@@ -27,6 +27,19 @@
             android:listSelector="@drawable/gesture_list_selector_pressed"
             android:visibility="gone">
         </org.vliux.android.gesturecut.ui.view.GestureListView>
+        <!-- empty view for gesture listview -->
+        <TextView
+            android:id="@+id/ges_list_empty_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/ic_launcher"
+            android:drawablePadding="@dimen/drawable_padding_default"
+            android:gravity="left|center_vertical"
+            android:text="@string/float_gesture_list_empty_msg"
+            android:textColor="@color/gesture_cur_blue"
+            android:textSize="@dimen/text_size_small_title"
+            android:visibility="gone" />
 
         <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
             android:id="@+id/gesture_overlay"

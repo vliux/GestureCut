@@ -20,8 +20,8 @@
         android:layout_gravity="center"
         android:drawablePadding="@dimen/drawable_padding_default"
         android:drawableLeft="@drawable/ic_launcher"
-        android:gravity="left"
-        android:text="@string/gesture_list_empty_msg"
+        android:gravity="left|center_vertical"
+        android:text="@string/main_gesture_list_empty_msg"
         android:textColor="@color/gesture_cur_blue"
         android:textSize="@dimen/text_size_small_title"
         android:visibility="gone"/>

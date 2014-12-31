@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.graphics.Color;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.TaskFilterManager;
 import org.vliux.android.gesturecut.biz.TaskManager;
@@ -47,6 +49,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
     private ImageView mIvAppIconUseAnim; // app icon for animator when using gesture
     private TextView mTvInvalidRc; // show warning for invalid ResolvedComponent
     private GestureListView mGestureListView;
+    private View mGestureListEmptyView;
 
     /* ResolvedComponent as a gesture target. This variable is is used for kepping the reference,
      * as far as, when actually saving the new gesture, the top-level component may be different than what is shown to user.
@@ -82,8 +85,10 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
         mAppInfoLayout = (LinearLayout)findViewById(R.id.gesture_appinfo_layout);
         mTvInvalidRc = (TextView)findViewById(R.id.gesture_tv_invalid_rc);
         mGestureListView = (GestureListView)findViewById(R.id.gesture_listview);
+        mGestureListEmptyView = findViewById(R.id.ges_list_empty_view);
 
         mGestureListView.setOnItemClickListener(mOnGestureListItemClicked);
+        mGestureListEmptyView.setOnClickListener(mOnEmptyViewClicked);
 
         mGestureOverlayView.setGestureColor(Color.RED);
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
@@ -252,12 +257,14 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                     mTvInvalidRc.setText(e.getMessage());
                 }
                 mAppInfoView.setResolvedComponent(mResolvedComponent);
+                mGestureListView.setEmptyView(null);
                 //mGestureOverlayView.setVisibility(VISIBLE);
                 //mGestureListView.setVisibility(GONE);
                 break;
             case USE:
                 mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.gesture_cur_blue));
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
+                mGestureListView.setEmptyView(null);
                 //mGestureOverlayView.setVisibility(VISIBLE);
                 //mGestureListView.setVisibility(GONE);
                 break;
@@ -266,6 +273,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                 //mGestureListView.setVisibility(VISIBLE);
                 //mGestureOverlayView.setVisibility(GONE);
                 mGestureListView.refresh();
+                mGestureListView.setEmptyView(mGestureListEmptyView);
                 break;
         }
         switchTabAnim(tabType);
@@ -289,6 +297,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                     public void onAnimationStart(Animator animation) {
                         if(mGestureListView.getVisibility() == VISIBLE){
                             mGestureListView.setVisibility(GONE);
+                            mGestureListEmptyView.setVisibility(GONE);
                         }
                         if(mGestureOverlayView.getVisibility() != VISIBLE){
                             mGestureOverlayView.setVisibility(VISIBLE);
@@ -400,4 +409,14 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
         }
         return translationYAnimator;
     }
+
+    private final OnClickListener mOnEmptyViewClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getContext(), AddGestureActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            getContext().startActivity(intent);
+            quitAnim();
+        }
+    };
 }
