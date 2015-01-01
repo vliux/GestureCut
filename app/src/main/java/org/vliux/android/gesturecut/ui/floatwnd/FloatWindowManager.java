@@ -102,11 +102,11 @@ public class FloatWindowManager {
         lp.format = PixelFormat.TRANSLUCENT;
         int[] screenSize = ScreenUtil.getScreenSize(context);
 
-        lp.width = (int)(screenSize[0] * 0.93);
-        lp.height = (int)(screenSize[1] * 0.93);
+        lp.width = (int)(screenSize[0] * 0.9f);
+        lp.height = (int)(screenSize[1] * 0.9f);
         lp.gravity = Gravity.CENTER;
         lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        lp.dimAmount = 0.5f;
+        lp.dimAmount = 0.7f;
 
         return lp;
     }

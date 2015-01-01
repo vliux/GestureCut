@@ -16,11 +16,11 @@ import org.vliux.android.gesturecut.R;
  */
 public class TabLikeView extends LinearLayout implements View.OnClickListener {
     private static final int COLOR_ACTIVE = R.color.yellow;
-    private static final int COLOR_INACTIVE = R.color.global_bkground;
+    private static final int COLOR_INACTIVE = R.color.text_general;
 
-    private TextView mTvUse;
+    private ImageView mIvUse;
+    private ImageView mIvAdd;
     private View mUnderscoreUse;
-    private TextView mTvAdd;
     private View mUnderscoreAdd;
 
     private ImageView mIvList;
@@ -46,16 +46,16 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
 
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_tablike, this, true);
-        mTvUse = (TextView)findViewById(R.id.tablike_tv_use);
-        mTvAdd = (TextView)findViewById(R.id.tablike_tv_add);
+        mIvUse = (ImageView)findViewById(R.id.tablike_use_iv);
+        mIvAdd = (ImageView)findViewById(R.id.tablike_add_iv);
         mUnderscoreUse = findViewById(R.id.tablike_underscore_use);
         mUnderscoreAdd = findViewById(R.id.tablike_underscore_add);
 
         mIvList = (ImageView)findViewById(R.id.tablike_list);
         mUnderscoreList = findViewById(R.id.tablike_underscore_list);
 
-        mTvUse.setOnClickListener(this);
-        mTvAdd.setOnClickListener(this);
+        mIvUse.setOnClickListener(this);
+        mIvAdd.setOnClickListener(this);
         mIvList.setOnClickListener(this);
     }
 
@@ -69,30 +69,30 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
 
             switch (type){
                 case USE:
-                    mTvAdd.setTypeface(null, Typeface.NORMAL);
-                    mTvUse.setTypeface(null, Typeface.BOLD);
+                    //mTvAdd.setTypeface(null, Typeface.NORMAL);
+                    //mTvUse.setTypeface(null, Typeface.BOLD);
                     mUnderscoreAdd.setVisibility(INVISIBLE);
                     mUnderscoreUse.setVisibility(VISIBLE);
-                    mTvAdd.setTextColor(getResources().getColor(COLOR_INACTIVE));
-                    mTvUse.setTextColor(getResources().getColor(COLOR_ACTIVE));
+                    //mTvAdd.setTextColor(getResources().getColor(COLOR_INACTIVE));
+                    //mTvUse.setTextColor(getResources().getColor(COLOR_ACTIVE));
                     mUnderscoreList.setVisibility(INVISIBLE);
                     break;
                 case ADD:
-                    mTvAdd.setTypeface(null, Typeface.BOLD);
-                    mTvUse.setTypeface(null, Typeface.NORMAL);
+                    //mTvAdd.setTypeface(null, Typeface.BOLD);
+                    //mTvUse.setTypeface(null, Typeface.NORMAL);
                     mUnderscoreAdd.setVisibility(VISIBLE);
                     mUnderscoreUse.setVisibility(INVISIBLE);
-                    mTvAdd.setTextColor(getResources().getColor(COLOR_ACTIVE));
-                    mTvUse.setTextColor(getResources().getColor(COLOR_INACTIVE));
+                    //mTvAdd.setTextColor(getResources().getColor(COLOR_ACTIVE));
+                    //mTvUse.setTextColor(getResources().getColor(COLOR_INACTIVE));
                     mUnderscoreList.setVisibility(INVISIBLE);
                     break;
                 case LIST:
-                    mTvAdd.setTypeface(null, Typeface.NORMAL);
-                    mTvUse.setTypeface(null, Typeface.NORMAL);
+                    //mTvAdd.setTypeface(null, Typeface.NORMAL);
+                    //mTvUse.setTypeface(null, Typeface.NORMAL);
                     mUnderscoreAdd.setVisibility(INVISIBLE);
                     mUnderscoreUse.setVisibility(INVISIBLE);
-                    mTvAdd.setTextColor(getResources().getColor(COLOR_INACTIVE));
-                    mTvUse.setTextColor(getResources().getColor(COLOR_INACTIVE));
+                    //mTvAdd.setTextColor(getResources().getColor(COLOR_INACTIVE));
+                    //mTvUse.setTextColor(getResources().getColor(COLOR_INACTIVE));
 
                     mUnderscoreList.setVisibility(VISIBLE);
             }
@@ -103,10 +103,10 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch(v.getId()){
-            case R.id.tablike_tv_add:
+            case R.id.tablike_add_iv:
                 switchTab(TabType.ADD);
                 break;
-            case R.id.tablike_tv_use:
+            case R.id.tablike_use_iv:
                 switchTab(TabType.USE);
                 break;
             case R.id.tablike_list:

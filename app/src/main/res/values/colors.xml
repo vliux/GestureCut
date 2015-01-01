@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="global_bkground">@android:color/white</color>
+    <color name="global_bkground">#f7f7f7</color>
     <color name="gesture_cur_blue">#2567d5</color>
     <color name="gesture_cur_blue_light">@android:color/holo_blue_bright</color>
     <color name="gesture_list_bkground">#efefef</color>
@@ -13,6 +13,7 @@
     <!-- the bg color of GestureOverlayView on Second FloatWindow -->
     <color name="gesture_create_bg_semi_transparent">#BB000000</color>
     <color name="yellow">#ffbb33</color>
+    <color name="yellow_semi_transparent">#99ffbb33</color>
 
     <color name="float_wnd_circle">#880ce6e8</color>
     <color name="float_wnd_inner_blue">#66104a89</color>

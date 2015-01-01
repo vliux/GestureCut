@@ -4,9 +4,4 @@
         <attr name="longClassName" format="boolean"/>
     </declare-styleable>
 
-    <declare-styleable name="DrawBoundsGestureOverlayView">
-        <attr name="boundColor" format="color"/>
-        <attr name="boundWidth" format="float"/>
-    </declare-styleable>
-
 </resources>

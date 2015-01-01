@@ -2,15 +2,33 @@
 
 <!-- LinearLayout -->
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/fw2_title_height"
+        android:background="@drawable/float_wnd_2nd_titlebar_bg">
+        <TextView
+            android:id="@+id/fw2_tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical|left"
+            android:paddingLeft="@dimen/gesture_overlay_margin"
+            android:paddingRight="@dimen/gesture_overlay_margin"
+            android:background="@drawable/btn_bg_transparent"
+            android:text="@string/app_name"
+            android:textColor="@color/global_bkground"
+            android:textSize="@dimen/text_size_general"
+            android:drawableLeft="@drawable/ic_back"
+            android:drawablePadding="@dimen/drawable_padding_default"/>
+    </LinearLayout>
 
     <org.vliux.android.gesturecut.ui.floatwnd.TabLikeView
         android:id="@+id/gesture_tablike"
         android:layout_width="match_parent"
         android:layout_height="@dimen/switch_layout_height"
-        android:background="@color/global_bkground"/>
+        android:background="@color/gesture_cur_grey_light"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,7 +38,6 @@
             android:id="@+id/gesture_listview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/gesture_list_bkground"
             android:cacheColorHint="@color/gesture_list_bkground"
             android:divider="@color/gesture_cur_grey"
             android:dividerHeight="@dimen/listview_divider_thin"
@@ -41,11 +58,10 @@
             android:textSize="@dimen/text_size_small_title"
             android:visibility="gone" />
 
-        <org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView
+        <android.gesture.GestureOverlayView
             android:id="@+id/gesture_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            custom:boundWidth="2"
             style="@style/gesture_overlay_use">
             <TextView
                 android:id="@+id/gesture_hint"
@@ -53,11 +69,11 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textSize="@dimen/text_size_small_title"
+                android:textSize="@dimen/text_size_general"
                 android:textColor="@color/yellow"
                 android:drawableLeft="@drawable/ic_pencil"
                 android:drawablePadding="4dp"/>
-        </org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView>
+        </android.gesture.GestureOverlayView>
 
         <LinearLayout
             android:id="@+id/gesture_appinfo_layout"
@@ -85,7 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingLeft="@dimen/settings_outmost_margin"
-                android:background="@color/yellow">
+                android:background="@color/yellow_semi_transparent">
             </org.vliux.android.gesturecut.ui.view.AppInfoView>
         </LinearLayout>
 

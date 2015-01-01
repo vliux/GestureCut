@@ -48,7 +48,8 @@
     <dimen name="unlock_bar_margin_vertical">20dp</dimen>
 
     <!-- 2nd float window -->
-    <dimen name="switch_layout_height">48dp</dimen>
+    <dimen name="fw2_title_height">42dp</dimen>
+    <dimen name="switch_layout_height">46dp</dimen>
     <dimen name="fw2_outmost_margin">45dp</dimen>
     <dimen name="fw2_tablelayout_padding">8dp</dimen>
 

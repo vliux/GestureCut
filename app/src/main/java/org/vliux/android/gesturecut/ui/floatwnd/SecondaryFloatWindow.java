@@ -29,7 +29,6 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
-import org.vliux.android.gesturecut.ui.view.DrawBoundsGestureOverlayView;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.AnimUtil;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
@@ -38,8 +37,8 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
  * Created by vliux on 4/9/14.
  */
 public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.OnTablikeChangedListener {
-
-    private DrawBoundsGestureOverlayView mGestureOverlayView;
+    private TextView mTvBack;
+    private GestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
     private TextView mTvHint;
     private GestureConfirmDialog mFwDialog;
@@ -74,9 +73,10 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
     private void init(){
         LayoutInflater.from(getContext()).inflate(R.layout.view_2nd_floatwindow, this, true);
         setOrientation(VERTICAL);
-        setBackgroundResource(R.color.gesture_create_bg_semi_transparent);
+        setBackgroundResource(R.drawable.float_wnd_2nd_bg);
 
-        mGestureOverlayView = (DrawBoundsGestureOverlayView)findViewById(R.id.gesture_overlay);
+        mTvBack = (TextView)findViewById(R.id.fw2_tv_back);
+        mGestureOverlayView = (GestureOverlayView)findViewById(R.id.gesture_overlay);
         mTabLikeView = (TabLikeView)findViewById(R.id.gesture_tablike);
         mTvHint = (TextView)findViewById(R.id.gesture_hint);
         mFwDialog = (GestureConfirmDialog)findViewById(R.id.gesture_fwdialog);
@@ -95,6 +95,7 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
 
         mTabLikeView.setOnTabChangedListener(this);
         refreshHint(mTabLikeView.getType());
+        mTvBack.setOnClickListener(mOnBackClicked);
     }
 
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
@@ -245,7 +246,6 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
 
         switch (tabType){
             case ADD:
-                mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.yellow));
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_record));
                 mResolvedComponent = TaskManager.getTopComponent(getContext());
                 try {
@@ -262,7 +262,6 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
                 //mGestureListView.setVisibility(GONE);
                 break;
             case USE:
-                mGestureOverlayView.setBoundayColor(getResources().getColor(R.color.gesture_cur_blue));
                 mTvHint.setText(getContext().getString(R.string.gesture_bg_title_use));
                 mGestureListView.setEmptyView(null);
                 //mGestureOverlayView.setVisibility(VISIBLE);
@@ -416,6 +415,13 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
             Intent intent = new Intent(getContext(), AddGestureActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
             getContext().startActivity(intent);
+            quitAnim();
+        }
+    };
+
+    private final OnClickListener mOnBackClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
             quitAnim();
         }
     };

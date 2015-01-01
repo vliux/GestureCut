@@ -11,9 +11,9 @@
     <string name="notification_content">点击编辑已定义的手势</string>
 
     <!-- text in background for recording a new gesture -->
-    <string name="gesture_bg_title_record">画出要添加的手势</string>
+    <string name="gesture_bg_title_record">画出对应的新手势</string>
     <!-- text in background for starting activity from a gesture -->
-    <string name="gesture_bg_title_use">画出要使用的手势</string>
+    <string name="gesture_bg_title_use">画出已定义的手势，以启动app</string>
 
     <string name="saving_gesture_completed">手势%s已保存</string>
     <string name="start_activity_from_gesture">通过手势启动任务&#8230;</string>
