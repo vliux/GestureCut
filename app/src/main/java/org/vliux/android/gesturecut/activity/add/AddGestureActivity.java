@@ -2,6 +2,9 @@ package org.vliux.android.gesturecut.activity.add;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -19,6 +22,7 @@ import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.db.DbManager;
@@ -76,9 +80,23 @@ public class AddGestureActivity extends Activity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        if(Intent.ACTION_SEARCH.equals(intent.getAction())){
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            scanUnGesturedPackagrsAsync(query);
+        }else {
+            super.onNewIntent(intent);
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.activity_add_gesture, menu);
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -104,16 +122,27 @@ public class AddGestureActivity extends Activity {
     }
 
 
+    private ConcurrentManager.IJob scanUnGesturedPackagrsAsync(String searchQuery){
+        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
+                mTabsPresenter.getSelectedTab(),
+                searchQuery);
+    }
+
     private ConcurrentManager.IJob scanUnGesturedPackagrsAsync(){
-        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback, mTabsPresenter.getSelectedTab(), mTabsPresenter.getSelectedTab());
+        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
+                mTabsPresenter.getSelectedTab());
     }
 
     private final ConcurrentManager.IBizCallback<List<ResolvedComponent>> mScanPkgsBizCallback = new ConcurrentManager.IBizCallback<List<ResolvedComponent>>() {
         @Override
         public List<ResolvedComponent> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
             TabsPresenter.TabTag tabTag = (TabsPresenter.TabTag)params[0];
-            List<ResolvedComponent> ungesturedRcList = new ArrayList<ResolvedComponent>();
+            String searchQuery = null;
+            if(params.length > 1){
+                searchQuery = (String)params[1];
+            }
 
+            List<ResolvedComponent> ungesturedRcList = new ArrayList<ResolvedComponent>();
             // already gestured package set
             GestureDbTable dbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
             Set<String> packageNames = dbTable.getGesturedPackageNames();
@@ -127,7 +156,18 @@ public class AddGestureActivity extends Activity {
                 boolean condition = (tabTag == TabsPresenter.TabTag.SYSTEM_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1);
                 condition = (condition || (tabTag == TabsPresenter.TabTag.USER_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0));
 
-                if(condition && !packageNames.contains(pkgInfo.packageName)) {
+                if(!condition || null == pkgInfo.applicationInfo){
+                    continue;
+                }
+                // search query filter
+                if(null != searchQuery){
+                    ApplicationInfo applicationInfo = pkgInfo.applicationInfo;
+                    if(!packageManager.getApplicationLabel(applicationInfo).toString().toLowerCase().contains(searchQuery)){
+                        continue;
+                    }
+                }
+
+                if(!packageNames.contains(pkgInfo.packageName)) {
                     ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
                     ungesturedRcList.add(rc);
                 }
@@ -146,10 +186,8 @@ public class AddGestureActivity extends Activity {
 
         @Override
         public void onPostExecute(List<ResolvedComponent> resolvedComponents) {
-            if(null != resolvedComponents && resolvedComponents.size() > 0){
-                mListAdapter.installedComponents = resolvedComponents;
-                mListAdapter.notifyDataSetChanged();
-            }
+            mListAdapter.installedComponents = resolvedComponents;
+            mListAdapter.notifyDataSetChanged();
             mProgressBar.setVisibility(View.GONE);
         }
 
@@ -169,16 +207,14 @@ public class AddGestureActivity extends Activity {
      */
     class PkgListAdapter extends BaseAdapter{
         private List<ResolvedComponent> installedComponents;
-        private PackageManager packageManager;
 
         public PkgListAdapter(PackageManager pkgMgr){
-            packageManager = pkgMgr;
             installedComponents = new ArrayList<ResolvedComponent>();
         }
 
         @Override
         public int getCount() {
-            return installedComponents.size();
+            return null != installedComponents? installedComponents.size() : 0;
         }
 
         @Override

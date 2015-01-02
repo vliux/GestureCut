@@ -80,4 +80,6 @@
 
     <string name="main_gesture_list_empty_msg">Press \"+\" at right bottom\nto add a gesture</string>
     <string name="float_gesture_list_empty_msg">No gesture defined yet</string>
+
+    <string name="search_add_ges_hint">Search apps</string>
 </resources>

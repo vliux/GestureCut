@@ -47,6 +47,11 @@
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
             android:parentActivityName=".activity.main.GestureListActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/search_add_gesture"/>
         </activity>
 
         <activity android:name=".activity.SettingsActivity"

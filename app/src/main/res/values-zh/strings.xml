@@ -80,4 +80,6 @@
 
     <string name="main_gesture_list_empty_msg">点我添加新手势, \n或右下角\"+\"按钮</string>
     <string name="float_gesture_list_empty_msg">您尚未定义手势</string>
+
+    <string name="search_add_ges_hint">搜索app</string>
 </resources>
