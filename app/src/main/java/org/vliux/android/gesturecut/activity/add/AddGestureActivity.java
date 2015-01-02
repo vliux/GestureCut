@@ -10,6 +10,8 @@ import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -73,7 +75,12 @@ public class AddGestureActivity extends Activity {
         mTabsPresenter.initTabs();
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.activity_add_gesture, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
     private ConcurrentManager.IJob mScanJob;
     @Override
