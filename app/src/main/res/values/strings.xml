@@ -2,6 +2,7 @@
     <string name="app_name">GestureCut</string>
     <string name="settings">Settings</string>
     <string name="about">About</string>
+    <string name="search">Search</string>
     <string name="add_gesture">Add gesture</string>
     <string name="refresh">Refresh</string>
     <string name="remove">Remove</string>

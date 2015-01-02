@@ -2,6 +2,7 @@
     <string name="app_name">弹指</string>
     <string name="settings">设置</string>
     <string name="about">关于</string>
+    <string name="search">搜索</string>
     <string name="add_gesture">添加手势</string>
     <string name="refresh">刷新</string>
     <string name="remove">删除</string>

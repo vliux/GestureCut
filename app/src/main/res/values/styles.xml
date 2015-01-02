@@ -22,7 +22,7 @@
 
     <style name="GcActionBarTabText"
         parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/text_general</item>
+        <item name="android:textColor">@color/global_bkground</item>
     </style>
 
     <style name="GcActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
