@@ -152,6 +152,7 @@ public class AddGestureActivity extends Activity {
 
             int pkgInfoSize = pkgInfoList.size();
             for(int i = 0; i < pkgInfoSize; i++){
+                job.publishJobProgress(100 * i/pkgInfoSize);
                 PackageInfo pkgInfo = pkgInfoList.get(i);
                 boolean condition = (tabTag == TabsPresenter.TabTag.SYSTEM_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1);
                 condition = (condition || (tabTag == TabsPresenter.TabTag.USER_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0));
@@ -171,7 +172,6 @@ public class AddGestureActivity extends Activity {
                     ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
                     ungesturedRcList.add(rc);
                 }
-                job.publishJobProgress(100 * (i+1)/pkgInfoSize);
             }
             return ungesturedRcList;
         }
