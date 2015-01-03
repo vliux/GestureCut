@@ -15,6 +15,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -52,6 +53,8 @@ public class AddGestureActivity extends Activity {
     private AddGestureView mAddGestureView;
     private AnimPresenter mAnimPresenter;
     private TabsPresenter mTabsPresenter;
+
+    private MenuItem mSearchMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +97,8 @@ public class AddGestureActivity extends Activity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.activity_add_gesture, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        mSearchMenu = menu.findItem(R.id.action_search);
+        SearchView searchView = (SearchView) mSearchMenu.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
         return super.onCreateOptionsMenu(menu);
@@ -304,6 +308,10 @@ public class AddGestureActivity extends Activity {
             }
         }else if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
             scanUnGesturedPackagrsAsync();
+            // close SearchView if it's expended.
+            if(null != mSearchMenu && mSearchMenu.isActionViewExpanded()){
+                mSearchMenu.collapseActionView();
+            }
         }
     }
 }
