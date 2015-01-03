@@ -324,10 +324,11 @@ public class AddGestureActivity extends Activity {
             }
         }else if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
             scanUnGesturedPackagrsAsync();
-            // close SearchView if it's expended.
-            if(null != mSearchMenu && mSearchMenu.isActionViewExpanded()){
-                mSearchMenu.collapseActionView();
-            }
+        }
+
+        // close SearchView if it's expended, for both events
+        if(null != mSearchMenu && mSearchMenu.isActionViewExpanded()){
+            mSearchMenu.collapseActionView();
         }
     }
 }
