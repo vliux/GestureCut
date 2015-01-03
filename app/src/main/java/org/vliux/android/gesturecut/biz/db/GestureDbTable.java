@@ -57,7 +57,7 @@ public class GestureDbTable extends DbTable {
     }
 
     public boolean removeGesture(String gestureName){
-        return super.delete(DB_COL_COMPONENT_NAME_TEXT_1 + "=?",
+        return super.delete(DB_COL_GESTURE_NAME_TEXT_1 + "=?",
                 new String[]{gestureName});
     }
 
