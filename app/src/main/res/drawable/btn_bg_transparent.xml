@@ -3,6 +3,6 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:drawable="@drawable/shape_bg_holo_blue_light_semi_transparent"
         android:state_pressed="true"/>
-    <item android:drawable="@drawable/shape_bg_transparent"
+    <item android:drawable="@drawable/shape_bg_transparent_corner"
         android:state_pressed="false"/>
 </selector>
