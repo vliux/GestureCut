@@ -31,6 +31,7 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.AddGestureView;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
+import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 
 import java.util.ArrayList;
@@ -43,6 +44,8 @@ import de.greenrobot.event.EventBus;
  * Created by vliux on 12/23/14.
  */
 public class AddGestureActivity extends Activity {
+    private static final String TAG = AddGestureActivity.class.getSimpleName();
+
     private FrameLayout mLayout;
     private ListView mListView;
     private ProgressBar mProgressBar;
@@ -159,26 +162,56 @@ public class AddGestureActivity extends Activity {
             for(int i = 0; i < pkgInfoSize; i++){
                 job.publishJobProgress(100 * i/pkgInfoSize);
                 PackageInfo pkgInfo = pkgInfoList.get(i);
-                boolean condition = (tabTag == TabsPresenter.TabTag.SYSTEM_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1);
-                condition = (condition || (tabTag == TabsPresenter.TabTag.USER_APP && (pkgInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 0));
 
-                if(!condition || null == pkgInfo.applicationInfo){
-                    continue;
-                }
-                // search query filter
-                if(null != searchQuery){
-                    ApplicationInfo applicationInfo = pkgInfo.applicationInfo;
-                    if(!packageManager.getApplicationLabel(applicationInfo).toString().toLowerCase().contains(searchQuery)){
-                        continue;
+                if(checkAppInfoExists(pkgInfo)
+                        && checkAppType(pkgInfo, tabTag)
+                        && checkSearchQuery(pkgInfo, searchQuery, packageManager)) {
+
+                    if (!packageNames.contains(pkgInfo.packageName)) {
+                        ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
+                        ungesturedRcList.add(rc);
                     }
-                }
-
-                if(!packageNames.contains(pkgInfo.packageName)) {
-                    ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
-                    ungesturedRcList.add(rc);
                 }
             }
             return ungesturedRcList;
+        }
+
+        private boolean checkAppType(PackageInfo packageInfo, TabsPresenter.TabTag tabTag){
+            boolean isSystem = (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1;
+            AppLog.logd(TAG, String.format("%s is %s system app", packageInfo.packageName,
+                    isSystem? "a" : "not a"));
+            switch (tabTag){
+                case SYSTEM_APP:
+                    return isSystem;
+                case USER_APP:
+                    return !isSystem;
+            }
+            return false;
+        }
+
+        private boolean checkAppInfoExists(PackageInfo packageInfo){
+            boolean condition = (null != packageInfo.applicationInfo);
+            AppLog.logd(TAG, String.format("%s %s application",
+                    packageInfo.packageName,
+                    condition? "has" : "has NO"));
+            return condition;
+        }
+
+        private boolean checkSearchQuery(PackageInfo packageInfo, String searchQuery, PackageManager packageManager){
+            if(null != searchQuery){
+                ApplicationInfo applicationInfo = packageInfo.applicationInfo;
+                String appLabel = packageManager.getApplicationLabel(applicationInfo).toString();
+                if(null != appLabel && !appLabel.toLowerCase().contains(searchQuery)){
+                    return true;
+                }else{
+                    AppLog.logd(TAG, String.format("%s NOT match search query %s",
+                            null != appLabel? appLabel : packageInfo.packageName,
+                            searchQuery));
+                    return false;
+                }
+            }else{
+                return true;
+            }
         }
     };
 
