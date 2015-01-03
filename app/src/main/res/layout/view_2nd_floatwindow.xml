@@ -39,8 +39,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:cacheColorHint="@color/gesture_list_bkground"
-            android:divider="@color/gesture_cur_grey"
-            android:dividerHeight="@dimen/listview_divider_thin"
+            android:divider="@drawable/listview_divider"
             android:listSelector="@drawable/gesture_list_selector_pressed"
             android:visibility="gone">
         </org.vliux.android.gesturecut.ui.view.GestureListView>

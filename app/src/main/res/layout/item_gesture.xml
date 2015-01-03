@@ -20,7 +20,7 @@
         android:background="@drawable/gesture_list_selector_pressed"/>
 
     <View
-        android:layout_width="@dimen/listview_divider_thin"
+        android:layout_width="@dimen/listview_divider_thin_line_height"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/gesture_list_item_padding_vertical"
         android:layout_marginBottom="@dimen/gesture_list_item_padding_vertical"

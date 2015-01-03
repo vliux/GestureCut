@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<inset xmlns:android="http://schemas.android.com/apk/res/android"
+    android:insetLeft="@dimen/gesture_list_outter_margin"
+    android:insetRight="@dimen/gesture_list_outter_margin" >
+
+    <shape android:shape="line">
+        <stroke
+            android:width="@dimen/listview_divider_thin_line_height"
+            android:color="@color/gesture_cur_grey" />
+
+        <size android:height="@dimen/listview_divider_thin_total_height"/>
+    </shape>
+
+</inset>
