@@ -303,6 +303,10 @@ public class AddGestureActivity extends Activity {
 
         @Override
         public boolean onMenuItemActionCollapse(MenuItem item) {
+            if(null != mAnimPresenter) {
+                mAnimPresenter.close();
+                mAnimPresenter = null;
+            }
             scanUnGesturedPackagrsAsync();
             return true;
         }
@@ -320,8 +324,8 @@ public class AddGestureActivity extends Activity {
             if(null != mAnimPresenter) {
                 mAnimPresenter.close();
                 mAnimPresenter = null;
-                scanUnGesturedPackagrsAsync();
             }
+            scanUnGesturedPackagrsAsync();
         }else if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
             scanUnGesturedPackagrsAsync();
         }
