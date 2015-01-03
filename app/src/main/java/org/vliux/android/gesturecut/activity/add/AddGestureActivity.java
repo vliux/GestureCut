@@ -201,7 +201,7 @@ public class AddGestureActivity extends Activity {
             if(null != searchQuery){
                 ApplicationInfo applicationInfo = packageInfo.applicationInfo;
                 String appLabel = packageManager.getApplicationLabel(applicationInfo).toString();
-                if(null != appLabel && !appLabel.toLowerCase().contains(searchQuery)){
+                if(null != appLabel && appLabel.toLowerCase().contains(searchQuery)){
                     return true;
                 }else{
                     AppLog.logd(TAG, String.format("%s NOT match search query %s",
