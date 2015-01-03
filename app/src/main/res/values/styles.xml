@@ -13,8 +13,9 @@
     <style name="GcActionBar"
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/gesture_cur_blue</item>
-        <item name="android:displayOptions">showTitle</item>
+        <item name="android:displayOptions">showTitle|showHome</item>
         <item name="android:backgroundStacked">@color/actionbar_tab_bg</item>
+        <item name="android:icon">@drawable/actionbar_logo</item>
     </style>
 
     <style name="GcActionBarOverflow" parent="@android:style/Widget.Holo.ActionButton.Overflow">
