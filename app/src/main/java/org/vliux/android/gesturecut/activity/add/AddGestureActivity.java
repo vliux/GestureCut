@@ -98,9 +98,10 @@ public class AddGestureActivity extends Activity {
         menuInflater.inflate(R.menu.activity_add_gesture, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchMenu = menu.findItem(R.id.action_search);
+        mSearchMenu.setOnActionExpandListener(mOnSearchExpandListener);
+
         SearchView searchView = (SearchView) mSearchMenu.getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -293,6 +294,21 @@ public class AddGestureActivity extends Activity {
             }
         }
     };
+
+    private final MenuItem.OnActionExpandListener mOnSearchExpandListener = new MenuItem.OnActionExpandListener() {
+        @Override
+        public boolean onMenuItemActionExpand(MenuItem item) {
+            return true;
+        }
+
+        @Override
+        public boolean onMenuItemActionCollapse(MenuItem item) {
+            scanUnGesturedPackagrsAsync();
+            return true;
+        }
+    };
+
+
 
     /**
      * For event bus.
