@@ -156,7 +156,6 @@ public class AddGestureActivity extends Activity {
             Set<String> packageNames = dbTable.getGesturedPackageNames();
 
             PackageManager packageManager = AddGestureActivity.this.getPackageManager();
-            //List<PackageInfo> pkgInfoList = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
             List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
             int pkgInfoSize = applicationInfos.size();
@@ -178,8 +177,8 @@ public class AddGestureActivity extends Activity {
 
         private boolean checkAppType(ApplicationInfo applicationInfo, TabsPresenter.TabTag tabTag){
             boolean isSystem = (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1;
-            AppLog.logd(TAG, String.format("%s is %s system app", applicationInfo.packageName,
-                    isSystem? "a" : "not a"));
+            //AppLog.logd(TAG, String.format("%s is %s system app", applicationInfo.packageName,
+            //        isSystem? "a" : "not a"));
             switch (tabTag){
                 case SYSTEM_APP:
                     return isSystem;
@@ -195,9 +194,9 @@ public class AddGestureActivity extends Activity {
                 if(null != appLabel && appLabel.toLowerCase().contains(searchQuery)){
                     return true;
                 }else{
-                    AppLog.logd(TAG, String.format("%s NOT match search query %s",
-                            null != appLabel? appLabel : applicationInfo.packageName,
-                            searchQuery));
+                    //AppLog.logd(TAG, String.format("%s NOT match search query %s",
+                    //        null != appLabel? appLabel : applicationInfo.packageName,
+                    //        searchQuery));
                     return false;
                 }
             }else{
