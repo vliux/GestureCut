@@ -108,11 +108,22 @@ public class AddGestureActivity extends Activity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    private ConcurrentManager.IJob mScanJob;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_refresh:
+                collapseSearchView();
+                scanUnGesturedPackagrsAsync();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
-        mScanJob = scanUnGesturedPackagrsAsync();
+        scanUnGesturedPackagrsAsync();
     }
 
     @Override
@@ -129,15 +140,23 @@ public class AddGestureActivity extends Activity {
         EventBus.getDefault().unregister(this);
     }
 
+    private ConcurrentManager.IJob mScanJob = null;
+    private void scanUnGesturedPackagrsAsync(String searchQuery){
+        if(null != mScanJob && !mScanJob.isJobCancelled()){
+            return;
+        }
 
-    private ConcurrentManager.IJob scanUnGesturedPackagrsAsync(String searchQuery){
-        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
+        mScanJob = ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
                 mTabsPresenter.getSelectedTab(),
                 searchQuery);
     }
 
-    private ConcurrentManager.IJob scanUnGesturedPackagrsAsync(){
-        return ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
+    private void scanUnGesturedPackagrsAsync(){
+        if(null != mScanJob && !mScanJob.isJobCancelled()){
+            return;
+        }
+
+        mScanJob = ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
                 mTabsPresenter.getSelectedTab());
     }
 
@@ -215,6 +234,7 @@ public class AddGestureActivity extends Activity {
             mListAdapter.installedComponents = resolvedComponents;
             mListAdapter.notifyDataSetChanged();
             mProgressBar.setVisibility(View.GONE);
+            mScanJob = null;
         }
 
         @Override
@@ -224,7 +244,7 @@ public class AddGestureActivity extends Activity {
 
         @Override
         public void onCancelled() {
-
+            mScanJob = null;
         }
     };
 
@@ -333,8 +353,6 @@ public class AddGestureActivity extends Activity {
         }
     };
 
-
-
     /**
      * For event bus.
      * @param event
@@ -351,7 +369,10 @@ public class AddGestureActivity extends Activity {
             scanUnGesturedPackagrsAsync();
         }
 
-        // close SearchView if it's expended, for both events
+        collapseSearchView();
+    }
+
+    private void collapseSearchView(){
         if(null != mSearchMenu && mSearchMenu.isActionViewExpanded()){
             mSearchMenu.collapseActionView();
         }
