@@ -164,12 +164,10 @@ public class AddGestureActivity extends Activity {
                 ApplicationInfo applicationInfo = applicationInfos.get(i);
 
                 if(checkAppType(applicationInfo, tabTag)
+                        && !packageNames.contains(applicationInfo.packageName)
                         && checkSearchQuery(applicationInfo, searchQuery, packageManager)) {
-
-                    if (!packageNames.contains(applicationInfo.packageName)) {
-                        ResolvedComponent rc = new ResolvedComponent(applicationInfo.packageName);
-                        ungesturedRcList.add(rc);
-                    }
+                    ResolvedComponent rc = new ResolvedComponent(applicationInfo.packageName);
+                    ungesturedRcList.add(rc);
                 }
             }
             return ungesturedRcList;
