@@ -156,19 +156,19 @@ public class AddGestureActivity extends Activity {
             Set<String> packageNames = dbTable.getGesturedPackageNames();
 
             PackageManager packageManager = AddGestureActivity.this.getPackageManager();
-            List<PackageInfo> pkgInfoList = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
+            //List<PackageInfo> pkgInfoList = packageManager.getInstalledPackages(PackageManager.GET_META_DATA);
+            List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
 
-            int pkgInfoSize = pkgInfoList.size();
+            int pkgInfoSize = applicationInfos.size();
             for(int i = 0; i < pkgInfoSize; i++){
                 job.publishJobProgress(100 * i/pkgInfoSize);
-                PackageInfo pkgInfo = pkgInfoList.get(i);
+                ApplicationInfo applicationInfo = applicationInfos.get(i);
 
-                if(checkAppInfoExists(pkgInfo)
-                        && checkAppType(pkgInfo, tabTag)
-                        && checkSearchQuery(pkgInfo, searchQuery, packageManager)) {
+                if(checkAppType(applicationInfo, tabTag)
+                        && checkSearchQuery(applicationInfo, searchQuery, packageManager)) {
 
-                    if (!packageNames.contains(pkgInfo.packageName)) {
-                        ResolvedComponent rc = new ResolvedComponent(pkgInfo.packageName);
+                    if (!packageNames.contains(applicationInfo.packageName)) {
+                        ResolvedComponent rc = new ResolvedComponent(applicationInfo.packageName);
                         ungesturedRcList.add(rc);
                     }
                 }
@@ -176,9 +176,9 @@ public class AddGestureActivity extends Activity {
             return ungesturedRcList;
         }
 
-        private boolean checkAppType(PackageInfo packageInfo, TabsPresenter.TabTag tabTag){
-            boolean isSystem = (packageInfo.applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1;
-            AppLog.logd(TAG, String.format("%s is %s system app", packageInfo.packageName,
+        private boolean checkAppType(ApplicationInfo applicationInfo, TabsPresenter.TabTag tabTag){
+            boolean isSystem = (applicationInfo.flags & ApplicationInfo.FLAG_SYSTEM) == 1;
+            AppLog.logd(TAG, String.format("%s is %s system app", applicationInfo.packageName,
                     isSystem? "a" : "not a"));
             switch (tabTag){
                 case SYSTEM_APP:
@@ -189,23 +189,14 @@ public class AddGestureActivity extends Activity {
             return false;
         }
 
-        private boolean checkAppInfoExists(PackageInfo packageInfo){
-            boolean condition = (null != packageInfo.applicationInfo);
-            AppLog.logd(TAG, String.format("%s %s application",
-                    packageInfo.packageName,
-                    condition? "has" : "has NO"));
-            return condition;
-        }
-
-        private boolean checkSearchQuery(PackageInfo packageInfo, String searchQuery, PackageManager packageManager){
+        private boolean checkSearchQuery(ApplicationInfo applicationInfo, String searchQuery, PackageManager packageManager){
             if(null != searchQuery){
-                ApplicationInfo applicationInfo = packageInfo.applicationInfo;
                 String appLabel = packageManager.getApplicationLabel(applicationInfo).toString();
                 if(null != appLabel && appLabel.toLowerCase().contains(searchQuery)){
                     return true;
                 }else{
                     AppLog.logd(TAG, String.format("%s NOT match search query %s",
-                            null != appLabel? appLabel : packageInfo.packageName,
+                            null != appLabel? appLabel : applicationInfo.packageName,
                             searchQuery));
                     return false;
                 }
