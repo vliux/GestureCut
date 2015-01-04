@@ -8,10 +8,6 @@
 
     <dimen name="gesture_overlay_margin">12dp</dimen>
 
-    <!-- main activity -->
-    <dimen name="main_actv_time_margin_left">12dp</dimen>
-    <dimen name="main_actv_topleft_iv_dimen">50dp</dimen> <!-- icon_dimen_global + 10dp + 10dp -->
-
     <!-- global listview dividers -->
     <dimen name="listview_divider_thin_line_height">1px</dimen>
     <dimen name="listview_divider_thin_total_height">3px</dimen>
@@ -26,7 +22,7 @@
     <dimen name="title_bar_gc_icon_left_margin">6dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
-    <dimen name="gesture_list_outter_margin">10dp</dimen>
+    <dimen name="gesture_list_outter_margin">12dp</dimen>
     <dimen name="gesture_list_item_height">82dp</dimen>
     <dimen name="gesture_list_item_icon_dimen">60dp</dimen>
     <dimen name="gesture_list_item_padding_vertical">4dp</dimen>
