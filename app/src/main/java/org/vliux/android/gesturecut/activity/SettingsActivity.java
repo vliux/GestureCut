@@ -1,6 +1,5 @@
 package org.vliux.android.gesturecut.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -8,6 +7,7 @@ import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceScreen;
+import android.support.v7.app.ActionBarActivity;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.service.GestureWindowService;
@@ -16,7 +16,7 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
 /**
  * Created by vliux on 4/28/14.
  */
-public class SettingsActivity extends Activity {
+public class SettingsActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class SettingsActivity extends Activity {
         getFragmentManager().beginTransaction()
                 .replace(R.id.settings_frame, new SettingsFragment()).commit();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public static class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {

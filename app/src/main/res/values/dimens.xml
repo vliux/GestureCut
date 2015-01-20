@@ -6,13 +6,13 @@
 
     <dimen name="float_wnd_dimen">48dp</dimen>
 
-    <dimen name="gesture_overlay_margin">12dp</dimen>
+    <dimen name="gesture_overlay_margin">16dp</dimen>
 
     <!-- global listview dividers -->
     <dimen name="listview_divider_thin_line_height">1px</dimen>
     <dimen name="listview_divider_thin_total_height">3px</dimen>
 
-    <dimen name="settings_outmost_margin">10dp</dimen>
+    <dimen name="settings_outmost_margin">16dp</dimen>
 
     <!-- global icon dimension -->
     <dimen name="icon_dimen_global">36dp</dimen>
@@ -22,7 +22,7 @@
     <dimen name="title_bar_gc_icon_left_margin">6dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
-    <dimen name="gesture_list_outter_margin">12dp</dimen>
+    <dimen name="gesture_list_outter_margin">16dp</dimen>
     <dimen name="gesture_list_item_height">82dp</dimen>
     <dimen name="gesture_list_item_icon_dimen">60dp</dimen>
     <dimen name="gesture_list_item_padding_vertical">4dp</dimen>
@@ -42,17 +42,15 @@
     <dimen name="text_size_large_title">25dp</dimen>
     <dimen name="text_size_clock">60dp</dimen>
 
-    <!-- UnlockBar -->
-    <dimen name="unlock_bar_margin_vertical">20dp</dimen>
-
     <!-- 2nd float window -->
-    <dimen name="fw2_title_height">42dp</dimen>
-    <dimen name="switch_layout_height">46dp</dimen>
-    <dimen name="fw2_outmost_margin">45dp</dimen>
+    <dimen name="fw2_title_height">48dp</dimen>
+    <dimen name="switch_layout_height">42dp</dimen>
+    <dimen name="fw2_outmost_margin">48dp</dimen>
     <dimen name="fw2_tablelayout_padding">8dp</dimen>
 
     <!-- action bar -->
-    <dimen name="back_imgv_margin_horiz">10dp</dimen>
+    <dimen name="tablike_icon_padding">16dp</dimen>
+
     <!-- welcome pages -->
     <dimen name="welcome_dots_margin_bottom">50dp</dimen>
     <dimen name="welcome_start_btn_padding_vertical">15dp</dimen>
@@ -64,8 +62,8 @@
     <dimen name="dialog_size">300dp</dimen>
     <dimen name="progress_bar_height">4dp</dimen>
 
-    <dimen name="about_title_margin_big">12dp</dimen>
-    <dimen name="about_title_margin_small">6dp</dimen>
+    <dimen name="about_title_margin_big">16dp</dimen>
+    <dimen name="about_title_margin_small">8dp</dimen>
 
-    <dimen name="drawable_padding_default">6dp</dimen>
+    <dimen name="drawable_padding_default">8dp</dimen>
 </resources>

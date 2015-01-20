@@ -1,10 +1,10 @@
 package org.vliux.android.gesturecut.activity;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
 
 import org.vliux.android.gesturecut.R;
@@ -12,7 +12,7 @@ import org.vliux.android.gesturecut.R;
 /**
  * Created by vliux on 12/29/14.
  */
-public class AboutActivity extends Activity {
+public class AboutActivity extends ActionBarActivity{
     private TextView mTvContent1;
 
     @Override
@@ -33,7 +33,7 @@ public class AboutActivity extends Activity {
         mTvContent1.setText(String.format("%s %s", getText(R.string.app_name),
                 null != version? version : ""));
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
     }
 }
