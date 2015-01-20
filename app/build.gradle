@@ -7,11 +7,11 @@ android {
         // but continue the build even when errors are found:
         abortOnError false
     }
-    compileSdkVersion 19
+    compileSdkVersion 21
     buildToolsVersion '19.1.0'
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 19
+        targetSdkVersion 21
         versionCode 6
         versionName '2.1'
     }
@@ -31,4 +31,5 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'de.greenrobot:eventbus:2.2.0@jar'
     compile 'com.melnykov:floatingactionbutton:1.1.0'
+    compile 'com.android.support:appcompat-v7:21.0.+'
 }

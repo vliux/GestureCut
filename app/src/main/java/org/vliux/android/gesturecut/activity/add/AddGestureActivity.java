@@ -1,18 +1,18 @@
 package org.vliux.android.gesturecut.activity.add;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.MenuItemCompat;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,7 +43,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by vliux on 12/23/14.
  */
-public class AddGestureActivity extends Activity {
+public class AddGestureActivity extends ActionBarActivity {
     private static final String TAG = AddGestureActivity.class.getSimpleName();
 
     private FrameLayout mLayout;
@@ -79,7 +79,7 @@ public class AddGestureActivity extends Activity {
         // use EventBus to receive events from presenters.
         EventBus.getDefault().register(this);
 
-        ActionBar actionBar = getActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
         mTabsPresenter = new TabsPresenter(this, actionBar);
         mTabsPresenter.initTabs();
@@ -101,9 +101,10 @@ public class AddGestureActivity extends Activity {
         menuInflater.inflate(R.menu.activity_add_gesture, menu);
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         mSearchMenu = menu.findItem(R.id.action_search);
-        mSearchMenu.setOnActionExpandListener(mOnSearchExpandListener);
+        MenuItemCompat.setOnActionExpandListener(mSearchMenu, mOnSearchExpandListener);
+        //mSearchMenu.setOnActionExpandListener(mOnSearchExpandListener);
 
-        SearchView searchView = (SearchView) mSearchMenu.getActionView();
+        SearchView searchView = (SearchView) MenuItemCompat.getActionView(mSearchMenu);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return super.onCreateOptionsMenu(menu);
     }
@@ -336,7 +337,7 @@ public class AddGestureActivity extends Activity {
         }
     };
 
-    private final MenuItem.OnActionExpandListener mOnSearchExpandListener = new MenuItem.OnActionExpandListener() {
+    private final MenuItemCompat.OnActionExpandListener mOnSearchExpandListener = new MenuItemCompat.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
             return true;

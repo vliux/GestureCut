@@ -3,6 +3,7 @@ package org.vliux.android.gesturecut.activity.main;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * Created by vliux on 4/21/14.
  */
-public class GestureListActivity extends Activity{
+public class GestureListActivity extends ActionBarActivity{
     private GestureListView mGestureList;
     private FloatingActionButton mFab;
     private FabPresenter mFabPresenter;
