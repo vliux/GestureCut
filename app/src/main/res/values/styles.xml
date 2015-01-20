@@ -2,8 +2,8 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/gesture_cur_blue</item>
-        <item name="colorPrimaryDark">@color/gesture_cur_blue</item>
+        <item name="colorPrimary">@color/primary_color</item>
+        <item name="colorPrimaryDark">@color/primary_color_dark</item>
         <item name="colorAccent">@color/yellow</item>
 
         <item name="android:actionBarStyle">@style/GcActionBar</item>
@@ -16,7 +16,7 @@
 
     <style name="GcActionBar"
         parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-        <item name="android:background">@color/gesture_cur_blue</item>
+        <item name="android:background">@color/primary_color</item>
         <item name="android:displayOptions">showTitle|showHome</item>
         <item name="android:backgroundStacked">@color/actionbar_tab_bg</item>
         <item name="android:icon">@drawable/actionbar_logo</item>
@@ -49,7 +49,7 @@
     </style>
 
     <style name="text_basic_style">
-        <item name="android:textColor">@color/gesture_cur_blue</item>
+        <item name="android:textColor">@color/primary_color</item>
     </style>
 
     <style name="gesture_overlay">

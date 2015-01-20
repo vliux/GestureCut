@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/about_title_margin_big"
             android:text="GestureCut 2.0.0"
             android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/gesture_cur_blue"
+            android:textColor="@color/primary_color"
             android:textStyle="bold"/>
         <TextView
             android:layout_width="match_parent"

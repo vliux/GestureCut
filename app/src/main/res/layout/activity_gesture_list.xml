@@ -22,7 +22,7 @@
         android:drawableLeft="@drawable/ic_launcher"
         android:gravity="left|center_vertical"
         android:text="@string/main_gesture_list_empty_msg"
-        android:textColor="@color/gesture_cur_blue"
+        android:textColor="@color/primary_color"
         android:textSize="@dimen/text_size_small_title"
         android:visibility="gone"/>
 
@@ -33,8 +33,8 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:src="@drawable/ic_add"
-        fab:fab_colorNormal="@color/gesture_cur_blue"
-        fab:fab_colorPressed="@color/gesture_cur_blue_light" />
+        fab:fab_colorNormal="@color/primary_color"
+        fab:fab_colorPressed="@color/primary_color_light" />
 
     <ProgressBar
         android:id="@+id/list_ges_prog_bar"

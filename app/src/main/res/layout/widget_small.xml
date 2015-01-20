@@ -24,7 +24,7 @@
             android:layout_marginTop="@dimen/widget_small_next_prev_btns_margin_top"
             android:layout_marginBottom="@dimen/widget_small_next_prev_btns_margin_top"
             android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-            android:src="@color/gesture_cur_blue"/>
+            android:src="@color/primary_color"/>
 
         <!-- app icon -->
         <ImageView
@@ -48,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="bottom"
-                android:textColor="@color/gesture_cur_blue"
+                android:textColor="@color/primary_color"
                 android:textSize="@dimen/text_size_general"
                 android:textStyle="bold" />
             <TextView

@@ -53,7 +53,7 @@
             android:drawablePadding="@dimen/drawable_padding_default"
             android:gravity="left|center_vertical"
             android:text="@string/float_gesture_list_empty_msg"
-            android:textColor="@color/gesture_cur_blue"
+            android:textColor="@color/primary_color"
             android:textSize="@dimen/text_size_small_title"
             android:visibility="gone" />
 

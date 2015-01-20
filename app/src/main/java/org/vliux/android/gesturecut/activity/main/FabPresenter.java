@@ -26,8 +26,8 @@ import java.util.Set;
  * Created by vliux on 12/25/14.
  */
 class FabPresenter {
-    private final int COLOR_NORMAL_NORMAL = R.color.gesture_cur_blue;
-    private final int COLOR_NORMAL_PRESSED = R.color.gesture_cur_blue_light;
+    private final int COLOR_NORMAL_NORMAL = R.color.primary_color;
+    private final int COLOR_NORMAL_PRESSED = R.color.primary_color_light;
     private final int COLOR_DELETE_NORMAL = R.color.red_warning;
     private final int COLOR_DELETE_PRESSED = R.color.yellow;
     private final int NORMAL_BG = R.drawable.ic_add;

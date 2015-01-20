@@ -4,5 +4,5 @@
     android:shape="rectangle">
     <gradient android:angle="0"
         android:startColor="@color/gesture_cur_blue_transparent"
-        android:endColor="@color/gesture_cur_blue"/>
+        android:endColor="@color/primary_color"/>
 </shape>
