@@ -112,7 +112,7 @@ public class AddGestureActivity extends ActionBarActivity {
         switch (item.getItemId()){
             case R.id.action_refresh:
                 collapseSearchView();
-                scanUnGesturedPackagrsAsync();
+                scanUnGesturedPackagrsAsync(true);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -122,7 +122,7 @@ public class AddGestureActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        scanUnGesturedPackagrsAsync();
+        scanUnGesturedPackagrsAsync(true);
     }
 
     @Override
@@ -150,22 +150,31 @@ public class AddGestureActivity extends ActionBarActivity {
                 searchQuery);
     }
 
-    private void scanUnGesturedPackagrsAsync(){
+    private void scanUnGesturedPackagrsAsync(boolean refreshInstalledAppInfos){
         if(null != mScanJob && !mScanJob.isJobCancelled()){
             return;
         }
 
         mScanJob = ConcurrentManager.submitJob(mScanPkgsBizCallback, mScanPackagesUiCallback,
-                mTabsPresenter.getSelectedTab());
+                mTabsPresenter.getSelectedTab(),
+                refreshInstalledAppInfos);
     }
 
     private final ConcurrentManager.IBizCallback<List<ResolvedComponent>> mScanPkgsBizCallback = new ConcurrentManager.IBizCallback<List<ResolvedComponent>>() {
+        private List<ApplicationInfo> mApplicationInfoList;
+
         @Override
         public List<ResolvedComponent> onBusinessLogicAsync(ConcurrentManager.IJob job, Object... params) {
             TabsPresenter.TabTag tabTag = (TabsPresenter.TabTag)params[0];
             String searchQuery = null;
+            boolean refreshAppInfos = false;
             if(params.length > 1){
-                searchQuery = (String)params[1];
+                Object param1 = params[1];
+                if(param1 instanceof String) {
+                    searchQuery = (String) params[1];
+                }else if(param1 instanceof Boolean){
+                    refreshAppInfos = (Boolean)param1;
+                }
             }
 
             List<ResolvedComponent> ungesturedRcList = new ArrayList<ResolvedComponent>();
@@ -174,12 +183,14 @@ public class AddGestureActivity extends ActionBarActivity {
             Set<String> packageNames = dbTable.getGesturedPackageNames();
 
             PackageManager packageManager = AddGestureActivity.this.getPackageManager();
-            List<ApplicationInfo> applicationInfos = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            if(refreshAppInfos || null == mApplicationInfoList || mApplicationInfoList.size() <= 0) {
+                mApplicationInfoList = packageManager.getInstalledApplications(PackageManager.GET_META_DATA);
+            }
 
-            int pkgInfoSize = applicationInfos.size();
+            int pkgInfoSize = mApplicationInfoList.size();
             for(int i = 0; i < pkgInfoSize; i++){
                 job.publishJobProgress(100 * i/pkgInfoSize);
-                ApplicationInfo applicationInfo = applicationInfos.get(i);
+                ApplicationInfo applicationInfo = mApplicationInfoList.get(i);
 
                 if(checkAppType(applicationInfo, tabTag)
                         && !packageNames.contains(applicationInfo.packageName)
@@ -347,7 +358,7 @@ public class AddGestureActivity extends ActionBarActivity {
                 mAnimPresenter.close();
                 mAnimPresenter = null;
             }
-            scanUnGesturedPackagrsAsync();
+            scanUnGesturedPackagrsAsync(false);
             return true;
         }
     };
@@ -363,9 +374,9 @@ public class AddGestureActivity extends ActionBarActivity {
                 mAnimPresenter.close();
                 mAnimPresenter = null;
             }
-            scanUnGesturedPackagrsAsync();
+            scanUnGesturedPackagrsAsync(false);
         }else if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
-            scanUnGesturedPackagrsAsync();
+            scanUnGesturedPackagrsAsync(false);
         }
 
         collapseSearchView();
