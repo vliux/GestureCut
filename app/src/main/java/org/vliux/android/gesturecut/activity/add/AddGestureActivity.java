@@ -51,7 +51,6 @@ public class AddGestureActivity extends ActionBarActivity {
     private ProgressBar mProgressBar;
     private PkgListAdapter mListAdapter;
     private int mListItemPaddingHoriz = 0;
-    private int mListItemPaddingVerti = 0;
 
     private AddGestureView mAddGestureView;
     private AnimPresenter mAnimPresenter;
@@ -73,7 +72,6 @@ public class AddGestureActivity extends ActionBarActivity {
         mListView.setOnItemClickListener(mOnItemClickListener);
 
         mListItemPaddingHoriz = (int)getResources().getDimension(R.dimen.gesture_list_outter_margin);
-        mListItemPaddingVerti = (int)getResources().getDimension(R.dimen.gesture_list_item_padding_vertical);
         mAddGestureView = new AddGestureView(this);
         mAddGestureView.getGestureOverlay().addOnGesturePerformedListener(mOnGesturePerformed);
         // use EventBus to receive events from presenters.
@@ -281,7 +279,7 @@ public class AddGestureActivity extends ActionBarActivity {
                 appInfoView = (AppInfoView)convertView;
             }else{
                 appInfoView = new AppInfoView(AddGestureActivity.this);
-                appInfoView.setPadding(mListItemPaddingHoriz, mListItemPaddingVerti, mListItemPaddingHoriz, mListItemPaddingVerti);
+                appInfoView.setPadding(mListItemPaddingHoriz, 0, mListItemPaddingHoriz, 0);
             }
 
             appInfoView.setResolvedComponent(installedComponents.get(position));

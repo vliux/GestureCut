@@ -4,19 +4,19 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="@dimen/gesture_list_item_height">
 
     <ImageView
         android:id="@+id/appinfo_app_icon"
-        android:layout_width="@dimen/icon_dimen_global_large"
-        android:layout_height="@dimen/icon_dimen_global_large"
-        android:layout_marginTop="@dimen/gesture_list_outter_margin"
-        android:layout_marginBottom="@dimen/gesture_list_outter_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="centerInside"
         android:layout_gravity="left|center_vertical" />
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:orientation="vertical"
         android:layout_marginLeft="@dimen/settings_outmost_margin">
 
@@ -27,8 +27,7 @@
             android:layout_weight="1"
             android:gravity="center_vertical|left"
             android:textSize="@dimen/text_size_general"
-            android:textColor="@color/text_general"
-            android:textStyle="bold" />
+            android:textColor="@color/text_general" />
 
         <!--<TextView
             android:id="@+id/appinfo_appdetail"

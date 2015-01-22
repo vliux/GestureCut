@@ -10,13 +10,13 @@
     <ImageView
         android:id="@+id/item_gesture_icon"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingTop="@dimen/gesture_list_item_padding_vertical"
         android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
         android:paddingLeft="@dimen/gesture_list_outter_margin"
         android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-        android:scaleType="center"
+        android:scaleType="centerInside"
         android:background="@drawable/gesture_list_selector_pressed"/>
 
     <View
