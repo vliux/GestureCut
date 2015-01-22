@@ -150,8 +150,12 @@ public class GestureListView extends ListView {
      */
     private class GestureListViewAdapter extends BaseAdapter {
         private List<String> mGestureNames;
+        private GestureDbTable mDbTable;
+        private int iconDimen;
 
         public GestureListViewAdapter() {
+            mDbTable = (GestureDbTable) DbManager.getInstance().getDbTable(GestureDbTable.class);
+            iconDimen = (int)getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
         }
 
         public String getGestureName(int position) {
@@ -202,9 +206,7 @@ public class GestureListView extends ListView {
             }
 
             ConcurrentManager.submitRunnable(
-                    new LoadGestureDataRunnable(mHandler,
-                            mGestureNames.get(position),
-                            listItem));
+                    new LoadGestureDataRunnable(mDbTable, mHandler, mGestureNames.get(position), listItem, iconDimen));
             return listItem;
         }
     }
@@ -213,27 +215,26 @@ public class GestureListView extends ListView {
         private final Handler notifyHandler;
         private final String gestureName;
         private final GestureListItem listItemView;
-        private final int iconWidth;
-        private final int iconHeight;
+        private final int iconDimen;
+        private GestureDbTable gestureDbTable;
 
-        public LoadGestureDataRunnable(Handler handler, String gesName,
-                                       GestureListItem itemView){
+        public LoadGestureDataRunnable(GestureDbTable gestureDbTable, Handler handler, String gesName,
+                                       GestureListItem itemView, int iconDimen){
+            this.gestureDbTable = gestureDbTable;
             notifyHandler = handler;
             gestureName = gesName;
             listItemView = itemView;
-            iconWidth = (int)getResources().getDimension(R.dimen.gesture_list_item_icon_dimen);
-            iconHeight = iconWidth;
+            this.iconDimen = iconDimen;
         }
 
         @Override
         public void run() {
-            GestureDbTable gestureDbTable = (GestureDbTable) DbManager.getInstance().getDbTable(GestureDbTable.class);
             GestureDbTable.DbData dbData = gestureDbTable.getGesture(gestureName);
             if(null != dbData && null != dbData.resolvedComponent){
                 String iconPath = dbData.iconPath;
                 Bitmap bmp = null;
                 if(null != iconPath && iconPath.length() > 0){
-                    bmp = ImageUtil.decodeSampledBitmap(iconPath, iconWidth, iconHeight, ImageUtil.optionSave());
+                    bmp = ImageUtil.decodeSampledBitmap(iconPath, this.iconDimen, this.iconDimen, ImageUtil.optionSave());
                 }
 
                 if(null != bmp){
