@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    
+    <ImageView
+        android:id="@+id/scw_li_gesture"
+        android:layout_width="@dimen/icon_dimen_global_large"
+        android:layout_height="@dimen/icon_dimen_global_large"
+        android:layout_margin="@dimen/gesture_list_item_padding_vertical"
+        android:layout_gravity="center"
+        android:scaleType="centerInside"/>
+    
+    <ImageView
+        android:id="@+id/scw_li_app"
+        android:layout_width="@dimen/icon_dimen_global_tiny"
+        android:layout_height="@dimen/icon_dimen_global_tiny"
+        android:layout_gravity="top|right"
+        android:scaleType="centerInside"/>
+</FrameLayout>
