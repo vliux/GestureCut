@@ -26,7 +26,10 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/scw_list_horiz"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="@dimen/shortcut_wnd_item_height"
+        android:paddingTop="@dimen/gesture_list_item_padding_vertical"
+        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+        android:background="@color/global_bkground"/>
 
     <android.gesture.GestureOverlayView
         android:id="@+id/scw_gesture_overlay"

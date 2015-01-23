@@ -51,14 +51,14 @@ public class FloatWindowManager {
 
     }
 
-    public static void showSecondaryFloatWindow(Context context, SecondaryFloatWindow secondaryFloatWindow){
-        if(null != secondaryFloatWindow.getParent()){
+    public static void showSecondaryFloatWindow(Context context, ShortcutWindow shortcutWindow){
+        if(null != shortcutWindow.getParent()){
             AppLog.loge(TAG, "SecondaryFloatWindow instance has already owned a parent, skip showSecondaryFloatWindow()");
             return;
         }
 
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        windowManager.addView(secondaryFloatWindow, getSecondFloatWindowLayoutParmas(context));
+        windowManager.addView(shortcutWindow, getSecondFloatWindowLayoutParmas(context));
     }
 
     public static void closeWindow(Context context, View view){

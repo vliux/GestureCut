@@ -151,8 +151,9 @@ public class FloatWindow extends View implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        SecondaryFloatWindow expandedFloatWindow = new SecondaryFloatWindow(getContext().getApplicationContext());
-        FloatWindowManager.showSecondaryFloatWindow(getContext(), expandedFloatWindow);
+        //SecondaryFloatWindow expandedFloatWindow = new SecondaryFloatWindow(getContext().getApplicationContext());
+        ShortcutWindow shortcutWindow = new ShortcutWindow(getContext().getApplicationContext());
+        FloatWindowManager.showSecondaryFloatWindow(getContext(), shortcutWindow);
     }
 
     // raw location of ACTION_DOWN, which is screen-coordinator-based.

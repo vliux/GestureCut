@@ -48,11 +48,14 @@ public class ShortcutWindow extends LinearLayout {
     }
 
     private void init(Context context){
+        setOrientation(LinearLayout.VERTICAL);
         LayoutInflater.from(context).inflate(R.layout.view_shortcut_wnd, this, true);
         mRecyclerView = (RecyclerView)findViewById(R.id.scw_list_horiz);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
         mAdapter = new GestureListAdapter();
+        mRecyclerView.setAdapter(mAdapter);
+        refresh();
     }
 
     private void refresh(){
@@ -80,6 +83,7 @@ public class ShortcutWindow extends LinearLayout {
         @Override
         public void onPostExecute(List<String> gestureNames) {
             mAdapter.gestureNames = gestureNames;
+            mAdapter.notifyDataSetChanged();
         }
 
         @Override
@@ -138,12 +142,6 @@ public class ShortcutWindow extends LinearLayout {
             gestureIconDimen = (int)getContext().getResources().getDimension(R.dimen.icon_dimen_global_large);
         }
 
-        public void refresh(){
-            List<String> gestureNames = new ArrayList<String>();
-            gestureNames.addAll(GestureUtil.getInstance().getGestureNames());
-            Collections.sort(gestureNames);
-        }
-
         @Override
         public GestureListVH onCreateViewHolder(ViewGroup parent, int viewType) {
             View view = LayoutInflater.from(getContext()).inflate(R.layout.item_scw_gesture, null, false);
@@ -160,7 +158,7 @@ public class ShortcutWindow extends LinearLayout {
 
         @Override
         public int getItemCount() {
-            return null != gestureNames? 0 : gestureNames.size();
+            return null != gestureNames? gestureNames.size() : 0;
         }
     };
 
