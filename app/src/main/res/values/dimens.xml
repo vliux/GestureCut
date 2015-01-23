@@ -17,7 +17,6 @@
     <!-- global icon dimension -->
     <dimen name="icon_dimen_global">32dp</dimen>
     <dimen name="icon_dimen_global_large">48dp</dimen>
-    <dimen name="icon_dimen_global_tiny">24dp</dimen>
 
     <!-- gesture list view, for editing existing gestures -->
     <dimen name="gesture_list_outter_margin">16dp</dimen>
@@ -63,4 +62,5 @@
 
     <dimen name="shortcut_wnd_item_margin_horiz">12dp</dimen>
     <dimen name="shortcut_wnd_item_height">64dp</dimen>
+    <dimen name="shortcut_wnd_item_gesture_dimen">36dp</dimen>
 </resources>

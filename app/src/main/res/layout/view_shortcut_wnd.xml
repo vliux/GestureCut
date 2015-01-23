@@ -28,8 +28,11 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/shortcut_wnd_item_height"
         android:paddingTop="@dimen/gesture_list_item_padding_vertical"
-        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
-        android:background="@color/global_bkground"/>
+        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"/>
+
+    <View android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/primary_color"/>
 
     <android.gesture.GestureOverlayView
         android:id="@+id/scw_gesture_overlay"
@@ -45,6 +48,7 @@
             android:textSize="@dimen/text_size_general"
             android:textColor="@color/yellow"
             android:drawableLeft="@drawable/ic_pencil"
-            android:drawablePadding="4dp"/>
+            android:drawablePadding="4dp"
+            android:text="@string/gesture_bg_title_use"/>
     </android.gesture.GestureOverlayView>
 </merge>

@@ -49,6 +49,7 @@ public class ShortcutWindow extends LinearLayout {
 
     private void init(Context context){
         setOrientation(LinearLayout.VERTICAL);
+        setBackgroundResource(R.drawable.float_wnd_2nd_bg);
         LayoutInflater.from(context).inflate(R.layout.view_shortcut_wnd, this, true);
         mRecyclerView = (RecyclerView)findViewById(R.id.scw_list_horiz);
 
@@ -139,7 +140,7 @@ public class ShortcutWindow extends LinearLayout {
 
         public GestureListAdapter(){
             dbTable = (GestureDbTable) DbManager.getInstance().getDbTable(GestureDbTable.class);
-            gestureIconDimen = (int)getContext().getResources().getDimension(R.dimen.icon_dimen_global_large);
+            gestureIconDimen = (int)getContext().getResources().getDimension(R.dimen.shortcut_wnd_item_gesture_dimen);
         }
 
         @Override
