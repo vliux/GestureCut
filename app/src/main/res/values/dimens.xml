@@ -61,6 +61,7 @@
     <dimen name="drawable_padding_default">8dp</dimen>
 
     <dimen name="shortcut_wnd_item_margin_horiz">12dp</dimen>
-    <dimen name="shortcut_wnd_item_height">64dp</dimen>
-    <dimen name="shortcut_wnd_item_gesture_dimen">36dp</dimen>
+    <dimen name="shortcut_wnd_item_dimen">72dp</dimen>
+    <dimen name="shortcut_wnd_item_gesture_dimen">48dp</dimen>
+    <dimen name="shortcut_wnd_item_app_dimen">24dp</dimen>
 </resources>

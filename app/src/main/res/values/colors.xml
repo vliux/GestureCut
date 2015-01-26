@@ -35,4 +35,6 @@
 
     <color name="text_general">#737373</color>
     <color name="actionbar_tab_bg">@color/primary_color</color>
+
+    <color name="scw_list_bg">#eeeeee</color>
 </resources>

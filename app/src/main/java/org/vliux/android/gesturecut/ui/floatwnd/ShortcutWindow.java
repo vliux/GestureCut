@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
+import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -49,7 +51,6 @@ public class ShortcutWindow extends LinearLayout {
 
     private void init(Context context){
         setOrientation(LinearLayout.VERTICAL);
-        setBackgroundResource(R.drawable.float_wnd_2nd_bg);
         LayoutInflater.from(context).inflate(R.layout.view_shortcut_wnd, this, true);
         mRecyclerView = (RecyclerView)findViewById(R.id.scw_list_horiz);
 
@@ -232,6 +233,17 @@ public class ShortcutWindow extends LinearLayout {
 
         @Override
         public void onCancelled() {
+        }
+    }
+
+    @Override
+    public boolean dispatchKeyEvent(KeyEvent event) {
+        if(event.getKeyCode() == KeyEvent.KEYCODE_BACK
+                && KeyEvent.ACTION_UP == event.getAction()){
+            WindowManagerUtil.closeWindow(getContext().getApplicationContext(), this);
+            return true;
+        }else{
+            return super.dispatchKeyEvent(event);
         }
     }
 }

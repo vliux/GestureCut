@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_marginLeft="@dimen/shortcut_wnd_item_margin_horiz"
-    android:layout_marginRight="@dimen/shortcut_wnd_item_margin_horiz">
-    
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/shortcut_wnd_item_margin_horiz"
+    android:paddingRight="@dimen/shortcut_wnd_item_margin_horiz">
+
     <ImageView
         android:id="@+id/scw_li_app"
-        android:layout_width="@dimen/icon_dimen_global_large"
-        android:layout_height="@dimen/icon_dimen_global_large"
-        android:layout_margin="@dimen/shortcut_wnd_item_margin_horiz"
-        android:layout_gravity="center"
+        android:layout_width="@dimen/shortcut_wnd_item_app_dimen"
+        android:layout_height="@dimen/shortcut_wnd_item_app_dimen"
+        android:layout_gravity="top|right"
         android:scaleType="centerInside"/>
 
     <ImageView
         android:id="@+id/scw_li_gesture"
         android:layout_width="@dimen/shortcut_wnd_item_gesture_dimen"
         android:layout_height="@dimen/shortcut_wnd_item_gesture_dimen"
-        android:layout_gravity="top|right"
+        android:layout_gravity="center"
         android:scaleType="centerInside"/>
 </FrameLayout>
