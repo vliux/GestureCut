@@ -42,6 +42,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".activity.ShortcutActivity"
+            android:label=""
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.NoTitlebar">
+        </activity>
+
         <activity android:name=".activity.add.AddGestureActivity"
             android:label="@string/add_gesture"
             android:launchMode="singleTop"

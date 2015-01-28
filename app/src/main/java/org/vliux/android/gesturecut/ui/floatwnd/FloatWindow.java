@@ -1,6 +1,7 @@
 package org.vliux.android.gesturecut.ui.floatwnd;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -16,6 +17,7 @@ import android.view.WindowManager;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.activity.ShortcutActivity;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
 /**
@@ -151,9 +153,12 @@ public class FloatWindow extends View implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
+        Log.d(TAG, "onClick()");
         //SecondaryFloatWindow expandedFloatWindow = new SecondaryFloatWindow(getContext().getApplicationContext());
-        ShortcutWindow shortcutWindow = new ShortcutWindow(getContext().getApplicationContext());
-        FloatWindowManager.showSecondaryFloatWindow(getContext(), shortcutWindow);
+        Context context = getContext();
+        Intent intent = new Intent(context, ShortcutActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        context.startActivity(intent);
     }
 
     // raw location of ACTION_DOWN, which is screen-coordinator-based.
@@ -177,7 +182,7 @@ public class FloatWindow extends View implements View.OnClickListener {
                 mDownY = rawY;
                 mDownInnerX = event.getX();
                 mDownInnerY = event.getY();
-                Log.d(TAG, String.format("DOWN: %f, %f; %f, %f", mDownX, mDownY, event.getX(), event.getY()));
+                //Log.d(TAG, String.format("DOWN: %f, %f; %f, %f", mDownX, mDownY, event.getX(), event.getY()));
                 if(null != mVibrator){
                     mVibrator.vibrate(AppConstant.FloatWindow.ACTION_DOWN_VIBRATE_DURATION);
                 }
@@ -188,7 +193,7 @@ public class FloatWindow extends View implements View.OnClickListener {
                     mIsPrevMoved = true;
                     mLayoutParams.x = (int)(rawX - mDownInnerX);
                     mLayoutParams.y = (int)(rawY - mDownInnerY);
-                    Log.d(TAG, "mIsPrevMoved = true");Log.d(TAG, String.format("MOVE: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
+                    //Log.d(TAG, "mIsPrevMoved = true");Log.d(TAG, String.format("MOVE: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                     FloatWindowManager.updateFloatWindow(getContext(), this, mLayoutParams, false);
                 }
                 break;
@@ -198,7 +203,7 @@ public class FloatWindow extends View implements View.OnClickListener {
                 mDownInnerY = 0;
                 mDownX = 0;
                 mDownY = 0;
-                Log.d(TAG, String.format("CANCEL: %f, %f; %f, %f", rawX, rawY, event.getX(), event.getY()));
+                //Log.d(TAG, String.format("CANCEL: %f, %f; %f, %f", rawX, rawY, event.getX(), event.getY()));
                 mIsPrevMoved = false;
                 invalidate();
                 break;
@@ -206,12 +211,12 @@ public class FloatWindow extends View implements View.OnClickListener {
                 mIsPressed = false;
                 Log.d(TAG, String.format("UP: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                 if(mIsPrevMoved) {
-                    Log.d(TAG, "mIsPrevMoved = true");
+                    //Log.d(TAG, "mIsPrevMoved = true");
                     mLayoutParams.x = (int)(rawX - mDownInnerX);
                     mLayoutParams.y = (int)(rawY - mDownInnerY);
                     FloatWindowManager.updateFloatWindow(getContext(), this, mLayoutParams, true);
                 }else{
-                    Log.d(TAG, "mIsPrevMoved = false");
+                    //Log.d(TAG, "mIsPrevMoved = false");
                     onClick(this);
                 }
 
@@ -229,8 +234,8 @@ public class FloatWindow extends View implements View.OnClickListener {
     private boolean isMoving(float rawX, float rawY){
         float offsetX = Math.abs(rawX - mDownX);
         float offsetY = Math.abs(rawY - mDownY);
-        Log.d(TAG, String.format("offsetX=%f, offsetY=%f, threshold=%f",
-                offsetX, offsetY, mMoveDistantThreshold));
+        //Log.d(TAG, String.format("offsetX=%f, offsetY=%f, threshold=%f",
+                //offsetX, offsetY, mMoveDistantThreshold));
         if (offsetX > mMoveDistantThreshold || offsetY > mMoveDistantThreshold) {
             return true;
         }
