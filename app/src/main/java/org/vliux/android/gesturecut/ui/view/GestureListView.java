@@ -1,5 +1,6 @@
 package org.vliux.android.gesturecut.ui.view;
 
+import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -23,6 +25,7 @@ import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
+import org.vliux.android.gesturecut.util.ScreenUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -207,8 +210,22 @@ public class GestureListView extends ListView {
 
             ConcurrentManager.submitRunnable(
                     new LoadGestureDataRunnable(mDbTable, mHandler, mGestureNames.get(position), listItem, iconDimen));
+            //startItemAnim(listItem, position);
             return listItem;
         }
+    }
+
+    private int mScreenWidth = -1;
+    private void startItemAnim(View itemView, int position){
+        if(mScreenWidth <= 0){
+            int[] screenSize = ScreenUtil.getScreenSize(getContext());
+            mScreenWidth = screenSize[0];
+        }
+        ObjectAnimator animator = ObjectAnimator.ofFloat(itemView, "translationX", -mScreenWidth, 0);
+        animator.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.setStartDelay(position * 100L);
+        animator.start();
     }
 
     private class LoadGestureDataRunnable implements Runnable{
