@@ -4,39 +4,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/gesture_list_item_height">
+    android:layout_height="match_parent">
 
     <ImageView
         android:id="@+id/appinfo_app_icon"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:scaleType="centerInside"
-        android:layout_gravity="left|center_vertical" />
+        android:layout_gravity="left|center_vertical"
+        android:scaleType="fitStart"/>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/appinfo_appname"
         android:layout_width="0dp"
         android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/settings_outmost_margin"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:layout_marginLeft="@dimen/settings_outmost_margin">
+        android:gravity="center_vertical|left"
+        android:textColor="@color/text_general"
+        android:textSize="@dimen/text_size_general" />
 
-        <TextView
-            android:id="@+id/appinfo_appname"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center_vertical|left"
-            android:textSize="@dimen/text_size_general"
-            android:textColor="@color/text_general" />
-
-        <!--<TextView
-            android:id="@+id/appinfo_appdetail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="top"
-            android:textSize="@dimen/text_size_tiny"
-            android:textColor="@color/gesture_cur_grey" />-->
-    </LinearLayout>
 
 </LinearLayout>
