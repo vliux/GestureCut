@@ -19,11 +19,11 @@ public class ShortcutActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         Window window = getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        //window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         window.addFlags(
                 WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-        setContentView(R.layout.activity_shortcut);
 
+        setContentView(R.layout.activity_shortcut);
         mGestureListView = (GestureListView)findViewById(R.id.sc_gesture_list);
     }
 
