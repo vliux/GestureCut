@@ -70,9 +70,9 @@ public class FloatWindowManager {
         WindowManager windowManager = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
         windowManager.updateViewLayout(floatWindow, layoutParams);
         if(isStoreXY){
-            PreferenceHelper.setUserPref(context.getApplicationContext(),
-                    R.string.pref_key_float_wnd_xy,
-                    layoutParams.x + ","+layoutParams.y);
+            saveLocationToPrefs(context,
+                    layoutParams.x,
+                    layoutParams.y);
         }
     }
 
@@ -120,7 +120,14 @@ public class FloatWindowManager {
         }else {
             lp.x = screenSize[0];
             lp.y = screenSize[1] / 2;
+            saveLocationToPrefs(context, lp.x, lp.y);
         }
+    }
+
+    private static void saveLocationToPrefs(Context context, int x, int y){
+        PreferenceHelper.setUserPref(context.getApplicationContext(),
+                R.string.pref_key_float_wnd_xy,
+                x + "," + y);
     }
 
     public static int[] parseLocationFromPrefs(Context context){
