@@ -1,12 +1,15 @@
 package org.vliux.android.gesturecut.ui.floatwnd;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.os.Build;
 import android.os.Vibrator;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -156,9 +159,7 @@ public class FloatWindow extends View implements View.OnClickListener {
         Log.d(TAG, "onClick()");
         //SecondaryFloatWindow expandedFloatWindow = new SecondaryFloatWindow(getContext().getApplicationContext());
         Context context = getContext();
-        Intent intent = new Intent(context, ShortcutActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        context.startActivity(intent);
+        ShortcutActivity.show(context);
     }
 
     // raw location of ACTION_DOWN, which is screen-coordinator-based.

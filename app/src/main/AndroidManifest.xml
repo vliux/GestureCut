@@ -45,7 +45,7 @@
         <activity android:name=".activity.ShortcutActivity"
             android:label=""
             android:launchMode="singleTop"
-            android:theme="@style/AppTheme.NoTitlebar">
+            android:theme="@style/AppTheme.ShortcutActivity">
         </activity>
 
         <activity android:name=".activity.add.AddGestureActivity"

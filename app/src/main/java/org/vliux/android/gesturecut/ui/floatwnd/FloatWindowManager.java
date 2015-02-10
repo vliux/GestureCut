@@ -113,10 +113,7 @@ public class FloatWindowManager {
 
     private static void setLayoutParamsLocation(Context context, WindowManager.LayoutParams lp,
                                                 int[] screenSize){
-        int[] xyValues = parseLocationFromPrefs(
-                PreferenceHelper.getUserPref(context.getApplicationContext(),
-                        R.string.pref_key_float_wnd_xy,
-                        null));
+        int[] xyValues = parseLocationFromPrefs(context);
         if(null != xyValues){
             lp.x = xyValues[0];
             lp.y = xyValues[1];
@@ -126,7 +123,10 @@ public class FloatWindowManager {
         }
     }
 
-    private static int[] parseLocationFromPrefs(String value){
+    public static int[] parseLocationFromPrefs(Context context){
+        String value = PreferenceHelper.getUserPref(context.getApplicationContext(),
+                R.string.pref_key_float_wnd_xy, null);
+
         if(TextUtils.isEmpty(value)){
             return null;
         }
