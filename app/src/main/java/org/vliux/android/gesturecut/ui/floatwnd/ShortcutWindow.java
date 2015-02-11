@@ -1,11 +1,13 @@
 package org.vliux.android.gesturecut.ui.floatwnd;
 
+import android.animation.Animator;
 import android.content.Context;
 import android.content.res.Resources;
+import android.gesture.Gesture;
+import android.gesture.GestureOverlayView;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -18,7 +20,11 @@ import android.widget.FrameLayout;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.biz.TaskManager;
+import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
+import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
 /**
@@ -28,6 +34,8 @@ public class ShortcutWindow extends FrameLayout {
     private static final String TAG = ShortcutWindow.class.getSimpleName();
     private GestureListView mGestureListView;
     private ViewGroup mOverlay;
+    private GestureOverlayView mGestureOverLay;
+
     private int mTouchSlop;
     private int mInitialOverlayTranslationX;
     private int mTargetTranslationX;
@@ -60,6 +68,7 @@ public class ShortcutWindow extends FrameLayout {
         LayoutInflater.from(context).inflate(R.layout.view_shortcut, this, true);
         mGestureListView = (GestureListView)findViewById(R.id.sc_gesture_list);
         mOverlay = (ViewGroup)findViewById(R.id.sc_overlay);
+        mGestureOverLay = (GestureOverlayView)findViewById(R.id.sc_ges_overlay);
 
         mGestureListView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -71,6 +80,7 @@ public class ShortcutWindow extends FrameLayout {
         });
         mGestureListView.refresh();
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
+        mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
     }
 
     private void startShowAnim(){
@@ -80,14 +90,41 @@ public class ShortcutWindow extends FrameLayout {
 
         mGestureListView.setPivotX(wndLoc[0]);
         mGestureListView.setPivotY(wndLoc[1]);
-        mGestureListView.animate().scaleY(1).scaleX(1).setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new AccelerateInterpolator()).start();
+        mGestureListView.animate().scaleY(1).scaleX(1)
+                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator()).start();
+    }
+
+    private void startCloseAnim(){
+        int[] wndLoc = FloatWindowManager.parseLocationFromPrefs(getContext());
+        mGestureListView.setPivotX(wndLoc[0]);
+        mGestureListView.setPivotY(wndLoc[1]);
+        mGestureListView.animate().scaleY(0.1f).scaleX(0.1f)
+                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        FloatWindowManager.closeWindow(getContext(), ShortcutWindow.this);
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                }).start();
     }
 
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if(event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && KeyEvent.ACTION_UP == event.getAction()){
-            FloatWindowManager.closeWindow(getContext(), this);
+            startCloseAnim();
             return true;
         }else{
             return super.dispatchKeyEvent(event);
@@ -151,4 +188,15 @@ public class ShortcutWindow extends FrameLayout {
         mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .translationX(mTargetTranslationX).setInterpolator(new DecelerateInterpolator()).start();
     }
+
+    private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
+        @Override
+        public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
+            ResolvedComponent rc = GesturePersistence.loadGesture(getContext(), gesture);
+            if(null != rc){
+                TaskManager.startActivity(getContext(), rc);
+                startCloseAnim();
+            }
+        }
+    };
 }
