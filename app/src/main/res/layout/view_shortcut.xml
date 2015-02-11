@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<!-- FrameLayout -->
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <org.vliux.android.gesturecut.ui.view.GestureListView
@@ -10,4 +11,4 @@
         android:cacheColorHint="@color/gesture_list_bkground"
         android:divider="@drawable/listview_divider">
     </org.vliux.android.gesturecut.ui.view.GestureListView>
-</FrameLayout>
+</merge>
