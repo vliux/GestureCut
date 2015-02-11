@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewPropertyAnimator;
 import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -189,13 +190,40 @@ public class ShortcutWindow extends FrameLayout {
                 .translationX(mTargetTranslationX).setInterpolator(new DecelerateInterpolator()).start();
     }
 
+    private void hideOverlay(boolean closeShortcutWindow){
+        ViewPropertyAnimator animator =
+                mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                .translationX(mInitialOverlayTranslationX).setInterpolator(new AccelerateInterpolator());
+        if(closeShortcutWindow){
+            animator.setListener(new Animator.AnimatorListener() {
+                @Override
+                public void onAnimationStart(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationEnd(Animator animation) {
+                    startCloseAnim();
+                }
+
+                @Override
+                public void onAnimationCancel(Animator animation) {
+                }
+
+                @Override
+                public void onAnimationRepeat(Animator animation) {
+                }
+            });
+        }
+        animator.start();
+    }
+
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
             ResolvedComponent rc = GesturePersistence.loadGesture(getContext(), gesture);
             if(null != rc){
                 TaskManager.startActivity(getContext(), rc);
-                startCloseAnim();
+                hideOverlay(true);
             }
         }
     };
