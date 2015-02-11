@@ -38,6 +38,7 @@ public class ShortcutWindow extends FrameLayout {
 
     private int mTouchSlop;
     private int mInitialOverlayTranslationX;
+    private int mGestureIconWidth;
 
     public ShortcutWindow(Context context) {
         super(context);
@@ -58,11 +59,11 @@ public class ShortcutWindow extends FrameLayout {
         int screenWidth = ScreenUtil.getScreenSize(context)[0];
         mTouchSlop = -ViewConfiguration.get(context).getScaledTouchSlop(); // negative value, so detect for swipe left
         Resources res = context.getResources();
-        int gestureIconWidth = // reserve space at left, showing gesture icons in listview
+        mGestureIconWidth = // reserve space at left, showing gesture icons in listview
             (int)(res.getDimension(R.dimen.gesture_thumbnail_width) +
             res.getDimension(R.dimen.gesture_list_outter_margin) + // marginLeft of ImageView in item_gesture
             res.getDimension(R.dimen.gesture_list_item_vertical_divider_margin_horiz)); // marginRight of ImageView in item_gesture
-        int overlayWidth = screenWidth - gestureIconWidth;
+        int overlayWidth = screenWidth - mGestureIconWidth;
         mInitialOverlayTranslationX = overlayWidth;
 
         LayoutInflater.from(context).inflate(R.layout.view_shortcut, this, true);
@@ -137,12 +138,6 @@ public class ShortcutWindow extends FrameLayout {
     private int mDownX = -1;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if(mOverlay.getTranslationX() < mInitialOverlayTranslationX){
-            // Overlay is currently shown or showing
-            // not to intercept events then.
-            return false;
-        }
-
         int action = MotionEventCompat.getActionMasked(ev);
         switch (action){
             case MotionEvent.ACTION_DOWN:
@@ -158,23 +153,38 @@ public class ShortcutWindow extends FrameLayout {
                 int xDiff = calculateDistanceX(ev);
                 Log.d(TAG, "xDiff = " + xDiff);
                 Log.d(TAG, "touchSlop = " + mTouchSlop);
-                if(xDiff < mTouchSlop){
+                boolean isOverlayVisible = isOverlayVisible();
+                if(!isOverlayVisible && xDiff < mTouchSlop){
                     Log.d(TAG, "showOverlay()");
                     mIsScrollingOverlay = true;
                     showOverlay();
+                    return true;
+                }else if(isOverlayVisible // Overlay is shown, swipe from left to right, and first touch left enough, will we hide the overlay
+                        && ev.getX() < mGestureIconWidth
+                        && xDiff > -mTouchSlop){
+                    Log.d(TAG, "hideOverlay()");
+                    mIsScrollingOverlay = true;
+                    hideOverlay(false);
                     return true;
                 }else{
                     Log.d(TAG, "less than slop, return false");
                     return false;
                 }
-            case MotionEvent.ACTION_CANCEL:
-            case MotionEvent.ACTION_UP:
-                Log.d(TAG, "UP");
-                mIsScrollingOverlay = false;
-                mDownX = -1;
-                return false;
         }
         return false;
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        int action = MotionEventCompat.getActionMasked(event);
+        switch (action){
+            case MotionEvent.ACTION_CANCEL:
+            case MotionEvent.ACTION_UP:
+                Log.d(TAG, "UP---");
+                mIsScrollingOverlay = false;
+                mDownX = -1;
+        }
+        return true;
     }
 
     private int calculateDistanceX(MotionEvent ev){
@@ -183,6 +193,10 @@ public class ShortcutWindow extends FrameLayout {
         }else{
             return 0;
         }
+    }
+
+    private boolean isOverlayVisible(){
+        return mOverlay.getTranslationX() < mInitialOverlayTranslationX;
     }
 
     private void showOverlay(){
