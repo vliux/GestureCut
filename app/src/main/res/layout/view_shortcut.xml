@@ -16,7 +16,8 @@
         android:id="@+id/sc_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
         <android.gesture.GestureOverlayView
             android:id="@+id/sc_ges_overlay"
             android:layout_width="match_parent"

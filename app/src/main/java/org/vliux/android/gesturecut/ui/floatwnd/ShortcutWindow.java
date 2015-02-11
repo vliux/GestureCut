@@ -1,9 +1,11 @@
 package org.vliux.android.gesturecut.ui.floatwnd;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -27,7 +29,8 @@ public class ShortcutWindow extends FrameLayout {
     private GestureListView mGestureListView;
     private ViewGroup mOverlay;
     private int mTouchSlop;
-    private int mScreenWidth;
+    private int mInitialOverlayTranslationX;
+    private int mTargetTranslationX;
 
     public ShortcutWindow(Context context) {
         super(context);
@@ -45,8 +48,14 @@ public class ShortcutWindow extends FrameLayout {
     }
 
     private void init(Context context){
-        mTouchSlop = ViewConfiguration.get(context).getScaledTouchSlop();
-        mScreenWidth = ScreenUtil.getScreenSize(context)[0];
+        mTouchSlop = -ViewConfiguration.get(context).getScaledTouchSlop(); // negative value, so detect for swipe left
+        mInitialOverlayTranslationX = ScreenUtil.getScreenSize(context)[0]; // translated to right initially
+
+        Resources res = context.getResources();
+        mTargetTranslationX = // reserve space at left, showing gesture icons in listview
+            (int)(res.getDimension(R.dimen.gesture_thumbnail_width) +
+            res.getDimension(R.dimen.gesture_list_outter_margin) + // marginLeft of ImageView in item_gesture
+            res.getDimension(R.dimen.gesture_list_item_vertical_divider_margin_horiz)); // marginRight of ImageView in item_gesture
 
         LayoutInflater.from(context).inflate(R.layout.view_shortcut, this, true);
         mGestureListView = (GestureListView)findViewById(R.id.sc_gesture_list);
@@ -61,7 +70,7 @@ public class ShortcutWindow extends FrameLayout {
             }
         });
         mGestureListView.refresh();
-        mOverlay.setTranslationX(-mScreenWidth);
+        mOverlay.setTranslationX(mInitialOverlayTranslationX);
     }
 
     private void startShowAnim(){
@@ -89,6 +98,12 @@ public class ShortcutWindow extends FrameLayout {
     private int mDownX = -1;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if(mOverlay.getTranslationX() < mInitialOverlayTranslationX){
+            // Overlay is currently shown or showing
+            // not to intercept events then.
+            return false;
+        }
+
         int action = MotionEventCompat.getActionMasked(ev);
         switch (action){
             case MotionEvent.ACTION_DOWN:
@@ -104,7 +119,7 @@ public class ShortcutWindow extends FrameLayout {
                 int xDiff = calculateDistanceX(ev);
                 Log.d(TAG, "xDiff = " + xDiff);
                 Log.d(TAG, "touchSlop = " + mTouchSlop);
-                if(xDiff > mTouchSlop){
+                if(xDiff < mTouchSlop){
                     Log.d(TAG, "showOverlay()");
                     mIsScrollingOverlay = true;
                     showOverlay();
@@ -125,15 +140,15 @@ public class ShortcutWindow extends FrameLayout {
 
     private int calculateDistanceX(MotionEvent ev){
         if(mDownX >= 0){
-            Log.d(TAG, "mMotionEventDown.X = " + mDownX + ", ev.X = " + ev.getX());
             return (int)(ev.getX() - mDownX);
         }else{
-            Log.d(TAG, "mMotionEventDown = null");
             return 0;
         }
     }
 
     private void showOverlay(){
-        mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).translationX(0).setInterpolator(new DecelerateInterpolator()).start();
+        mOverlay.setVisibility(VISIBLE);
+        mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                .translationX(mTargetTranslationX).setInterpolator(new DecelerateInterpolator()).start();
     }
 }
