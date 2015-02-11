@@ -11,4 +11,28 @@
         android:cacheColorHint="@color/gesture_list_bkground"
         android:divider="@drawable/listview_divider">
     </org.vliux.android.gesturecut.ui.view.GestureListView>
+
+    <LinearLayout
+        android:id="@+id/sc_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <android.gesture.GestureOverlayView
+            android:id="@+id/sc_ges_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gesture_create_bg_semi_transparent"
+            style="@style/gesture_overlay_use">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/gesture_bg_title_record"
+                android:textSize="@dimen/text_size_small_title"
+                android:textColor="@color/yellow"
+                android:drawableLeft="@drawable/ic_pencil"
+                android:drawablePadding="8dp"/>
+        </android.gesture.GestureOverlayView>
+    </LinearLayout>
 </merge>
