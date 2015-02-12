@@ -147,12 +147,12 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         }
     }
 
-    private boolean mIsScrollingOverlay = false;
     private int mDownX = -1;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if(mCurrentOverlayMode == OverlayMoveMode.BY_KNOB){
-            Log.d(TAG, "knob is pressed, stop intercepting events");
+        if(mCurrentOverlayMode == OverlayMoveMode.BY_KNOB
+                || mCurrentOverlayMode == OverlayMoveMode.BY_GESTURE){
+            //Log.d(TAG, "knob is pressed, stop intercepting events");
             return false;
         }
 
@@ -164,25 +164,17 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
                 return false;
             case MotionEvent.ACTION_MOVE:
                 Log.d(TAG, "MOVE: " + ev.getX());
-                if(mIsScrollingOverlay){
-                    Log.d(TAG, "isScrollingOverlay = true, return true");
-                    return true;
-                }
                 int xDiff = calculateDistanceX(ev);
                 Log.d(TAG, "xDiff = " + xDiff);
                 Log.d(TAG, "touchSlop = " + mTouchSlop);
                 boolean isOverlayVisible = isOverlayVisible();
                 if(!isOverlayVisible && xDiff < mTouchSlop){
-                    Log.d(TAG, "showOverlay()");
-                    mIsScrollingOverlay = true;
-                    //showOverlay();
+                    setExclusiveMoveMode(OverlayMoveMode.BY_GESTURE);
                     return true;
                 }else if(isOverlayVisible // Overlay is shown, swipe from left to right, and first touch left enough, will we hide the overlay
                         && ev.getX() < mGestureIconWidth
                         && xDiff > -mTouchSlop){
-                    Log.d(TAG, "hideOverlay()");
-                    mIsScrollingOverlay = true;
-                    //hideOverlay(false);
+                    setExclusiveMoveMode(OverlayMoveMode.BY_GESTURE);
                     return true;
                 }else{
                     Log.d(TAG, "less than slop, return false");
@@ -208,7 +200,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 Log.d(TAG, "onTouchEvent(), CANCEL/UP");
-                mIsScrollingOverlay = false;
+                setExclusiveMoveMode(OverlayMoveMode.UNKNOWN);
                 mDownX = -1;
         }
         return true;
@@ -241,9 +233,16 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
 
     @Override
     public void moveOverlay(int xDelta){
-        if(!mIsScrollingOverlay) {
+        if(mCurrentOverlayMode == OverlayMoveMode.BY_KNOB) {
             if (xDelta < 0) {
-                mOverlay.setTranslationX(mInitialOverlayTranslationX + xDelta);
+                int targetTranslationX = mInitialOverlayTranslationX + xDelta;
+                if(targetTranslationX >= mTargetOverlayTranslationX) {
+                    mOverlay.setTranslationX(mInitialOverlayTranslationX + xDelta);
+                }
+            }
+
+            if(mOverlay.getTranslationX() <= mTargetOverlayTranslationX){
+                setExclusiveMoveMode(OverlayMoveMode.UNKNOWN);
             }
         }
     }
