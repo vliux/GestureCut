@@ -12,16 +12,23 @@
         android:divider="@drawable/listview_divider">
     </org.vliux.android.gesturecut.ui.view.GestureListView>
 
-    <FrameLayout
+    <LinearLayout
         android:id="@+id/sc_overlay"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="right"
-        android:visibility="gone">
+        android:visibility="visible">
+        <org.vliux.android.gesturecut.ui.floatwnd.OverlayKnob
+            android:id="@+id/sc_knob"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
         <android.gesture.GestureOverlayView
             android:id="@+id/sc_ges_overlay"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="1"
             android:background="@color/gesture_create_bg_semi_transparent"
             style="@style/gesture_overlay_use">
             <TextView
@@ -35,5 +42,5 @@
                 android:drawableLeft="@drawable/ic_pencil"
                 android:drawablePadding="8dp"/>
         </android.gesture.GestureOverlayView>
-    </FrameLayout>
+    </LinearLayout>
 </merge>

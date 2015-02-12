@@ -24,6 +24,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.ui.SizeCalculator;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
@@ -35,9 +36,11 @@ public class ShortcutWindow extends FrameLayout {
     private GestureListView mGestureListView;
     private ViewGroup mOverlay;
     private GestureOverlayView mGestureOverLay;
+    private OverlayKnob mKnob;
 
     private int mTouchSlop;
     private int mInitialOverlayTranslationX;
+    private int mTargetOverlayTranslationX;
     private int mGestureIconWidth;
 
     public ShortcutWindow(Context context) {
@@ -59,17 +62,13 @@ public class ShortcutWindow extends FrameLayout {
         int screenWidth = ScreenUtil.getScreenSize(context)[0];
         mTouchSlop = -ViewConfiguration.get(context).getScaledTouchSlop(); // negative value, so detect for swipe left
         Resources res = context.getResources();
-        mGestureIconWidth = // reserve space at left, showing gesture icons in listview
-            (int)(res.getDimension(R.dimen.gesture_thumbnail_width) +
-            res.getDimension(R.dimen.gesture_list_outter_margin) + // marginLeft of ImageView in item_gesture
-            res.getDimension(R.dimen.gesture_list_item_vertical_divider_margin_horiz)); // marginRight of ImageView in item_gesture
-        int overlayWidth = screenWidth - mGestureIconWidth;
-        mInitialOverlayTranslationX = overlayWidth;
+        mGestureIconWidth = SizeCalculator.gestureIconWidth(res); // reserve space at left, showing gesture icons in listview
 
         LayoutInflater.from(context).inflate(R.layout.view_shortcut, this, true);
         mGestureListView = (GestureListView)findViewById(R.id.sc_gesture_list);
         mOverlay = (ViewGroup)findViewById(R.id.sc_overlay);
         mGestureOverLay = (GestureOverlayView)findViewById(R.id.sc_ges_overlay);
+        mKnob = (OverlayKnob)findViewById(R.id.sc_knob);
 
         mGestureListView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -79,10 +78,12 @@ public class ShortcutWindow extends FrameLayout {
                 return true;
             }
         });
-
         mGestureListView.refresh();
+
+        mInitialOverlayTranslationX = screenWidth - mKnob.getRadius();
+        mTargetOverlayTranslationX = mGestureIconWidth - mKnob.getRadius();
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
-        mOverlay.getLayoutParams().width = overlayWidth;
+
         mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
     }
 
@@ -200,9 +201,10 @@ public class ShortcutWindow extends FrameLayout {
     }
 
     private void showOverlay(){
-        mOverlay.setVisibility(VISIBLE);
-        mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
-                .translationX(0).setInterpolator(new DecelerateInterpolator()).start();
+        mGestureOverLay.setVisibility(VISIBLE);
+        ViewPropertyAnimator animator = mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                .translationX(mTargetOverlayTranslationX).setInterpolator(new DecelerateInterpolator());
+        animator.start();
     }
 
     private void hideOverlay(boolean closeShortcutWindow){
@@ -217,6 +219,7 @@ public class ShortcutWindow extends FrameLayout {
 
                 @Override
                 public void onAnimationEnd(Animator animation) {
+                    mGestureOverLay.setVisibility(GONE);
                     startCloseAnim();
                 }
 
