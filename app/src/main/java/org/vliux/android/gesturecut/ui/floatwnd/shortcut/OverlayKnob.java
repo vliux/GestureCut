@@ -90,7 +90,7 @@ public class OverlayKnob extends View {
 
     private boolean mIsPressed = false;
     private int mDownX;
-    private ShortcutWindow.Event evCached = new ShortcutWindow.Event();
+    private OverlayKnobPresenter.Event evCached = new OverlayKnobPresenter.Event();
     @Override
     public boolean onTouchEvent(MotionEvent event) {
         int action = MotionEventCompat.getActionMasked(event);
@@ -99,20 +99,20 @@ public class OverlayKnob extends View {
                 mDownX = (int)event.getRawX();
                 mIsPressed = true;
                 invalidate();
-                evCached.eventType = ShortcutWindow.EVENT_TYPE_KNOB_PRESSED;
+                evCached.eventType = OverlayKnobPresenter.EVENT_TYPE_KNOB_PRESSED;
                 EventBus.getDefault().post(evCached);
                 break;
             case MotionEvent.ACTION_MOVE:
-                evCached.eventType = ShortcutWindow.EVENT_TYPE_KNOB_MOVE;
+                evCached.eventType = OverlayKnobPresenter.EVENT_TYPE_KNOB_MOVE;
                 evCached.xDelta = (int)event.getRawX() - mDownX;
-                Log.d("ShortcutWindow", "=== KNOB_MOVE: xDelta = " + evCached.xDelta + ", mDownX = " + mDownX);
+                //Log.d("ShortcutWindow", "=== KNOB_MOVE: xDelta = " + evCached.xDelta + ", mDownX = " + mDownX);
                 EventBus.getDefault().post(evCached);
                 break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
                 mIsPressed = false;
                 invalidate();
-                evCached.eventType = ShortcutWindow.EVENT_TYPE_KNOB_UNPRESSED;
+                evCached.eventType = OverlayKnobPresenter.EVENT_TYPE_KNOB_UNPRESSED;
                 EventBus.getDefault().post(evCached);
                 break;
         }

@@ -36,7 +36,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by vliux on 1/23/15.
  */
-public class ShortcutWindow extends FrameLayout {
+public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     private static final String TAG = ShortcutWindow.class.getSimpleName();
     private GestureListView mGestureListView;
     private ViewGroup mOverlay;
@@ -48,6 +48,9 @@ public class ShortcutWindow extends FrameLayout {
     private int mTargetOverlayTranslationX;
     private int mGestureIconWidth;
     private GestureDetectorCompat mGestureDetector;
+
+    private OverlayMoveMode mCurrentOverlayMode = OverlayMoveMode.UNKNOWN;
+    private OverlayKnobPresenter mOverlayKnobPresenter;
 
     public ShortcutWindow(Context context) {
         super(context);
@@ -89,42 +92,11 @@ public class ShortcutWindow extends FrameLayout {
         mInitialOverlayTranslationX = screenWidth - mKnob.getRadius();
         mTargetOverlayTranslationX = mGestureIconWidth - mKnob.getRadius();
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
-
         mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
-
         mGestureDetector = new GestureDetectorCompat(context, mGestureDetectorListener);
-        EventBus.getDefault().register(this);
-    }
 
-    static final int EVENT_TYPE_KNOB_PRESSED = 1;
-    static final int EVENT_TYPE_KNOB_UNPRESSED = 2;
-    static final int EVENT_TYPE_KNOB_MOVE = 3;
-    static class Event{
-        public int eventType;
-        public int xDelta;
-
-        /*Event(){}
-        Event(int eventType, int xDelta) {
-            this.eventType = eventType;
-            this.xDelta = xDelta;
-        }*/
-    }
-
-    public void onEventMainThread(Event event){
-        switch (event.eventType){
-            case EVENT_TYPE_KNOB_PRESSED:
-                Log.d(TAG, "KNOB_PRESSED received");
-                mIsKnobPressed = true;
-                break;
-            case EVENT_TYPE_KNOB_UNPRESSED:
-                Log.d(TAG, "KNOB_UNPRESSED received");
-                mIsKnobPressed = false;
-                break;
-            case EVENT_TYPE_KNOB_MOVE:
-                Log.d(TAG, "KNOB_MOVE received, xDelta = " + event.xDelta);
-                moveOverlayByKnob(event);
-                break;
-        }
+        mOverlayKnobPresenter = new OverlayKnobPresenter(this);
+        EventBus.getDefault().register(mOverlayKnobPresenter);
     }
 
     private void startShowAnim(){
@@ -175,12 +147,11 @@ public class ShortcutWindow extends FrameLayout {
         }
     }
 
-    private boolean mIsKnobPressed = false;
     private boolean mIsScrollingOverlay = false;
     private int mDownX = -1;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
-        if(mIsKnobPressed){
+        if(mCurrentOverlayMode == OverlayMoveMode.BY_KNOB){
             Log.d(TAG, "knob is pressed, stop intercepting events");
             return false;
         }
@@ -268,23 +239,30 @@ public class ShortcutWindow extends FrameLayout {
         return mOverlay.getTranslationX() < mInitialOverlayTranslationX;
     }
 
-    private void moveOverlayByKnob(Event event){
+    @Override
+    public void moveOverlay(int xDelta){
         if(!mIsScrollingOverlay) {
-            int xDelta = event.xDelta;
             if (xDelta < 0) {
                 mOverlay.setTranslationX(mInitialOverlayTranslationX + xDelta);
             }
         }
     }
 
-    private void showOverlay(){
+    @Override
+    public void setExclusiveMoveMode(OverlayMoveMode mode) {
+        mCurrentOverlayMode = mode;
+    }
+
+    @Override
+    public void showOverlay(){
         mGestureOverLay.setVisibility(VISIBLE);
         ViewPropertyAnimator animator = mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .translationX(mTargetOverlayTranslationX).setInterpolator(new DecelerateInterpolator());
         animator.start();
     }
 
-    private void hideOverlay(boolean closeShortcutWindow){
+    @Override
+    public void hideOverlay(boolean closeShortcutWindow){
         ViewPropertyAnimator animator =
                 mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .translationX(mInitialOverlayTranslationX).setInterpolator(new AccelerateInterpolator());
