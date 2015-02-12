@@ -16,6 +16,7 @@ import android.view.WindowManager;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
+import org.vliux.android.gesturecut.ui.floatwnd.shortcut.ShortcutWindow;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
 /**

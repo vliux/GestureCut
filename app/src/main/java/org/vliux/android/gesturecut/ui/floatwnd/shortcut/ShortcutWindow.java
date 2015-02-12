@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwnd;
+package org.vliux.android.gesturecut.ui.floatwnd.shortcut;
 
 import android.animation.Animator;
 import android.content.Context;
@@ -27,6 +27,7 @@ import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.SizeCalculator;
+import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 

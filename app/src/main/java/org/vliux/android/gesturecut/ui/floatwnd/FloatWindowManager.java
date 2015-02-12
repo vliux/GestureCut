@@ -4,19 +4,15 @@ package org.vliux.android.gesturecut.ui.floatwnd;
  * Created by vliux on 4/3/14.
  */
 
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.PixelFormat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 
-import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.biz.broadcast.AppBroadcastManager;
+import org.vliux.android.gesturecut.ui.floatwnd.shortcut.ShortcutWindow;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
 import org.vliux.android.gesturecut.util.ScreenUtil;

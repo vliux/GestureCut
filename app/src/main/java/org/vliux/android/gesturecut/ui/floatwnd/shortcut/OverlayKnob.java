@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwnd;
+package org.vliux.android.gesturecut.ui.floatwnd.shortcut;
 
 import android.content.Context;
 import android.graphics.Canvas;
