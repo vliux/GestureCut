@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -28,6 +30,8 @@ import org.vliux.android.gesturecut.ui.SizeCalculator;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Created by vliux on 1/23/15.
  */
@@ -42,6 +46,7 @@ public class ShortcutWindow extends FrameLayout {
     private int mInitialOverlayTranslationX;
     private int mTargetOverlayTranslationX;
     private int mGestureIconWidth;
+    private GestureDetectorCompat mGestureDetector;
 
     public ShortcutWindow(Context context) {
         super(context);
@@ -85,6 +90,40 @@ public class ShortcutWindow extends FrameLayout {
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
 
         mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
+
+        mGestureDetector = new GestureDetectorCompat(context, mGestureDetectorListener);
+        EventBus.getDefault().register(this);
+    }
+
+    static final int EVENT_TYPE_KNOB_PRESSED = 1;
+    static final int EVENT_TYPE_KNOB_UNPRESSED = 2;
+    static final int EVENT_TYPE_KNOB_MOVE = 3;
+    static class Event{
+        public int eventType;
+        public int xDelta;
+
+        /*Event(){}
+        Event(int eventType, int xDelta) {
+            this.eventType = eventType;
+            this.xDelta = xDelta;
+        }*/
+    }
+
+    public void onEventMainThread(Event event){
+        switch (event.eventType){
+            case EVENT_TYPE_KNOB_PRESSED:
+                Log.d(TAG, "KNOB_PRESSED received");
+                mIsKnobPressed = true;
+                break;
+            case EVENT_TYPE_KNOB_UNPRESSED:
+                Log.d(TAG, "KNOB_UNPRESSED received");
+                mIsKnobPressed = false;
+                break;
+            case EVENT_TYPE_KNOB_MOVE:
+                Log.d(TAG, "KNOB_MOVE received, xDelta = " + event.xDelta);
+                moveOverlayByKnob(event);
+                break;
+        }
     }
 
     private void startShowAnim(){
@@ -135,10 +174,16 @@ public class ShortcutWindow extends FrameLayout {
         }
     }
 
+    private boolean mIsKnobPressed = false;
     private boolean mIsScrollingOverlay = false;
     private int mDownX = -1;
     @Override
     public boolean onInterceptTouchEvent(MotionEvent ev) {
+        if(mIsKnobPressed){
+            Log.d(TAG, "knob is pressed, stop intercepting events");
+            return false;
+        }
+
         int action = MotionEventCompat.getActionMasked(ev);
         switch (action){
             case MotionEvent.ACTION_DOWN:
@@ -158,14 +203,14 @@ public class ShortcutWindow extends FrameLayout {
                 if(!isOverlayVisible && xDiff < mTouchSlop){
                     Log.d(TAG, "showOverlay()");
                     mIsScrollingOverlay = true;
-                    showOverlay();
+                    //showOverlay();
                     return true;
                 }else if(isOverlayVisible // Overlay is shown, swipe from left to right, and first touch left enough, will we hide the overlay
                         && ev.getX() < mGestureIconWidth
                         && xDiff > -mTouchSlop){
                     Log.d(TAG, "hideOverlay()");
                     mIsScrollingOverlay = true;
-                    hideOverlay(false);
+                    //hideOverlay(false);
                     return true;
                 }else{
                     Log.d(TAG, "less than slop, return false");
@@ -177,16 +222,38 @@ public class ShortcutWindow extends FrameLayout {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        mGestureDetector.onTouchEvent(event);
         int action = MotionEventCompat.getActionMasked(event);
         switch (action){
+            case MotionEvent.ACTION_DOWN:
+                Log.d(TAG, "onTouchEvent(), DOWN");
+                break;
+            case MotionEvent.ACTION_MOVE:
+                Log.d(TAG, "onTouchEvent(), MOVE");
+                Log.d(TAG, "  event.x = " + event.getX());
+                Log.d(TAG, String.format("  knob.x=%.2f, y=%d, width=%d, height=%d", mKnob.getTranslationX(), mKnob.getTop(), mKnob.getWidth(), mKnob.getHeight()));
+                break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, "UP---");
+                Log.d(TAG, "onTouchEvent(), CANCEL/UP");
                 mIsScrollingOverlay = false;
                 mDownX = -1;
         }
         return true;
     }
+
+    private final GestureDetector.OnGestureListener mGestureDetectorListener = new GestureDetector.SimpleOnGestureListener(){
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            Log.d(TAG, "detector: velocityX = " + velocityX);
+            if(velocityX < mTouchSlop){ // mTouchSlop is negative
+                showOverlay();
+            }else if(velocityX > -mTouchSlop){
+                hideOverlay(false);
+            }
+            return true;
+        }
+    };
 
     private int calculateDistanceX(MotionEvent ev){
         if(mDownX >= 0){
@@ -198,6 +265,15 @@ public class ShortcutWindow extends FrameLayout {
 
     private boolean isOverlayVisible(){
         return mOverlay.getTranslationX() < mInitialOverlayTranslationX;
+    }
+
+    private void moveOverlayByKnob(Event event){
+        if(!mIsScrollingOverlay) {
+            int xDelta = event.xDelta;
+            if (xDelta < 0) {
+                mOverlay.setTranslationX(mInitialOverlayTranslationX + xDelta);
+            }
+        }
     }
 
     private void showOverlay(){
