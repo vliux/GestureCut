@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -47,10 +45,10 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     private int mInitialOverlayTranslationX;
     private int mTargetOverlayTranslationX;
     private int mGestureIconWidth;
-    private GestureDetectorCompat mGestureDetector;
 
     private OverlayMoveMode mCurrentOverlayMode = OverlayMoveMode.UNKNOWN;
     private OverlayKnobPresenter mOverlayKnobPresenter;
+    private OverlayGesturePresenter mOverlayGesturePresenter;
 
     public ShortcutWindow(Context context) {
         super(context);
@@ -93,9 +91,9 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         mTargetOverlayTranslationX = mGestureIconWidth - mKnob.getRadius();
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
         mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
-        mGestureDetector = new GestureDetectorCompat(context, mGestureDetectorListener);
 
         mOverlayKnobPresenter = new OverlayKnobPresenter(this);
+        mOverlayGesturePresenter = new OverlayGesturePresenter(context, this, mTouchSlop);
         EventBus.getDefault().register(mOverlayKnobPresenter);
     }
 
@@ -186,38 +184,15 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mGestureDetector.onTouchEvent(event);
+        mOverlayGesturePresenter.onTouchEvent(event);
         int action = MotionEventCompat.getActionMasked(event);
         switch (action){
-            case MotionEvent.ACTION_DOWN:
-                Log.d(TAG, "onTouchEvent(), DOWN");
-                break;
-            case MotionEvent.ACTION_MOVE:
-                Log.d(TAG, "onTouchEvent(), MOVE");
-                Log.d(TAG, "  event.x = " + event.getX());
-                Log.d(TAG, String.format("  knob.x=%.2f, y=%d, width=%d, height=%d", mKnob.getTranslationX(), mKnob.getTop(), mKnob.getWidth(), mKnob.getHeight()));
-                break;
             case MotionEvent.ACTION_CANCEL:
             case MotionEvent.ACTION_UP:
-                Log.d(TAG, "onTouchEvent(), CANCEL/UP");
-                setExclusiveMoveMode(OverlayMoveMode.UNKNOWN);
                 mDownX = -1;
         }
         return true;
     }
-
-    private final GestureDetector.OnGestureListener mGestureDetectorListener = new GestureDetector.SimpleOnGestureListener(){
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-            Log.d(TAG, "detector: velocityX = " + velocityX);
-            if(velocityX < mTouchSlop){ // mTouchSlop is negative
-                showOverlay();
-            }else if(velocityX > -mTouchSlop){
-                hideOverlay(false);
-            }
-            return true;
-        }
-    };
 
     private int calculateDistanceX(MotionEvent ev){
         if(mDownX >= 0){
@@ -234,10 +209,12 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     @Override
     public void moveOverlay(int xDelta){
         if(mCurrentOverlayMode == OverlayMoveMode.BY_KNOB) {
+            int translationX = (int)mOverlay.getTranslationX();
+
             if (xDelta < 0) {
                 int targetTranslationX = mInitialOverlayTranslationX + xDelta;
                 if(targetTranslationX >= mTargetOverlayTranslationX) {
-                    mOverlay.setTranslationX(mInitialOverlayTranslationX + xDelta);
+                    mOverlay.setTranslationX(targetTranslationX);
                 }
             }
 
@@ -254,10 +231,12 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
 
     @Override
     public void showOverlay(){
-        mGestureOverLay.setVisibility(VISIBLE);
-        ViewPropertyAnimator animator = mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
-                .translationX(mTargetOverlayTranslationX).setInterpolator(new DecelerateInterpolator());
-        animator.start();
+        if(mCurrentOverlayMode == OverlayMoveMode.BY_GESTURE) {
+            mGestureOverLay.setVisibility(VISIBLE);
+            ViewPropertyAnimator animator = mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                    .translationX(mTargetOverlayTranslationX).setInterpolator(new DecelerateInterpolator());
+            animator.start();
+        }
     }
 
     @Override
