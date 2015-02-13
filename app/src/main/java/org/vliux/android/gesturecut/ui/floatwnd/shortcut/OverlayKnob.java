@@ -150,17 +150,17 @@ public class OverlayKnob extends View {
     }
 
     private boolean mNeedRotate = false;
-    public void onEventMainThread(OverlayKnobPresenter.EventToKnob event){
+    public void onEventMainThread(IShortcutWindow.EventToKnob event){
         switch (event.eventType){
-            case OverlayKnobPresenter.EventToKnob.END_STATE_LEFT:
+            case IShortcutWindow.EventToKnob.END_STATE_LEFT:
                 mNeedRotate = true;
                 invalidate();
                 break;
-            case OverlayKnobPresenter.EventToKnob.END_STATE_RIGHT:
+            case IShortcutWindow.EventToKnob.END_STATE_RIGHT:
                 mNeedRotate = false;
                 invalidate();
                 break;
-            case OverlayKnobPresenter.EventToKnob.WND_CLOSING:
+            case IShortcutWindow.EventToKnob.WND_CLOSING:
                 EventBus.getDefault().unregister(this);
                 break;
         }

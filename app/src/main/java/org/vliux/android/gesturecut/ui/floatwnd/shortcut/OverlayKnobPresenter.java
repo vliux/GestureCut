@@ -22,23 +22,6 @@ class OverlayKnobPresenter {
         public int rawX;
     }
 
-    /**
-     * Event send to OverlayKnob, notify it that the moving is stopped,
-     * and the whether the knob stops at left/right side of the screen.
-     */
-    static class EventToKnob{
-        public static final int END_STATE_LEFT = 1;
-        public static final int END_STATE_RIGHT = 2;
-        public static final int WND_CLOSING = 3;
-
-        public int eventType;
-
-        public EventToKnob(int eventType){
-            this.eventType = eventType;
-        }
-
-    }
-
     private IShortcutWindow mShortcutWindow;
     private int mDownX;
     private int mDownTranslationX;
@@ -51,7 +34,6 @@ class OverlayKnobPresenter {
     public void onShortcutWindowClosed(){
         EventBus eb = EventBus.getDefault();
         eb.unregister(this);
-        eb.post(new EventToKnob(EventToKnob.WND_CLOSING));
     }
 
     /**
@@ -122,9 +104,9 @@ class OverlayKnobPresenter {
                         mShortcutWindow.setExclusiveMoveMode(IShortcutWindow.OverlayMoveMode.UNKNOWN);
                         if (finalIsRestore) {
                             mShortcutWindow.setGestureOverlayViewVisible(View.GONE);
-                            EventBus.getDefault().post(new EventToKnob(EventToKnob.END_STATE_RIGHT));
+                            EventBus.getDefault().post(new IShortcutWindow.EventToKnob(IShortcutWindow.EventToKnob.END_STATE_RIGHT));
                         } else {
-                            EventBus.getDefault().post(new EventToKnob(EventToKnob.END_STATE_LEFT));
+                            EventBus.getDefault().post(new IShortcutWindow.EventToKnob(IShortcutWindow.EventToKnob.END_STATE_LEFT));
                         }
                     }
 

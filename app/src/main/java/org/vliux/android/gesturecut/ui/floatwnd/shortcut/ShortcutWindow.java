@@ -127,6 +127,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mOverlayKnobPresenter.onShortcutWindowClosed();
+                        EventBus.getDefault().post(new IShortcutWindow.EventToKnob(IShortcutWindow.EventToKnob.WND_CLOSING));
                         FloatWindowManager.closeWindow(getContext(), ShortcutWindow.this);
                     }
 
@@ -250,17 +251,15 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
 
                         @Override
                         public void onAnimationEnd(Animator animation) {
-
+                            EventBus.getDefault().post(new EventToKnob(EventToKnob.END_STATE_LEFT));
                         }
 
                         @Override
                         public void onAnimationCancel(Animator animation) {
-
                         }
 
                         @Override
                         public void onAnimationRepeat(Animator animation) {
-
                         }
                     });
             animator.start();
@@ -280,6 +279,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
             @Override
             public void onAnimationEnd(Animator animation) {
                 mGestureOverLay.setVisibility(GONE);
+                EventBus.getDefault().post(new EventToKnob(EventToKnob.END_STATE_RIGHT));
                 if(closeShortcutWindow) {
                     startCloseAnim();
                 }

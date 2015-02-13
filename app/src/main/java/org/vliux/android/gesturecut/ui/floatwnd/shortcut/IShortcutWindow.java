@@ -22,4 +22,21 @@ interface IShortcutWindow {
     public void setGestureOverlayViewVisible(int visibility);
     public int getInitialTranslationX();
     public int getTargetTranslationX();
+
+    /**
+     * Event send to OverlayKnob, notify it that the moving is stopped,
+     * and the whether the knob stops at left/right side of the screen.
+     */
+    static class EventToKnob{
+        public static final int END_STATE_LEFT = 1;
+        public static final int END_STATE_RIGHT = 2;
+        public static final int WND_CLOSING = 3;
+
+        public int eventType;
+
+        public EventToKnob(int eventType){
+            this.eventType = eventType;
+        }
+
+    }
 }
