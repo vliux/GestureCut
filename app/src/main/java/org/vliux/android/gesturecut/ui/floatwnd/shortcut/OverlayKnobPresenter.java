@@ -49,7 +49,9 @@ class OverlayKnobPresenter {
     }
 
     public void onShortcutWindowClosed(){
-        EventBus.getDefault().unregister(this);
+        EventBus eb = EventBus.getDefault();
+        eb.unregister(this);
+        eb.post(new EventToKnob(EventToKnob.WND_CLOSING));
     }
 
     /**
@@ -121,7 +123,7 @@ class OverlayKnobPresenter {
                         if (finalIsRestore) {
                             mShortcutWindow.setGestureOverlayViewVisible(View.GONE);
                             EventBus.getDefault().post(new EventToKnob(EventToKnob.END_STATE_RIGHT));
-                        }else{
+                        } else {
                             EventBus.getDefault().post(new EventToKnob(EventToKnob.END_STATE_LEFT));
                         }
                     }
