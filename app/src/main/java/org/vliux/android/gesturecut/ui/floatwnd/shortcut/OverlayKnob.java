@@ -31,7 +31,8 @@ public class OverlayKnob extends View {
     private Paint mPaint;
     private RectF mBoundRectF;
 
-    private Drawable mIconDrawable;
+    private Drawable mIconDrawableBack;
+    private Drawable mIconDrawableNext;
     private Rect mDrawableBounds;
 
     private int mColorNormal;
@@ -73,13 +74,15 @@ public class OverlayKnob extends View {
         mStrokePaint.setStrokeWidth(strokePadding/2);
         mBoundStroke = new RectF(strokePadding, strokePadding, mDiameter - strokePadding, mDiameter - strokePadding);
 
-        mIconDrawable = getContext().getResources().getDrawable(R.drawable.ic_back);
+        mIconDrawableBack = context.getResources().getDrawable(R.drawable.ic_back);
+        mIconDrawableNext = context.getResources().getDrawable(R.drawable.ic_next);
         int left = mRadius / 4;
         int top = mRadius - left;
         int right = mRadius - left;
         int bottom = mDiameter - top;
         mDrawableBounds = new Rect(left, top, right, bottom);
-        mIconDrawable.setBounds(mDrawableBounds);
+        mIconDrawableBack.setBounds(mDrawableBounds);
+        mIconDrawableNext.setBounds(mDrawableBounds);
 
         // register for eventbus
         EventBus.getDefault().register(this);
@@ -103,7 +106,9 @@ public class OverlayKnob extends View {
         }
 
         if(!mNeedRotate) {
-            mIconDrawable.draw(canvas);
+            mIconDrawableBack.draw(canvas);
+        }else{
+            mIconDrawableNext.draw(canvas);
         }
     }
 
