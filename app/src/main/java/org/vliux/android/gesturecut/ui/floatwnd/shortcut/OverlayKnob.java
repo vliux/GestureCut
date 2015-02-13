@@ -69,7 +69,7 @@ public class OverlayKnob extends View {
         int strokePadding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, context.getResources().getDisplayMetrics());
         mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStrokePaint.setStyle(Paint.Style.STROKE);
-        mStrokePaint.setColor(context.getResources().getColor(R.color.sc_knob_stroke));
+        mStrokePaint.setColor(context.getResources().getColor(COLOR_STROKE));
         mStrokePaint.setStrokeWidth(strokePadding/2);
         mBoundStroke = new RectF(strokePadding, strokePadding, mDiameter - strokePadding, mDiameter - strokePadding);
 

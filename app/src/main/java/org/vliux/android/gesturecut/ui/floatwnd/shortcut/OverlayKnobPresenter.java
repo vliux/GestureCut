@@ -18,12 +18,6 @@ class OverlayKnobPresenter {
     static class Event{
         public int eventType;
         public int rawX;
-
-        /*Event(){}
-        Event(int eventType, int xDelta) {
-            this.eventType = eventType;
-            this.xDelta = xDelta;
-        }*/
     }
 
     private IShortcutWindow mShortcutWindow;
@@ -41,6 +35,7 @@ class OverlayKnobPresenter {
                 mShortcutWindow.setExclusiveMoveMode(IShortcutWindow.OverlayMoveMode.BY_KNOB);
                 mDownX = event.rawX;
                 mDownTranslationX = (int)mShortcutWindow.getOverlayView().getTranslationX();
+                mShortcutWindow.setGestureOverlayViewVisible(View.VISIBLE);
                 break;
             case EVENT_TYPE_KNOB_UNPRESSED:
                 Log.d(ShortcutWindow.TAG, "KNOB_UNPRESSED received");
@@ -75,12 +70,16 @@ class OverlayKnobPresenter {
         int translationX = (int)overlay.getTranslationX();
         int middleTranslationX = (mShortcutWindow.getInitialTranslationX() + mShortcutWindow.getTargetTranslationX())/2;
         int animTargetTranslationX = 0;
+        boolean isRestore = false;
         if(translationX >= middleTranslationX){
             animTargetTranslationX = mShortcutWindow.getInitialTranslationX();
+            isRestore = true;
         }else{
             animTargetTranslationX = mShortcutWindow.getTargetTranslationX();
+            isRestore = false;
         }
 
+        final boolean finalIsRestore = isRestore;
         overlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).translationX(animTargetTranslationX)
                 .setInterpolator(new DecelerateInterpolator())
                 .setListener(new Animator.AnimatorListener() {
@@ -91,6 +90,9 @@ class OverlayKnobPresenter {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mShortcutWindow.setExclusiveMoveMode(IShortcutWindow.OverlayMoveMode.UNKNOWN);
+                        if (finalIsRestore) {
+                            mShortcutWindow.setGestureOverlayViewVisible(View.GONE);
+                        }
                     }
 
                     @Override

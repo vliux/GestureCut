@@ -280,6 +280,11 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         return mOverlay;
     }
 
+    @Override
+    public void setGestureOverlayViewVisible(int visibility) {
+        mGestureOverLay.setVisibility(visibility);
+    }
+
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
         @Override
         public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {

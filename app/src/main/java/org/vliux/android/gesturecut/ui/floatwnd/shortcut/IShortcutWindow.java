@@ -19,6 +19,7 @@ interface IShortcutWindow {
     public void hideOverlay(boolean closeWindow);
 
     public View getOverlayView();
+    public void setGestureOverlayViewVisible(int visibility);
     public int getInitialTranslationX();
     public int getTargetTranslationX();
 }
