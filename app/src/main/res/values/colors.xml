@@ -28,7 +28,7 @@
     <!-- bg color of right-top corner image in simplified gesture listview items -->
     <color name="simp_ges_listview_rt_bg">#55FFFFFF</color>
 
-    <color name="lock_screen_up_arrow_bg">#AAFFFFFF</color>
+    <color name="sc_knob_stroke">#88ffffff</color>
 
     <!-- widget -->
     <color name="widget_bkground">#77000000</color>
