@@ -100,7 +100,6 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
 
         mOverlayKnobPresenter = new OverlayKnobPresenter(this);
         mOverlayGesturePresenter = new OverlayGesturePresenter(context, this, mTouchSlop);
-        EventBus.getDefault().register(mOverlayKnobPresenter);
     }
 
     private void startShowAnim(){
@@ -127,6 +126,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
 
                     @Override
                     public void onAnimationEnd(Animator animation) {
+                        mOverlayKnobPresenter.onShortcutWindowClosed();
                         FloatWindowManager.closeWindow(getContext(), ShortcutWindow.this);
                     }
 
@@ -241,37 +241,58 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         if(mCurrentOverlayMode == OverlayMoveMode.BY_GESTURE) {
             mGestureOverLay.setVisibility(VISIBLE);
             ViewPropertyAnimator animator = mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
-                    .translationX(mTargetOverlayTranslationX).setInterpolator(new DecelerateInterpolator());
+                    .translationX(mTargetOverlayTranslationX).setInterpolator(new DecelerateInterpolator())
+                    .setListener(new Animator.AnimatorListener() {
+                        @Override
+                        public void onAnimationStart(Animator animation) {
+                            mGestureOverLay.setVisibility(VISIBLE);
+                        }
+
+                        @Override
+                        public void onAnimationEnd(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationCancel(Animator animation) {
+
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animator animation) {
+
+                        }
+                    });
             animator.start();
         }
     }
 
     @Override
-    public void hideOverlay(boolean closeShortcutWindow){
+    public void hideOverlay(final boolean closeShortcutWindow){
         ViewPropertyAnimator animator =
                 mOverlay.animate().setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .translationX(mInitialOverlayTranslationX).setInterpolator(new AccelerateInterpolator());
-        if(closeShortcutWindow){
-            animator.setListener(new Animator.AnimatorListener() {
-                @Override
-                public void onAnimationStart(Animator animation) {
-                }
+        animator.setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
 
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mGestureOverLay.setVisibility(GONE);
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mGestureOverLay.setVisibility(GONE);
+                if(closeShortcutWindow) {
                     startCloseAnim();
                 }
+            }
 
-                @Override
-                public void onAnimationCancel(Animator animation) {
-                }
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
 
-                @Override
-                public void onAnimationRepeat(Animator animation) {
-                }
-            });
-        }
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
         animator.start();
     }
 

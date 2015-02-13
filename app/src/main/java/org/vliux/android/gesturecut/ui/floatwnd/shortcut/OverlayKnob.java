@@ -80,6 +80,9 @@ public class OverlayKnob extends View {
         int bottom = mDiameter - top;
         mDrawableBounds = new Rect(left, top, right, bottom);
         mIconDrawable.setBounds(mDrawableBounds);
+
+        // register for eventbus
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -99,7 +102,9 @@ public class OverlayKnob extends View {
             canvas.drawArc(mBoundStroke, 90f, 180f, true, mStrokePaint);
         }
 
-        mIconDrawable.draw(canvas);
+        if(!mNeedRotate) {
+            mIconDrawable.draw(canvas);
+        }
     }
 
     public int getRadius(){
@@ -137,5 +142,23 @@ public class OverlayKnob extends View {
                 break;
         }
         return true;
+    }
+
+    private boolean mNeedRotate = false;
+    public void onEventMainThread(OverlayKnobPresenter.EventToKnob event){
+        switch (event.eventType){
+            case OverlayKnobPresenter.EventToKnob.END_STATE_LEFT:
+                mNeedRotate = true;
+                invalidate();
+                break;
+            case OverlayKnobPresenter.EventToKnob.END_STATE_RIGHT:
+                mNeedRotate = false;
+                invalidate();
+                break;
+            case OverlayKnobPresenter.EventToKnob.WND_CLOSING:
+                EventBus.getDefault().unregister(this);
+                break;
+        }
+
     }
 }
