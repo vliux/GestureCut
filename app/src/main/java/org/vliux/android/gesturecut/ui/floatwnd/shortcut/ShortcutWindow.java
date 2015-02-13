@@ -88,10 +88,15 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         });
         mGestureListView.refresh();
 
-        mInitialOverlayTranslationX = screenWidth - mKnob.getRadius();
-        mTargetOverlayTranslationX = mGestureIconWidth - mKnob.getRadius();
+        // as the width of the overlay will be changed below, while its layout_gravity is right,
+        // so calculation of translationX is then affected.
+        mTargetOverlayTranslationX = 0;
+        mInitialOverlayTranslationX = screenWidth - mGestureIconWidth;
+
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
         mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
+        mGestureOverLay.getLayoutParams().width = screenWidth - mGestureIconWidth;
+        mOverlay.getLayoutParams().width = screenWidth - (mGestureIconWidth - mKnob.getRadius());
 
         mOverlayKnobPresenter = new OverlayKnobPresenter(this);
         mOverlayGesturePresenter = new OverlayGesturePresenter(context, this, mTouchSlop);

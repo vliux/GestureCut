@@ -14,7 +14,7 @@
     <!-- text in background for recording a new gesture -->
     <string name="gesture_bg_title_record">Draw new gesture here</string>
     <!-- text in background for starting activity from a gesture -->
-    <string name="gesture_bg_title_use">Draw gesture to start app</string>
+    <string name="gesture_bg_title_use">Draw gesture here</string>
 
     <string name="saving_gesture_completed">Gesture %s saved</string>
     <string name="start_activity_from_gesture">Starting activity from gesture&#8230;</string>

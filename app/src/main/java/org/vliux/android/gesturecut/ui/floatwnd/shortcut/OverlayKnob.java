@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -21,6 +22,9 @@ import de.greenrobot.event.EventBus;
  * Created by vliux on 2/12/15.
  */
 public class OverlayKnob extends View {
+    private static final int COLOR_BG_PRESSED = R.color.yellow;
+    private static final int COLOR_BG_UNPRESSED = R.color.gesture_create_bg_semi_transparent;
+
     private int mDiameter;
     private int mRadius;
     private Paint mPaint;
@@ -31,6 +35,9 @@ public class OverlayKnob extends View {
 
     private int mColorNormal;
     private int mColorPressed;
+
+    private Paint mStrokePaint;
+    private RectF mBoundStroke;
 
     public OverlayKnob(Context context) {
         super(context);
@@ -52,11 +59,18 @@ public class OverlayKnob extends View {
         mRadius = mDiameter / 2;
         mBoundRectF = new RectF(0f, 0f, mDiameter, mDiameter);
 
-        mColorNormal = context.getResources().getColor(R.color.gesture_create_bg_semi_transparent);
-        mColorPressed = context.getResources().getColor(R.color.red_warning);
+        mColorNormal = context.getResources().getColor(COLOR_BG_UNPRESSED);
+        mColorPressed = context.getResources().getColor(COLOR_BG_PRESSED);
 
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
+
+        int strokePadding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, context.getResources().getDisplayMetrics());
+        mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        mStrokePaint.setStyle(Paint.Style.STROKE);
+        mStrokePaint.setColor(context.getResources().getColor(R.color.global_bkground));
+        mStrokePaint.setStrokeWidth(strokePadding/2);
+        mBoundStroke = new RectF(strokePadding, strokePadding, mDiameter - strokePadding, mDiameter - strokePadding);
 
         mIconDrawable = getContext().getResources().getDrawable(R.drawable.ic_back);
         int left = mRadius / 4;
@@ -69,18 +83,19 @@ public class OverlayKnob extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        setMeasuredDimension(mRadius, mDiameter);
+        setMeasuredDimension(mDiameter, mDiameter);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         if(mIsPressed){
             mPaint.setColor(mColorPressed);
+            canvas.drawArc(mBoundRectF, 90f, 360f, true, mPaint);
+            canvas.drawArc(mBoundStroke, 90f, 360f, false, mStrokePaint);
         }else{
             mPaint.setColor(mColorNormal);
+            canvas.drawArc(mBoundRectF, 90f, 180f, true, mPaint);
         }
-
-        canvas.drawArc(mBoundRectF, 90f, 180f, true, mPaint);
         mIconDrawable.draw(canvas);
     }
 
