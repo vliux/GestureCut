@@ -1,5 +1,7 @@
 package org.vliux.android.gesturecut.ui.floatwnd.shortcut;
 
+import android.view.View;
+
 /**
  * Created by vliux on 2/12/15.
  */
@@ -11,7 +13,12 @@ interface IShortcutWindow {
     }
 
     public void setExclusiveMoveMode(OverlayMoveMode mode);
+    public OverlayMoveMode getExclusiveMoveMode();
+
     public void showOverlay();
     public void hideOverlay(boolean closeWindow);
-    public void moveOverlay(int xDelta);
+
+    public View getOverlayView();
+    public int getInitialTranslationX();
+    public int getTargetTranslationX();
 }

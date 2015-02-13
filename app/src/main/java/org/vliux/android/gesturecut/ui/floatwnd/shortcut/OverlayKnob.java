@@ -100,11 +100,12 @@ public class OverlayKnob extends View {
                 mIsPressed = true;
                 invalidate();
                 evCached.eventType = OverlayKnobPresenter.EVENT_TYPE_KNOB_PRESSED;
+                evCached.rawX = mDownX;
                 EventBus.getDefault().post(evCached);
                 break;
             case MotionEvent.ACTION_MOVE:
                 evCached.eventType = OverlayKnobPresenter.EVENT_TYPE_KNOB_MOVE;
-                evCached.xDelta = (int)event.getRawX() - mDownX;
+                evCached.rawX = (int)event.getRawX();
                 //Log.d("ShortcutWindow", "=== KNOB_MOVE: xDelta = " + evCached.xDelta + ", mDownX = " + mDownX);
                 EventBus.getDefault().post(evCached);
                 break;
@@ -113,6 +114,7 @@ public class OverlayKnob extends View {
                 mIsPressed = false;
                 invalidate();
                 evCached.eventType = OverlayKnobPresenter.EVENT_TYPE_KNOB_UNPRESSED;
+                evCached.rawX = (int)event.getRawX();
                 EventBus.getDefault().post(evCached);
                 break;
         }

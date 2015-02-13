@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
+import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
 import android.view.ViewPropertyAnimator;
@@ -35,7 +36,7 @@ import de.greenrobot.event.EventBus;
  * Created by vliux on 1/23/15.
  */
 public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
-    private static final String TAG = ShortcutWindow.class.getSimpleName();
+    static final String TAG = ShortcutWindow.class.getSimpleName();
     private GestureListView mGestureListView;
     private ViewGroup mOverlay;
     private GestureOverlayView mGestureOverLay;
@@ -207,26 +208,23 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     }
 
     @Override
-    public void moveOverlay(int xDelta){
-        if(mCurrentOverlayMode == OverlayMoveMode.BY_KNOB) {
-            int translationX = (int)mOverlay.getTranslationX();
+    public int getInitialTranslationX() {
+        return mInitialOverlayTranslationX;
+    }
 
-            if (xDelta < 0) {
-                int targetTranslationX = mInitialOverlayTranslationX + xDelta;
-                if(targetTranslationX >= mTargetOverlayTranslationX) {
-                    mOverlay.setTranslationX(targetTranslationX);
-                }
-            }
-
-            if(mOverlay.getTranslationX() <= mTargetOverlayTranslationX){
-                setExclusiveMoveMode(OverlayMoveMode.UNKNOWN);
-            }
-        }
+    @Override
+    public int getTargetTranslationX() {
+        return mTargetOverlayTranslationX;
     }
 
     @Override
     public void setExclusiveMoveMode(OverlayMoveMode mode) {
         mCurrentOverlayMode = mode;
+    }
+
+    @Override
+    public OverlayMoveMode getExclusiveMoveMode() {
+        return mCurrentOverlayMode;
     }
 
     @Override
@@ -266,6 +264,11 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
             });
         }
         animator.start();
+    }
+
+    @Override
+    public View getOverlayView() {
+        return mOverlay;
     }
 
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
