@@ -139,7 +139,11 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     public boolean dispatchKeyEvent(KeyEvent event) {
         if(event.getKeyCode() == KeyEvent.KEYCODE_BACK
                 && KeyEvent.ACTION_UP == event.getAction()){
-            startCloseAnim();
+            if(isOverlayVisible()){
+                hideOverlay(true);
+            }else {
+                startCloseAnim();
+            }
             return true;
         }else{
             return super.dispatchKeyEvent(event);
