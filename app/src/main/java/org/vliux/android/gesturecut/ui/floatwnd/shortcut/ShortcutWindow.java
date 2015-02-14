@@ -19,6 +19,7 @@ import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
@@ -41,6 +42,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     private ViewGroup mOverlay;
     private GestureOverlayView mGestureOverLay;
     private OverlayKnob mKnob;
+    private ImageView mIvTargetApp;
 
     private int mTouchSlop;
     private int mInitialOverlayTranslationX;
@@ -50,6 +52,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     private OverlayMoveMode mCurrentOverlayMode = OverlayMoveMode.UNKNOWN;
     private OverlayKnobPresenter mOverlayKnobPresenter;
     private OverlayGesturePresenter mOverlayGesturePresenter;
+    private StartTaskPresenter mStartTaskPresenter;
 
     public ShortcutWindow(Context context) {
         super(context);
@@ -67,7 +70,9 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     }
 
     private void init(Context context){
-        int screenWidth = ScreenUtil.getScreenSize(context)[0];
+        int[] screenDimen = ScreenUtil.getScreenSize(context);
+        int screenWidth = screenDimen[0];
+        int screenHeight = screenDimen[1];
         mTouchSlop = -ViewConfiguration.get(context).getScaledTouchSlop(); // negative value, so detect for swipe left
         Resources res = context.getResources();
         mGestureIconWidth = SizeCalculator.gestureIconWidth(res); // reserve space at left, showing gesture icons in listview
@@ -77,6 +82,11 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         mOverlay = (ViewGroup)findViewById(R.id.sc_overlay);
         mGestureOverLay = (GestureOverlayView)findViewById(R.id.sc_ges_overlay);
         mKnob = (OverlayKnob)findViewById(R.id.sc_knob);
+        mIvTargetApp = (ImageView)findViewById(R.id.sc_target_icon);
+
+        mOverlayKnobPresenter = new OverlayKnobPresenter(this);
+        mOverlayGesturePresenter = new OverlayGesturePresenter(context, this, mTouchSlop);
+        mStartTaskPresenter = new StartTaskPresenter(this, mIvTargetApp, -screenHeight/2);
 
         mGestureListView.getViewTreeObserver().addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
             @Override
@@ -86,6 +96,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
                 return true;
             }
         });
+        mGestureListView.setOnGestureItemClickedListener(mStartTaskPresenter);
         mGestureListView.refresh();
 
         // as the width of the overlay will be changed below, while its layout_gravity is right,
@@ -94,12 +105,10 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         mInitialOverlayTranslationX = screenWidth - mGestureIconWidth;
 
         mOverlay.setTranslationX(mInitialOverlayTranslationX);
-        mGestureOverLay.addOnGesturePerformedListener(mOnGesturePerformedListener);
+
+        mGestureOverLay.addOnGesturePerformedListener(mStartTaskPresenter);
         mGestureOverLay.getLayoutParams().width = screenWidth - mGestureIconWidth;
         mOverlay.getLayoutParams().width = screenWidth - (mGestureIconWidth - mKnob.getRadius());
-
-        mOverlayKnobPresenter = new OverlayKnobPresenter(this);
-        mOverlayGesturePresenter = new OverlayGesturePresenter(context, this, mTouchSlop);
     }
 
     private void startShowAnim(){
@@ -305,15 +314,4 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     public void setGestureOverlayViewVisible(int visibility) {
         mGestureOverLay.setVisibility(visibility);
     }
-
-    private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
-        @Override
-        public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-            ResolvedComponent rc = GesturePersistence.loadGesture(getContext(), gesture);
-            if(null != rc){
-                TaskManager.startActivity(getContext(), rc);
-                hideOverlay(true);
-            }
-        }
-    };
 }

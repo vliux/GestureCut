@@ -44,4 +44,12 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|left" />
     </FrameLayout>
+
+    <!-- ImageView for animator when starting activty of defined gestures -->
+    <ImageView
+        android:id="@+id/sc_target_icon"
+        android:layout_width="@dimen/icon_dimen_global_large"
+        android:layout_height="@dimen/icon_dimen_global_large"
+        android:layout_gravity="center_horizontal|bottom"
+        android:visibility="gone"/>
 </merge>

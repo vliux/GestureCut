@@ -25,6 +25,7 @@ public class OverlayKnob extends View {
     private static final int COLOR_BG_PRESSED = R.color.yellow;
     private static final int COLOR_BG_UNPRESSED = R.color.gesture_create_bg_semi_transparent;
     private static final int COLOR_STROKE = R.color.sc_knob_stroke;
+    private static final float STROKE_PADDING_DP = 6f;
 
     private int mDiameter;
     private int mRadius;
@@ -67,7 +68,7 @@ public class OverlayKnob extends View {
         mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mPaint.setStyle(Paint.Style.FILL_AND_STROKE);
 
-        int strokePadding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4f, context.getResources().getDisplayMetrics());
+        int strokePadding = (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, STROKE_PADDING_DP, context.getResources().getDisplayMetrics());
         mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setColor(context.getResources().getColor(COLOR_STROKE));

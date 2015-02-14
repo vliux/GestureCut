@@ -36,7 +36,7 @@ import org.vliux.android.gesturecut.util.WindowManagerUtil;
 /**
  * Created by vliux on 4/9/14.
  */
-public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.OnTablikeChangedListener {
+/*public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.OnTablikeChangedListener {
     private TextView mTvBack;
     private GestureOverlayView mGestureOverlayView;
     private TabLikeView mTabLikeView;
@@ -50,9 +50,9 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
     private GestureListView mGestureListView;
     private View mGestureListEmptyView;
 
-    /* ResolvedComponent as a gesture target. This variable is is used for kepping the reference,
-     * as far as, when actually saving the new gesture, the top-level component may be different than what is shown to user.
-     */
+    // ResolvedComponent as a gesture target. This variable is is used for kepping the reference,
+    // as far as, when actually saving the new gesture, the top-level component may be different than what is shown to user.
+    //
     private ResolvedComponent mResolvedComponent;
 
     public SecondaryFloatWindow(Context context) {
@@ -425,4 +425,4 @@ public class SecondaryFloatWindow extends LinearLayout implements TabLikeView.On
             quitAnim();
         }
     };
-}
+}*/

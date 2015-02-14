@@ -1,6 +1,9 @@
 package org.vliux.android.gesturecut.ui.floatwnd.shortcut;
 
+import android.content.Context;
 import android.view.View;
+
+import org.vliux.android.gesturecut.util.ConcurrentManager;
 
 /**
  * Created by vliux on 2/12/15.
@@ -22,6 +25,7 @@ interface IShortcutWindow {
     public void setGestureOverlayViewVisible(int visibility);
     public int getInitialTranslationX();
     public int getTargetTranslationX();
+    public Context getContext();
 
     /**
      * Event send to OverlayKnob, notify it that the moving is stopped,

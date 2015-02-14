@@ -27,53 +27,6 @@ public class AnimUtil {
      * @param animEndRunnable called in UI thread, only used for carrying logic.
      * @return
      */
-    public static AnimatorSet getStartActivityAnimatorSet(final Context context, final ImageView targetView,
-                                                          final ResolvedComponent resolvedComponent, final Runnable animEndRunnable){
-        ObjectAnimator transxObjAnimator = ObjectAnimator.ofFloat(targetView, "translationY", 0.0f, -ScreenUtil.getScreenSize(context)[1]/2);
-        ObjectAnimator alphaObjAnimator = ObjectAnimator.ofFloat(targetView, "alpha", 0.0f, 1.0f, 0.5f);
-        ObjectAnimator scalexAnimator = ObjectAnimator.ofFloat(targetView, "scaleX", 1.0f, 3.0f);
-        ObjectAnimator scaleyAnimator = ObjectAnimator.ofFloat(targetView, "scaleY", 1.0f, 3.0f);
 
-        AnimatorSet animatorSet = new AnimatorSet();
-        animatorSet.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
-        animatorSet.setInterpolator(new OvershootInterpolator());
-        animatorSet.play(transxObjAnimator).with(alphaObjAnimator).with(scalexAnimator).with(scaleyAnimator);
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                if(null != resolvedComponent){
-                    targetView.setImageDrawable(TaskManager.getIcon(context, resolvedComponent));
-                }
-                targetView.setVisibility(View.VISIBLE);
-                // vibrate
-                if(PreferenceHelper.getUserPref(context.getApplicationContext(), R.string.pref_key_vibrate, true)) {
-                    Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-                    if (null != vibrator) {
-                        vibrator.vibrate(AppConstant.Anim.ANIM_DURATION_NORMAL);
-                    }
-                }
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                if(null != resolvedComponent){
-                    TaskManager.startActivity(context.getApplicationContext(), resolvedComponent);
-                }
-                targetView.setVisibility(View.GONE);
-                if(null != animEndRunnable){
-                    animEndRunnable.run();
-                }
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-            }
-        });
-        return animatorSet;
-    }
 
 }
