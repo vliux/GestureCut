@@ -1,38 +1,5 @@
 package org.vliux.android.gesturecut.ui.floatwnd;
 
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
-import android.content.Context;
-import android.content.Intent;
-import android.gesture.Gesture;
-import android.gesture.GestureOverlayView;
-import android.graphics.Color;
-import android.util.AttributeSet;
-import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.AdapterView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import org.vliux.android.gesturecut.AppConstant;
-import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
-import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.biz.TaskFilterManager;
-import org.vliux.android.gesturecut.biz.TaskManager;
-import org.vliux.android.gesturecut.biz.db.GestureDbTable;
-import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
-import org.vliux.android.gesturecut.biz.taskfilters.TaskFilterException;
-import org.vliux.android.gesturecut.ui.view.AppInfoView;
-import org.vliux.android.gesturecut.ui.view.GestureListView;
-import org.vliux.android.gesturecut.util.AnimUtil;
-import org.vliux.android.gesturecut.util.WindowManagerUtil;
-
 /**
  * Created by vliux on 4/9/14.
  */
