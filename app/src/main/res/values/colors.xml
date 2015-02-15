@@ -5,6 +5,9 @@
     <color name="primary_color_light">#C5CAE9</color>
     <color name="primary_color_dark">#3949AB</color>
 
+    <color name="accent_color">#FF4081</color>
+    <color name="accent_color_dark">#C2185B</color>
+
     <color name="gesture_list_bkground">#efefef</color>
     <color name="transparent_black">#88000000</color>
     <color name="gesture_cur_grey">#99888888</color>

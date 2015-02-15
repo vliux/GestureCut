@@ -22,10 +22,11 @@ import de.greenrobot.event.EventBus;
  * Created by vliux on 2/12/15.
  */
 public class OverlayKnob extends View {
-    private static final int COLOR_BG_PRESSED = R.color.yellow;
-    private static final int COLOR_BG_UNPRESSED = R.color.gesture_create_bg_semi_transparent;
+    private static final int COLOR_BG_PRESSED = R.color.accent_color_dark;
+    private static final int COLOR_BG_UNPRESSED = R.color.accent_color;
     private static final int COLOR_STROKE = R.color.sc_knob_stroke;
     private static final float STROKE_PADDING_DP = 6f;
+    private static final float STROKE_WIDTH_DP = 1f;
 
     private int mDiameter;
     private int mRadius;
@@ -72,7 +73,7 @@ public class OverlayKnob extends View {
         mStrokePaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         mStrokePaint.setStyle(Paint.Style.STROKE);
         mStrokePaint.setColor(context.getResources().getColor(COLOR_STROKE));
-        mStrokePaint.setStrokeWidth(strokePadding/2);
+        mStrokePaint.setStrokeWidth((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, STROKE_WIDTH_DP, context.getResources().getDisplayMetrics()));
         mBoundStroke = new RectF(strokePadding, strokePadding, mDiameter - strokePadding, mDiameter - strokePadding);
 
         mIconDrawableBack = context.getResources().getDrawable(R.drawable.ic_back);
@@ -99,12 +100,11 @@ public class OverlayKnob extends View {
         if(mIsPressed){
             mPaint.setColor(mColorPressed);
             canvas.drawArc(mBoundRectF, 90f, 360f, true, mPaint);
-            canvas.drawArc(mBoundStroke, 90f, 360f, false, mStrokePaint);
         }else{
             mPaint.setColor(mColorNormal);
-            canvas.drawArc(mBoundRectF, 90f, 180f, true, mPaint);
-            canvas.drawArc(mBoundStroke, 90f, 180f, true, mStrokePaint);
+            canvas.drawArc(mBoundRectF, 90f, 360f, true, mPaint);
         }
+        canvas.drawArc(mBoundStroke, 90f, 360f, false, mStrokePaint);
 
         if(!mNeedRotate) {
             mIconDrawableBack.draw(canvas);
