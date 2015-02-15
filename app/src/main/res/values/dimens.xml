@@ -44,10 +44,6 @@
     <!-- action bar -->
     <dimen name="tablike_icon_padding">16dp</dimen>
 
-    <!-- welcome pages -->
-    <dimen name="welcome_dots_margin_bottom">50dp</dimen>
-    <dimen name="welcome_start_btn_padding_vertical">15dp</dimen>
-
     <!-- widget -->
     <dimen name="widget_small_next_prev_btns_margin_top">8dp</dimen>
     <dimen name="widet_out_margin">8dp</dimen>
@@ -64,4 +60,10 @@
     <dimen name="shortcut_wnd_item_dimen">72dp</dimen>
     <dimen name="shortcut_wnd_item_gesture_dimen">48dp</dimen>
     <dimen name="shortcut_wnd_item_app_dimen">24dp</dimen>
+
+    <!-- AddGestureDrawActivity -->
+    <dimen name="agda_appname_margin_top">16dp</dimen>
+    <dimen name="agda_appname_margin_bottom">12dp</dimen>
+    <dimen name="agda_appicon_margin_bottom">16dp</dimen>
+    <dimen name="agda_appicon_dimen">56dp</dimen>
 </resources>

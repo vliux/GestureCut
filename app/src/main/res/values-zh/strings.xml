@@ -83,4 +83,7 @@
     <string name="float_gesture_list_empty_msg">您尚未定义手势</string>
 
     <string name="search_add_ges_hint">搜索app</string>
+
+    <!-- AddGestureDrawActivity -->
+    <string name="new_gesture_no_rc">无法定位到对应的app</string>
 </resources>

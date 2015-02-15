@@ -1,6 +1,8 @@
 package org.vliux.android.gesturecut.model;
 
 import android.content.ComponentName;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import org.vliux.android.gesturecut.util.AppLog;
 
@@ -8,13 +10,50 @@ import org.vliux.android.gesturecut.util.AppLog;
  * Created by vliux on 4/14/14.
  * Represent an entity of the top task.
  */
-public class ResolvedComponent {
+public class ResolvedComponent implements Parcelable{
     private static final String TAG = ResolvedComponent.class.getSimpleName();
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(type.name());
+        dest.writeParcelable(componentName, 0);
+        dest.writeString(packageName);
+    }
 
     public enum ResolvedType{
         COMPONENT_NAME,
         PACKAGE_NAME,
     }
+
+    public static final Creator<ResolvedComponent> CREATOR = new Creator<ResolvedComponent>() {
+        @Override
+        public ResolvedComponent createFromParcel(Parcel source) {
+            ResolvedComponent rc = null;
+            ResolvedType rType = ResolvedType.valueOf(source.readString());
+            ComponentName cn = ComponentName.readFromParcel(source);
+            String pkgName = source.readString();
+
+            switch (rType){
+                case COMPONENT_NAME:
+                    rc = new ResolvedComponent(cn);
+                    break;
+                case PACKAGE_NAME:
+                    rc = new ResolvedComponent(pkgName);
+                    break;
+            }
+            return rc;
+        }
+
+        @Override
+        public ResolvedComponent[] newArray(int size) {
+            return new ResolvedComponent[0];
+        }
+    };
 
     private ResolvedType type;
     private ComponentName componentName;

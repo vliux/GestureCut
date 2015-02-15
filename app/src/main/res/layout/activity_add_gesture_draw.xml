@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/primary_color"
+        android:orientation="vertical">
+        <!--<TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:textSize="@dimen/text_size_general"
+            android:textColor="@color/text_white"
+            android:text="Draw new gesture for:"/>-->
+        <TextView
+            android:id="@+id/agda_app_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/agda_appname_margin_bottom"
+            android:layout_marginTop="@dimen/agda_appname_margin_top"
+            android:textColor="@color/text_white"
+            android:textSize="@dimen/text_size_general" />
+
+        <ImageView
+            android:id="@+id/agda_app_icon"
+            android:layout_width="@dimen/agda_appicon_dimen"
+            android:layout_height="@dimen/agda_appicon_dimen"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/agda_appicon_margin_bottom"
+            android:scaleType="fitXY" />
+    </LinearLayout>
+</LinearLayout>

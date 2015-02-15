@@ -268,6 +268,15 @@ public class AddGestureActivity extends ActionBarActivity {
             installedComponents = new ArrayList<ResolvedComponent>();
         }
 
+        /*public ResolvedComponent getResolvedComponent(int position){
+            if(null != installedComponents &&
+                    position >= 0 && position < installedComponents.size()){
+                return installedComponents.get(position);
+            }else{
+                return null;
+            }
+        }*/
+
         @Override
         public int getCount() {
             return null != installedComponents? installedComponents.size() : 0;
@@ -320,8 +329,10 @@ public class AddGestureActivity extends ActionBarActivity {
             //    mAnimPresenter = new AnimPresenter(AddGestureActivity.this, view, mLayout, mAddGestureView);
             //    mAnimPresenter.show();
             //}
-            Intent intent = new Intent(AddGestureActivity.this, AddGestureDrawActivity.class);
-            AddGestureActivity.this.startActivity(intent);
+            if(view instanceof AppInfoView){
+                AppInfoView appInfoView = (AppInfoView)view;
+                AddGestureDrawActivity.start(AddGestureActivity.this, appInfoView.getResolvedComponent());
+            }
         }
     };
 

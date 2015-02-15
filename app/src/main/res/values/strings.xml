@@ -83,4 +83,7 @@
     <string name="float_gesture_list_empty_msg">No gesture defined yet</string>
 
     <string name="search_add_ges_hint">Search apps</string>
+
+    <!-- AddGestureDrawActivity -->
+    <string name="new_gesture_no_rc">Unable to locate the target app</string>
 </resources>
