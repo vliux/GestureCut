@@ -4,7 +4,7 @@
     <dimen name="gesture_thumbnail_width">@dimen/icon_dimen_global_large</dimen>
     <dimen name="gesture_thumbnail_height">@dimen/icon_dimen_global_large</dimen>
 
-    <dimen name="float_wnd_dimen">32dp</dimen>
+    <dimen name="float_wnd_dimen">48dp</dimen>
 
     <dimen name="gesture_overlay_margin">16dp</dimen>
 

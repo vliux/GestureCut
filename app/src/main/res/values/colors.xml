@@ -17,8 +17,8 @@
     <color name="yellow">#ffbb33</color>
     <color name="yellow_semi_transparent">#99ffbb33</color>
 
-    <color name="float_wnd_circle">#880ce6e8</color>
-    <color name="float_wnd_inner_blue">#66104a89</color>
+    <color name="float_wnd_circle">#883F51B5</color> <!-- primary_color with transparency -->
+    <color name="float_wnd_inner_blue">#553F51B5</color> <!-- primary_color_light with transparency -->
 
     <color name="red_warning">@android:color/holo_red_light</color>
     <color name="red_warning_semi_transparent">#bbff4444</color>
