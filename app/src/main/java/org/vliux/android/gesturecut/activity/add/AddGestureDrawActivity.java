@@ -88,12 +88,13 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     private void startActivityAnim(){
         mLayoutTitleArea.setScaleY(0.3f);
         mLayoutTitleArea.setScaleX(0.3f);
+        mLayoutTitleArea.setAlpha(0f);
 
         mLayoutTitleArea.setPivotX(mAnimStartX);
         mLayoutTitleArea.setPivotY(mAnimStartY);
 
         mGestureOverlayView.setTranslationX(mGestureOverlayView.getWidth());
-        mLayoutTitleArea.animate().scaleY(1).scaleX(1)
+        mLayoutTitleArea.animate().scaleY(1).scaleX(1).alpha(1f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
                 .setListener(new Animator.AnimatorListener() {
                     @Override
@@ -118,5 +119,59 @@ public class AddGestureDrawActivity extends ActionBarActivity {
                     }
                 })
         .start();
+    }
+
+    private void closeActivityAnim(){
+        mLayoutTitleArea.setPivotX(mAnimStartX);
+        mLayoutTitleArea.setPivotY(mAnimStartY);
+
+
+        mGestureOverlayView.animate().translationX(mGestureOverlayView.getWidth())
+                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                .setInterpolator(new DecelerateInterpolator())
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mLayoutTitleArea.animate().scaleY(0.3f).scaleX(0.3f).alpha(0f)
+                                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
+                                .setListener(new Animator.AnimatorListener() {
+                                    @Override
+                                    public void onAnimationStart(Animator animation) {
+                                    }
+
+                                    @Override
+                                    public void onAnimationEnd(Animator animation) {
+                                        finish();
+                                        overridePendingTransition(0, 0);
+                                    }
+
+                                    @Override
+                                    public void onAnimationCancel(Animator animation) {
+                                    }
+
+                                    @Override
+                                    public void onAnimationRepeat(Animator animation) {
+                                    }
+                                }).start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+                    }
+                })
+                .start();
+    }
+
+    @Override
+    public void onBackPressed() {
+        closeActivityAnim();
     }
 }
