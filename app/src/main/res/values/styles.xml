@@ -77,5 +77,7 @@
 
     <style name="AppTheme.AddGestureDrawActivity" parent="AppTheme">
         <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
 </resources>

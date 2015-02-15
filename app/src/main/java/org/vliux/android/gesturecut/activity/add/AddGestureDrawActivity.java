@@ -1,7 +1,9 @@
 package org.vliux.android.gesturecut.activity.add;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.ViewGroup;
@@ -24,6 +26,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     public static final String INTENT_ANIM_START_X = "x";
     public static final String INTENT_ANIM_START_Y = "y";
 
+    private GestureOverlayView mGestureOverlayView;
     private TextView mTvAppName;
     private ImageView mIvAppIcon;
     private ResolvedComponent mRc;
@@ -54,6 +57,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mTvAppName = (TextView)findViewById(R.id.agda_app_name);
         mIvAppIcon = (ImageView)findViewById(R.id.agda_app_icon);
         mLayoutTitleArea = (ViewGroup)findViewById(R.id.agda_title_area);
+        mGestureOverlayView = (GestureOverlayView)findViewById(R.id.agda_gesture_overlay);
 
         Intent intent = getIntent();
         if(intent.hasExtra(INTENT_RESOLVED_COMPONENT)){
@@ -87,7 +91,32 @@ public class AddGestureDrawActivity extends ActionBarActivity {
 
         mLayoutTitleArea.setPivotX(mAnimStartX);
         mLayoutTitleArea.setPivotY(mAnimStartY);
+
+        mGestureOverlayView.setTranslationX(mGestureOverlayView.getWidth());
         mLayoutTitleArea.animate().scaleY(1).scaleX(1)
-                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator()).start();
+                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
+                .setListener(new Animator.AnimatorListener() {
+                    @Override
+                    public void onAnimationStart(Animator animation) {
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mGestureOverlayView.animate().translationX(0f)
+                                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                                .setInterpolator(new DecelerateInterpolator()).start();
+                    }
+
+                    @Override
+                    public void onAnimationCancel(Animator animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animator animation) {
+
+                    }
+                })
+        .start();
     }
 }
