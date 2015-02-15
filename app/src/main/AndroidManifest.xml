@@ -46,7 +46,8 @@
             android:label="@string/add_gesture"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activity.main.GestureListActivity">
+            android:parentActivityName=".activity.main.GestureListActivity"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -54,18 +55,28 @@
                 android:resource="@xml/search_add_gesture"/>
         </activity>
 
+        <activity android:name=".activity.add.AddGestureDrawActivity"
+            android:theme="@style/AppTheme.AddGestureDrawActivity"
+            android:label="@string/add_gesture_draw"
+            android:launchMode="singleTop"
+            android:parentActivityName=".activity.add.AddGestureActivity"
+            android:exported="false">
+        </activity>
+
         <activity android:name=".activity.SettingsActivity"
             android:label="@string/settings"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activity.main.GestureListActivity">
+            android:parentActivityName=".activity.main.GestureListActivity"
+            android:exported="false">
         </activity>
 
         <activity android:name=".activity.AboutActivity"
             android:label="@string/about"
             android:launchMode="singleTop"
             android:screenOrientation="portrait"
-            android:parentActivityName=".activity.SettingsActivity"/>
+            android:parentActivityName=".activity.SettingsActivity"
+            android:exported="false"/>
 
         <!-- widget -->
         <receiver android:name=".widget.LockScreenWidget" >

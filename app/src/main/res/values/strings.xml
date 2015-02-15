@@ -7,6 +7,7 @@
     <string name="refresh">Refresh</string>
     <string name="remove">Remove</string>
     <string name="your_gesture_list">Your gestures</string>
+    <string name="add_gesture_draw">New gesture</string>
 
     <string name="notification_title">Gesturecut</string>
     <string name="notification_content">Press to edit defined gestures</string>

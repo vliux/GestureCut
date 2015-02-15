@@ -316,10 +316,12 @@ public class AddGestureActivity extends ActionBarActivity {
     private final AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-            if(null == mAnimPresenter){
-                mAnimPresenter = new AnimPresenter(AddGestureActivity.this, view, mLayout, mAddGestureView);
-                mAnimPresenter.show();
-            }
+            //if(null == mAnimPresenter){
+            //    mAnimPresenter = new AnimPresenter(AddGestureActivity.this, view, mLayout, mAddGestureView);
+            //    mAnimPresenter.show();
+            //}
+            Intent intent = new Intent(AddGestureActivity.this, AddGestureDrawActivity.class);
+            AddGestureActivity.this.startActivity(intent);
         }
     };
 

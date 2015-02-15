@@ -4,7 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_color_dark</item>
-        <item name="colorAccent">@color/yellow</item>
+        <item name="colorAccent">@color/accent_color</item>
 
         <item name="android:actionBarStyle">@style/GcActionBar</item>
         <item name="android:actionBarTabStyle">@style/GcActionBarTabStyle</item>
@@ -48,10 +48,6 @@
         <item name="android:background">@drawable/gesture_list_selector_activated</item>
     </style>
 
-    <style name="text_basic_style">
-        <item name="android:textColor">@color/primary_color</item>
-    </style>
-
     <style name="gesture_overlay">
         <item name="android:gestureStrokeWidth">24.0</item>
     </style>
@@ -64,11 +60,11 @@
         <item name="android:gestureColor">#FF3344FF</item>
     </style>
 
-    <style name="Welcome.Theme.Transparent" parent="android:Theme.NoTitleBar">
+    <!--<style name="Welcome.Theme.Transparent" parent="android:Theme.NoTitleBar">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/transparent_black</item>
         <item name="android:backgroundDimEnabled">false</item>
-    </style>
+    </style>-->
 
     <style name="AppTheme.NoTitlebar">
         <item name="android:windowNoTitle">true</item>
@@ -77,5 +73,9 @@
     <style name="AppTheme.ShortcutActivity" parent="AppTheme.NoTitlebar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppTheme.AddGestureDrawActivity" parent="AppTheme">
+        <item name="android:windowContentOverlay">@null</item>
     </style>
 </resources>
