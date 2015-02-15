@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="global_bkground">#f7f7f7</color>
-    <color name="primary_color">#2196F3</color>
-    <color name="primary_color_light">#90CAF9</color>
-    <color name="primary_color_dark">#1E88E5</color>
+    <color name="primary_color">#3F51B5</color>
+    <color name="primary_color_light">#5C6BC0</color>
+    <color name="primary_color_dark">#3949AB</color>
 
     <color name="gesture_list_bkground">#efefef</color>
     <color name="transparent_black">#88000000</color>
