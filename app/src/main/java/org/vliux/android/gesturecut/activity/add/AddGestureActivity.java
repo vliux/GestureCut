@@ -330,8 +330,17 @@ public class AddGestureActivity extends ActionBarActivity {
             //    mAnimPresenter.show();
             //}
             if(view instanceof AppInfoView){
+                int[] screenLoc = new int[2];
+                view.getLocationOnScreen(screenLoc);
+                int left = screenLoc[0];
+                int top = screenLoc[1];
+                int viewWidth = view.getWidth();
+                int viewHeight = view.getHeight();
+                int animStartX = left + viewWidth/2;
+                int animStartY = top + viewHeight/2;
+
                 AppInfoView appInfoView = (AppInfoView)view;
-                AddGestureDrawActivity.start(AddGestureActivity.this, appInfoView.getResolvedComponent());
+                AddGestureDrawActivity.start(AddGestureActivity.this, appInfoView.getResolvedComponent(), animStartX, animStartY);
             }
         }
     };
