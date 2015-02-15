@@ -9,7 +9,7 @@ import android.gesture.GestureOverlayView;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.AppConstant;
@@ -17,6 +17,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.ui.view.GestureListItem;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.PreferenceHelper;
 
@@ -24,7 +25,8 @@ import org.vliux.android.gesturecut.util.PreferenceHelper;
  * Created by vliux on 2/14/15.
  */
 public class StartTaskPresenter implements GestureOverlayView.OnGesturePerformedListener,
-        GestureListView.OnGestureItemClickedListener {
+        GestureListView.OnGestureIconClickedListener,
+        AdapterView.OnItemClickListener {
     private IShortcutWindow mShortcutWindow;
     private ImageView mIvTargetApp;
     private int mTargetTranslationY;
@@ -108,7 +110,7 @@ public class StartTaskPresenter implements GestureOverlayView.OnGesturePerformed
      * @param rc
      */
     @Override
-    public void onGestureItemClicked(ResolvedComponent rc) {
+    public void onGestureIconClicked(ResolvedComponent rc) {
         if(null != rc){
             startTask(rc, new Runnable() {
                 @Override
@@ -116,6 +118,22 @@ public class StartTaskPresenter implements GestureOverlayView.OnGesturePerformed
                     mShortcutWindow.hideOverlay(true);
                 }
             });
+        }
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        if(view instanceof GestureListItem){
+            GestureListItem gli = (GestureListItem)view;
+            ResolvedComponent rc = gli.getAppInfoView().getResolvedComponent();
+            if(null != rc){
+                startTask(rc, new Runnable() {
+                    @Override
+                    public void run() {
+                        mShortcutWindow.hideOverlay(true);
+                    }
+                });
+            }
         }
     }
 }

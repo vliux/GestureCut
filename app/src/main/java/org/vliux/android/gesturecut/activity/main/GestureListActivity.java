@@ -1,6 +1,5 @@
 package org.vliux.android.gesturecut.activity.main;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -17,7 +16,6 @@ import com.melnykov.fab.FloatingActionButton;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.activity.SettingsActivity;
-import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.view.GestureListView;
@@ -45,7 +43,7 @@ public class GestureListActivity extends ActionBarActivity{
         mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
         mTvEmptyView = (TextView)findViewById(R.id.actv_ges_list_empty_view);
 
-        mGestureList.setOnGestureItemClickedListener(mOnGestureItemClicked);
+        mGestureList.setOnGestureIconClickedListener(mOnGestureItemClicked);
         mGestureList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mGestureList.setOnItemClickListener(mListItemClicked);
         mGestureList.setExternalUiCallback(mLoadGestureUiCallback);
@@ -132,9 +130,9 @@ public class GestureListActivity extends ActionBarActivity{
     /**
      * Gesture image in the item is clicked.
      */
-    private final GestureListView.OnGestureItemClickedListener mOnGestureItemClicked = new GestureListView.OnGestureItemClickedListener() {
+    private final GestureListView.OnGestureIconClickedListener mOnGestureItemClicked = new GestureListView.OnGestureIconClickedListener() {
         @Override
-        public void onGestureItemClicked(ResolvedComponent rc) {
+        public void onGestureIconClicked(ResolvedComponent rc) {
             TaskManager.startActivity(GestureListActivity.this, rc);
         }
     };

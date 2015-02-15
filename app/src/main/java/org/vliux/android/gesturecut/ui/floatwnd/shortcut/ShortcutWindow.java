@@ -96,7 +96,8 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
                 return true;
             }
         });
-        mGestureListView.setOnGestureItemClickedListener(mStartTaskPresenter);
+        //mGestureListView.setOnGestureIconClickedListener(mStartTaskPresenter);
+        mGestureListView.setOnItemClickListener(mStartTaskPresenter);
         mGestureListView.refresh();
 
         // as the width of the overlay will be changed below, while its layout_gravity is right,

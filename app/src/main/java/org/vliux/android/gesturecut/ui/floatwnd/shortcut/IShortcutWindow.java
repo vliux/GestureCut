@@ -3,6 +3,7 @@ package org.vliux.android.gesturecut.ui.floatwnd.shortcut;
 import android.content.Context;
 import android.view.View;
 
+import org.vliux.android.gesturecut.ui.view.GestureListView;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 
 /**

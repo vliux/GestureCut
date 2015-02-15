@@ -39,11 +39,11 @@ public class GestureListView extends ListView {
      * Click listener when an item in the GestureListView has been clicked, and the relevant
      * ResolvedComponent is not NULL.
      */
-    public static interface OnGestureItemClickedListener{
-        void onGestureItemClicked(ResolvedComponent rc);
+    public static interface OnGestureIconClickedListener {
+        void onGestureIconClicked(ResolvedComponent rc);
     }
 
-    private OnGestureItemClickedListener mOnGestureItemClickedListener;
+    private OnGestureIconClickedListener mOnGestureIconClickedListener;
     private GestureListViewAdapter mListViewAdapter;
     private ConcurrentManager.IUiCallback<List<String>> mExternalUiCallback;
 
@@ -67,8 +67,8 @@ public class GestureListView extends ListView {
         setAdapter(mListViewAdapter);
     }
 
-    public void setOnGestureItemClickedListener(OnGestureItemClickedListener listener){
-        mOnGestureItemClickedListener = listener;
+    public void setOnGestureIconClickedListener(OnGestureIconClickedListener listener){
+        mOnGestureIconClickedListener = listener;
     }
 
     public void setExternalUiCallback(ConcurrentManager.IUiCallback<List<String>> uiCallback){
@@ -190,15 +190,15 @@ public class GestureListView extends ListView {
             if (null == convertView) {
                 listItem = new GestureListItem(getContext());
                 // OnGestureItemClickedListener
-                if (null != mOnGestureItemClickedListener) {
+                if (null != mOnGestureIconClickedListener) {
                     final GestureListItem finalListItem = listItem;
                     listItem.setOnGestureIconClicked(new OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            if (null != mOnGestureItemClickedListener) {
+                            if (null != mOnGestureIconClickedListener) {
                                 AppInfoView appInfoView = finalListItem.getAppInfoView();
                                 if (null != appInfoView && null != appInfoView.getResolvedComponent()) {
-                                    mOnGestureItemClickedListener.onGestureItemClicked(appInfoView.getResolvedComponent());
+                                    mOnGestureIconClickedListener.onGestureIconClicked(appInfoView.getResolvedComponent());
                                 }
                             }
                         }
