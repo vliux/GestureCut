@@ -7,18 +7,18 @@
     android:layout_height="@dimen/gesture_list_item_height"
     style="@style/activated">
 
+    <!-- gesture icon size is defined when generating from gesture, so layout_width=wrap_content should be safe. -->
     <ImageView
         android:id="@+id/item_gesture_icon"
-        android:layout_width="@dimen/gesture_thumbnail_width"
-        android:layout_height="@dimen/gesture_thumbnail_height"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-
-        android:layout_marginTop="@dimen/gesture_list_item_padding_vertical"
-        android:layout_marginBottom="@dimen/gesture_list_item_padding_vertical"
-        android:layout_marginLeft="@dimen/gesture_list_outter_margin"
-        android:layout_marginRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
-        android:scaleType="centerInside"
-        android:background="@drawable/gesture_list_selector_pressed"/>
+        android:paddingTop="@dimen/gesture_list_item_padding_vertical"
+        android:paddingBottom="@dimen/gesture_list_item_padding_vertical"
+        android:paddingLeft="@dimen/gesture_list_outter_margin"
+        android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
+        android:scaleType="centerInside"/>
+        <!-- android:background="@drawable/gesture_list_selector_pressed"/> -->
 
     <View
         android:layout_width="@dimen/listview_divider_thin_line_height"

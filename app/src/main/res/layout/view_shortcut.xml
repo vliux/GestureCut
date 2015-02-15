@@ -9,7 +9,8 @@
         android:layout_height="match_parent"
         android:background="@color/gesture_list_bkground"
         android:cacheColorHint="@color/gesture_list_bkground"
-        android:divider="@drawable/listview_divider">
+        android:divider="@drawable/listview_divider"
+        android:listSelector="@drawable/gesture_list_selector_pressed">
     </org.vliux.android.gesturecut.ui.view.GestureListView>
 
     <FrameLayout

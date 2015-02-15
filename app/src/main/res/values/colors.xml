@@ -2,7 +2,7 @@
 <resources>
     <color name="global_bkground">#f7f7f7</color>
     <color name="primary_color">#3F51B5</color>
-    <color name="primary_color_light">#5C6BC0</color>
+    <color name="primary_color_light">#C5CAE9</color>
     <color name="primary_color_dark">#3949AB</color>
 
     <color name="gesture_list_bkground">#efefef</color>

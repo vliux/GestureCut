@@ -36,7 +36,7 @@ import java.util.List;
  */
 public class GestureListView extends ListView {
     /**
-     * Click listener when an item in the GestureListView has been clicked, and the relevant
+     * Click listener when an icon in the GestureListItem has been clicked, and the relevant
      * ResolvedComponent is not NULL.
      */
     public static interface OnGestureIconClickedListener {
