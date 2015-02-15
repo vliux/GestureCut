@@ -18,7 +18,7 @@
         android:paddingLeft="@dimen/gesture_list_outter_margin"
         android:paddingRight="@dimen/gesture_list_item_vertical_divider_margin_horiz"
         android:scaleType="centerInside"/>
-        <!-- android:background="@drawable/gesture_list_selector_pressed"/> -->
+        <!-- android:background="@drawable/sc_gesturelist_selector_pressed"/> -->
 
     <View
         android:layout_width="@dimen/listview_divider_thin_line_height"

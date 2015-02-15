@@ -28,8 +28,8 @@ import java.util.Set;
 class FabPresenter {
     private final int COLOR_NORMAL_NORMAL = R.color.primary_color;
     private final int COLOR_NORMAL_PRESSED = R.color.primary_color_dark;
-    private final int COLOR_DELETE_NORMAL = R.color.red_warning;
-    private final int COLOR_DELETE_PRESSED = R.color.yellow;
+    private final int COLOR_DELETE_NORMAL = R.color.accent_color;
+    private final int COLOR_DELETE_PRESSED = R.color.accent_color_dark;
     private final int NORMAL_BG = R.drawable.ic_add;
     private final int DELETE_BG = R.drawable.ic_del;
 

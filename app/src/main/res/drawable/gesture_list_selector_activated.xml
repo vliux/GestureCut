@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/yellow"
+    <item android:drawable="@color/gesture_list_item_pressed"
         android:state_activated="true"/>
     <item android:drawable="@color/gesture_cur_blue_transparent"
         android:state_activated="false" />
