@@ -24,9 +24,12 @@ import org.vliux.android.gesturecut.util.SimpleAnimatorListener;
  * Created by vliux on 2/15/15.
  */
 public class AddGestureDrawActivity extends ActionBarActivity {
-    public static final String INTENT_RESOLVED_COMPONENT = "rc";
-    public static final String INTENT_ANIM_START_X = "x";
-    public static final String INTENT_ANIM_START_Y = "y";
+    private static final String INTENT_RESOLVED_COMPONENT = "rc";
+    private static final String INTENT_ANIM_START_X = "x";
+    private static final String INTENT_ANIM_START_Y = "y";
+
+    public static final int REQUEST_CODE = 1;
+    private static final int REQUEST_CODE_INVALID = -1;
 
     private GestureOverlayView mGestureOverlayView;
     private TextView mTvAppName;
@@ -39,16 +42,26 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     // for activity start anim
     private ViewGroup mLayoutTitleArea;
 
-    public static void start(Activity activity, ResolvedComponent rc, int animStartPointX, int animStartPointY){
+    /**
+     *
+     * @param activity
+     * @param rc
+     * @param animStartPointX
+     * @param animStartPointY
+     * @return If succeded, return request code; else return value is negative.
+     */
+    public static int startForResult(Activity activity, ResolvedComponent rc, int animStartPointX, int animStartPointY){
         if(null != rc && null != rc.getType()) {
             Intent intent = new Intent(activity, AddGestureDrawActivity.class);
             intent.putExtra(INTENT_RESOLVED_COMPONENT, rc);
             intent.putExtra(INTENT_ANIM_START_X, animStartPointX);
             intent.putExtra(INTENT_ANIM_START_Y, animStartPointY);
-            activity.startActivity(intent);
+            activity.startActivityForResult(intent, REQUEST_CODE);
             activity.overridePendingTransition(0, 0);
+            return REQUEST_CODE;
         }else{
             Toast.makeText(activity, activity.getString(R.string.new_gesture_no_rc), Toast.LENGTH_SHORT).show();
+            return REQUEST_CODE_INVALID;
         }
     }
 
@@ -112,7 +125,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         .start();
     }
 
-    private void closeActivityAnim(){
+    private void closeActivityAnim(final boolean gestureAdded){
         mLayoutTitleArea.setPivotX(mAnimStartX);
         mLayoutTitleArea.setPivotY(mAnimStartY);
 
@@ -128,6 +141,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
                                 .setListener(new SimpleAnimatorListener() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
+                                        setResult(gestureAdded? RESULT_OK : RESULT_CANCELED);
                                         finish();
                                         overridePendingTransition(0, 0);
                                     }
@@ -139,7 +153,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        closeActivityAnim();
+        closeActivityAnim(false);
     }
 
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
@@ -150,7 +164,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
                         new Runnable() {
                             @Override
                             public void run() {
-                                closeActivityAnim();
+                                closeActivityAnim(true);
                             }
                         });
             }

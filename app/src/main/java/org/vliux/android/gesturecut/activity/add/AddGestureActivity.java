@@ -337,10 +337,22 @@ public class AddGestureActivity extends ActionBarActivity {
                 int animStartY = top + viewHeight/2;
 
                 AppInfoView appInfoView = (AppInfoView)view;
-                AddGestureDrawActivity.start(AddGestureActivity.this, appInfoView.getResolvedComponent(), animStartX, animStartY);
+                AddGestureDrawActivity.startForResult(AddGestureActivity.this, appInfoView.getResolvedComponent(), animStartX, animStartY);
             }
         }
     };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case AddGestureDrawActivity.REQUEST_CODE:
+                if(resultCode == RESULT_OK){
+                    scanUnGesturedPackagrsAsync(false);
+                }
+                break;
+        }
+    }
 
     private final MenuItemCompat.OnActionExpandListener mOnSearchExpandListener = new MenuItemCompat.OnActionExpandListener() {
         @Override
