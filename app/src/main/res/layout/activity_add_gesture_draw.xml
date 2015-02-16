@@ -9,7 +9,6 @@
         android:id="@+id/agda_title_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/primary_color"
         android:orientation="vertical">
         <!--<TextView
             android:layout_width="wrap_content"
@@ -20,21 +19,33 @@
             android:text="Draw new gesture for:"/>-->
         <TextView
             android:id="@+id/agda_app_name"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/agda_appname_margin_bottom"
-            android:layout_marginTop="@dimen/agda_appname_margin_top"
+            android:gravity="center"
+            android:paddingBottom="@dimen/agda_appname_margin_bottom"
+            android:paddingTop="@dimen/agda_appname_margin_top"
             android:textColor="@color/text_white"
-            android:textSize="@dimen/text_size_general" />
+            android:textSize="@dimen/text_size_general"
+            android:background="@color/primary_color"/>
 
-        <ImageView
-            android:id="@+id/agda_app_icon"
-            android:layout_width="@dimen/agda_appicon_dimen"
+        <FrameLayout
+            android:layout_width="match_parent"
             android:layout_height="@dimen/agda_appicon_dimen"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="@dimen/agda_appicon_margin_bottom"
-            android:scaleType="fitXY" />
+            android:background="@color/gesture_create_bg_semi_transparent">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/agda_appicon_dimen_half"
+                android:layout_gravity="top"
+                android:background="@color/primary_color"/>
+            <ImageView
+                android:id="@+id/agda_app_icon"
+                android:layout_width="@dimen/agda_appicon_dimen"
+                android:layout_height="@dimen/agda_appicon_dimen"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="@dimen/agda_appicon_margin_bottom"
+                android:scaleType="fitXY"/>
+        </FrameLayout>
     </LinearLayout>
 
     <android.gesture.GestureOverlayView
