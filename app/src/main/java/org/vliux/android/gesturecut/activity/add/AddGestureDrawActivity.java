@@ -17,6 +17,7 @@ import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.util.SimpleAnimatorListener;
 
 /**
  * Created by vliux on 2/15/15.
@@ -96,26 +97,12 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mGestureOverlayView.setTranslationX(mGestureOverlayView.getWidth());
         mLayoutTitleArea.animate().scaleY(1).scaleX(1).alpha(1f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                    }
-
+                .setListener(new SimpleAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mGestureOverlayView.animate().translationX(0f)
                                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                                 .setInterpolator(new DecelerateInterpolator()).start();
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
-
                     }
                 })
         .start();
@@ -129,42 +116,18 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mGestureOverlayView.animate().translationX(mGestureOverlayView.getWidth())
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .setInterpolator(new DecelerateInterpolator())
-                .setListener(new Animator.AnimatorListener() {
-                    @Override
-                    public void onAnimationStart(Animator animation) {
-                    }
-
+                .setListener(new SimpleAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mLayoutTitleArea.animate().scaleY(0.3f).scaleX(0.3f).alpha(0f)
                                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
-                                .setListener(new Animator.AnimatorListener() {
-                                    @Override
-                                    public void onAnimationStart(Animator animation) {
-                                    }
-
+                                .setListener(new SimpleAnimatorListener() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
                                         finish();
                                         overridePendingTransition(0, 0);
                                     }
-
-                                    @Override
-                                    public void onAnimationCancel(Animator animation) {
-                                    }
-
-                                    @Override
-                                    public void onAnimationRepeat(Animator animation) {
-                                    }
                                 }).start();
-                    }
-
-                    @Override
-                    public void onAnimationCancel(Animator animation) {
-                    }
-
-                    @Override
-                    public void onAnimationRepeat(Animator animation) {
                     }
                 })
                 .start();
