@@ -3,6 +3,7 @@ package org.vliux.android.gesturecut.activity.add;
 import android.animation.Animator;
 import android.app.Activity;
 import android.content.Intent;
+import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -31,10 +32,10 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     private TextView mTvAppName;
     private ImageView mIvAppIcon;
     private ResolvedComponent mRc;
+    private GesturePerformedPresenter mGesturePerformedPresenter;
 
     private int mAnimStartX;
     private int mAnimStartY;
-
     // for activity start anim
     private ViewGroup mLayoutTitleArea;
 
@@ -84,6 +85,9 @@ public class AddGestureDrawActivity extends ActionBarActivity {
                 return true;
             }
         });
+
+        mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
+        mGesturePerformedPresenter = new GesturePerformedPresenter(this, mRc);
     }
 
     private void startActivityAnim(){
@@ -137,4 +141,19 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     public void onBackPressed() {
         closeActivityAnim();
     }
+
+    private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
+        @Override
+        public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
+            if(null != mRc){
+                mGesturePerformedPresenter.addGesture(gesture,
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                closeActivityAnim();
+                            }
+                        });
+            }
+        }
+    };
 }

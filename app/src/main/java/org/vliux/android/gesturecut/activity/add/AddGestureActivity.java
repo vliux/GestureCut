@@ -52,8 +52,7 @@ public class AddGestureActivity extends ActionBarActivity {
     private PkgListAdapter mListAdapter;
     private int mListItemPaddingHoriz = 0;
 
-    private AddGestureView mAddGestureView;
-    private AnimPresenter mAnimPresenter;
+    //private AnimPresenter mAnimPresenter;
     private TabsPresenter mTabsPresenter;
 
     private MenuItem mSearchMenu;
@@ -72,8 +71,6 @@ public class AddGestureActivity extends ActionBarActivity {
         mListView.setOnItemClickListener(mOnItemClickListener);
 
         mListItemPaddingHoriz = (int)getResources().getDimension(R.dimen.gesture_list_outter_margin);
-        mAddGestureView = new AddGestureView(this);
-        mAddGestureView.getGestureOverlay().addOnGesturePerformedListener(mOnGesturePerformed);
         // use EventBus to receive events from presenters.
         EventBus.getDefault().register(this);
 
@@ -345,29 +342,6 @@ public class AddGestureActivity extends ActionBarActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        if(null != mAnimPresenter){
-            mAnimPresenter.close();
-            mAnimPresenter = null;
-        }else {
-            super.onBackPressed();
-        }
-    }
-
-    private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformed = new GestureOverlayView.OnGesturePerformedListener() {
-        @Override
-        public void onGesturePerformed(GestureOverlayView overlay, Gesture gesture) {
-            if(null != mAnimPresenter){
-                ResolvedComponent rc = mAnimPresenter.getRelatedResolvedComponent();
-                if(null != rc){
-                    GesturePerformedPresenter presenter = new GesturePerformedPresenter(AddGestureActivity.this, rc);
-                    presenter.addGesture(gesture);
-                }
-            }
-        }
-    };
-
     private final MenuItemCompat.OnActionExpandListener mOnSearchExpandListener = new MenuItemCompat.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
@@ -376,10 +350,6 @@ public class AddGestureActivity extends ActionBarActivity {
 
         @Override
         public boolean onMenuItemActionCollapse(MenuItem item) {
-            if(null != mAnimPresenter) {
-                mAnimPresenter.close();
-                mAnimPresenter = null;
-            }
             scanUnGesturedPackagrsAsync(false);
             return true;
         }
@@ -391,13 +361,7 @@ public class AddGestureActivity extends ActionBarActivity {
      */
     public void onEventMainThread(AddGestureEvent event){
         AddGestureEvent.EventType eventType = event.getType();
-        if(eventType == AddGestureEvent.EventType.GESTURE_ADDED){
-            if(null != mAnimPresenter) {
-                mAnimPresenter.close();
-                mAnimPresenter = null;
-            }
-            scanUnGesturedPackagrsAsync(false);
-        }else if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
+        if(eventType == AddGestureEvent.EventType.TAB_CHANGED){
             scanUnGesturedPackagrsAsync(false);
         }
 

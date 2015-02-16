@@ -5,7 +5,6 @@ package org.vliux.android.gesturecut.activity.add;
  */
 class AddGestureEvent {
     public static enum EventType{
-        GESTURE_ADDED,
         TAB_CHANGED // system app, user app
     }
 

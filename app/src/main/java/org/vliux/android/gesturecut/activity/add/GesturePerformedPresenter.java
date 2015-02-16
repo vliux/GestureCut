@@ -12,8 +12,6 @@ import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
-import de.greenrobot.event.EventBus;
-
 /**
  * Created by vliux on 12/24/14.
  */
@@ -28,7 +26,7 @@ public class GesturePerformedPresenter {
         mWindowMgr = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
     }
 
-    public void addGesture(final Gesture gesture){
+    public void addGesture(final Gesture gesture, final Runnable gestureAddedPostRunnable){
         if(null != mResolvedComponent){
             GestureDbTable.DbData dbData = GesturePersistence.loadGestureEx(mContext, gesture);
             final GestureConfirmDialog mFwDialog = new GestureConfirmDialog(mContext);
@@ -55,8 +53,9 @@ public class GesturePerformedPresenter {
                                 try {
                                     GesturePersistence.saveGesture(mContext, gesture, mResolvedComponent);
                                     mWindowMgr.removeView(mFwDialog);
-                                    // notify
-                                    EventBus.getDefault().post(new AddGestureEvent(AddGestureEvent.EventType.GESTURE_ADDED));
+                                    if(null != gestureAddedPostRunnable){
+                                        gestureAddedPostRunnable.run();
+                                    }
                                 } catch (GesturePersistence.GestureLibraryException e) {
                                     e.printStackTrace();
                                 } catch (GesturePersistence.GestureSaveIconException e) {
