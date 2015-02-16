@@ -78,6 +78,8 @@ public class AddGestureActivity extends ActionBarActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         mTabsPresenter = new TabsPresenter(this, actionBar);
         mTabsPresenter.initTabs();
+
+        scanUnGesturedPackagrsAsync(true);
     }
 
     @Override
@@ -119,7 +121,6 @@ public class AddGestureActivity extends ActionBarActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        scanUnGesturedPackagrsAsync(true);
     }
 
     @Override
