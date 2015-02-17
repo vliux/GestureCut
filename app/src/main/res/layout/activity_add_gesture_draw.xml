@@ -10,13 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!--<TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left"
-            android:textSize="@dimen/text_size_general"
-            android:textColor="@color/text_white"
-            android:text="Draw new gesture for:"/>-->
         <TextView
             android:id="@+id/agda_app_name"
             android:layout_width="match_parent"
@@ -28,42 +21,46 @@
             android:textColor="@color/text_white"
             android:textSize="@dimen/text_size_general"
             android:background="@color/primary_color"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <android.gesture.GestureOverlayView
+            android:id="@+id/agda_gesture_overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/gesture_create_bg_semi_transparent"
+            style="@style/gesture_overlay_use">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/gesture_bg_title_record"
+                android:textSize="@dimen/text_size_small_title"
+                android:textColor="@color/text_white"
+                android:drawableTop="@drawable/ic_pencil"
+                android:drawablePadding="8dp"/>
+        </android.gesture.GestureOverlayView>
 
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/agda_appicon_dimen"
-            android:background="@color/gesture_create_bg_semi_transparent">
+            android:layout_gravity="top">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/agda_appicon_dimen_half"
                 android:layout_gravity="top"
-                android:background="@color/primary_color"/>
+                android:background="@color/primary_color" />
             <ImageView
                 android:id="@+id/agda_app_icon"
                 android:layout_width="@dimen/agda_appicon_dimen"
                 android:layout_height="@dimen/agda_appicon_dimen"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="@dimen/agda_appicon_margin_bottom"
-                android:scaleType="fitXY"/>
+                android:scaleType="fitXY" />
         </FrameLayout>
-    </LinearLayout>
-
-    <android.gesture.GestureOverlayView
-        android:id="@+id/agda_gesture_overlay"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@color/gesture_create_bg_semi_transparent"
-        style="@style/gesture_overlay_use">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="@string/gesture_bg_title_record"
-            android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/text_white"
-            android:drawableTop="@drawable/ic_pencil"
-            android:drawablePadding="8dp"/>
-    </android.gesture.GestureOverlayView>
+    </FrameLayout>
 </LinearLayout>
