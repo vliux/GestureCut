@@ -21,11 +21,11 @@
             android:drawablePadding="8dp"/>
 
         <!-- layer above, show confirmation dialog -->
-        <org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog
+        <org.vliux.android.gesturecut.ui.view.GestureConfirmDialog
             android:id="@+id/add_gesture_fwdialog"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone">
-        </org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog>
+        </org.vliux.android.gesturecut.ui.view.GestureConfirmDialog>
     </android.gesture.GestureOverlayView>
 </merge>

@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwnd;
+package org.vliux.android.gesturecut.ui.view;
 
 import android.animation.Animator;
 import android.animation.AnimatorSet;

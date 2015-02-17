@@ -9,7 +9,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.floatwnd.GestureConfirmDialog;
+import org.vliux.android.gesturecut.ui.view.GestureConfirmDialog;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 
 /**
