@@ -24,9 +24,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="right"
-            android:background="@color/gesture_create_bg_semi_transparent"
             style="@style/gesture_overlay_use"
             android:visibility="gone">
+            <org.vliux.android.gesturecut.ui.view.GestureOverlayBgView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/overlay_bg"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -34,7 +37,7 @@
                 android:gravity="center"
                 android:text="@string/gesture_bg_title_use"
                 android:textSize="@dimen/text_size_general"
-                android:textColor="@color/global_bkground"
+                android:textColor="@color/primary_color"
                 android:drawableTop="@drawable/ic_pencil"
                 android:drawablePadding="8dp"/>
         </android.gesture.GestureOverlayView>

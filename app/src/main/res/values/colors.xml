@@ -42,4 +42,7 @@
     <color name="text_general">#737373</color>
     <color name="text_white">@color/global_bkground</color>
     <color name="actionbar_tab_bg">@color/primary_color</color>
+
+    <color name="overlay_bg_dot">#424242</color>
+    <color name="overlay_bg">#DDBDBDBD</color>
 </resources>

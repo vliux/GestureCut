@@ -29,7 +29,6 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.view.AddGestureView;
 import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.AppLog;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
