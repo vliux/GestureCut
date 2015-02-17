@@ -31,6 +31,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     public static final int REQUEST_CODE = 1;
     private static final int REQUEST_CODE_INVALID = -1;
 
+    private ViewGroup mGestureOverlayViewParent;
     private GestureOverlayView mGestureOverlayView;
     private TextView mTvAppName;
     private ImageView mIvAppIcon;
@@ -73,6 +74,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mIvAppIcon = (ImageView)findViewById(R.id.agda_app_icon);
         mLayoutTitleArea = (ViewGroup)findViewById(R.id.agda_title_area);
         mGestureOverlayView = (GestureOverlayView)findViewById(R.id.agda_gesture_overlay);
+        mGestureOverlayViewParent = (ViewGroup)findViewById(R.id.agda_gesture_parent);
 
         Intent intent = getIntent();
         if(intent.hasExtra(INTENT_RESOLVED_COMPONENT)){
@@ -111,13 +113,13 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mLayoutTitleArea.setPivotX(mAnimStartX);
         mLayoutTitleArea.setPivotY(mAnimStartY);
 
-        mGestureOverlayView.setTranslationX(mGestureOverlayView.getWidth());
+        mGestureOverlayViewParent.setTranslationX(mGestureOverlayViewParent.getWidth());
         mLayoutTitleArea.animate().scaleY(1).scaleX(1).alpha(1f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
                 .setListener(new SimpleAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        mGestureOverlayView.animate().translationX(0f)
+                        mGestureOverlayViewParent.animate().translationX(0f)
                                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                                 .setInterpolator(new DecelerateInterpolator()).start();
                     }
@@ -130,7 +132,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mLayoutTitleArea.setPivotY(mAnimStartY);
 
 
-        mGestureOverlayView.animate().translationX(mGestureOverlayView.getWidth())
+        mGestureOverlayViewParent.animate().translationX(mGestureOverlayViewParent.getWidth())
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .setInterpolator(new DecelerateInterpolator())
                 .setListener(new SimpleAnimatorListener() {
