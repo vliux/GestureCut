@@ -51,7 +51,7 @@
 
             <TableRow
                 android:background="@color/gesture_cur_blue_light_semi_transparent"
-                android:padding="@dimen/fw2_tablelayout_padding">
+                android:padding="@dimen/ges_confirm_row_padding">
                 <TextView
                     android:id="@+id/fw_layer2_tv_title1"
                     android:gravity="center"
@@ -68,7 +68,7 @@
             </TableRow>
 
             <TableRow
-                android:padding="@dimen/fw2_tablelayout_padding">
+                android:padding="@dimen/ges_confirm_row_padding">
                 <ImageView
                     android:id="@+id/fw_layer2_iv1"
                     android:src="@drawable/ic_launcher"

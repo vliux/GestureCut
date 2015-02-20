@@ -36,10 +36,13 @@
     <dimen name="text_size_large_title">25dp</dimen>
 
     <!-- 2nd float window -->
-    <dimen name="fw2_title_height">48dp</dimen>
+    <!--<dimen name="fw2_title_height">48dp</dimen>
     <dimen name="switch_layout_height">42dp</dimen>
     <dimen name="fw2_outmost_margin">48dp</dimen>
-    <dimen name="fw2_tablelayout_padding">8dp</dimen>
+    <dimen name="fw2_tablelayout_padding">8dp</dimen>-->
+
+    <!-- gesture_confirm -->
+    <dimen name="ges_confirm_row_padding">8dp</dimen>
 
     <!-- action bar -->
     <dimen name="tablike_icon_padding">16dp</dimen>
@@ -60,6 +63,9 @@
     <dimen name="shortcut_wnd_item_dimen">72dp</dimen>
     <dimen name="shortcut_wnd_item_gesture_dimen">48dp</dimen>
     <dimen name="shortcut_wnd_item_app_dimen">24dp</dimen>
+
+    <!-- AddGestureActivity -->
+    <dimen name="aga_item_height">@dimen/icon_dimen_global_large</dimen>
 
     <!-- AddGestureDrawActivity -->
     <dimen name="agda_appname_margin_top">16dp</dimen>

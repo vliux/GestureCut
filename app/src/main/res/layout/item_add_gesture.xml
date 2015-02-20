@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/aga_item_height">
+
+    <org.vliux.android.gesturecut.ui.view.AppInfoView
+        android:id="@+id/aga_appinfo"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/gesture_list_item_padding_vertical"
+        android:layout_marginBottom="@dimen/gesture_list_item_padding_vertical"
+        android:layout_marginRight="@dimen/gesture_list_outter_margin"
+        android:layout_marginLeft="@dimen/gesture_list_outter_margin"
+        custom:longClassName="false">
+    </org.vliux.android.gesturecut.ui.view.AppInfoView>
+
+</LinearLayout>

@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/appinfo_app_icon"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_width="@dimen/icon_dimen_global_large"
+        android:layout_height="@dimen/icon_dimen_global_large"
         android:layout_gravity="left|center_vertical"
         android:scaleType="fitStart"/>
 

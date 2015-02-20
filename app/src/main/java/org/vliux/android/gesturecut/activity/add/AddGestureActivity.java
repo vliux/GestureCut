@@ -13,6 +13,7 @@ import android.os.Message;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -293,14 +294,15 @@ public class AddGestureActivity extends ActionBarActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             AppInfoView appInfoView = null;
             if(null != convertView){
-                appInfoView = (AppInfoView)convertView;
+                appInfoView = (AppInfoView)convertView.getTag();
             }else{
-                appInfoView = new AppInfoView(AddGestureActivity.this);
-                appInfoView.setPadding(mListItemPaddingHoriz, 0, mListItemPaddingHoriz, 0);
+                convertView = LayoutInflater.from(AddGestureActivity.this).inflate(R.layout.item_add_gesture, null, false);
+                appInfoView = (AppInfoView)convertView.findViewById(R.id.aga_appinfo);
+                convertView.setTag(appInfoView);
             }
 
             appInfoView.setResolvedComponent(installedComponents.get(position));
-            return appInfoView;
+            return convertView;
         }
     } // end of adapter
 
@@ -322,11 +324,9 @@ public class AddGestureActivity extends ActionBarActivity {
     private final AdapterView.OnItemClickListener mOnItemClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> parent, final View view, int position, long id) {
-            //if(null == mAnimPresenter){
-            //    mAnimPresenter = new AnimPresenter(AddGestureActivity.this, view, mLayout, mAddGestureView);
-            //    mAnimPresenter.show();
-            //}
-            if(view instanceof AppInfoView){
+            Object viewTag = view.getTag();
+            if(viewTag instanceof AppInfoView){
+                AppInfoView appInfoView = (AppInfoView)viewTag;
                 int[] screenLoc = new int[2];
                 view.getLocationOnScreen(screenLoc);
                 int left = screenLoc[0];
@@ -335,8 +335,6 @@ public class AddGestureActivity extends ActionBarActivity {
                 int viewHeight = view.getHeight();
                 int animStartX = left + viewWidth/2;
                 int animStartY = top + viewHeight/2;
-
-                AppInfoView appInfoView = (AppInfoView)view;
                 AddGestureDrawActivity.startForResult(AddGestureActivity.this, appInfoView.getResolvedComponent(), animStartX, animStartY);
             }
         }
