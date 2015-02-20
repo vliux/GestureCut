@@ -35,6 +35,7 @@
     <color name="simp_ges_listview_rt_bg">#55FFFFFF</color>
 
     <color name="sc_knob_stroke">#bbffffff</color>
+    <color name="sc_overlay_bg">#DDBDBDBD</color>
 
     <!-- widget -->
     <color name="widget_bkground">#77000000</color>
@@ -44,5 +45,7 @@
     <color name="actionbar_tab_bg">@color/primary_color</color>
 
     <color name="overlay_bg_dot">#424242</color>
-    <color name="overlay_bg">#DDBDBDBD</color>
+
+    <!-- AddGestureDrawActivity -->
+    <color name="agda_overlay_bg">#BDBDBD</color>
 </resources>

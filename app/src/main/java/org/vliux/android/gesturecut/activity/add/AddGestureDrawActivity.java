@@ -114,12 +114,14 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mLayoutTitleArea.setPivotY(mAnimStartY);
 
         mGestureOverlayViewParent.setTranslationX(mGestureOverlayViewParent.getWidth());
+        mGestureOverlayViewParent.setAlpha(0f);
         mLayoutTitleArea.animate().scaleY(1).scaleX(1).alpha(1f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
                 .setListener(new SimpleAnimatorListener() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
                         mGestureOverlayViewParent.animate().translationX(0f)
+                                .alpha(1f)
                                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                                 .setInterpolator(new DecelerateInterpolator()).start();
                     }
@@ -133,6 +135,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
 
 
         mGestureOverlayViewParent.animate().translationX(mGestureOverlayViewParent.getWidth())
+                .alpha(0f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .setInterpolator(new DecelerateInterpolator())
                 .setListener(new SimpleAnimatorListener() {
