@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.MenuItem;
@@ -105,8 +106,18 @@ public class AddGestureDrawActivity extends ActionBarActivity {
 
         mGestureOverlayView.addOnGesturePerformedListener(mOnGesturePerformedListener);
         mGesturePerformedPresenter = new GesturePerformedPresenter(this, mRc);
+        // on Lollipop we have to disable ActionBar bottom shadow by code
+        // on older versions, set it in styles.
+        //if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+            getSupportActionBar().setElevation(0f);
+        //}
     }
 
+    /**
+     * Pressing the "back" btn in action bar should have the same quit transition.
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
