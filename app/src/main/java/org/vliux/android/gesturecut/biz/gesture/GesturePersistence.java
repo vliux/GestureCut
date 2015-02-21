@@ -93,14 +93,13 @@ public class GesturePersistence {
      * @param packageName
      */
     public static void onPackageRemovedOnDevice(Context context, String packageName){
+        // delete from db
         GestureDbTable gestureDbTable = (GestureDbTable)DbManager.getInstance().getDbTable(GestureDbTable.class);
-
         List<String> gesturesRemoved = gestureDbTable.removeGesturesByPackage(packageName);
+        // delete from gestures library
         for(String gestureName : gesturesRemoved) {
-            Log.d("vliux", "remove gesture " + gestureName);
             GestureUtil.getInstance().deleteGesture(gestureName);
         }
-        Log.d("vliux", "post PkgRemovedEvent to EventBus");
         PkgRemovedEventBus.getInstance().post(new PkgRemovedEventBus.PkgRemovedEvent());
 
     }

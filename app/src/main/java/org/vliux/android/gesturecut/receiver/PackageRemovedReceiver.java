@@ -19,7 +19,7 @@ public class PackageRemovedReceiver extends BroadcastReceiver {
         if(true != intent.getBooleanExtra(Intent.EXTRA_REPLACING, false)){
             Uri uri = intent.getData();
             String pkg = (uri != null)? uri.getSchemeSpecificPart() : null;
-            Log.d("vliux", String.format("    pkg %s removed", pkg));
+            Log.d(TAG, String.format("package %s removed", pkg));
             GesturePersistence.onPackageRemovedOnDevice(context, pkg);
         }
     }

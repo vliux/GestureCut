@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.floatwnd;
+/*package org.vliux.android.gesturecut.ui.floatwnd;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -11,9 +11,6 @@ import android.widget.TextView;
 
 import org.vliux.android.gesturecut.R;
 
-/**
- * Created by vliux on 4/17/14.
- */
 public class TabLikeView extends LinearLayout implements View.OnClickListener {
     private static final int COLOR_ACTIVE = R.color.yellow;
     private static final int COLOR_INACTIVE = R.color.text_general;
@@ -124,15 +121,14 @@ public class TabLikeView extends LinearLayout implements View.OnClickListener {
     }
 
     public interface OnTablikeChangedListener {
-        /**
-         *
-         * @param newType
-         * @return True if the tab switch can be proceed, False if the switch should be stopped.
-         */
+         //*
+         //* @param newType
+         //* @return True if the tab switch can be proceed, False if the switch should be stopped.
+
         public boolean onTabSwitched(TabType newType);
     }
 
     public TabType getType(){
         return mCurrentType;
     }
-}
+}*/

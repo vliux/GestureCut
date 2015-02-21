@@ -7,6 +7,7 @@ import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.DecelerateInterpolator;
@@ -43,6 +44,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
     // for activity start anim
     private ViewGroup mLayoutTitleArea;
 
+    private boolean mGestureAdded = false; // if the gesture has been added
     /**
      *
      * @param activity
@@ -105,6 +107,15 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         mGesturePerformedPresenter = new GesturePerformedPresenter(this, mRc);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            closeActivityAnim();
+            return true;
+        }
+        return false;
+    }
+
     private void startActivityAnim(){
         mLayoutTitleArea.setScaleY(0.3f);
         mLayoutTitleArea.setScaleX(0.3f);
@@ -129,7 +140,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
         .start();
     }
 
-    private void closeActivityAnim(final boolean gestureAdded){
+    private void closeActivityAnim(){
         mLayoutTitleArea.setPivotX(mAnimStartX);
         mLayoutTitleArea.setPivotY(mAnimStartY);
 
@@ -146,7 +157,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
                                 .setListener(new SimpleAnimatorListener() {
                                     @Override
                                     public void onAnimationEnd(Animator animation) {
-                                        setResult(gestureAdded? RESULT_OK : RESULT_CANCELED);
+                                        setResult(mGestureAdded? RESULT_OK : RESULT_CANCELED);
                                         finish();
                                         overridePendingTransition(0, 0);
                                     }
@@ -158,7 +169,7 @@ public class AddGestureDrawActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        closeActivityAnim(false);
+        closeActivityAnim();
     }
 
     private final GestureOverlayView.OnGesturePerformedListener mOnGesturePerformedListener = new GestureOverlayView.OnGesturePerformedListener() {
@@ -169,7 +180,8 @@ public class AddGestureDrawActivity extends ActionBarActivity {
                         new Runnable() {
                             @Override
                             public void run() {
-                                closeActivityAnim(true);
+                                mGestureAdded = true;
+                                closeActivityAnim();
                             }
                         });
             }
