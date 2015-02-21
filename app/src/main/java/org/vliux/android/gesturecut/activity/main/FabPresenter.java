@@ -13,7 +13,7 @@ import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
 import org.vliux.android.gesturecut.ui.view.GeneralDialog;
-import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.ui.view.glv.GestureListView;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.WindowManagerUtil;
 

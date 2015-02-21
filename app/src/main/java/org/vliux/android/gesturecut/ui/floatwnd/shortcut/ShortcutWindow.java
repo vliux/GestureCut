@@ -2,8 +2,8 @@ package org.vliux.android.gesturecut.ui.floatwnd.shortcut;
 
 import android.animation.Animator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
-import android.gesture.Gesture;
 import android.gesture.GestureOverlayView;
 import android.support.v4.view.MotionEventCompat;
 import android.util.AttributeSet;
@@ -23,12 +23,10 @@ import android.widget.ImageView;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
-import org.vliux.android.gesturecut.biz.TaskManager;
-import org.vliux.android.gesturecut.biz.gesture.GesturePersistence;
-import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
 import org.vliux.android.gesturecut.ui.SizeCalculator;
 import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
-import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.ui.view.glv.GestureListView;
 import org.vliux.android.gesturecut.util.ScreenUtil;
 
 import de.greenrobot.event.EventBus;
@@ -98,6 +96,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         });
         //mGestureListView.setOnGestureIconClickedListener(mStartTaskPresenter);
         mGestureListView.setOnItemClickListener(mStartTaskPresenter);
+        mGestureListView.setOnEmptyViewClickedListener(mGestureListEmptyViewClicked);
         mGestureListView.refresh();
 
         // as the width of the overlay will be changed below, while its layout_gravity is right,
@@ -315,4 +314,17 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
     public void setGestureOverlayViewVisible(int visibility) {
         mGestureOverLay.setVisibility(visibility);
     }
+
+    private final OnClickListener mGestureListEmptyViewClicked = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Context context = ShortcutWindow.this.getContext();
+            if(null != context) {
+                Intent intent = new Intent(context, AddGestureActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                context.startActivity(intent);
+                startCloseAnim();
+            }
+        }
+    };
 }

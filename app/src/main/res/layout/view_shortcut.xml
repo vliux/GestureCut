@@ -3,7 +3,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <org.vliux.android.gesturecut.ui.view.GestureListView
+    <org.vliux.android.gesturecut.ui.view.glv.GestureListView
         android:id="@+id/sc_gesture_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -11,7 +11,7 @@
         android:cacheColorHint="@color/gesture_list_bkground"
         android:divider="@drawable/listview_divider"
         android:listSelector="@drawable/sc_gesturelist_selector_pressed">
-    </org.vliux.android.gesturecut.ui.view.GestureListView>
+    </org.vliux.android.gesturecut.ui.view.glv.GestureListView>
 
     <FrameLayout
         android:id="@+id/sc_overlay"

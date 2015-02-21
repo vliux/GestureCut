@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view;
+package org.vliux.android.gesturecut.ui.view.glv;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
+import org.vliux.android.gesturecut.ui.view.AppInfoView;
 
 /**
  * Created by vliux on 12/25/14.

@@ -1,4 +1,4 @@
-package org.vliux.android.gesturecut.ui.view;
+package org.vliux.android.gesturecut.ui.view.glv;
 
 import android.animation.ObjectAnimator;
 import android.content.BroadcastReceiver;
@@ -10,6 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
@@ -22,6 +24,7 @@ import org.vliux.android.gesturecut.control.PkgRemovedEventBus;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
 import org.vliux.android.gesturecut.biz.db.DbManager;
 import org.vliux.android.gesturecut.biz.db.GestureDbTable;
+import org.vliux.android.gesturecut.ui.view.AppInfoView;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 import org.vliux.android.gesturecut.util.GestureUtil;
 import org.vliux.android.gesturecut.util.ImageUtil;
@@ -33,8 +36,12 @@ import java.util.List;
 
 /**
  * Created by vliux on 4/11/14.
+ * GestureListView handles empty view automatically,
+ * by managing a single item view holding the full size of the ListView.
  */
 public class GestureListView extends ListView {
+    private OnClickListener mEmptyViewClicked;
+
     /**
      * Click listener when an icon in the GestureListItem has been clicked, and the relevant
      * ResolvedComponent is not NULL.
@@ -65,6 +72,24 @@ public class GestureListView extends ListView {
     private void init(AttributeSet attrs){
         mListViewAdapter = new GestureListViewAdapter();
         setAdapter(mListViewAdapter);
+    }
+
+    public void setOnEmptyViewClickedListener(OnClickListener emptyViewClicked){
+        this.mEmptyViewClicked = emptyViewClicked;
+    }
+
+    @Override
+    public boolean performItemClick(View view, int position, long id) {
+        if(null != mListViewAdapter.mGestureNames && mListViewAdapter.mGestureNames.size() > 0){
+            return super.performItemClick(view, position, id);
+        }else{
+            // click at empty view
+            if(null != mEmptyViewClicked){
+                mEmptyViewClicked.onClick(view);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setOnGestureIconClickedListener(OnGestureIconClickedListener listener){
@@ -152,6 +177,9 @@ public class GestureListView extends ListView {
      * Adapter
      */
     private class GestureListViewAdapter extends BaseAdapter {
+        static final int ITEM_TYPE_EMPTY_VIEW = 0;
+        static final int ITEM_TYPE_NORMAL = 1;
+
         private List<String> mGestureNames;
         private GestureDbTable mDbTable;
         private int iconDimen;
@@ -171,7 +199,11 @@ public class GestureListView extends ListView {
 
         @Override
         public int getCount() {
-            return null != mGestureNames? mGestureNames.size() : 0;
+            if(null == mGestureNames || mGestureNames.size() <= 0){
+                return 1; // empty view
+            }else{
+                return mGestureNames.size();
+            }
         }
 
         @Override
@@ -185,7 +217,25 @@ public class GestureListView extends ListView {
         }
 
         @Override
+        public int getItemViewType(int position) {
+            if(null != mGestureNames && mGestureNames.size() > 0){
+                return ITEM_TYPE_NORMAL;
+            }else{
+                return ITEM_TYPE_EMPTY_VIEW;
+            }
+        }
+
+        @Override
+        public int getViewTypeCount() {
+            return 2;
+        }
+
+        @Override
         public View getView(int position, View convertView, ViewGroup parent) {
+            if(null == mGestureNames || mGestureNames.size() <= 0){
+                return getEmptyView(convertView);
+            }
+
             GestureListItem listItem = null;
             if (null == convertView) {
                 listItem = new GestureListItem(getContext());
@@ -212,6 +262,16 @@ public class GestureListView extends ListView {
                     new LoadGestureDataRunnable(mDbTable, mHandler, mGestureNames.get(position), listItem, iconDimen));
             //startItemAnim(listItem, position);
             return listItem;
+        }
+
+        private View getEmptyView(View convertView){
+            Log.d("vliux", "GestureListView.getEmptyView()");
+            if(null == convertView){
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_gesture_list_empty, null, false);
+                Log.d("vliux", "height of GestureListView=" + GestureListView.this.getHeight());
+                convertView.setMinimumHeight(GestureListView.this.getHeight());
+            }
+            return convertView;
         }
     }
 

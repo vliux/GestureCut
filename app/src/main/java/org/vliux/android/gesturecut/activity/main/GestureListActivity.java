@@ -10,15 +10,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.melnykov.fab.FloatingActionButton;
 
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.activity.SettingsActivity;
+import org.vliux.android.gesturecut.activity.add.AddGestureActivity;
+import org.vliux.android.gesturecut.activity.add.AddGestureDrawActivity;
 import org.vliux.android.gesturecut.biz.TaskManager;
 import org.vliux.android.gesturecut.model.ResolvedComponent;
-import org.vliux.android.gesturecut.ui.view.GestureListView;
+import org.vliux.android.gesturecut.ui.view.glv.GestureListView;
 import org.vliux.android.gesturecut.util.ConcurrentManager;
 
 import java.util.List;
@@ -31,7 +32,6 @@ public class GestureListActivity extends ActionBarActivity{
     private FloatingActionButton mFab;
     private FabPresenter mFabPresenter;
     private ProgressBar mProgressBar;
-    private TextView mTvEmptyView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,14 +41,12 @@ public class GestureListActivity extends ActionBarActivity{
         mProgressBar = (ProgressBar)findViewById(R.id.list_ges_prog_bar);
 
         mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
-        mTvEmptyView = (TextView)findViewById(R.id.actv_ges_list_empty_view);
 
         mGestureList.setOnGestureIconClickedListener(mOnGestureItemClicked);
         mGestureList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mGestureList.setOnItemClickListener(mListItemClicked);
         mGestureList.setExternalUiCallback(mLoadGestureUiCallback);
-        mGestureList.setEmptyView(mTvEmptyView);
-        mTvEmptyView.setOnClickListener(mOnEmptyViewClicked);
+        mGestureList.setOnEmptyViewClickedListener(mGestureListEmptyViewClicked);
 
         mFab = (FloatingActionButton)findViewById(R.id.fab);
         mFab.attachToListView(mGestureList);
@@ -155,13 +153,11 @@ public class GestureListActivity extends ActionBarActivity{
         }
     };
 
-    private final View.OnClickListener mOnEmptyViewClicked = new View.OnClickListener() {
+    private final View.OnClickListener mGestureListEmptyViewClicked = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int id = v.getId();
-            if(R.id.actv_ges_list_empty_view == id){
-                mFabPresenter.onFabClicked();
-            }
+            Intent intent = new Intent(GestureListActivity.this, AddGestureActivity.class);
+            GestureListActivity.this.startActivity(intent);
         }
     };
 }
