@@ -20,7 +20,7 @@
     <!-- the bg color of GestureOverlayView on Second FloatWindow -->
     <color name="gesture_create_bg_semi_transparent">#99000000</color>
     <color name="yellow">#ffbb33</color>
-    <color name="yellow_semi_transparent">#99ffbb33</color>
+    <color name="yellow_semi_transparent">#ccffbb33</color>
 
     <color name="float_wnd_circle">#883F51B5</color> <!-- primary_color with transparency -->
     <color name="float_wnd_inner_blue">#663F51B5</color> <!-- primary_color_light with transparency -->

@@ -50,7 +50,7 @@
             android:layout_marginTop="@dimen/dlg_btn_margiin_horiz"
             android:layout_marginLeft="@dimen/dlg_btn_margiin_horiz"
             android:layout_marginRight="@dimen/dlg_btn_margiin_horiz"
-            android:background="@drawable/beige_bg_round_corner">
+            android:background="@drawable/dlg_confirm_tb_bg">
 
             <TableRow
                 android:background="@color/gesture_cur_blue_light_semi_transparent"
