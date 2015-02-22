@@ -28,6 +28,7 @@ import org.vliux.android.gesturecut.ui.SizeCalculator;
 import org.vliux.android.gesturecut.ui.floatwnd.FloatWindowManager;
 import org.vliux.android.gesturecut.ui.view.glv.GestureListView;
 import org.vliux.android.gesturecut.util.ScreenUtil;
+import org.vliux.android.gesturecut.util.SimpleAnimatorListener;
 
 import de.greenrobot.event.EventBus;
 
@@ -97,7 +98,6 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         //mGestureListView.setOnGestureIconClickedListener(mStartTaskPresenter);
         mGestureListView.setOnItemClickListener(mStartTaskPresenter);
         mGestureListView.setOnEmptyViewClickedListener(mGestureListEmptyViewClicked);
-        mGestureListView.refresh();
 
         // as the width of the overlay will be changed below, while its layout_gravity is right,
         // so calculation of translationX is then affected.
@@ -119,7 +119,14 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         mGestureListView.setPivotX(wndLoc[0]);
         mGestureListView.setPivotY(wndLoc[1]);
         mGestureListView.animate().scaleY(1).scaleX(1)
-                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator()).start();
+                .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
+                .setInterpolator(new DecelerateInterpolator())
+                .setListener(new SimpleAnimatorListener() {
+                    @Override
+                    public void onAnimationEnd(Animator animation) {
+                        mGestureListView.refresh();
+                    }
+                }).start();
     }
 
     private void startCloseAnim(){
