@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/gesture_list_outter_margin"
-            android:layout_marginBottom="@dimen/gesture_list_outter_margin"
+            android:layout_marginTop="@dimen/dlg_title_margin_vertical"
+            android:layout_marginBottom="@dimen/dlg_title_margin_vertical"
             android:gravity="center"
             android:textSize="@dimen/text_size_small_title"
             android:text="Are you sure?"
@@ -28,14 +28,15 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:layout_marginBottom="@dimen/dlg_title_margin_vertical"
             android:background="@color/primary_color" />
         <!-- dialog content -->
         <TextView
             android:id="@+id/fw2_layer2_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:layout_marginLeft="@dimen/dlg_btn_margiin_horiz"
+            android:layout_marginRight="@dimen/dlg_btn_margiin_horiz"
             android:gravity="center"
             android:textSize="@dimen/text_size_general"
             android:text="Add the new gesture into your gesture store?"
@@ -46,7 +47,9 @@
             android:shrinkColumns="*"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/gesture_list_outter_margin"
+            android:layout_marginTop="@dimen/dlg_btn_margiin_horiz"
+            android:layout_marginLeft="@dimen/dlg_btn_margiin_horiz"
+            android:layout_marginRight="@dimen/dlg_btn_margiin_horiz"
             android:background="@drawable/beige_bg_round_corner">
 
             <TableRow
@@ -86,14 +89,16 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/dlg_btn_margiin_horiz"
+            android:layout_marginBottom="@dimen/dlg_btn_margiin_horiz">
             <!-- button cancel -->
             <Button
                 android:id="@+id/fw2_layer2_btn_cancel"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/gesture_list_outter_margin"
+                android:layout_marginLeft="@dimen/dlg_btn_margiin_horiz"
                 android:text="@string/cancel"
                 android:textColor="@color/global_bkground"
                 android:textSize="@dimen/text_size_general"
@@ -104,7 +109,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:layout_margin="@dimen/gesture_list_outter_margin"
+                android:layout_marginLeft="@dimen/dlg_btn_margiin_horiz"
+                android:layout_marginRight="@dimen/dlg_btn_margiin_horiz"
                 android:text="@string/save"
                 android:textColor="@color/global_bkground"
                 android:textSize="@dimen/text_size_general"

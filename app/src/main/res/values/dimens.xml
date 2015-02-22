@@ -18,6 +18,9 @@
     <dimen name="icon_dimen_global">32dp</dimen>
     <dimen name="icon_dimen_global_large">48dp</dimen>
 
+    <dimen name="dlg_title_margin_vertical">12dp</dimen>
+    <dimen name="dlg_btn_margiin_horiz">12dp</dimen>
+
     <!-- gesture list view, for editing existing gestures -->
     <dimen name="gesture_list_outter_margin">16dp</dimen>
     <dimen name="gesture_list_item_height">72dp</dimen>

@@ -74,7 +74,7 @@
     <string name="lock_screen_mask_layer_msg_on_listview_item">Double click to start the app</string>
     <string name="lock_screen_mask_layer_msg_on_gestureoverlay">To draw a gesture, continue moving your finger</string>
 
-    <string name="del_gesture_confirm_title">Deleting...</string>
+    <string name="del_gesture_confirm_title">Removal</string>
     <string name="del_gesture_confirm_content">Delete the %d gesture(s)?</string>
 
     <string name="about_intro_app">Convenient task switching with gestures~</string>

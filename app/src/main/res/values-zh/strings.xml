@@ -74,7 +74,7 @@
     <string name="lock_screen_mask_layer_msg_on_listview_item">双击来启动应用</string>
     <string name="lock_screen_mask_layer_msg_on_gestureoverlay">继续移动手指，以画出你的手势</string>
 
-    <string name="del_gesture_confirm_title">删除...</string>
+    <string name="del_gesture_confirm_title">删除</string>
     <string name="del_gesture_confirm_content">删除选中的%d个手势?</string>
 
     <string name="about_intro_app">手势，让切换变的简单～</string>
