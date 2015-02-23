@@ -28,12 +28,12 @@ public class FloatWindow extends View implements View.OnClickListener {
     private static final int CHAR_STROKE_WIDTH_DP = 1;
 
     private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.float_wnd_circle;
-    private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.primary_color;
+    private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.float_wnd_circle;
 
     private static final int COLOR_INNER_SPACE_NORMAL = R.color.float_wnd_inner_blue;
     private static final int COLOR_INNER_SPACE_PRESSED = R.color.float_wnd_inner_blue_pressed;
 
-    private static final int COLOR_TEXT_STROKE = R.color.accent_color;
+    private static final int COLOR_TEXT_STROKE = R.color.yellow;
 
     private int mOutterStrokeWidth;
     private int mCharStrokeWidth;

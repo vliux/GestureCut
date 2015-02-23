@@ -56,6 +56,7 @@ public class AddGestureActivity extends ActionBarActivity {
     private TabsPresenter mTabsPresenter;
 
     private MenuItem mSearchMenu;
+    private SearchView mSearchView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,8 +102,9 @@ public class AddGestureActivity extends ActionBarActivity {
         MenuItemCompat.setOnActionExpandListener(mSearchMenu, mOnSearchExpandListener);
         //mSearchMenu.setOnActionExpandListener(mOnSearchExpandListener);
 
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(mSearchMenu);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mSearchView = (SearchView) MenuItemCompat.getActionView(mSearchMenu);
+        mSearchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        mSearchView.setIconifiedByDefault(true);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -355,6 +357,8 @@ public class AddGestureActivity extends ActionBarActivity {
     private final MenuItemCompat.OnActionExpandListener mOnSearchExpandListener = new MenuItemCompat.OnActionExpandListener() {
         @Override
         public boolean onMenuItemActionExpand(MenuItem item) {
+            mSearchView.onActionViewExpanded();
+            mSearchView.requestFocus();
             return true;
         }
 

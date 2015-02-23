@@ -96,14 +96,13 @@ public class FloatWindowManager {
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
         lp.format = PixelFormat.TRANSLUCENT;
-        int[] screenSize = ScreenUtil.getScreenSize(context);
+        //int[] screenSize = ScreenUtil.getScreenSize(context);
 
         lp.width = WindowManager.LayoutParams.MATCH_PARENT;
         lp.height = WindowManager.LayoutParams.MATCH_PARENT;
         lp.gravity = Gravity.CENTER;
-        lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        lp.dimAmount = 0.7f;
-
+        //lp.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+        //lp.dimAmount = 0.7f;
         return lp;
     }
 
