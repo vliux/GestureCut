@@ -52,8 +52,7 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/agda_appicon_circle"
-            android:layout_gravity="top"
-            android:elevation="1dp">
+            android:layout_gravity="top">
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/agda_appicon_circle_half"
@@ -63,7 +62,7 @@
                 android:layout_width="@dimen/agda_appicon_circle"
                 android:layout_height="@dimen/agda_appicon_circle"
                 android:layout_gravity="center"
-                android:background="@drawable/bg_app_info_circle"/>
+                android:background="@drawable/layer_bg_agda_appinfo_icon"/>
             <ImageView
                 android:id="@+id/agda_app_icon"
                 android:layout_width="@dimen/agda_appicon_dimen"
