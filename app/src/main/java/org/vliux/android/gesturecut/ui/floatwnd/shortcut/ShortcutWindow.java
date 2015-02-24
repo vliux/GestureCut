@@ -115,10 +115,12 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         int[] wndLoc = FloatWindowManager.parseLocationFromPrefs(getContext());
         mGestureListView.setScaleY(0.3f);
         mGestureListView.setScaleX(0.3f);
+        mGestureListView.setAlpha(0f);
 
         mGestureListView.setPivotX(wndLoc[0]);
         mGestureListView.setPivotY(wndLoc[1]);
         mGestureListView.animate().scaleY(1).scaleX(1)
+                .alpha(1f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL)
                 .setInterpolator(new DecelerateInterpolator())
                 .setListener(new SimpleAnimatorListener() {
@@ -134,6 +136,7 @@ public class ShortcutWindow extends FrameLayout implements IShortcutWindow {
         mGestureListView.setPivotX(wndLoc[0]);
         mGestureListView.setPivotY(wndLoc[1]);
         mGestureListView.animate().scaleY(0.1f).scaleX(0.1f)
+                .alpha(0f)
                 .setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL).setInterpolator(new DecelerateInterpolator())
                 .setListener(new Animator.AnimatorListener() {
                     @Override
