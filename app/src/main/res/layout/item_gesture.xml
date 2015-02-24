@@ -5,7 +5,9 @@
     android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="@dimen/gesture_list_item_height"
-    style="@style/activated">
+    android:background="@drawable/gesture_list_selector_activated">
+    <!-- has to use background on list item view to enable item selection status in multiple choice mode,
+        as setting android:listSelector on ListView doesn't work -->
 
     <!-- gesture icon size is defined when generating from gesture, so layout_width=wrap_content should be safe. -->
     <ImageView

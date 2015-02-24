@@ -43,7 +43,6 @@ public class GestureListActivity extends ActionBarActivity{
         mGestureList = (GestureListView)findViewById(R.id.actv_gesture_list);
 
         mGestureList.setOnGestureIconClickedListener(mOnGestureItemClicked);
-        mGestureList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         mGestureList.setOnItemClickListener(mListItemClicked);
         mGestureList.setExternalUiCallback(mLoadGestureUiCallback);
         mGestureList.setOnEmptyViewClickedListener(mGestureListEmptyViewClicked);

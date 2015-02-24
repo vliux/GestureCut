@@ -44,10 +44,6 @@
         <item name="android:maxHeight">3dp</item>
     </style>
 
-    <style name="activated" parent="AppTheme">
-        <item name="android:background">@drawable/gesture_list_selector_activated</item>
-    </style>
-
     <style name="gesture_overlay">
         <item name="android:gestureStrokeWidth">24.0</item>
     </style>
