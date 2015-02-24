@@ -59,7 +59,7 @@ public class StartTaskPresenter implements GestureOverlayView.OnGesturePerformed
                 if(PreferenceHelper.getUserPref(context.getApplicationContext(), R.string.pref_key_vibrate, true)) {
                     Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
                     if (null != vibrator) {
-                        vibrator.vibrate(AppConstant.Anim.ANIM_DURATION_NORMAL);
+                        vibrator.vibrate(AppConstant.VIBRATE_DURATION);
                     }
                 }
             }

@@ -41,7 +41,9 @@ public class AppConstant {
     }
 
     public static class Anim{
-        public static final long ANIM_DURATION_NORMAL = 350L;
+        public static final long ANIM_DURATION_NORMAL = 300L;
         public static final long ANIM_DURATION_LONGER = 500L;
     }
+
+    public static final long VIBRATE_DURATION = 50L;
 }
