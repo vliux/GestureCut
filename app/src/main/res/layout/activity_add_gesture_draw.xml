@@ -43,7 +43,7 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:text="@string/gesture_bg_title_record"
-                android:textSize="@dimen/text_size_small_title"
+                android:textSize="@dimen/text_size_general"
                 android:textColor="@color/primary_color"
                 android:drawableTop="@drawable/ic_pencil"
                 android:drawablePadding="8dp"/>
