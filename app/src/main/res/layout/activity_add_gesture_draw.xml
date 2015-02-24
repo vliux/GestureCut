@@ -51,19 +51,23 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/agda_appicon_dimen"
+            android:layout_height="@dimen/agda_appicon_circle"
             android:layout_gravity="top">
             <View
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/agda_appicon_dimen_half"
+                android:layout_height="@dimen/agda_appicon_circle_half"
                 android:layout_gravity="top"
                 android:background="@color/primary_color" />
+            <View
+                android:layout_width="@dimen/agda_appicon_circle"
+                android:layout_height="@dimen/agda_appicon_circle"
+                android:layout_gravity="center"
+                android:background="@drawable/bg_app_info_circle"/>
             <ImageView
                 android:id="@+id/agda_app_icon"
                 android:layout_width="@dimen/agda_appicon_dimen"
                 android:layout_height="@dimen/agda_appicon_dimen"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="@dimen/agda_appicon_margin_bottom"
+                android:layout_gravity="center"
                 android:scaleType="fitXY" />
         </FrameLayout>
     </FrameLayout>

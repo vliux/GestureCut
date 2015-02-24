@@ -74,6 +74,7 @@
     <dimen name="agda_appname_margin_top">16dp</dimen>
     <dimen name="agda_appname_margin_bottom">12dp</dimen>
     <dimen name="agda_appicon_margin_bottom">16dp</dimen>
+    <dimen name="agda_appicon_circle">96dp</dimen>
+    <dimen name="agda_appicon_circle_half">48dp</dimen>
     <dimen name="agda_appicon_dimen">56dp</dimen> <!-- if changed, need to change agda_appicon_dimen_half -->
-    <dimen name="agda_appicon_dimen_half">28dp</dimen>
 </resources>
