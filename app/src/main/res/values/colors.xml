@@ -23,10 +23,12 @@
     <color name="yellow">#ffbb33</color>
     <color name="yellow_semi_transparent">#ccffbb33</color>
 
-    <color name="float_wnd_circle">#88FF4081</color> <!-- accent_color with transparency -->
-    <color name="float_wnd_inner_blue">#883F51B5</color> <!-- primary_color_light with transparency -->
-    <color name="float_wnd_inner_blue_transparent">#553F51B5</color>
-    <color name="float_wnd_inner_blue_pressed">#aa303F9F</color>
+    <!--<color name="float_wnd_circle">#88FF4081</color>-->
+    <color name="floatwnd_out_rect_opaque">#66000000</color>
+    <color name="floatwnd_out_rect_transparent">#33000000</color>
+    <color name="floatwnd_out_rect_pressed">#aa303F9F</color>
+    <color name="floatwnd_char_opaque">@color/yellow</color>
+    <color name="floatwnd_char_transparent">#88ffbb33</color> <!-- yellow with transparency -->
 
     <color name="red_warning">@android:color/holo_red_light</color>
     <color name="red_warning_semi_transparent">#bbff4444</color>

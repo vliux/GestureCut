@@ -27,18 +27,19 @@ import org.vliux.android.gesturecut.util.ScreenUtil;
 public class FloatWindow extends View implements View.OnClickListener {
     private static final String TAG = FloatWindow.class.getSimpleName();
     private static final int OUTTER_STROKE_WIDTH_DP = 2;
-    private static final int CHAR_STROKE_WIDTH_DP = 1;
+    private static final int CHAR_STROKE_WIDTH_DP = 2;
     private static final long RESTORE_LESS_OPAQUE_MILLIS = 4000L;
 
     //private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.float_wnd_circle;
     //private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.float_wnd_circle;
 
-    private static final int COLOR_INNER_SPACE_NORMAL = R.color.float_wnd_inner_blue;
-    private static final int COLOR_INNER_SPACE_NORMAL_TRANSPARENT = R.color.float_wnd_inner_blue_transparent;
-    private static final int COLOR_INNER_SPACE_PRESSED = R.color.float_wnd_inner_blue_pressed;
-    private static final int COLOR_TEXT_STROKE = R.color.yellow;
+    private static final int COLOR_INNER_SPACE_NORMAL = R.color.floatwnd_out_rect_opaque;
+    private static final int COLOR_INNER_SPACE_NORMAL_TRANSPARENT = R.color.floatwnd_out_rect_transparent;
+    private static final int COLOR_INNER_SPACE_PRESSED = R.color.floatwnd_out_rect_pressed;
+    private static final int COLOR_TEXT_STROKE = R.color.floatwnd_char_opaque;
+    private static final int COLOR_TEXT_STROKE_TRANSPARENT = R.color.floatwnd_char_transparent;
 
-    //private int mOutterStrokeWidth;
+    private int mColorChar = COLOR_TEXT_STROKE_TRANSPARENT;
     private int mColorOutterRectNormal = COLOR_INNER_SPACE_NORMAL_TRANSPARENT;
     private int mOutterStrokeWidth;
     private int mCharStrokeWidth;
@@ -108,7 +109,7 @@ public class FloatWindow extends View implements View.OnClickListener {
         Typeface tf = Typeface.createFromAsset(context.getAssets(), "CodeLight.otf");
         mPaintText.setTypeface(tf);
         mPaintText.setStrokeWidth(mCharStrokeWidth);
-        mPaintText.setColor(getResources().getColor(COLOR_TEXT_STROKE));
+        mPaintText.setColor(getResources().getColor(mColorChar));
         mPaintText.setTextSize(mDimenSize/2);
         mPaintText.setTextAlign(Paint.Align.CENTER);
 
@@ -140,9 +141,6 @@ public class FloatWindow extends View implements View.OnClickListener {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        int width = getWidth();
-        int height = getHeight();
-
         // outter circle
         /*mPaintStroke.setStrokeWidth(mOutterStrokeWidth);
         if(!mIsPressed) {
@@ -161,6 +159,7 @@ public class FloatWindow extends View implements View.OnClickListener {
         canvas.drawRoundRect(mOutRectF, mRoundCornerRadius, mRoundCornerRadius, mPaintSlight);
 
         // center text
+        mPaintText.setColor(getResources().getColor(mColorChar));
         canvas.drawText("G", mCharWidth, mCharHeight, mPaintText);
     }
 
@@ -269,10 +268,12 @@ public class FloatWindow extends View implements View.OnClickListener {
             switch (msg.what){
                 case WHAT_LESS_OPAQUE:
                     mColorOutterRectNormal = COLOR_INNER_SPACE_NORMAL_TRANSPARENT;
+                    mColorChar = COLOR_TEXT_STROKE_TRANSPARENT;
                     invalidate();
                     break;
                 case WHAT_MORE_OPAQUE:
                     mColorOutterRectNormal = COLOR_INNER_SPACE_NORMAL;
+                    mColorChar = COLOR_TEXT_STROKE;
                     invalidate();
                     break;
             }
