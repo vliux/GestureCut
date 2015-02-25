@@ -26,7 +26,7 @@
     <!--<color name="float_wnd_circle">#88FF4081</color>-->
     <color name="floatwnd_out_rect_opaque">#66000000</color>
     <color name="floatwnd_out_rect_transparent">#33000000</color>
-    <color name="floatwnd_out_rect_pressed">#aa303F9F</color>
+    <color name="floatwnd_out_rect_pressed">#aa000000</color>
     <color name="floatwnd_char_opaque">@color/yellow</color>
     <color name="floatwnd_char_transparent">#88ffbb33</color> <!-- yellow with transparency -->
 

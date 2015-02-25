@@ -1,5 +1,7 @@
 package org.vliux.android.gesturecut.ui.floatwnd;
 
+import android.animation.Animator;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -15,11 +17,13 @@ import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.vliux.android.gesturecut.AppConstant;
 import org.vliux.android.gesturecut.R;
 import org.vliux.android.gesturecut.ui.floatwnd.shortcut.ShortcutWindow;
 import org.vliux.android.gesturecut.util.ScreenUtil;
+import org.vliux.android.gesturecut.util.SimpleAnimatorListener;
 
 /**
  * Created by vliux on 4/3/14.
@@ -60,6 +64,9 @@ public class FloatWindow extends View implements View.OnClickListener {
     // dimension of the char "G"
     private float mCharWidth;
     private float mCharHeight;
+
+    private int mScreenWidth;
+    private int mScreenHeight;
 
     public FloatWindow(Context context) {
         super(context);
@@ -115,6 +122,10 @@ public class FloatWindow extends View implements View.OnClickListener {
 
         mOutRectF = new RectF();
         mRoundCornerRadius = mDimenSize/4;
+
+        int[] screenSizes = ScreenUtil.getScreenSize(context);
+        mScreenWidth = screenSizes[0];
+        mScreenHeight = screenSizes[1];
     }
 
     @Override
@@ -188,6 +199,10 @@ public class FloatWindow extends View implements View.OnClickListener {
     private boolean mIsPrevMoved = false;
     @Override
     public boolean onTouchEvent(MotionEvent event) {
+        if(mInPullBoundaryAnim){
+            // currently in animation of pulling to boundary, not respond to events
+            return true;
+        }
         float rawX = event.getRawX();
         float rawY = event.getRawY() - mSysBarHeight;
 
@@ -229,9 +244,11 @@ public class FloatWindow extends View implements View.OnClickListener {
                 Log.d(TAG, String.format("UP: %d, %d; %f, %f", mLayoutParams.x, mLayoutParams.y, event.getX(), event.getY()));
                 if(mIsPrevMoved) {
                     //Log.d(TAG, "mIsPrevMoved = true");
-                    mLayoutParams.x = (int)(rawX - mDownInnerX);
-                    mLayoutParams.y = (int)(rawY - mDownInnerY);
-                    FloatWindowManager.updateFloatWindow(getContext(), this, mLayoutParams, true);
+                    //mLayoutParams.x = (int)(rawX - mDownInnerX);
+                    //mLayoutParams.y = (int)(rawY - mDownInnerY);
+                    //FloatWindowManager.updateFloatWindow(getContext(), this, mLayoutParams, false);
+                    pullToBoundary((int)(rawX - mDownInnerX),
+                            (int)(rawY - mDownInnerY));
                 }else{
                     //Log.d(TAG, "mIsPrevMoved = false");
                     onClick(this);
@@ -246,6 +263,36 @@ public class FloatWindow extends View implements View.OnClickListener {
                 break;
         }
         return true;
+    }
+
+    private boolean mInPullBoundaryAnim = false;
+    private void pullToBoundary(int x, final int y){
+        final int targetX = x >= mScreenWidth/2 ? mScreenWidth : 0;
+        ValueAnimator va = ValueAnimator.ofInt(x, targetX);
+        va.setDuration(AppConstant.Anim.ANIM_DURATION_NORMAL);
+        va.setInterpolator(new AccelerateDecelerateInterpolator());
+        va.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int animatedX = (Integer)animation.getAnimatedValue();
+                mLayoutParams.x = animatedX;
+                mLayoutParams.y = y;
+                FloatWindowManager.updateFloatWindow(getContext(), FloatWindow.this, mLayoutParams,
+                        animatedX == targetX);
+            }
+        });
+        va.addListener(new SimpleAnimatorListener(){
+            @Override
+            public void onAnimationStart(Animator animation) {
+                mInPullBoundaryAnim = true;
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                mInPullBoundaryAnim = false;
+            }
+        });
+        va.start();
     }
 
     private boolean isMoving(float rawX, float rawY){
