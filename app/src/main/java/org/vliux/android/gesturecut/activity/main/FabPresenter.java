@@ -39,6 +39,10 @@ class FabPresenter {
     private Context mContext;
     private WindowManager mWindowMgr;
 
+    private ConcurrentManager.IJob mDelJob;
+    private DeleteGesturesUiCallback mDelUiCallback;
+    private DeleteGesturesBizCallback mDelBizCallback;
+
     public FabPresenter(Context context, FloatingActionButton fab, GestureListView gestureListView){
         mContext = context;
         mFab = fab;
@@ -58,6 +62,12 @@ class FabPresenter {
         mFab.setImageResource(NORMAL_BG);
         mFab.setColorNormalResId(COLOR_NORMAL_NORMAL);
         mFab.setColorPressedResId(COLOR_NORMAL_PRESSED);
+    }
+
+    public void onActivityDestroyed(){
+        if(null != mDelJob && !mDelJob.isJobCancelled()){
+            mDelJob.cancelJob();
+        }
     }
 
     public void onFabClicked(){
@@ -96,8 +106,12 @@ class FabPresenter {
                     @Override
                     public void onClick(View v) {
                         mWindowMgr.removeView(dialog);
-                        ConcurrentManager.submitJob(new DeleteGesturesBizCallback(gestureNameSet),
-                                new DeleteGesturesUiCallback(checkedPositions));
+                        if(null != mDelJob && !mDelJob.isJobCancelled()){
+                            mDelJob.cancelJob();
+                        }
+                        mDelBizCallback = new DeleteGesturesBizCallback(gestureNameSet);
+                        mDelUiCallback = new DeleteGesturesUiCallback(checkedPositions);
+                        mDelJob = ConcurrentManager.submitJob(mDelBizCallback, mDelUiCallback);
                     }
                 });
 

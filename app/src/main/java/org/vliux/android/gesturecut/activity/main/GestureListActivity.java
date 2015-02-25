@@ -79,6 +79,12 @@ public class GestureListActivity extends ActionBarActivity{
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mFabPresenter.onActivityDestroyed();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_main, menu);

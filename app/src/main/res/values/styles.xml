@@ -5,9 +5,8 @@
         <item name="colorPrimary">@color/primary_color</item>
         <item name="colorPrimaryDark">@color/primary_color_dark</item>
         <item name="colorAccent">@color/accent_color</item>
-
         <item name="android:actionBarStyle">@style/GcActionBar</item>
-        <item name="android:actionBarTabStyle">@style/GcActionBarTabStyle</item>
+        <!--<item name="android:actionBarTabStyle">@style/GcActionBarTabStyle</item>-->
         <item name="android:actionOverflowButtonStyle">@style/GcActionBarOverflow</item>
         <item name="android:homeAsUpIndicator">@drawable/ic_back</item>
         <item name="android:actionBarTabTextStyle">@style/GcActionBarTabText</item>
@@ -29,10 +28,6 @@
     <style name="GcActionBarTabText"
         parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/global_bkground</item>
-    </style>
-
-    <style name="GcActionBarTabStyle" parent="@android:style/Widget.Holo.ActionBar.TabView">
-        <item name="android:background">@drawable/tab_indicator_yellow</item>
     </style>
 
     <style name="GcActionBarWidgetTheme" parent="@android:style/Theme.Holo">
