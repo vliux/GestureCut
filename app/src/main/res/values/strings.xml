@@ -87,4 +87,7 @@
 
     <!-- AddGestureDrawActivity -->
     <string name="new_gesture_no_rc">Unable to locate the target app</string>
+
+    <string name="about_dev">Develop: Liu,Xin</string>
+    <string name="about_ued">UED support: 小渣渣</string>
 </resources>

@@ -57,8 +57,8 @@
     <dimen name="dialog_size">300dp</dimen>
     <dimen name="progress_bar_height">4dp</dimen>
 
-    <dimen name="about_title_margin_big">16dp</dimen>
-    <dimen name="about_title_margin_small">8dp</dimen>
+    <dimen name="about_title_margin_big">24dp</dimen>
+    <dimen name="about_title_margin_small">16dp</dimen>
 
     <dimen name="drawable_padding_default">8dp</dimen>
 

@@ -1,47 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:src="@drawable/ic_launcher"
-            android:scaleType="centerInside"/>
-        <TextView
-            android:id="@+id/about_content_1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="@dimen/about_title_margin_big"
-            android:text="GestureCut 2.0.0"
-            android:textSize="@dimen/text_size_small_title"
-            android:textColor="@color/primary_color"
-            android:textStyle="bold"/>
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:singleLine="false"
-            android:layout_marginTop="@dimen/about_title_margin_small"
-            android:text="Xin Liu\nhttp://vliux.me"
-            android:textSize="@dimen/text_size_general"
-            android:textColor="@color/yellow"/>
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"
+        android:src="@drawable/head" />
 
-        <!--<TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:singleLine="false"
-            android:layout_marginTop="@dimen/about_title_margin_big"
-            android:text="@string/about_intro_app"
-            android:textSize="@dimen/text_size_tiny"
-            android:textColor="@color/gesture_cur_blue"/>-->
-    </LinearLayout>
-</FrameLayout>
+    <TextView
+        android:id="@+id/about_content_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/about_title_margin_big"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="@color/text_general"
+        android:textSize="@dimen/text_size_small_title"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/about_title_margin_small"
+        android:gravity="center"
+        android:text="http://vliux.me"
+        android:autoLink="web"
+        android:textColor="@color/text_general"
+        android:textSize="@dimen/text_size_general" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/about_title_margin_small"
+        android:gravity="center"
+        android:text="@string/about_dev"
+        android:textColor="@color/text_general"
+        android:textSize="@dimen/text_size_general" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
+        android:text="@string/about_ued"
+        android:textColor="@color/text_general"
+        android:textSize="@dimen/text_size_general" />
+</LinearLayout>

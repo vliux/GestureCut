@@ -87,4 +87,7 @@
 
     <!-- AddGestureDrawActivity -->
     <string name="new_gesture_no_rc">无法定位到对应的app</string>
+
+    <string name="about_dev">开发: Liu,Xin</string>
+    <string name="about_ued">UED支持: 小渣渣</string>
 </resources>
