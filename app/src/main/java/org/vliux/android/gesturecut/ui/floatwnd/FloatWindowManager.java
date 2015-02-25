@@ -44,7 +44,7 @@ public class FloatWindowManager {
         WindowManager.LayoutParams lp = getFloatWindowLayoutParams(context);
         windowManager.addView(floatWindow, lp);
         floatWindow.setWindowLayoutParams(lp);
-
+        floatWindow.moreOpaque();
     }
 
     public static void showSecondaryFloatWindow(Context context, ShortcutWindow shortcutWindow){
@@ -70,6 +70,7 @@ public class FloatWindowManager {
                     layoutParams.x,
                     layoutParams.y);
         }
+        floatWindow.moreOpaque();
     }
 
     private static WindowManager.LayoutParams getFloatWindowLayoutParams(Context context){

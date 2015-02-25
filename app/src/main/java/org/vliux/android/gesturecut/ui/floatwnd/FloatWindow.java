@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Typeface;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -26,15 +28,18 @@ public class FloatWindow extends View implements View.OnClickListener {
     private static final String TAG = FloatWindow.class.getSimpleName();
     private static final int OUTTER_STROKE_WIDTH_DP = 2;
     private static final int CHAR_STROKE_WIDTH_DP = 1;
+    private static final long RESTORE_LESS_OPAQUE_MILLIS = 4000L;
 
-    private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.float_wnd_circle;
-    private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.float_wnd_circle;
+    //private static final int COLOR_OUTTER_CIRCLE_NORMAL = R.color.float_wnd_circle;
+    //private static final int COLOR_OUTTER_CIRCLE_PRESSED = R.color.float_wnd_circle;
 
     private static final int COLOR_INNER_SPACE_NORMAL = R.color.float_wnd_inner_blue;
+    private static final int COLOR_INNER_SPACE_NORMAL_TRANSPARENT = R.color.float_wnd_inner_blue_transparent;
     private static final int COLOR_INNER_SPACE_PRESSED = R.color.float_wnd_inner_blue_pressed;
-
     private static final int COLOR_TEXT_STROKE = R.color.yellow;
 
+    //private int mOutterStrokeWidth;
+    private int mColorOutterRectNormal = COLOR_INNER_SPACE_NORMAL_TRANSPARENT;
     private int mOutterStrokeWidth;
     private int mCharStrokeWidth;
 
@@ -47,6 +52,13 @@ public class FloatWindow extends View implements View.OnClickListener {
     private WindowManager.LayoutParams mLayoutParams;
     private Vibrator mVibrator;
     private int mDimenSize;
+    // out boundary of rounded rectangle
+    private RectF mOutRectF;
+    // the radius of rounder corners in rectangle
+    private float mRoundCornerRadius;
+    // dimension of the char "G"
+    private float mCharWidth;
+    private float mCharHeight;
 
     public FloatWindow(Context context) {
         super(context);
@@ -99,6 +111,23 @@ public class FloatWindow extends View implements View.OnClickListener {
         mPaintText.setColor(getResources().getColor(COLOR_TEXT_STROKE));
         mPaintText.setTextSize(mDimenSize/2);
         mPaintText.setTextAlign(Paint.Align.CENTER);
+
+        mOutRectF = new RectF();
+        mRoundCornerRadius = mDimenSize/4;
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        // out bound rect
+        mOutRectF.top = mOutterStrokeWidth;
+        mOutRectF.bottom = h - mOutterStrokeWidth;
+        mOutRectF.left = mOutterStrokeWidth;
+        mOutRectF.right = w - mOutterStrokeWidth;
+        // char "G"
+        float txtWidth = mPaintText.measureText("G");
+        mCharWidth = w/2;
+        mCharHeight = (h + txtWidth)/2;
     }
 
     @Override
@@ -114,32 +143,25 @@ public class FloatWindow extends View implements View.OnClickListener {
         int width = getWidth();
         int height = getHeight();
 
-        RectF oval = new RectF();
-        oval.top = mOutterStrokeWidth;
-        oval.bottom = height - mOutterStrokeWidth;
-        oval.left = mOutterStrokeWidth;
-        oval.right = width - mOutterStrokeWidth;
-
         // outter circle
-        mPaintStroke.setStrokeWidth(mOutterStrokeWidth);
+        /*mPaintStroke.setStrokeWidth(mOutterStrokeWidth);
         if(!mIsPressed) {
             mPaintStroke.setColor(getResources().getColor(COLOR_OUTTER_CIRCLE_NORMAL));
         }else{
             mPaintStroke.setColor(getResources().getColor(COLOR_OUTTER_CIRCLE_PRESSED));
         }
-        canvas.drawArc(oval, 0.0f, 360.0f, false, mPaintStroke);
+        canvas.drawRoundRect(mOutRectF, mRoundCornerRadius, mRoundCornerRadius, mPaintStroke);*/
 
         // semi-transparent background of circle
         if(!mIsPressed) {
-            mPaintSlight.setColor(getResources().getColor(COLOR_INNER_SPACE_NORMAL));
+            mPaintSlight.setColor(getResources().getColor(mColorOutterRectNormal));
         }else{
             mPaintSlight.setColor(getResources().getColor(COLOR_INNER_SPACE_PRESSED));
         }
-        canvas.drawArc(oval, 0.0f, 360.0f, true, mPaintSlight);
+        canvas.drawRoundRect(mOutRectF, mRoundCornerRadius, mRoundCornerRadius, mPaintSlight);
 
         // center text
-        float txtWidth = mPaintText.measureText("G");
-        canvas.drawText("G", width/2, (height + txtWidth)/2, mPaintText);
+        canvas.drawText("G", mCharWidth, mCharHeight, mPaintText);
     }
 
     /**
@@ -152,7 +174,7 @@ public class FloatWindow extends View implements View.OnClickListener {
 
     @Override
     public void onClick(View view){
-        Log.d(TAG, "onClick()");
+        moreOpaque();
         ShortcutWindow shortcutWindow = new ShortcutWindow(getContext());
         FloatWindowManager.showSecondaryFloatWindow(getContext(), shortcutWindow);
     }
@@ -238,4 +260,36 @@ public class FloatWindow extends View implements View.OnClickListener {
         return false;
     }
 
+    private static final int WHAT_MORE_OPAQUE = 100;
+    private static final int WHAT_LESS_OPAQUE = 101;
+    private final Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case WHAT_LESS_OPAQUE:
+                    mColorOutterRectNormal = COLOR_INNER_SPACE_NORMAL_TRANSPARENT;
+                    invalidate();
+                    break;
+                case WHAT_MORE_OPAQUE:
+                    mColorOutterRectNormal = COLOR_INNER_SPACE_NORMAL;
+                    invalidate();
+                    break;
+            }
+        }
+    };
+
+    /**
+     * Use to inform this view to be shown as more opaque.
+     * It will be restore to less opaque state if serverl seconds no activity.
+     */
+    public void moreOpaque(){
+        // remove previous LESS_OPAQUE messages
+        mHandler.removeMessages(WHAT_LESS_OPAQUE);
+        // send MORE_OPQAUE message
+        Message msg = mHandler.obtainMessage(WHAT_MORE_OPAQUE);
+        mHandler.sendMessage(msg);
+        // schedule LESS_OPAQUE message for the coming future
+        mHandler.sendEmptyMessageDelayed(WHAT_LESS_OPAQUE, RESTORE_LESS_OPAQUE_MILLIS);
+    }
 }
