@@ -216,7 +216,7 @@ public class FloatWindow extends View implements View.OnClickListener {
                 mDownInnerY = event.getY();
                 //Log.d(TAG, String.format("DOWN: %f, %f; %f, %f", mDownX, mDownY, event.getX(), event.getY()));
                 if(null != mVibrator){
-                    mVibrator.vibrate(AppConstant.FloatWindow.ACTION_DOWN_VIBRATE_DURATION);
+                    mVibrator.vibrate(AppConstant.VIBRATE_DURATION);
                 }
                 invalidate();
                 break;

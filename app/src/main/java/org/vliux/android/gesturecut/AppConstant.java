@@ -10,7 +10,6 @@ public class AppConstant {
 
     public static class FloatWindow{
         public static final float THRESHOLD_MOVE_DISTANCE = 10f;
-        public static final long ACTION_DOWN_VIBRATE_DURATION = 40L;
     }
 
     public static class LockScreen{
